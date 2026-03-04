@@ -6,7 +6,7 @@
         "policy_result": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum23"
+              "$ref": "#/$defs/EnumerationEnum19"
             },
             {
               "type": "null"
@@ -29,17 +29,6 @@
           "anyOf": [
             {
               "$ref": "#/$defs/IsisContainer3"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "ospf": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/OspfContainer3"
             },
             {
               "type": "null"
@@ -142,13 +131,13 @@
         "match_set_options": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum16"
+              "$ref": "#/$defs/EnumerationEnum13"
             },
             {
               "type": "null"
             }
           ],
-          "default": "any"
+          "default": null
         }
       },
       "title": "AsPathContainer2",
@@ -219,7 +208,7 @@
         "operator": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum17"
+              "$ref": "#/$defs/EnumerationEnum14"
             },
             {
               "type": "null"
@@ -251,16 +240,19 @@
           "title": "Name",
           "type": "string"
         },
-        "regex_mode": {
+        "expression": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum"
+              "maxLength": 65535,
+              "minLength": 1,
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": "asn"
+          "default": null,
+          "title": "Expression"
         },
         "as_path_set_member": {
           "anyOf": [
@@ -285,7 +277,8 @@
       "type": "object"
     },
     "AsPathSetMemberLeafList": {
-      "pattern": "^(?=^(null)|([0-9$ ()*+,.^{}\\[\\]\\-\\|?<>_\\\\]+)$).*$",
+      "maxLength": 65535,
+      "minLength": 1,
       "title": "AsPathSetMemberLeafList",
       "type": "string"
     },
@@ -402,10 +395,10 @@
           ],
           "default": null
         },
-        "label_allocation": {
+        "statistics": {
           "anyOf": [
             {
-              "$ref": "#/$defs/LabelAllocationContainer"
+              "$ref": "#/$defs/StatisticsContainer"
             },
             {
               "type": "null"
@@ -413,10 +406,10 @@
           ],
           "default": null
         },
-        "srv6": {
+        "label_allocation": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Srv6Container"
+              "$ref": "#/$defs/LabelAllocationContainer"
             },
             {
               "type": "null"
@@ -431,6 +424,19 @@
     "BgpContainer2": {
       "description": "Configuration for BGP-specific policy match criteria",
       "properties": {
+        "as_path_set": {
+          "anyOf": [
+            {
+              "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Path Set"
+        },
         "as_path": {
           "anyOf": [
             {
@@ -492,28 +498,6 @@
           "anyOf": [
             {
               "$ref": "#/$defs/EvpnContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "srte_policy": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/SrtePolicyContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "srv6": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Srv6Container2"
             },
             {
               "type": "null"
@@ -638,43 +622,21 @@
           ],
           "default": null
         },
+        "statistics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StatisticsContainer2"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "label_allocation": {
           "anyOf": [
             {
               "$ref": "#/$defs/LabelAllocationContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "statistics": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/StatisticsContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "protection": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ProtectionContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "srv6": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Srv6Container3"
             },
             {
               "type": "null"
@@ -687,38 +649,18 @@
       "type": "object"
     },
     "BgpExtCommunityRegexpType2Type1": {
-      "pattern": "^(?=^[\\^]?link\\-bandwidth[0-9$()*+,.^{}\\[\\]\\-|?:_]*[kMGT]?[$]?$).*$",
+      "pattern": "^(?=^[\\^]?link-bandwidth:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+[kMGT]?[$]?$).*$",
       "title": "BgpExtCommunityRegexpType2Type1",
       "type": "string"
     },
     "BgpExtCommunityRegexpType2Type2": {
-      "pattern": "^(?=^[\\^]?target[0-9$()*+,.^{}\\[\\]\\-|?:_\\\\]*[$]?$).*$",
+      "pattern": "^(?=^[\\^]?target:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+[$]?$).*$",
       "title": "BgpExtCommunityRegexpType2Type2",
       "type": "string"
     },
     "BgpExtCommunityRegexpType2Type3": {
-      "pattern": "^(?=^[\\^]?origin[0-9$()*+,.^{}\\[\\]\\-|?:_\\\\]*[$]?$).*$",
+      "pattern": "^(?=^[\\^]?origin:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+[$]?$).*$",
       "title": "BgpExtCommunityRegexpType2Type3",
-      "type": "string"
-    },
-    "BgpExtCommunityRegexpType2Type4": {
-      "pattern": "^(?=^[\\^]?color[0-9$()*+,.^{}\\[\\]\\-|?:_]*[$]?$).*$",
-      "title": "BgpExtCommunityRegexpType2Type4",
-      "type": "string"
-    },
-    "BgpExtCommunityRegexpType2Type5": {
-      "pattern": "^(?=^bgp-tunnel-encap:(VXLAN|MPLS)$).*$",
-      "title": "BgpExtCommunityRegexpType2Type5",
-      "type": "string"
-    },
-    "BgpExtCommunityRegexpType2Type6": {
-      "pattern": "^(?=^[\\^]?ext[0-9a-f$()*+,.^{}\\[\\]\\-|?:_]*[$]?$).*$",
-      "title": "BgpExtCommunityRegexpType2Type6",
-      "type": "string"
-    },
-    "BgpExtCommunityRegexpType2Type7": {
-      "pattern": "^(?=^[\\^]?gbp\\-tag[0-9$()*+,.^{}\\[\\]\\-|?:_]*[$]?$).*$",
-      "title": "BgpExtCommunityRegexpType2Type7",
       "type": "string"
     },
     "BgpExtCommunityRegexpTypeType1": {
@@ -729,6 +671,51 @@
     "BgpExtCommunityRegexpTypeType2": {
       "pattern": "^(?=^origin:[0-9$()*+,.^{}\\[\\]\\-\\|?\\\\]+:[0-9$()*+,.^{}\\[\\]\\-\\|?\\\\]+$).*$",
       "title": "BgpExtCommunityRegexpTypeType2",
+      "type": "string"
+    },
+    "BgpExtCommunityType2Type1": {
+      "pattern": "^(?=^link-bandwidth:(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9]):[0-9]+[kMGT]?$).*$",
+      "title": "BgpExtCommunityType2Type1",
+      "type": "string"
+    },
+    "BgpExtCommunityType2Type2": {
+      "pattern": "^(?=^target:(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9]):(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9])$).*$",
+      "title": "BgpExtCommunityType2Type2",
+      "type": "string"
+    },
+    "BgpExtCommunityType2Type3": {
+      "pattern": "^(?=^target:(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$",
+      "title": "BgpExtCommunityType2Type3",
+      "type": "string"
+    },
+    "BgpExtCommunityType2Type4": {
+      "pattern": "^(?=^target:(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$",
+      "title": "BgpExtCommunityType2Type4",
+      "type": "string"
+    },
+    "BgpExtCommunityType2Type5": {
+      "pattern": "^(?=^origin:(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9]):(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9])$).*$",
+      "title": "BgpExtCommunityType2Type5",
+      "type": "string"
+    },
+    "BgpExtCommunityType2Type6": {
+      "pattern": "^(?=^origin:(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$",
+      "title": "BgpExtCommunityType2Type6",
+      "type": "string"
+    },
+    "BgpExtCommunityType2Type7": {
+      "pattern": "^(?=^origin:(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$",
+      "title": "BgpExtCommunityType2Type7",
+      "type": "string"
+    },
+    "BgpExtCommunityType2Type8": {
+      "pattern": "^(?=^color:[0-1]{2}:(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9])$).*$",
+      "title": "BgpExtCommunityType2Type8",
+      "type": "string"
+    },
+    "BgpExtCommunityType2Type9": {
+      "pattern": "^(?=^bgp-tunnel-encap:(VXLAN|MPLS)$).*$",
+      "title": "BgpExtCommunityType2Type9",
       "type": "string"
     },
     "BgpExtCommunityTypeType1": {
@@ -779,11 +766,6 @@
     "BgpLargeCommunityTypeType": {
       "pattern": "^(?=^(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9]):(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9]):(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9])$).*$",
       "title": "BgpLargeCommunityTypeType",
-      "type": "string"
-    },
-    "BgpStdCommunityRegexpType2Type": {
-      "pattern": "^(?=^[0-9$()*+,.\\^{}\\[\\]\\-|?:_]+$).*$",
-      "title": "BgpStdCommunityRegexpType2Type",
       "type": "string"
     },
     "BgpStdCommunityRegexpTypeType": {
@@ -965,7 +947,7 @@
         "match_set_options": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum2"
+              "$ref": "#/$defs/EnumerationEnum"
             },
             {
               "type": "null"
@@ -981,12 +963,12 @@
       "type": "object"
     },
     "DefaultActionContainer": {
-      "description": "Actions for routes that do not match any policy statement",
+      "description": "Actions for routes that do not match any policy entry",
       "properties": {
         "policy_result": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum3"
+              "$ref": "#/$defs/EnumerationEnum2"
             },
             {
               "type": "null"
@@ -1009,17 +991,6 @@
           "anyOf": [
             {
               "$ref": "#/$defs/IsisContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "ospf": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/OspfContainer"
             },
             {
               "type": "null"
@@ -1055,46 +1026,48 @@
     },
     "EnumerationEnum": {
       "enum": [
-        "asn",
-        "character"
+        "any",
+        "all",
+        "invert"
       ],
       "title": "EnumerationEnum",
       "type": "string"
     },
     "EnumerationEnum10": {
       "enum": [
-        "self"
+        "internal",
+        "external"
       ],
       "title": "EnumerationEnum10",
       "type": "string"
     },
     "EnumerationEnum11": {
       "enum": [
-        "igp",
-        "egp",
-        "incomplete"
+        "narrow",
+        "wide"
       ],
       "title": "EnumerationEnum11",
       "type": "string"
     },
     "EnumerationEnum12": {
       "enum": [
-        "wide"
+        "any"
       ],
       "title": "EnumerationEnum12",
       "type": "string"
     },
     "EnumerationEnum13": {
       "enum": [
-        "type-1",
-        "type-2"
+        "any"
       ],
       "title": "EnumerationEnum13",
       "type": "string"
     },
     "EnumerationEnum14": {
       "enum": [
-        "any"
+        "eq",
+        "ge",
+        "le"
       ],
       "title": "EnumerationEnum14",
       "type": "string"
@@ -1119,156 +1092,96 @@
     },
     "EnumerationEnum17": {
       "enum": [
-        "eq",
-        "ge",
-        "le"
+        "any",
+        "all",
+        "invert"
       ],
       "title": "EnumerationEnum17",
       "type": "string"
     },
     "EnumerationEnum18": {
       "enum": [
-        "any",
-        "all",
-        "invert"
+        "internal",
+        "external"
       ],
       "title": "EnumerationEnum18",
       "type": "string"
     },
     "EnumerationEnum19": {
       "enum": [
-        "any",
-        "all",
-        "invert"
+        "accept",
+        "reject",
+        "next-statement",
+        "next-policy"
       ],
       "title": "EnumerationEnum19",
       "type": "string"
     },
     "EnumerationEnum2": {
       "enum": [
-        "any",
-        "all",
-        "invert"
+        "accept",
+        "reject",
+        "next-policy"
       ],
       "title": "EnumerationEnum2",
       "type": "string"
     },
     "EnumerationEnum20": {
       "enum": [
-        "present",
-        "not-present"
+        "auto"
       ],
       "title": "EnumerationEnum20",
       "type": "string"
     },
     "EnumerationEnum21": {
       "enum": [
-        "internal",
-        "external"
+        "reference"
       ],
       "title": "EnumerationEnum21",
       "type": "string"
     },
     "EnumerationEnum22": {
       "enum": [
-        "internal",
-        "external"
+        "reference"
       ],
       "title": "EnumerationEnum22",
       "type": "string"
     },
     "EnumerationEnum23": {
       "enum": [
-        "accept",
-        "reject",
-        "next-statement",
-        "next-policy"
+        "route-table-cost"
       ],
       "title": "EnumerationEnum23",
       "type": "string"
     },
     "EnumerationEnum24": {
       "enum": [
-        "auto"
-      ],
-      "title": "EnumerationEnum24",
-      "type": "string"
-    },
-    "EnumerationEnum25": {
-      "enum": [
-        "reference"
-      ],
-      "title": "EnumerationEnum25",
-      "type": "string"
-    },
-    "EnumerationEnum26": {
-      "enum": [
-        "reference"
-      ],
-      "title": "EnumerationEnum26",
-      "type": "string"
-    },
-    "EnumerationEnum27": {
-      "enum": [
-        "route-table-cost"
-      ],
-      "title": "EnumerationEnum27",
-      "type": "string"
-    },
-    "EnumerationEnum28": {
-      "enum": [
-        "set",
-        "add",
-        "subtract"
-      ],
-      "title": "EnumerationEnum28",
-      "type": "string"
-    },
-    "EnumerationEnum29": {
-      "enum": [
         "igp",
         "egp",
         "incomplete"
       ],
-      "title": "EnumerationEnum29",
+      "title": "EnumerationEnum24",
       "type": "string"
     },
     "EnumerationEnum3": {
       "enum": [
-        "accept",
-        "reject",
-        "next-policy"
+        "auto"
       ],
       "title": "EnumerationEnum3",
       "type": "string"
     },
-    "EnumerationEnum30": {
-      "enum": [
-        "wide"
-      ],
-      "title": "EnumerationEnum30",
-      "type": "string"
-    },
-    "EnumerationEnum31": {
-      "enum": [
-        "type-1",
-        "type-2"
-      ],
-      "title": "EnumerationEnum31",
-      "type": "string"
-    },
     "EnumerationEnum4": {
       "enum": [
-        "auto"
+        "add",
+        "remove",
+        "replace"
       ],
       "title": "EnumerationEnum4",
       "type": "string"
     },
     "EnumerationEnum5": {
       "enum": [
-        "add",
-        "remove",
-        "replace"
+        "reference"
       ],
       "title": "EnumerationEnum5",
       "type": "string"
@@ -1282,23 +1195,23 @@
     },
     "EnumerationEnum7": {
       "enum": [
-        "reference"
+        "route-table-cost"
       ],
       "title": "EnumerationEnum7",
       "type": "string"
     },
     "EnumerationEnum8": {
       "enum": [
-        "route-table-cost"
+        "self"
       ],
       "title": "EnumerationEnum8",
       "type": "string"
     },
     "EnumerationEnum9": {
       "enum": [
-        "set",
-        "add",
-        "subtract"
+        "igp",
+        "egp",
+        "incomplete"
       ],
       "title": "EnumerationEnum9",
       "type": "string"
@@ -1330,7 +1243,7 @@
         "operation": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum5"
+              "$ref": "#/$defs/EnumerationEnum4"
             },
             {
               "type": "null"
@@ -1356,7 +1269,7 @@
         "method": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum7"
+              "$ref": "#/$defs/EnumerationEnum6"
             },
             {
               "type": "null"
@@ -1386,7 +1299,7 @@
         "match_set_options": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum19"
+              "$ref": "#/$defs/EnumerationEnum16"
             },
             {
               "type": "null"
@@ -1403,7 +1316,7 @@
         "operation": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum5"
+              "$ref": "#/$defs/EnumerationEnum4"
             },
             {
               "type": "null"
@@ -1429,7 +1342,7 @@
         "method": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum26"
+              "$ref": "#/$defs/EnumerationEnum22"
             },
             {
               "type": "null"
@@ -1455,6 +1368,33 @@
               "items": {
                 "anyOf": [
                   {
+                    "$ref": "#/$defs/BgpExtCommunityType2Type1"
+                  },
+                  {
+                    "$ref": "#/$defs/BgpExtCommunityType2Type2"
+                  },
+                  {
+                    "$ref": "#/$defs/BgpExtCommunityType2Type3"
+                  },
+                  {
+                    "$ref": "#/$defs/BgpExtCommunityType2Type4"
+                  },
+                  {
+                    "$ref": "#/$defs/BgpExtCommunityType2Type5"
+                  },
+                  {
+                    "$ref": "#/$defs/BgpExtCommunityType2Type6"
+                  },
+                  {
+                    "$ref": "#/$defs/BgpExtCommunityType2Type7"
+                  },
+                  {
+                    "$ref": "#/$defs/BgpExtCommunityType2Type8"
+                  },
+                  {
+                    "$ref": "#/$defs/BgpExtCommunityType2Type9"
+                  },
+                  {
                     "$ref": "#/$defs/BgpExtCommunityRegexpType2Type1"
                   },
                   {
@@ -1462,18 +1402,6 @@
                   },
                   {
                     "$ref": "#/$defs/BgpExtCommunityRegexpType2Type3"
-                  },
-                  {
-                    "$ref": "#/$defs/BgpExtCommunityRegexpType2Type4"
-                  },
-                  {
-                    "$ref": "#/$defs/BgpExtCommunityRegexpType2Type5"
-                  },
-                  {
-                    "$ref": "#/$defs/BgpExtCommunityRegexpType2Type6"
-                  },
-                  {
-                    "$ref": "#/$defs/BgpExtCommunityRegexpType2Type7"
                   }
                 ]
               },
@@ -1494,7 +1422,6 @@
       "type": "object"
     },
     "GroupAddressContainer": {
-      "description": "Multicast group IP address\n\nTo match a <S,G> the source needs to be present in the multicast source-address leafref and the group needs to present in the group-address leafref.\nTo match a <*,G> the group has to be programmed in the group-address leafref and no source in the source-address leafref.\nGroup address can be configured as a prefix.",
       "properties": {
         "prefix_set": {
           "anyOf": [
@@ -1561,7 +1488,7 @@
         "match_set_options": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum15"
+              "$ref": "#/$defs/EnumerationEnum17"
             },
             {
               "type": "null"
@@ -1666,7 +1593,7 @@
         "route_type": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum21"
+              "$ref": "#/$defs/EnumerationEnum18"
             },
             {
               "type": "null"
@@ -1697,7 +1624,7 @@
         "metric": {
           "anyOf": [
             {
-              "$ref": "#/$defs/MetricContainer3"
+              "$ref": "#/$defs/MetricContainer2"
             },
             {
               "type": "null"
@@ -1745,37 +1672,6 @@
       "title": "LabelAllocationContainer2",
       "type": "object"
     },
-    "LabeledUnicastContainer": {
-      "description": "Policy actions related to statistics collection of BGP-LU routes and tunnels",
-      "properties": {
-        "ingress": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Ingress"
-        },
-        "egress": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Egress"
-        }
-      },
-      "title": "LabeledUnicastContainer",
-      "type": "object"
-    },
     "LocalPreferenceContainer": {
       "properties": {
         "set": {
@@ -1819,10 +1715,34 @@
     "MatchContainer": {
       "description": "Match conditions of the policy statement",
       "properties": {
+        "prefix_set": {
+          "anyOf": [
+            {
+              "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prefix Set"
+        },
         "prefix": {
           "anyOf": [
             {
               "$ref": "#/$defs/PrefixContainer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bgp": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BgpContainer2"
             },
             {
               "type": "null"
@@ -1872,46 +1792,10 @@
           "default": [],
           "title": "Call Policy"
         },
-        "origin_network_instance": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Origin Network Instance"
-        },
-        "network_instance_leaked_route": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Network Instance Leaked Route"
-        },
         "internal_tags": {
           "anyOf": [
             {
               "$ref": "#/$defs/InternalTagsContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "bgp": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/BgpContainer2"
             },
             {
               "type": "null"
@@ -1933,7 +1817,7 @@
         "ospf": {
           "anyOf": [
             {
-              "$ref": "#/$defs/OspfContainer2"
+              "$ref": "#/$defs/OspfContainer"
             },
             {
               "type": "null"
@@ -1958,31 +1842,20 @@
     },
     "MedContainer": {
       "properties": {
-        "value": {
+        "set": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum8"
+              "$ref": "#/$defs/SetLeaf21"
             },
             {
-              "$ref": "#/$defs/ValueLeaf1"
+              "$ref": "#/$defs/EnumerationEnum7"
             },
             {
               "type": "null"
             }
           ],
           "default": null,
-          "title": "Value"
-        },
-        "operation": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum9"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
+          "title": "Set"
         }
       },
       "title": "MedContainer",
@@ -1990,31 +1863,20 @@
     },
     "MedContainer2": {
       "properties": {
-        "value": {
+        "set": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum27"
+              "$ref": "#/$defs/SetLeaf71"
             },
             {
-              "$ref": "#/$defs/ValueLeaf31"
+              "$ref": "#/$defs/EnumerationEnum23"
             },
             {
               "type": "null"
             }
           ],
           "default": null,
-          "title": "Value"
-        },
-        "operation": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum28"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
+          "title": "Set"
         }
       },
       "title": "MedContainer2",
@@ -2023,10 +1885,21 @@
     "MetricContainer": {
       "description": "Policy actions related to ISIS metrics",
       "properties": {
+        "set_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EnumerationEnum10"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "set_style": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum12"
+              "$ref": "#/$defs/EnumerationEnum11"
             },
             {
               "type": "null"
@@ -2053,12 +1926,12 @@
       "type": "object"
     },
     "MetricContainer2": {
-      "description": "Policy actions related to OSPF metrics",
+      "description": "Policy actions related to ISIS metrics",
       "properties": {
-        "set_external_type": {
+        "set_type": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum13"
+              "$ref": "#/$defs/EnumerationEnum10"
             },
             {
               "type": "null"
@@ -2066,31 +1939,10 @@
           ],
           "default": null
         },
-        "set_value": {
-          "anyOf": [
-            {
-              "maximum": 65535,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Set Value"
-        }
-      },
-      "title": "MetricContainer2",
-      "type": "object"
-    },
-    "MetricContainer3": {
-      "description": "Policy actions related to ISIS metrics",
-      "properties": {
         "set_style": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum30"
+              "$ref": "#/$defs/EnumerationEnum11"
             },
             {
               "type": "null"
@@ -2113,39 +1965,7 @@
           "title": "Set Value"
         }
       },
-      "title": "MetricContainer3",
-      "type": "object"
-    },
-    "MetricContainer4": {
-      "description": "Policy actions related to OSPF metrics",
-      "properties": {
-        "set_external_type": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum31"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "set_value": {
-          "anyOf": [
-            {
-              "maximum": 65535,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Set Value"
-        }
-      },
-      "title": "MetricContainer4",
+      "title": "MetricContainer2",
       "type": "object"
     },
     "MulticastContainer": {
@@ -2182,7 +2002,7 @@
         "set": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum10"
+              "$ref": "#/$defs/EnumerationEnum8"
             },
             {
               "$ref": "#/$defs/Ipv4AddressType"
@@ -2207,7 +2027,7 @@
         "set": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum10"
+              "$ref": "#/$defs/EnumerationEnum8"
             },
             {
               "$ref": "#/$defs/Ipv4AddressType"
@@ -2241,20 +2061,6 @@
           ],
           "default": null,
           "title": "Set Tag Set"
-        },
-        "set_flex_algo": {
-          "anyOf": [
-            {
-              "maximum": 255,
-              "minimum": 128,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Set Flex Algo"
         }
       },
       "title": "NextHopResolutionContainer",
@@ -2275,20 +2081,6 @@
           ],
           "default": null,
           "title": "Set Tag Set"
-        },
-        "set_flex_algo": {
-          "anyOf": [
-            {
-              "maximum": 255,
-              "minimum": 128,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Set Flex Algo"
         }
       },
       "title": "NextHopResolutionContainer2",
@@ -2299,7 +2091,7 @@
         "set": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum11"
+              "$ref": "#/$defs/EnumerationEnum9"
             },
             {
               "type": "null"
@@ -2316,7 +2108,7 @@
         "set": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum29"
+              "$ref": "#/$defs/EnumerationEnum24"
             },
             {
               "type": "null"
@@ -2329,23 +2121,6 @@
       "type": "object"
     },
     "OspfContainer": {
-      "properties": {
-        "metric": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/MetricContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "OspfContainer",
-      "type": "object"
-    },
-    "OspfContainer2": {
       "description": "Configuration for OSPF-specific policy match criteria",
       "properties": {
         "area_id": {
@@ -2364,13 +2139,14 @@
         "route_type": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum22"
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": null,
+          "title": "Route Type"
         },
         "instance_id": {
           "anyOf": [
@@ -2387,28 +2163,11 @@
           "title": "Instance Id"
         }
       },
-      "title": "OspfContainer2",
-      "type": "object"
-    },
-    "OspfContainer3": {
-      "properties": {
-        "metric": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/MetricContainer4"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "OspfContainer3",
+      "title": "OspfContainer",
       "type": "object"
     },
     "PolicyListEntry": {
-      "description": "List of policy definitions, keyed by unique name\n\nThese policy definitions are expected to be referenced (by name) in policy in import-policy and/or export-policy statements.",
+      "description": "List of policy definitions, keyed by unique name\nThese policy definitions are expected to be referenced (by name) in policy in import-policy and/or export-policy statements.",
       "properties": {
         "name": {
           "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
@@ -2466,7 +2225,7 @@
         "match_set_options": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum14"
+              "$ref": "#/$defs/EnumerationEnum12"
             },
             {
               "type": "null"
@@ -2616,7 +2375,7 @@
               "$ref": "#/$defs/AsNumberType"
             },
             {
-              "$ref": "#/$defs/EnumerationEnum4"
+              "$ref": "#/$defs/EnumerationEnum3"
             },
             {
               "type": "null"
@@ -2652,7 +2411,7 @@
               "$ref": "#/$defs/AsNumberType"
             },
             {
-              "$ref": "#/$defs/EnumerationEnum24"
+              "$ref": "#/$defs/EnumerationEnum20"
             },
             {
               "type": "null"
@@ -2677,24 +2436,6 @@
         }
       },
       "title": "PrependContainer2",
-      "type": "object"
-    },
-    "ProtectionContainer": {
-      "description": "Policy actions related to protection and maintenance of BGP tunnels",
-      "properties": {
-        "srte_policy": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/SrtePolicyContainer3"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "ProtectionContainer",
       "type": "object"
     },
     "ReferencedSetsLeafList": {
@@ -2795,6 +2536,21 @@
           "default": null,
           "title": "As Path Set"
         },
+        "prefix_set": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/PrefixSetListEntry"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prefix Set"
+        },
         "community_set": {
           "anyOf": [
             {
@@ -2840,21 +2596,6 @@
           "default": null,
           "title": "Extended Community Set"
         },
-        "prefix_set": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/PrefixSetListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Prefix Set"
-        },
         "tag_set": {
           "anyOf": [
             {
@@ -2889,6 +2630,18 @@
       "title": "RoutingPolicyContainer",
       "type": "object"
     },
+    "SetLeaf21": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "title": "SetLeaf21",
+      "type": "integer"
+    },
+    "SetLeaf71": {
+      "maximum": 4294967295,
+      "minimum": 0,
+      "title": "SetLeaf71",
+      "type": "integer"
+    },
     "SetTagSetLeafList": {
       "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
       "title": "SetTagSetLeafList",
@@ -2900,7 +2653,6 @@
       "type": "string"
     },
     "SourceAddressContainer": {
-      "description": "Multicast Source IP address\n\nSource address can be configured as a prefix.",
       "properties": {
         "prefix_set": {
           "anyOf": [
@@ -2919,183 +2671,12 @@
       "title": "SourceAddressContainer",
       "type": "object"
     },
-    "SrtePolicyContainer": {
-      "properties": {
-        "distinguisher": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Distinguisher"
-        },
-        "color": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Color"
-        },
-        "endpoint": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Ipv4AddressType"
-            },
-            {
-              "$ref": "#/$defs/Ipv6AddressType"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Endpoint"
-        }
-      },
-      "title": "SrtePolicyContainer",
-      "type": "object"
-    },
-    "SrtePolicyContainer2": {
-      "description": "Policy actions related to statistics collection of BGP-signaled SR policies",
-      "properties": {
-        "ingress": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Ingress"
-        },
-        "egress": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Egress"
-        }
-      },
-      "title": "SrtePolicyContainer2",
-      "type": "object"
-    },
-    "SrtePolicyContainer3": {
-      "description": "Policy actions related to protection and maintenance of BGP SRTE policy tunnels",
-      "properties": {
-        "protection_policy": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Protection Policy"
-        }
-      },
-      "title": "SrtePolicyContainer3",
-      "type": "object"
-    },
-    "Srv6Container": {
-      "description": "Enter the srv6 context",
-      "properties": {
-        "locator": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Locator"
-        }
-      },
-      "title": "Srv6Container",
-      "type": "object"
-    },
-    "Srv6Container2": {
-      "description": "Enter the srv6 context",
-      "properties": {
-        "sid_prefix": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Sid Prefix"
-        },
-        "tlv": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum20"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "Srv6Container2",
-      "type": "object"
-    },
-    "Srv6Container3": {
-      "description": "Enter the srv6 context",
-      "properties": {
-        "locator": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Locator"
-        }
-      },
-      "title": "Srv6Container3",
-      "type": "object"
-    },
     "StandardCommunityContainer": {
       "properties": {
         "operation": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum5"
+              "$ref": "#/$defs/EnumerationEnum4"
             },
             {
               "type": "null"
@@ -3121,7 +2702,7 @@
         "method": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum6"
+              "$ref": "#/$defs/EnumerationEnum5"
             },
             {
               "type": "null"
@@ -3151,7 +2732,7 @@
         "match_set_options": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum18"
+              "$ref": "#/$defs/EnumerationEnum15"
             },
             {
               "type": "null"
@@ -3168,7 +2749,7 @@
         "operation": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum5"
+              "$ref": "#/$defs/EnumerationEnum4"
             },
             {
               "type": "null"
@@ -3194,7 +2775,7 @@
         "method": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum25"
+              "$ref": "#/$defs/EnumerationEnum21"
             },
             {
               "type": "null"
@@ -3220,7 +2801,10 @@
               "items": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/BgpStdCommunityRegexpType2Type"
+                    "$ref": "#/$defs/BgpStdCommunityTypeType"
+                  },
+                  {
+                    "$ref": "#/$defs/BgpStdCommunityRegexpTypeType"
                   },
                   {
                     "type": "string"
@@ -3281,32 +2865,65 @@
       "type": "object"
     },
     "StatisticsContainer": {
-      "description": "Policy actions related to statistics collection",
+      "description": "BGP Labeled unicast tunnel statistics",
       "properties": {
-        "labeled_unicast": {
+        "ingress": {
           "anyOf": [
             {
-              "$ref": "#/$defs/LabeledUnicastContainer"
+              "type": "boolean"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": null,
+          "title": "Ingress"
         },
-        "srte_policy": {
+        "egress": {
           "anyOf": [
             {
-              "$ref": "#/$defs/SrtePolicyContainer2"
+              "type": "boolean"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": null,
+          "title": "Egress"
         }
       },
       "title": "StatisticsContainer",
+      "type": "object"
+    },
+    "StatisticsContainer2": {
+      "description": "BGP Labeled unicast tunnel statistics",
+      "properties": {
+        "ingress": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ingress"
+        },
+        "egress": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Egress"
+        }
+      },
+      "title": "StatisticsContainer2",
       "type": "object"
     },
     "TagSetLeafList": {
@@ -3369,18 +2986,6 @@
       "maximum": 4294967295,
       "minimum": 1,
       "title": "TagTypeType1",
-      "type": "integer"
-    },
-    "ValueLeaf1": {
-      "maximum": 4294967295,
-      "minimum": 0,
-      "title": "ValueLeaf1",
-      "type": "integer"
-    },
-    "ValueLeaf31": {
-      "maximum": 4294967295,
-      "minimum": 0,
-      "title": "ValueLeaf31",
       "type": "integer"
     }
   },

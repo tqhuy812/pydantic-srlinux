@@ -343,8 +343,7 @@
     "EnumerationEnum6": {
       "enum": [
         "LOCAL",
-        "PCEP",
-        "BGP"
+        "PCEP"
       ],
       "title": "EnumerationEnum6",
       "type": "string"
@@ -724,7 +723,7 @@
       "type": "object"
     },
     "NetworkInstanceListEntry": {
-      "description": "Network-instance context for the BFD session",
+      "description": "network-instance context for BFD session.",
       "properties": {
         "name": {
           "title": "Name",
@@ -1026,33 +1025,6 @@
             }
           ],
           "default": null
-        },
-        "te_policy_candidate_path_name": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Te Policy Candidate Path Name"
-        },
-        "te_policy_color": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Te Policy Color"
         },
         "te_policy_segment_list_index": {
           "anyOf": [

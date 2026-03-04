@@ -257,10 +257,10 @@
     "TunnelContainer": {
       "description": "This model collects all config and state aspects of the tunnel table\nin SRLinux.",
       "properties": {
-        "vxlan_tunnel": {
+        "pseudowire_tunnel": {
           "anyOf": [
             {
-              "$ref": "#/$defs/VxlanTunnelContainer"
+              "$ref": "#/$defs/PseudowireTunnelContainer"
             },
             {
               "type": "null"
@@ -268,10 +268,10 @@
           ],
           "default": null
         },
-        "pseudowire_tunnel": {
+        "vxlan_tunnel": {
           "anyOf": [
             {
-              "$ref": "#/$defs/PseudowireTunnelContainer"
+              "$ref": "#/$defs/VxlanTunnelContainer"
             },
             {
               "type": "null"

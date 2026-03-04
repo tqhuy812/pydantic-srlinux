@@ -136,6 +136,17 @@
           ],
           "default": null
         },
+        "tcam_profile": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EnumerationEnum10"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "egress_mac_filtering": {
           "anyOf": [
             {
@@ -156,7 +167,6 @@
       "description": "List of MAC, IPv4, IPv6 filter policies",
       "properties": {
         "name": {
-          "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
           "title": "Name",
           "type": "string"
         },
@@ -166,7 +176,7 @@
         "description": {
           "anyOf": [
             {
-              "maxLength": 4096,
+              "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
@@ -217,7 +227,6 @@
       "description": "MAC, IPv4, IPv6 ACL filter(s) to be applied on this subinterface direction\n\nOn 7220 and 7250 IXR platforms only a single MAC, IPv4 or IPv6 filter is supported.",
       "properties": {
         "name": {
-          "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
           "title": "Name",
           "type": "string"
         },
@@ -279,18 +288,6 @@
           ],
           "default": false,
           "title": "Collect Stats"
-        },
-        "log": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": false,
-          "title": "Log"
         }
       },
       "title": "ActionContainer",
@@ -367,62 +364,6 @@
           ],
           "default": 0,
           "title": "Exceeding Octets"
-        },
-        "conforming_in_packets": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "Conforming In Packets"
-        },
-        "conforming_out_packets": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "Conforming Out Packets"
-        },
-        "conforming_in_octets": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "Conforming In Octets"
-        },
-        "conforming_out_octets": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "Conforming Out Octets"
         }
       },
       "title": "AggregateContainer",
@@ -592,20 +533,42 @@
     "DestinationPortContainer": {
       "description": "A packet matches this condition if its destination TCP or UDP port number matches the value or range that is specified\n\nThe rule should also have a condition that the IP protocol equals 6 (TCP) or 17 (UDP) in order for this to be interpreted correctly.",
       "properties": {
-        "port": {
+        "operator": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ValueCase3"
+              "$ref": "#/$defs/EnumerationEnum6"
             },
             {
-              "$ref": "#/$defs/RangeCase3"
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/L4PortTypeType1"
+            },
+            {
+              "$ref": "#/$defs/EnumerationEnum7"
             },
             {
               "type": "null"
             }
           ],
           "default": null,
-          "title": "Port"
+          "title": "Value"
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RangeContainer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "title": "DestinationPortContainer",
@@ -652,7 +615,7 @@
         "description": {
           "anyOf": [
             {
-              "maxLength": 4096,
+              "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
@@ -774,6 +737,15 @@
       "title": "EnumerationEnum",
       "type": "string"
     },
+    "EnumerationEnum10": {
+      "enum": [
+        "default",
+        "ipv4-egress-scaled",
+        "acl-mfc-ipv4-only"
+      ],
+      "title": "EnumerationEnum10",
+      "type": "string"
+    },
     "EnumerationEnum2": {
       "enum": [
         "CS0",
@@ -854,15 +826,6 @@
     },
     "EnumerationEnum5": {
       "enum": [
-        "le",
-        "ge",
-        "eq"
-      ],
-      "title": "EnumerationEnum5",
-      "type": "string"
-    },
-    "EnumerationEnum6": {
-      "enum": [
         "dest-unreachable",
         "packet-too-big",
         "time-exceeded",
@@ -884,6 +847,15 @@
         "mcast-rtr-adv",
         "mcast-rtr-solicit",
         "mcast-rtr-term"
+      ],
+      "title": "EnumerationEnum5",
+      "type": "string"
+    },
+    "EnumerationEnum6": {
+      "enum": [
+        "le",
+        "ge",
+        "eq"
       ],
       "title": "EnumerationEnum6",
       "type": "string"
@@ -1082,7 +1054,7 @@
       "type": "string"
     },
     "ForwardContainer": {
-      "description": "Enter the forward context",
+      "description": "Enable the next-hop context",
       "properties": {
         "forward_action": {
           "anyOf": [
@@ -1090,14 +1062,10 @@
               "$ref": "#/$defs/NextHopCase"
             },
             {
-              "$ref": "#/$defs/NetworkInstanceCase"
-            },
-            {
               "type": "null"
             }
           ],
-          "default": null,
-          "title": "Forward Action"
+          "default": null
         }
       },
       "title": "ForwardContainer",
@@ -1179,28 +1147,6 @@
       "title": "ForwardingComplexListEntry2",
       "type": "object"
     },
-    "HopLimitContainer": {
-      "description": "A packet matches this condition if its IPv6 hop-limit value matches the value or range that is specified.",
-      "properties": {
-        "hop_limit_match_type": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ValueCase2"
-            },
-            {
-              "$ref": "#/$defs/RangeCase2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Hop Limit Match Type"
-        }
-      },
-      "title": "HopLimitContainer",
-      "type": "object"
-    },
     "Icmp6Container": {
       "description": "A packet matches this condition if its ICMPv6 type and code matches one of the specified combinations\n\nThe rule should also have a condition that the next-header value equals 58 (ICMPv6) in order for this to be interpreted correctly.",
       "properties": {
@@ -1210,7 +1156,7 @@
               "$ref": "#/$defs/Icmp6TypeType1"
             },
             {
-              "$ref": "#/$defs/EnumerationEnum6"
+              "$ref": "#/$defs/EnumerationEnum5"
             },
             {
               "type": "null"
@@ -1324,7 +1270,6 @@
       "description": "List of interfaces and subinterfaces referencing ACL filters.",
       "properties": {
         "interface_id": {
-          "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
           "title": "Interface Id",
           "type": "string"
         },
@@ -1461,18 +1406,6 @@
           "default": null,
           "title": "First Fragment"
         },
-        "ip_option_present": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Ip Option Present"
-        },
         "icmp": {
           "anyOf": [
             {
@@ -1509,17 +1442,6 @@
             }
           ],
           "default": null
-        },
-        "ttl": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/TtlContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
         }
       },
       "title": "Ipv4Container",
@@ -1529,14 +1451,13 @@
       "description": "A user defined IPv4 prefix list description",
       "properties": {
         "name": {
-          "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
           "title": "Name",
           "type": "string"
         },
         "description": {
           "anyOf": [
             {
-              "maxLength": 4096,
+              "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
@@ -1646,17 +1567,6 @@
             }
           ],
           "default": null
-        },
-        "hop_limit": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/HopLimitContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
         }
       },
       "title": "Ipv6Container",
@@ -1666,14 +1576,13 @@
       "description": "A user defined IPv6 prefix list description",
       "properties": {
         "name": {
-          "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
           "title": "Name",
           "type": "string"
         },
         "description": {
           "anyOf": [
             {
-              "maxLength": 4096,
+              "maxLength": 255,
               "minLength": 1,
               "type": "string"
             },
@@ -1802,25 +1711,6 @@
       "title": "MatchListContainer",
       "type": "object"
     },
-    "NetworkInstanceCase": {
-      "properties": {
-        "network_instance": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Network Instance"
-        }
-      },
-      "title": "NetworkInstanceCase",
-      "type": "object"
-    },
     "NextHopCase": {
       "properties": {
         "next_hop": {
@@ -1847,27 +1737,15 @@
             },
             {
               "$ref": "#/$defs/Ipv6AddressType"
-            }
-          ],
-          "title": "Address"
-        },
-        "network_instance": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$",
-              "type": "string"
             },
             {
               "type": "null"
             }
           ],
           "default": null,
-          "title": "Network Instance"
+          "title": "Address"
         }
       },
-      "required": [
-        "address"
-      ],
       "title": "NextHopContainer",
       "type": "object"
     },
@@ -2016,20 +1894,33 @@
           ],
           "default": "global"
         },
-        "rate_parameters": {
+        "peak_rate": {
           "anyOf": [
             {
-              "$ref": "#/$defs/RateBpsCase"
-            },
-            {
-              "$ref": "#/$defs/RatePpsCase"
+              "maximum": 800000000,
+              "minimum": 1,
+              "type": "integer"
             },
             {
               "type": "null"
             }
           ],
           "default": null,
-          "title": "Rate Parameters"
+          "title": "Peak Rate"
+        },
+        "max_burst": {
+          "anyOf": [
+            {
+              "maximum": 125000000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Burst"
         },
         "statistics": {
           "anyOf": [
@@ -2120,7 +2011,6 @@
       "description": "Match a packet if its destination IP address is within the specified IPv4 prefix list.",
       "properties": {
         "name": {
-          "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
           "title": "Name",
           "type": "string"
         }
@@ -2135,7 +2025,6 @@
       "description": "Match a packet if its source IP address is within the specified IPv4 prefix list.",
       "properties": {
         "name": {
-          "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
           "title": "Name",
           "type": "string"
         }
@@ -2150,7 +2039,6 @@
       "description": "Match a packet if its destination IP address is within the specified IPv6 prefix list.",
       "properties": {
         "name": {
-          "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
           "title": "Name",
           "type": "string"
         }
@@ -2165,7 +2053,6 @@
       "description": "Match a packet if its source IP address is within the specified IPv6 prefix list.",
       "properties": {
         "name": {
-          "pattern": "^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$",
           "title": "Name",
           "type": "string"
         }
@@ -2176,83 +2063,16 @@
       "title": "PrefixListListEntry4",
       "type": "object"
     },
-    "RangeCase": {
-      "properties": {
-        "range": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/RangeContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "RangeCase",
-      "type": "object"
-    },
-    "RangeCase2": {
-      "properties": {
-        "range": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/RangeContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "RangeCase2",
-      "type": "object"
-    },
-    "RangeCase3": {
-      "properties": {
-        "range": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/RangeContainer3"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "RangeCase3",
-      "type": "object"
-    },
-    "RangeCase4": {
-      "properties": {
-        "range": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/RangeContainer4"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "RangeCase4",
-      "type": "object"
-    },
     "RangeContainer": {
-      "description": "Container used to specify a contiguous range of TTL values",
+      "description": "Container used to specify a contiguous range of TCP/UDP port numbers",
       "properties": {
         "start": {
           "anyOf": [
             {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
+              "$ref": "#/$defs/L4PortTypeType1"
+            },
+            {
+              "$ref": "#/$defs/EnumerationEnum7"
             },
             {
               "type": "null"
@@ -2264,9 +2084,10 @@
         "end": {
           "anyOf": [
             {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
+              "$ref": "#/$defs/L4PortTypeType1"
+            },
+            {
+              "$ref": "#/$defs/EnumerationEnum7"
             },
             {
               "type": "null"
@@ -2280,14 +2101,15 @@
       "type": "object"
     },
     "RangeContainer2": {
-      "description": "Container used to specify a contiguous range of hop-limit values",
+      "description": "Container used to specify a contiguous range of TCP/UDP port numbers",
       "properties": {
         "start": {
           "anyOf": [
             {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
+              "$ref": "#/$defs/L4PortTypeType1"
+            },
+            {
+              "$ref": "#/$defs/EnumerationEnum7"
             },
             {
               "type": "null"
@@ -2299,9 +2121,10 @@
         "end": {
           "anyOf": [
             {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
+              "$ref": "#/$defs/L4PortTypeType1"
+            },
+            {
+              "$ref": "#/$defs/EnumerationEnum7"
             },
             {
               "type": "null"
@@ -2312,115 +2135,6 @@
         }
       },
       "title": "RangeContainer2",
-      "type": "object"
-    },
-    "RangeContainer3": {
-      "description": "Container used to specify a contiguous range of TCP/UDP port numbers",
-      "properties": {
-        "start": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/L4PortTypeType1"
-            },
-            {
-              "$ref": "#/$defs/EnumerationEnum7"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Start"
-        },
-        "end": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/L4PortTypeType1"
-            },
-            {
-              "$ref": "#/$defs/EnumerationEnum7"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "End"
-        }
-      },
-      "title": "RangeContainer3",
-      "type": "object"
-    },
-    "RangeContainer4": {
-      "description": "Container used to specify a contiguous range of TCP/UDP port numbers",
-      "properties": {
-        "start": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/L4PortTypeType1"
-            },
-            {
-              "$ref": "#/$defs/EnumerationEnum7"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Start"
-        },
-        "end": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/L4PortTypeType1"
-            },
-            {
-              "$ref": "#/$defs/EnumerationEnum7"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "End"
-        }
-      },
-      "title": "RangeContainer4",
-      "type": "object"
-    },
-    "RateBpsCase": {
-      "description": "Rate-based rate limit configuration.",
-      "properties": {
-        "peak_rate_kbps": {
-          "anyOf": [
-            {
-              "maximum": 800000000,
-              "minimum": 1,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Peak Rate Kbps"
-        },
-        "maximum_burst_size": {
-          "anyOf": [
-            {
-              "maximum": 125000000,
-              "minimum": 1,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Maximum Burst Size"
-        }
-      },
-      "title": "RateBpsCase",
       "type": "object"
     },
     "RateLimitContainer": {
@@ -2454,69 +2168,6 @@
         }
       },
       "title": "RateLimitContainer",
-      "type": "object"
-    },
-    "RatePpsCase": {
-      "description": "Packet-based rate limit configuration.",
-      "properties": {
-        "peak_rate_pps": {
-          "anyOf": [
-            {
-              "maximum": 4000000,
-              "minimum": 64,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 64,
-          "title": "Peak Rate Pps"
-        },
-        "maximum_burst_packet": {
-          "anyOf": [
-            {
-              "maximum": 126976,
-              "minimum": 32,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 32,
-          "title": "Maximum Burst Packet"
-        },
-        "committed_rate_pps": {
-          "anyOf": [
-            {
-              "maximum": 4000000,
-              "minimum": 1,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 1,
-          "title": "Committed Rate Pps"
-        },
-        "committed_burst_packet": {
-          "anyOf": [
-            {
-              "maximum": 4000000,
-              "minimum": 32,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 32,
-          "title": "Committed Burst Packet"
-        }
-      },
-      "title": "RatePpsCase",
       "type": "object"
     },
     "SourceIpContainer": {
@@ -2644,20 +2295,42 @@
     "SourcePortContainer": {
       "description": "A packet matches this condition if its source TCP or UDP port number matches the value or range that is specified\n\nThe rule should also have a condition that the IP protocol equals 6 (TCP) or 17 (UDP) in order for this to be interpreted correctly.",
       "properties": {
-        "port": {
+        "operator": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ValueCase4"
+              "$ref": "#/$defs/EnumerationEnum6"
             },
             {
-              "$ref": "#/$defs/RangeCase4"
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/L4PortTypeType1"
+            },
+            {
+              "$ref": "#/$defs/EnumerationEnum7"
             },
             {
               "type": "null"
             }
           ],
           "default": null,
-          "title": "Port"
+          "title": "Value"
+        },
+        "range": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RangeContainer2"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "title": "SourcePortContainer",
@@ -3004,7 +2677,7 @@
           "default": false,
           "title": "Entry Specific"
         },
-        "peak_rate_pps": {
+        "peak_packet_rate": {
           "anyOf": [
             {
               "maximum": 4000000,
@@ -3016,9 +2689,9 @@
             }
           ],
           "default": null,
-          "title": "Peak Rate Pps"
+          "title": "Peak Packet Rate"
         },
-        "maximum_burst_packet": {
+        "max_packet_burst": {
           "anyOf": [
             {
               "maximum": 4000000,
@@ -3030,7 +2703,7 @@
             }
           ],
           "default": 16,
-          "title": "Maximum Burst Packet"
+          "title": "Max Packet Burst"
         },
         "statistics": {
           "anyOf": [
@@ -3112,154 +2785,6 @@
         }
       },
       "title": "TransportContainer",
-      "type": "object"
-    },
-    "TtlContainer": {
-      "description": "A packet matches this condition if its IPv4 TTL value matches the value or range that is specified.",
-      "properties": {
-        "ttl_match_type": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ValueCase"
-            },
-            {
-              "$ref": "#/$defs/RangeCase"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Ttl Match Type"
-        }
-      },
-      "title": "TtlContainer",
-      "type": "object"
-    },
-    "ValueCase": {
-      "properties": {
-        "operator": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum5"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "value": {
-          "anyOf": [
-            {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Value"
-        }
-      },
-      "title": "ValueCase",
-      "type": "object"
-    },
-    "ValueCase2": {
-      "properties": {
-        "operator": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum5"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "value": {
-          "anyOf": [
-            {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Value"
-        }
-      },
-      "title": "ValueCase2",
-      "type": "object"
-    },
-    "ValueCase3": {
-      "properties": {
-        "operator": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum5"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "value": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/L4PortTypeType1"
-            },
-            {
-              "$ref": "#/$defs/EnumerationEnum7"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Value"
-        }
-      },
-      "title": "ValueCase3",
-      "type": "object"
-    },
-    "ValueCase4": {
-      "properties": {
-        "operator": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum5"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "value": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/L4PortTypeType1"
-            },
-            {
-              "$ref": "#/$defs/EnumerationEnum7"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Value"
-        }
-      },
-      "title": "ValueCase4",
       "type": "object"
     }
   },

@@ -1,60 +1,5 @@
 {
   "$defs": {
-    "ApplicationListEntry": {
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "entries": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entries"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ApplicationListEntry",
-      "type": "object"
-    },
-    "ApplicationListEntry2": {
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "bank_allocation": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/BankAllocationListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Bank Allocation"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ApplicationListEntry2",
-      "type": "object"
-    },
     "AsicContainer": {
       "description": "Container for monitoring ASIC-specific datapath resources",
       "properties": {
@@ -62,7 +7,7 @@
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ResourceListEntry3"
+                "$ref": "#/$defs/ResourceListEntry5"
               },
               "type": "array"
             },
@@ -78,13 +23,13 @@
       "type": "object"
     },
     "AsicContainer2": {
-      "description": "Container for monitoring datapath resources that are typically ASIC specific",
+      "description": "Container for monitoring datapath resources that are specific to a subset of the chipsets supported by SRLinux.",
       "properties": {
         "resource": {
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ResourceListEntry8"
+                "$ref": "#/$defs/ResourceListEntry9"
               },
               "type": "array"
             },
@@ -97,84 +42,6 @@
         }
       },
       "title": "AsicContainer2",
-      "type": "object"
-    },
-    "AsicContainer3": {
-      "description": "Container for monitoring datapath resources that are specific to a subset of the chipsets supported by SRLinux.",
-      "properties": {
-        "resource": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/ResourceListEntry10"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Resource"
-        }
-      },
-      "title": "AsicContainer3",
-      "type": "object"
-    },
-    "BankAllocationListEntry": {
-      "properties": {
-        "bank_id": {
-          "maximum": 34,
-          "minimum": 1,
-          "title": "Bank Id",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "bank_id"
-      ],
-      "title": "BankAllocationListEntry",
-      "type": "object"
-    },
-    "BankListEntry": {
-      "properties": {
-        "bank_id": {
-          "maximum": 34,
-          "minimum": 1,
-          "title": "Bank Id",
-          "type": "integer"
-        },
-        "bank_size": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum8"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "application": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/ApplicationListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Application"
-        }
-      },
-      "required": [
-        "bank_id"
-      ],
-      "title": "BankListEntry",
       "type": "object"
     },
     "BufferMemoryContainer": {
@@ -237,17 +104,6 @@
           "anyOf": [
             {
               "$ref": "#/$defs/DramContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "pfc_headroom_buffer": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/PfcHeadroomBufferContainer"
             },
             {
               "type": "null"
@@ -423,17 +279,6 @@
           "default": null,
           "title": "Id"
         },
-        "environment": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnvironmentContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
         "type": {
           "anyOf": [
             {
@@ -501,7 +346,7 @@
         "power": {
           "anyOf": [
             {
-              "$ref": "#/$defs/PowerContainer4"
+              "$ref": "#/$defs/PowerContainer3"
             },
             {
               "type": "null"
@@ -631,32 +476,10 @@
           "default": null,
           "title": "Manufactured Date"
         },
-        "crypto_module": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/CryptoModuleContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "mode": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ModeContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
         "healthz": {
           "anyOf": [
             {
-              "$ref": "#/$defs/HealthzContainer6"
+              "$ref": "#/$defs/HealthzContainer3"
             },
             {
               "type": "null"
@@ -839,7 +662,7 @@
       "type": "object"
     },
     "ControlListEntry": {
-      "description": "TPM status, PCR indexes and certificates per control module",
+      "description": "Secure Boot states related to control modules",
       "properties": {
         "slot": {
           "pattern": "^(?=^A|B$).*$",
@@ -850,6 +673,69 @@
           "anyOf": [
             {
               "$ref": "#/$defs/EnumerationEnum"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "root_of_trust": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EnumerationEnum2"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "uefi_variables_update": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UefiVariablesUpdateContainer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "uefi_variables": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/UefiVariablesListEntry"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Uefi Variables"
+        }
+      },
+      "required": [
+        "slot"
+      ],
+      "title": "ControlListEntry",
+      "type": "object"
+    },
+    "ControlListEntry2": {
+      "description": "TPM status, PCR indexes and certificates per control module",
+      "properties": {
+        "slot": {
+          "pattern": "^(?=^A|B$).*$",
+          "title": "Slot",
+          "type": "string"
+        },
+        "oper_state": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EnumerationEnum3"
             },
             {
               "type": "null"
@@ -891,69 +777,6 @@
       "required": [
         "slot"
       ],
-      "title": "ControlListEntry",
-      "type": "object"
-    },
-    "ControlListEntry2": {
-      "description": "Secure Boot states related to control modules",
-      "properties": {
-        "slot": {
-          "pattern": "^(?=^A|B$).*$",
-          "title": "Slot",
-          "type": "string"
-        },
-        "oper_state": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "root_of_trust": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum3"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "uefi_variables_update": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/UefiVariablesUpdateContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "uefi_variables": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/UefiVariablesListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Uefi Variables"
-        }
-      },
-      "required": [
-        "slot"
-      ],
       "title": "ControlListEntry2",
       "type": "object"
     },
@@ -980,7 +803,7 @@
         "role": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum15"
+              "$ref": "#/$defs/EnumerationEnum11"
             },
             {
               "type": "null"
@@ -1176,7 +999,7 @@
         "locator_state": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum12"
+              "$ref": "#/$defs/EnumerationEnum9"
             },
             {
               "type": "null"
@@ -1198,7 +1021,7 @@
         "temperature": {
           "anyOf": [
             {
-              "$ref": "#/$defs/TemperatureContainer3"
+              "$ref": "#/$defs/TemperatureContainer2"
             },
             {
               "type": "null"
@@ -1210,17 +1033,6 @@
           "anyOf": [
             {
               "$ref": "#/$defs/ForwardingPlaneContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "healthz": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/HealthzContainer4"
             },
             {
               "type": "null"
@@ -1242,6 +1054,17 @@
           ],
           "default": null,
           "title": "Cgroup"
+        },
+        "healthz": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HealthzContainer2"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "cpu": {
           "anyOf": [
@@ -1304,48 +1127,6 @@
         "slot"
       ],
       "title": "ControlListEntry3",
-      "type": "object"
-    },
-    "ControlPlaneContainer": {
-      "description": "Top-level container for control plane redundancy",
-      "properties": {
-        "active_module": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum35"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "failover_time": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Failover Time"
-        },
-        "synchronization": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/SynchronizationContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "ControlPlaneContainer",
       "type": "object"
     },
     "ControlPlaneTrafficContainer": {
@@ -1411,69 +1192,13 @@
       "title": "ControlPlaneTrafficContainer",
       "type": "object"
     },
-    "CounterBanksContainer": {
-      "description": "Bank allocation across different stake-holders. Banks are required by policers to function as well for various stats collection such as Per-Prefix Stats, LSP Stats and alike",
-      "properties": {
-        "bank": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/BankListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Bank"
-        }
-      },
-      "title": "CounterBanksContainer",
-      "type": "object"
-    },
-    "CounterBanksContainer2": {
-      "description": "Container for managing the allocation of hardware counter banks",
-      "properties": {
-        "chassis_reboot_required": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Chassis Reboot Required"
-        },
-        "forwarding_complex_type": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/ForwardingComplexTypeListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Forwarding Complex Type"
-        }
-      },
-      "title": "CounterBanksContainer2",
-      "type": "object"
-    },
     "CpuListEntry": {
       "description": "List of all CPUs in the system",
       "properties": {
         "index": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum17"
+              "$ref": "#/$defs/EnumerationEnum13"
             },
             {
               "$ref": "#/$defs/IndexLeaf121"
@@ -1484,7 +1209,7 @@
         "architecture": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum18"
+              "$ref": "#/$defs/EnumerationEnum14"
             },
             {
               "type": "null"
@@ -1636,7 +1361,7 @@
         "oper_reason": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum39"
+              "$ref": "#/$defs/EnumerationEnum28"
             },
             {
               "type": "null"
@@ -1734,49 +1459,6 @@
       "title": "CpuacctStatisticsContainer",
       "type": "object"
     },
-    "CryptoModuleContainer": {
-      "description": "Top level container for crypto module state",
-      "properties": {
-        "crypto_module_version": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Crypto Module Version"
-        },
-        "entropy_provider_version": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entropy Provider Version"
-        },
-        "fips_provider_version": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Fips Provider Version"
-        }
-      },
-      "title": "CryptoModuleContainer",
-      "type": "object"
-    },
     "DatapathContainer": {
       "description": "Container for monitoring datapath resources of a particular pipeline",
       "properties": {
@@ -1825,7 +1507,7 @@
       "type": "object"
     },
     "DatapathContainer3": {
-      "description": "Container for monitoring datapath resources of XDP CPM",
+      "description": "Container for monitoring datapath resources system-wide",
       "properties": {
         "xdp": {
           "anyOf": [
@@ -1851,35 +1533,6 @@
         }
       },
       "title": "DatapathContainer3",
-      "type": "object"
-    },
-    "DatapathContainer4": {
-      "description": "Container for monitoring datapath resources system-wide",
-      "properties": {
-        "xdp": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/XdpContainer4"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "asic": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/AsicContainer3"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "DatapathContainer4",
       "type": "object"
     },
     "DiskListEntry": {
@@ -1930,7 +1583,7 @@
         "type": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum19"
+              "$ref": "#/$defs/EnumerationEnum15"
             },
             {
               "type": "null"
@@ -1981,27 +1634,6 @@
         "name"
       ],
       "title": "DiskListEntry",
-      "type": "object"
-    },
-    "Dot1xMultiHostAuthenticationTcamContainer": {
-      "description": "Container to provide an option for allocating required hardware resources to dot1x multi-host-authentication or mac-based-authentication",
-      "properties": {
-        "dot1x_multi_host": {
-          "anyOf": [
-            {
-              "maximum": 254,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "Dot1X Multi Host"
-        }
-      },
-      "title": "Dot1xMultiHostAuthenticationTcamContainer",
       "type": "object"
     },
     "DramContainer": {
@@ -2107,74 +1739,37 @@
     },
     "EnumerationEnum11": {
       "enum": [
-        "up",
-        "down",
-        "failed",
-        "up-unused",
-        "down-vni-conflict"
+        "active",
+        "standby"
       ],
       "title": "EnumerationEnum11",
       "type": "string"
     },
     "EnumerationEnum12": {
       "enum": [
-        "active",
-        "inactive"
+        "unspecified",
+        "healthy",
+        "unhealthy"
       ],
       "title": "EnumerationEnum12",
       "type": "string"
     },
     "EnumerationEnum13": {
       "enum": [
-        "unspecified",
-        "healthy",
-        "unhealthy"
+        "all"
       ],
       "title": "EnumerationEnum13",
       "type": "string"
     },
     "EnumerationEnum14": {
       "enum": [
-        "unspecified",
-        "healthy",
-        "unhealthy"
+        "x86_64",
+        "aarch64"
       ],
       "title": "EnumerationEnum14",
       "type": "string"
     },
     "EnumerationEnum15": {
-      "enum": [
-        "active",
-        "standby"
-      ],
-      "title": "EnumerationEnum15",
-      "type": "string"
-    },
-    "EnumerationEnum16": {
-      "enum": [
-        "unspecified",
-        "healthy",
-        "unhealthy"
-      ],
-      "title": "EnumerationEnum16",
-      "type": "string"
-    },
-    "EnumerationEnum17": {
-      "enum": [
-        "all"
-      ],
-      "title": "EnumerationEnum17",
-      "type": "string"
-    },
-    "EnumerationEnum18": {
-      "enum": [
-        "x86_64",
-        "aarch64"
-      ],
-      "title": "EnumerationEnum18",
-      "type": "string"
-    },
-    "EnumerationEnum19": {
       "enum": [
         "compactflash",
         "ssd",
@@ -2182,38 +1777,73 @@
         "usb",
         "mmc"
       ],
+      "title": "EnumerationEnum15",
+      "type": "string"
+    },
+    "EnumerationEnum16": {
+      "enum": [
+        "ro",
+        "rw"
+      ],
+      "title": "EnumerationEnum16",
+      "type": "string"
+    },
+    "EnumerationEnum17": {
+      "enum": [
+        "A",
+        "B"
+      ],
+      "title": "EnumerationEnum17",
+      "type": "string"
+    },
+    "EnumerationEnum18": {
+      "enum": [
+        "synchronized",
+        "synchronizing",
+        "not-ready"
+      ],
+      "title": "EnumerationEnum18",
+      "type": "string"
+    },
+    "EnumerationEnum19": {
+      "enum": [
+        "disabled",
+        "enabled",
+        "high-scale"
+      ],
       "title": "EnumerationEnum19",
       "type": "string"
     },
     "EnumerationEnum2": {
       "enum": [
-        "up",
-        "down"
+        "firmware",
+        "hardware"
       ],
       "title": "EnumerationEnum2",
       "type": "string"
     },
     "EnumerationEnum20": {
       "enum": [
-        "ro",
-        "rw"
+        "feed",
+        "module",
+        "none"
       ],
       "title": "EnumerationEnum20",
       "type": "string"
     },
     "EnumerationEnum21": {
       "enum": [
-        "two-priorities",
-        "eight-priorities"
+        "up",
+        "down"
       ],
       "title": "EnumerationEnum21",
       "type": "string"
     },
     "EnumerationEnum22": {
       "enum": [
-        "fault",
-        "eeprom-invalid",
-        "airflow-mismatch"
+        "unspecified",
+        "healthy",
+        "unhealthy"
       ],
       "title": "EnumerationEnum22",
       "type": "string"
@@ -2229,146 +1859,41 @@
     },
     "EnumerationEnum24": {
       "enum": [
-        "vertical-ports-up",
-        "vertical-ports-down",
-        "horizontal"
+        "fault",
+        "eeprom-invalid",
+        "airflow-mismatch"
       ],
       "title": "EnumerationEnum24",
       "type": "string"
     },
     "EnumerationEnum25": {
       "enum": [
-        "feed",
-        "module",
-        "none"
+        "unspecified",
+        "healthy",
+        "unhealthy"
       ],
       "title": "EnumerationEnum25",
       "type": "string"
     },
     "EnumerationEnum26": {
       "enum": [
-        "up",
-        "down"
+        "no-input/fault",
+        "eeprom-invalid",
+        "airflow-mismatch"
       ],
       "title": "EnumerationEnum26",
       "type": "string"
     },
     "EnumerationEnum27": {
       "enum": [
-        "gen2cp-only",
-        "gen3-only",
-        "gen2cp-gen3-mixed"
+        "unspecified",
+        "healthy",
+        "unhealthy"
       ],
       "title": "EnumerationEnum27",
       "type": "string"
     },
     "EnumerationEnum28": {
-      "enum": [
-        "unspecified",
-        "healthy",
-        "unhealthy"
-      ],
-      "title": "EnumerationEnum28",
-      "type": "string"
-    },
-    "EnumerationEnum29": {
-      "enum": [
-        "unspecified",
-        "healthy",
-        "unhealthy"
-      ],
-      "title": "EnumerationEnum29",
-      "type": "string"
-    },
-    "EnumerationEnum3": {
-      "enum": [
-        "firmware",
-        "hardware"
-      ],
-      "title": "EnumerationEnum3",
-      "type": "string"
-    },
-    "EnumerationEnum30": {
-      "enum": [
-        "no-input/fault",
-        "eeprom-invalid",
-        "airflow-mismatch"
-      ],
-      "title": "EnumerationEnum30",
-      "type": "string"
-    },
-    "EnumerationEnum31": {
-      "enum": [
-        "unspecified",
-        "healthy",
-        "unhealthy"
-      ],
-      "title": "EnumerationEnum31",
-      "type": "string"
-    },
-    "EnumerationEnum32": {
-      "enum": [
-        "1",
-        "2",
-        "3",
-        "4"
-      ],
-      "title": "EnumerationEnum32",
-      "type": "string"
-    },
-    "EnumerationEnum33": {
-      "enum": [
-        "disabled",
-        "enabled",
-        "high-scale"
-      ],
-      "title": "EnumerationEnum33",
-      "type": "string"
-    },
-    "EnumerationEnum34": {
-      "enum": [
-        "Gen2",
-        "Gen2c+",
-        "Gen3"
-      ],
-      "title": "EnumerationEnum34",
-      "type": "string"
-    },
-    "EnumerationEnum35": {
-      "enum": [
-        "A",
-        "B"
-      ],
-      "title": "EnumerationEnum35",
-      "type": "string"
-    },
-    "EnumerationEnum36": {
-      "enum": [
-        "synchronized",
-        "synchronizing",
-        "not-ready"
-      ],
-      "title": "EnumerationEnum36",
-      "type": "string"
-    },
-    "EnumerationEnum37": {
-      "enum": [
-        "A",
-        "B"
-      ],
-      "title": "EnumerationEnum37",
-      "type": "string"
-    },
-    "EnumerationEnum38": {
-      "enum": [
-        "active",
-        "standby",
-        "synchronizing"
-      ],
-      "title": "EnumerationEnum38",
-      "type": "string"
-    },
-    "EnumerationEnum39": {
       "enum": [
         "not-isolated",
         "no-hugepages",
@@ -2376,7 +1901,15 @@
         "sibling-not-isolated",
         "invalid-cpu-id"
       ],
-      "title": "EnumerationEnum39",
+      "title": "EnumerationEnum28",
+      "type": "string"
+    },
+    "EnumerationEnum3": {
+      "enum": [
+        "up",
+        "down"
+      ],
+      "title": "EnumerationEnum3",
       "type": "string"
     },
     "EnumerationEnum4": {
@@ -2424,43 +1957,21 @@
     },
     "EnumerationEnum8": {
       "enum": [
-        "4K",
-        "6K",
-        "8K",
-        "12K",
-        "16K",
-        "24K"
+        "up",
+        "down",
+        "failed",
+        "up-unused"
       ],
       "title": "EnumerationEnum8",
       "type": "string"
     },
     "EnumerationEnum9": {
       "enum": [
-        "level-1-fec",
-        "level-2-fec",
-        "level-3-fec",
-        "lag",
-        "network-header"
+        "active",
+        "inactive"
       ],
       "title": "EnumerationEnum9",
       "type": "string"
-    },
-    "EnvironmentContainer": {
-      "properties": {
-        "orientation": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum24"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "horizontal"
-        }
-      },
-      "title": "EnvironmentContainer",
-      "type": "object"
     },
     "ExtractionReasonListEntry": {
       "description": "List of extraction reasons that are possible for the pipeline",
@@ -2828,7 +2339,7 @@
         "locator_state": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum12"
+              "$ref": "#/$defs/EnumerationEnum9"
             },
             {
               "type": "null"
@@ -2839,7 +2350,7 @@
         "power": {
           "anyOf": [
             {
-              "$ref": "#/$defs/PowerContainer5"
+              "$ref": "#/$defs/PowerContainer4"
             },
             {
               "type": "null"
@@ -2850,7 +2361,7 @@
         "temperature": {
           "anyOf": [
             {
-              "$ref": "#/$defs/TemperatureContainer4"
+              "$ref": "#/$defs/TemperatureContainer3"
             },
             {
               "type": "null"
@@ -2861,7 +2372,7 @@
         "healthz": {
           "anyOf": [
             {
-              "$ref": "#/$defs/HealthzContainer7"
+              "$ref": "#/$defs/HealthzContainer4"
             },
             {
               "type": "null"
@@ -2877,55 +2388,6 @@
       "type": "object"
     },
     "FanContainer": {
-      "properties": {
-        "speed": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Speed"
-        },
-        "speed_rpm": {
-          "anyOf": [
-            {
-              "maximum": 65535,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Speed Rpm"
-        },
-        "fan": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/FanListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Fan"
-        }
-      },
-      "title": "FanContainer",
-      "type": "object"
-    },
-    "FanContainer2": {
       "description": "Top-level container for state relating to fans",
       "properties": {
         "speed": {
@@ -2957,51 +2419,7 @@
           "title": "Speed Rpm"
         }
       },
-      "title": "FanContainer2",
-      "type": "object"
-    },
-    "FanListEntry": {
-      "description": "Grouping for fan configuration and state",
-      "properties": {
-        "id": {
-          "maximum": 255,
-          "minimum": 1,
-          "title": "Id",
-          "type": "integer"
-        },
-        "speed": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Speed"
-        },
-        "speed_rpm": {
-          "anyOf": [
-            {
-              "maximum": 65535,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Speed Rpm"
-        }
-      },
-      "required": [
-        "id"
-      ],
-      "title": "FanListEntry",
+      "title": "FanContainer",
       "type": "object"
     },
     "FanTrayContainer": {
@@ -3068,7 +2486,7 @@
       "type": "object"
     },
     "FanTrayListEntry": {
-      "description": "Top-level container for fan tray configuration and state",
+      "description": "Top-level container for fan module configuration and state",
       "properties": {
         "id": {
           "maximum": 255,
@@ -3088,21 +2506,38 @@
           "default": null,
           "title": "Type"
         },
-        "fan": {
+        "speed": {
           "anyOf": [
             {
-              "$ref": "#/$defs/FanContainer"
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": null,
+          "title": "Speed"
+        },
+        "speed_rpm": {
+          "anyOf": [
+            {
+              "maximum": 65535,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speed Rpm"
         },
         "oper_reason": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum22"
+              "$ref": "#/$defs/EnumerationEnum24"
             },
             {
               "type": "null"
@@ -3235,7 +2670,7 @@
         "locator_state": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum12"
+              "$ref": "#/$defs/EnumerationEnum9"
             },
             {
               "type": "null"
@@ -3246,7 +2681,7 @@
         "power": {
           "anyOf": [
             {
-              "$ref": "#/$defs/PowerContainer3"
+              "$ref": "#/$defs/PowerContainer5"
             },
             {
               "type": "null"
@@ -3364,95 +2799,6 @@
         }
       },
       "title": "FibTableContainer2",
-      "type": "object"
-    },
-    "FirstHopSecurityContainer": {
-      "description": "Container to provide an option for allocating required hardware resources to First Hop security",
-      "properties": {
-        "first_hop_security_protocols": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum4"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "disable"
-        },
-        "ipv6_ra_guard": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum4"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "enable"
-        }
-      },
-      "title": "FirstHopSecurityContainer",
-      "type": "object"
-    },
-    "FirstHopSecurityTcamContainer": {
-      "description": "Container for managing the allocation of TCAM banks to First Hop Security.",
-      "properties": {
-        "first_hop_security_ip_source_guard_entries": {
-          "anyOf": [
-            {
-              "maximum": 1280,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "First Hop Security Ip Source Guard Entries"
-        },
-        "first_hop_security_ip_source_guard": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum4"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "disable"
-        },
-        "first_hop_security_ip_source_guard_v4_entries": {
-          "anyOf": [
-            {
-              "maximum": 6144,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "First Hop Security Ip Source Guard V4 Entries"
-        },
-        "first_hop_security_ip_source_guard_v6_entries": {
-          "anyOf": [
-            {
-              "maximum": 6144,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "First Hop Security Ip Source Guard V6 Entries"
-        }
-      },
-      "title": "FirstHopSecurityTcamContainer",
       "type": "object"
     },
     "ForwarderContainer": {
@@ -3674,10 +3020,10 @@
           ],
           "default": null
         },
-        "counter_banks": {
+        "fib_table": {
           "anyOf": [
             {
-              "$ref": "#/$defs/CounterBanksContainer"
+              "$ref": "#/$defs/FibTableContainer"
             },
             {
               "type": "null"
@@ -3685,32 +3031,10 @@
           ],
           "default": null
         },
-        "load_balancing": {
+        "p4rt": {
           "anyOf": [
             {
-              "$ref": "#/$defs/LoadBalancingContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "datapath": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/DatapathContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "mtu": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/MtuContainer"
+              "$ref": "#/$defs/P4rtContainer"
             },
             {
               "type": "null"
@@ -3740,10 +3064,10 @@
           ],
           "default": null
         },
-        "healthz": {
+        "mtu": {
           "anyOf": [
             {
-              "$ref": "#/$defs/HealthzContainer"
+              "$ref": "#/$defs/MtuContainer"
             },
             {
               "type": "null"
@@ -3751,32 +3075,10 @@
           ],
           "default": null
         },
-        "p4rt": {
+        "datapath": {
           "anyOf": [
             {
-              "$ref": "#/$defs/P4rtContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "oam": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/OamContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "fib_table": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/FibTableContainer"
+              "$ref": "#/$defs/DatapathContainer2"
             },
             {
               "type": "null"
@@ -3789,34 +3091,6 @@
         "name"
       ],
       "title": "ForwardingComplexListEntry",
-      "type": "object"
-    },
-    "ForwardingComplexTypeListEntry": {
-      "description": "List of forwarding complex types in the system",
-      "properties": {
-        "name": {
-          "$ref": "#/$defs/EnumerationEnum34"
-        },
-        "application": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/ApplicationListEntry2"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Application"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ForwardingComplexTypeListEntry",
       "type": "object"
     },
     "ForwardingPlaneContainer": {
@@ -3832,74 +3106,9 @@
             }
           ],
           "default": null
-        },
-        "tcam": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/TcamContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "datapath": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/DatapathContainer3"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
         }
       },
       "title": "ForwardingPlaneContainer",
-      "type": "object"
-    },
-    "GroupBasedPolicyContainer": {
-      "description": "Container for managing the allocation of hardware resources used for group-based policy",
-      "properties": {
-        "chassis_reboot_required": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Chassis Reboot Required"
-        },
-        "mac_lookup": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": false,
-          "title": "Mac Lookup"
-        },
-        "lpm_source_lookup": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": false,
-          "title": "Lpm Source Lookup"
-        }
-      },
-      "title": "GroupBasedPolicyContainer",
       "type": "object"
     },
     "HardwareInterruptContainer": {
@@ -3965,32 +3174,6 @@
       "title": "HardwareInterruptContainer",
       "type": "object"
     },
-    "HashUserListEntry": {
-      "properties": {
-        "user": {
-          "$ref": "#/$defs/EnumerationEnum9"
-        },
-        "hash_polynomial": {
-          "anyOf": [
-            {
-              "maximum": 8,
-              "minimum": 1,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Hash Polynomial"
-        }
-      },
-      "required": [
-        "user"
-      ],
-      "title": "HashUserListEntry",
-      "type": "object"
-    },
     "HealthzContainer": {
       "description": "The health of the component\n\nThe paramaters within this\ncontainer indicate the status of the component beyond whether\nit is operationally up or down. When a signal is received\nthat a component is in an unhealthy state the gNOI.Healthz\nservice can be used to retrieve further diagnostic information\nrelating to the component.\nThe contents of this directory relate only to the specific\ncomponent that it is associated with.",
       "properties": {
@@ -4042,7 +3225,7 @@
         "status": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum13"
+              "$ref": "#/$defs/EnumerationEnum12"
             },
             {
               "type": "null"
@@ -4087,7 +3270,7 @@
         "status": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum14"
+              "$ref": "#/$defs/EnumerationEnum22"
             },
             {
               "type": "null"
@@ -4132,7 +3315,7 @@
         "status": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum16"
+              "$ref": "#/$defs/EnumerationEnum23"
             },
             {
               "type": "null"
@@ -4177,7 +3360,7 @@
         "status": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum23"
+              "$ref": "#/$defs/EnumerationEnum25"
             },
             {
               "type": "null"
@@ -4222,7 +3405,7 @@
         "status": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum28"
+              "$ref": "#/$defs/EnumerationEnum27"
             },
             {
               "type": "null"
@@ -4261,96 +3444,6 @@
       "title": "HealthzContainer6",
       "type": "object"
     },
-    "HealthzContainer7": {
-      "description": "The health of the component\n\nThe paramaters within this\ncontainer indicate the status of the component beyond whether\nit is operationally up or down. When a signal is received\nthat a component is in an unhealthy state the gNOI.Healthz\nservice can be used to retrieve further diagnostic information\nrelating to the component.\nThe contents of this directory relate only to the specific\ncomponent that it is associated with.",
-      "properties": {
-        "status": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum29"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "last_unhealthy": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Unhealthy"
-        },
-        "unhealthy_count": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "Unhealthy Count"
-        }
-      },
-      "title": "HealthzContainer7",
-      "type": "object"
-    },
-    "HealthzContainer8": {
-      "description": "The health of the component\n\nThe paramaters within this\ncontainer indicate the status of the component beyond whether\nit is operationally up or down. When a signal is received\nthat a component is in an unhealthy state the gNOI.Healthz\nservice can be used to retrieve further diagnostic information\nrelating to the component.\nThe contents of this directory relate only to the specific\ncomponent that it is associated with.",
-      "properties": {
-        "status": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum31"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "last_unhealthy": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Unhealthy"
-        },
-        "unhealthy_count": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 0,
-          "title": "Unhealthy Count"
-        }
-      },
-      "title": "HealthzContainer8",
-      "type": "object"
-    },
     "HostInterfaceBlockContainer": {
       "description": "The ASIC host interface block subsystem that connects the NPU to the host CPU (on the CPM)",
       "properties": {
@@ -4367,156 +3460,6 @@
         }
       },
       "title": "HostInterfaceBlockContainer",
-      "type": "object"
-    },
-    "IcmListEntry": {
-      "description": "Top-level container for icm module state",
-      "properties": {
-        "id": {
-          "maximum": 255,
-          "minimum": 1,
-          "title": "Id",
-          "type": "integer"
-        },
-        "type": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Type"
-        },
-        "oper_state": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum5"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "last_booted": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Booted"
-        },
-        "last_booted_reason": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Booted Reason"
-        },
-        "last_change": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Change"
-        },
-        "part_number": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Part Number"
-        },
-        "removable": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Removable"
-        },
-        "failure_reason": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Failure Reason"
-        },
-        "clei_code": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Clei Code"
-        },
-        "serial_number": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Serial Number"
-        },
-        "manufactured_date": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Manufactured Date"
-        }
-      },
-      "required": [
-        "id"
-      ],
-      "title": "IcmListEntry",
       "type": "object"
     },
     "IdleContainer": {
@@ -4583,7 +3526,7 @@
       "type": "object"
     },
     "IndexLeaf121": {
-      "maximum": 18446744073709551615,
+      "maximum": 4294967295,
       "minimum": 0,
       "title": "IndexLeaf121",
       "type": "integer"
@@ -4689,7 +3632,7 @@
               "type": "null"
             }
           ],
-          "default": "enable"
+          "default": null
         },
         "oper_state": {
           "anyOf": [
@@ -4707,58 +3650,6 @@
         "name"
       ],
       "title": "InterfaceListEntry",
-      "type": "object"
-    },
-    "IomListEntry": {
-      "description": "Top-level container for line card redundancy",
-      "properties": {
-        "cpiom": {
-          "$ref": "#/$defs/EnumerationEnum37"
-        },
-        "forwarding_state": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum38"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "mda_binding": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/MdaBindingLeafList"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": [],
-          "title": "Mda Binding"
-        },
-        "active_up_time": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Active Up Time"
-        }
-      },
-      "required": [
-        "cpiom"
-      ],
-      "title": "IomListEntry",
       "type": "object"
     },
     "IowaitContainer": {
@@ -5014,39 +3905,6 @@
       "title": "LinecardContainer",
       "type": "object"
     },
-    "LinecardContainer2": {
-      "properties": {
-        "iom": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/IomListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Iom"
-        },
-        "forwarding_takeover": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": false,
-          "title": "Forwarding Takeover"
-        }
-      },
-      "title": "LinecardContainer2",
-      "type": "object"
-    },
     "LinecardListEntry": {
       "description": "Top-level container for linecard configuration and state",
       "properties": {
@@ -5244,7 +4102,7 @@
         "locator_state": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum12"
+              "$ref": "#/$defs/EnumerationEnum9"
             },
             {
               "type": "null"
@@ -5274,25 +4132,10 @@
           ],
           "default": null
         },
-        "mda": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/MdaListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Mda"
-        },
         "healthz": {
           "anyOf": [
             {
-              "$ref": "#/$defs/HealthzContainer3"
+              "$ref": "#/$defs/HealthzContainer"
             },
             {
               "type": "null"
@@ -5305,286 +4148,6 @@
         "slot"
       ],
       "title": "LinecardListEntry",
-      "type": "object"
-    },
-    "LoadBalancingContainer": {
-      "description": "Load-balancing state presented on a per-forwarding-complex basis",
-      "properties": {
-        "hash_user": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/HashUserListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Hash User"
-        }
-      },
-      "title": "LoadBalancingContainer",
-      "type": "object"
-    },
-    "MdaBindingLeafList": {
-      "maxLength": 1,
-      "minLength": 1,
-      "title": "MdaBindingLeafList",
-      "type": "string"
-    },
-    "MdaListEntry": {
-      "description": "Top-level container for mda configuration and state",
-      "properties": {
-        "slot": {
-          "maximum": 8,
-          "minimum": 1,
-          "title": "Slot",
-          "type": "integer"
-        },
-        "admin_state": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum4"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "enable"
-        },
-        "oper_state": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum5"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "last_booted": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Booted"
-        },
-        "last_booted_reason": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Booted Reason"
-        },
-        "last_change": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Change"
-        },
-        "part_number": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Part Number"
-        },
-        "removable": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Removable"
-        },
-        "failure_reason": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Failure Reason"
-        },
-        "clei_code": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Clei Code"
-        },
-        "serial_number": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Serial Number"
-        },
-        "manufactured_date": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Manufactured Date"
-        },
-        "rebooting_at": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Rebooting At"
-        },
-        "type": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Type"
-        },
-        "interfaces": {
-          "anyOf": [
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": [],
-          "title": "Interfaces"
-        },
-        "locator_state": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum12"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "inactive"
-        },
-        "temperature": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/TemperatureContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "healthz": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/HealthzContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "required": [
-        "slot"
-      ],
-      "title": "MdaListEntry",
-      "type": "object"
-    },
-    "MdbProfileContainer": {
-      "description": "Container for managing the allocation of hardware resources according to a Broadcom MDB profile",
-      "properties": {
-        "chassis_reboot_required": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Chassis Reboot Required"
-        },
-        "id": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum32"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "1"
-        }
-      },
-      "title": "MdbProfileContainer",
       "type": "object"
     },
     "MemoryContainer": {
@@ -5928,150 +4491,13 @@
       "title": "MidPoolListEntry",
       "type": "object"
     },
-    "ModeContainer": {
-      "description": "Top level container for chassis mode state",
-      "properties": {
-        "running": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum27"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "configured": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum27"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "chassis_reboot_required": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Chassis Reboot Required"
-        }
-      },
-      "title": "ModeContainer",
-      "type": "object"
-    },
-    "MplsLabelsContainer": {
-      "description": "Container for the FIB programming state of ILM entries",
-      "properties": {
-        "entries_remaining_to_add": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entries Remaining To Add"
-        },
-        "entries_remaining_to_modify": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entries Remaining To Modify"
-        },
-        "last_sync_time": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Sync Time"
-        }
-      },
-      "title": "MplsLabelsContainer",
-      "type": "object"
-    },
-    "MplsLabelsContainer2": {
-      "description": "Container for the FIB programming state of ILM entries",
-      "properties": {
-        "entries_remaining_to_add": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entries Remaining To Add"
-        },
-        "entries_remaining_to_modify": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entries Remaining To Modify"
-        },
-        "last_sync_time": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Sync Time"
-        }
-      },
-      "title": "MplsLabelsContainer2",
-      "type": "object"
-    },
     "MtuContainer": {
       "properties": {
         "resource": {
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ResourceListEntry4"
+                "$ref": "#/$defs/ResourceListEntry3"
               },
               "type": "array"
             },
@@ -6092,7 +4518,7 @@
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ResourceListEntry11"
+                "$ref": "#/$defs/ResourceListEntry7"
               },
               "type": "array"
             },
@@ -6119,7 +4545,7 @@
         "oper_state": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum11"
+              "$ref": "#/$defs/EnumerationEnum8"
             },
             {
               "type": "null"
@@ -6296,7 +4722,7 @@
         "oper_state": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum11"
+              "$ref": "#/$defs/EnumerationEnum8"
             },
             {
               "type": "null"
@@ -6463,24 +4889,6 @@
         }
       },
       "title": "NiceContainer",
-      "type": "object"
-    },
-    "OamContainer": {
-      "description": "Enter the OAM context",
-      "properties": {
-        "resources": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ResourcesContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "OamContainer",
       "type": "object"
     },
     "OutputContainer": {
@@ -6679,25 +5087,13 @@
         "mount_status": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum20"
+              "$ref": "#/$defs/EnumerationEnum16"
             },
             {
               "type": "null"
             }
           ],
           "default": null
-        },
-        "label": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Label"
         },
         "size": {
           "anyOf": [
@@ -6779,41 +5175,6 @@
       "minimum": 0,
       "title": "PcrIndexLeafList",
       "type": "integer"
-    },
-    "PfcHeadroomBufferContainer": {
-      "description": "Container for utilization statistics of the pfc-headroom-buffer",
-      "properties": {
-        "used": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used"
-        },
-        "free": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Free"
-        }
-      },
-      "title": "PfcHeadroomBufferContainer",
-      "type": "object"
     },
     "PipelineCountersContainer": {
       "description": "Top-level container for the packet counters associated with the different NPU sub-blocks.",
@@ -6920,6 +5281,28 @@
           "default": null,
           "title": "Control"
         },
+        "redundancy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RedundancyContainer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "resource_management": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResourceManagementContainer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "resource_monitoring": {
           "anyOf": [
             {
@@ -6930,32 +5313,6 @@
             }
           ],
           "default": null
-        },
-        "qos": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/QosContainer3"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "fan_tray": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/FanTrayListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Fan Tray"
         },
         "chassis": {
           "anyOf": [
@@ -6983,6 +5340,21 @@
           "default": null,
           "title": "Fabric"
         },
+        "fan_tray": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/FanTrayListEntry"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fan Tray"
+        },
         "power_supply": {
           "anyOf": [
             {
@@ -6997,57 +5369,6 @@
           ],
           "default": null,
           "title": "Power Supply"
-        },
-        "resource_management": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ResourceManagementContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "icm": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/IcmListEntry"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Icm"
-        },
-        "max_poe_power_budget_available": {
-          "anyOf": [
-            {
-              "maximum": 9.223372036854776e+16,
-              "minimum": -9.223372036854776e+16,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Max Poe Power Budget Available"
-        },
-        "redundancy": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/RedundancyContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
         },
         "vxdp": {
           "anyOf": [
@@ -7163,55 +5484,6 @@
       "type": "object"
     },
     "PowerContainer3": {
-      "description": "State related to power consumption and allocation for this component",
-      "properties": {
-        "allocated": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Allocated"
-        },
-        "used": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used"
-        },
-        "required": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Required"
-        }
-      },
-      "title": "PowerContainer3",
-      "type": "object"
-    },
-    "PowerContainer4": {
       "description": "Top-level container for chassis-wide power state",
       "properties": {
         "total": {
@@ -7272,13 +5544,62 @@
         "redundancy": {
           "anyOf": [
             {
-              "$ref": "#/$defs/RedundancyContainer"
+              "$ref": "#/$defs/RedundancyContainer2"
             },
             {
               "type": "null"
             }
           ],
           "default": null
+        }
+      },
+      "title": "PowerContainer3",
+      "type": "object"
+    },
+    "PowerContainer4": {
+      "description": "State related to power consumption and allocation for this component",
+      "properties": {
+        "allocated": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Allocated"
+        },
+        "used": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used"
+        },
+        "required": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Required"
         }
       },
       "title": "PowerContainer4",
@@ -7371,7 +5692,7 @@
         "fan": {
           "anyOf": [
             {
-              "$ref": "#/$defs/FanContainer2"
+              "$ref": "#/$defs/FanContainer"
             },
             {
               "type": "null"
@@ -7419,7 +5740,7 @@
         "oper_reason": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum30"
+              "$ref": "#/$defs/EnumerationEnum26"
             },
             {
               "type": "null"
@@ -7552,7 +5873,7 @@
         "temperature": {
           "anyOf": [
             {
-              "$ref": "#/$defs/TemperatureContainer5"
+              "$ref": "#/$defs/TemperatureContainer4"
             },
             {
               "type": "null"
@@ -7563,7 +5884,7 @@
         "healthz": {
           "anyOf": [
             {
-              "$ref": "#/$defs/HealthzContainer8"
+              "$ref": "#/$defs/HealthzContainer6"
             },
             {
               "type": "null"
@@ -7700,28 +6021,6 @@
             }
           ],
           "default": null
-        },
-        "mpls_labels": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/MplsLabelsContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "tunnels": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/TunnelsContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
         }
       },
       "title": "ProgrammingProgressContainer",
@@ -7751,28 +6050,6 @@
             }
           ],
           "default": null
-        },
-        "mpls_labels": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/MplsLabelsContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "tunnels": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/TunnelsContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
         }
       },
       "title": "ProgrammingProgressContainer2",
@@ -7784,7 +6061,7 @@
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ResourceListEntry5"
+                "$ref": "#/$defs/ResourceListEntry2"
               },
               "type": "array"
             },
@@ -7820,7 +6097,7 @@
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ResourceListEntry12"
+                "$ref": "#/$defs/ResourceListEntry6"
               },
               "type": "array"
             },
@@ -7835,53 +6112,37 @@
       "title": "QosContainer2",
       "type": "object"
     },
-    "QosContainer3": {
+    "RedundancyContainer": {
+      "description": "Top-level container for platform redundancy",
       "properties": {
-        "traffic_management_mode": {
+        "active_module": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum21"
+              "$ref": "#/$defs/EnumerationEnum17"
             },
             {
               "type": "null"
             }
           ],
-          "default": "eight-priorities"
+          "default": null
         },
-        "chassis_reboot_required": {
+        "failover_time": {
           "anyOf": [
             {
-              "type": "boolean"
+              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
+              "type": "string"
             },
             {
               "type": "null"
             }
           ],
           "default": null,
-          "title": "Chassis Reboot Required"
-        }
-      },
-      "title": "QosContainer3",
-      "type": "object"
-    },
-    "RedundancyContainer": {
-      "description": "Top-level container for power redundancy configuration and state",
-      "properties": {
-        "mode": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/EnumerationEnum25"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "none"
+          "title": "Failover Time"
         },
-        "status": {
+        "synchronization": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum26"
+              "$ref": "#/$defs/SynchronizationContainer"
             },
             {
               "type": "null"
@@ -7894,23 +6155,23 @@
       "type": "object"
     },
     "RedundancyContainer2": {
-      "description": "Top-level container for platform redundancy",
+      "description": "Top-level container for power redundancy configuration and state",
       "properties": {
-        "control_plane": {
+        "mode": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ControlPlaneContainer"
+              "$ref": "#/$defs/EnumerationEnum20"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": "none"
         },
-        "linecard": {
+        "status": {
           "anyOf": [
             {
-              "$ref": "#/$defs/LinecardContainer2"
+              "$ref": "#/$defs/EnumerationEnum21"
             },
             {
               "type": "null"
@@ -7923,7 +6184,7 @@
       "type": "object"
     },
     "ResourceGroupListEntry": {
-      "description": "Resource-group resources for the given interface-group-resource-pool\n\nDescribes the number of resource-sets used and free within the resource-group.\nA resource-set consists of 1 output-queue, and 1 tier-0 queue-scheduler, which is allocated to every configured subinterface.",
+      "description": "Resource-group resources for the given interface-group-resource-pool\n\nDescribes the number of resource-sets used and free within the resource-group.\nA resource-set consists of 16 output-queues, 16 tier-0 queue-schedulers and 1 tier-1 queue-scheduler, which is allocated to every configured subinterface.",
       "properties": {
         "index": {
           "maximum": 61,
@@ -8039,8 +6300,362 @@
       "title": "ResourceListEntry",
       "type": "object"
     },
-    "ResourceListEntry10": {
-      "description": "List of ASIC-specific datapath resources",
+    "ResourceListEntry2": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "used": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used"
+        },
+        "free": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Free"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ResourceListEntry2",
+      "type": "object"
+    },
+    "ResourceListEntry3": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "used": {
+          "anyOf": [
+            {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used"
+        },
+        "free": {
+          "anyOf": [
+            {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Free"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ResourceListEntry3",
+      "type": "object"
+    },
+    "ResourceListEntry4": {
+      "description": "List of generic datapath resources.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "used_percent": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used Percent"
+        },
+        "used_entries": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used Entries"
+        },
+        "free_entries": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Free Entries"
+        },
+        "used_high_watermark": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used High Watermark"
+        },
+        "used_last_high_watermark_time": {
+          "anyOf": [
+            {
+              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used Last High Watermark Time"
+        },
+        "used_upper_threshold_exceeded": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used Upper Threshold Exceeded"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ResourceListEntry4",
+      "type": "object"
+    },
+    "ResourceListEntry5": {
+      "description": "List of ASIC-specific datapath resources.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "used_percent": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used Percent"
+        },
+        "used_entries": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used Entries"
+        },
+        "free_entries": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Free Entries"
+        },
+        "used_high_watermark": {
+          "anyOf": [
+            {
+              "maximum": 4294967295,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used High Watermark"
+        },
+        "used_last_high_watermark_time": {
+          "anyOf": [
+            {
+              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used Last High Watermark Time"
+        },
+        "used_upper_threshold_exceeded": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Used Upper Threshold Exceeded"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ResourceListEntry5",
+      "type": "object"
+    },
+    "ResourceListEntry6": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "rising_threshold_log": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 90,
+          "title": "Rising Threshold Log"
+        },
+        "falling_threshold_log": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 70,
+          "title": "Falling Threshold Log"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ResourceListEntry6",
+      "type": "object"
+    },
+    "ResourceListEntry7": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "rising_threshold_log": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 90,
+          "title": "Rising Threshold Log"
+        },
+        "falling_threshold_log": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 70,
+          "title": "Falling Threshold Log"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ResourceListEntry7",
+      "type": "object"
+    },
+    "ResourceListEntry8": {
+      "description": "List of generic datapath resources",
       "properties": {
         "name": {
           "title": "Name",
@@ -8078,532 +6693,11 @@
       "required": [
         "name"
       ],
-      "title": "ResourceListEntry10",
-      "type": "object"
-    },
-    "ResourceListEntry11": {
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "rising_threshold_log": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 90,
-          "title": "Rising Threshold Log"
-        },
-        "falling_threshold_log": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 70,
-          "title": "Falling Threshold Log"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ResourceListEntry11",
-      "type": "object"
-    },
-    "ResourceListEntry12": {
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "rising_threshold_log": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 90,
-          "title": "Rising Threshold Log"
-        },
-        "falling_threshold_log": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": 70,
-          "title": "Falling Threshold Log"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ResourceListEntry12",
-      "type": "object"
-    },
-    "ResourceListEntry2": {
-      "description": "List of generic datapath resources.",
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "used_percent": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Percent"
-        },
-        "used_entries": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Entries"
-        },
-        "free_entries": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Free Entries"
-        },
-        "used_high_watermark": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used High Watermark"
-        },
-        "used_last_high_watermark_time": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Last High Watermark Time"
-        },
-        "used_upper_threshold_exceeded": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Upper Threshold Exceeded"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ResourceListEntry2",
-      "type": "object"
-    },
-    "ResourceListEntry3": {
-      "description": "List of ASIC-specific datapath resources.",
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "used_percent": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Percent"
-        },
-        "used_entries": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Entries"
-        },
-        "free_entries": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Free Entries"
-        },
-        "used_high_watermark": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used High Watermark"
-        },
-        "used_last_high_watermark_time": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Last High Watermark Time"
-        },
-        "used_upper_threshold_exceeded": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Upper Threshold Exceeded"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ResourceListEntry3",
-      "type": "object"
-    },
-    "ResourceListEntry4": {
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "used": {
-          "anyOf": [
-            {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used"
-        },
-        "free": {
-          "anyOf": [
-            {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Free"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ResourceListEntry4",
-      "type": "object"
-    },
-    "ResourceListEntry5": {
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "used": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used"
-        },
-        "free": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Free"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ResourceListEntry5",
-      "type": "object"
-    },
-    "ResourceListEntry6": {
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "free": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Free"
-        },
-        "reserved": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Reserved"
-        },
-        "programmed": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Programmed"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ResourceListEntry6",
-      "type": "object"
-    },
-    "ResourceListEntry7": {
-      "description": "List of generic datapath resources.",
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "used_percent": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Percent"
-        },
-        "used_entries": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Entries"
-        },
-        "free_entries": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Free Entries"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "ResourceListEntry7",
-      "type": "object"
-    },
-    "ResourceListEntry8": {
-      "description": "List of ASIC-specific datapath resources.",
-      "properties": {
-        "name": {
-          "title": "Name",
-          "type": "string"
-        },
-        "used_percent": {
-          "anyOf": [
-            {
-              "maximum": 100,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Percent"
-        },
-        "used_entries": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Used Entries"
-        },
-        "free_entries": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Free Entries"
-        }
-      },
-      "required": [
-        "name"
-      ],
       "title": "ResourceListEntry8",
       "type": "object"
     },
     "ResourceListEntry9": {
-      "description": "List of generic datapath resources",
+      "description": "List of ASIC-specific datapath resources",
       "properties": {
         "name": {
           "title": "Name",
@@ -8647,21 +6741,10 @@
     "ResourceManagementContainer": {
       "description": "Container for managing resources in a system-wide context",
       "properties": {
-        "mdb_profile": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/MdbProfileContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
         "tcam": {
           "anyOf": [
             {
-              "$ref": "#/$defs/TcamContainer2"
+              "$ref": "#/$defs/TcamContainer"
             },
             {
               "type": "null"
@@ -8679,39 +6762,6 @@
             }
           ],
           "default": null
-        },
-        "counter_banks": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/CounterBanksContainer2"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "group_based_policy": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/GroupBasedPolicyContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "first_hop_security": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/FirstHopSecurityContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
         }
       },
       "title": "ResourceManagementContainer",
@@ -8719,10 +6769,10 @@
     },
     "ResourceMonitoringContainer": {
       "properties": {
-        "datapath": {
+        "qos": {
           "anyOf": [
             {
-              "$ref": "#/$defs/DatapathContainer4"
+              "$ref": "#/$defs/QosContainer2"
             },
             {
               "type": "null"
@@ -8741,10 +6791,10 @@
           ],
           "default": null
         },
-        "qos": {
+        "datapath": {
           "anyOf": [
             {
-              "$ref": "#/$defs/QosContainer2"
+              "$ref": "#/$defs/DatapathContainer3"
             },
             {
               "type": "null"
@@ -8831,24 +6881,6 @@
       "title": "ResourceSetsContainer",
       "type": "object"
     },
-    "ResourcesContainer": {
-      "description": "OAM resources usage and allocation",
-      "properties": {
-        "service_activation_testhead": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ServiceActivationTestheadContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "ResourcesContainer",
-      "type": "object"
-    },
     "RootPoolListEntry": {
       "properties": {
         "index": {
@@ -8914,7 +6946,7 @@
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ControlListEntry2"
+                "$ref": "#/$defs/ControlListEntry"
               },
               "type": "array"
             },
@@ -8927,97 +6959,6 @@
         }
       },
       "title": "SecureBootContainer",
-      "type": "object"
-    },
-    "ServiceActivationTestheadContainer": {
-      "description": "Service activation generator stream and bandwidth resources",
-      "properties": {
-        "stream_total": {
-          "anyOf": [
-            {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Stream Total"
-        },
-        "stream_allocated": {
-          "anyOf": [
-            {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Stream Allocated"
-        },
-        "stream_free": {
-          "anyOf": [
-            {
-              "maximum": 255,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Stream Free"
-        },
-        "bandwidth_total_kbps": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Bandwidth Total Kbps"
-        },
-        "bandwidth_allocated_kbps": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Bandwidth Allocated Kbps"
-        },
-        "bandwidth_free_kbps": {
-          "anyOf": [
-            {
-              "maximum": 4294967295,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Bandwidth Free Kbps"
-        }
-      },
-      "title": "ServiceActivationTestheadContainer",
       "type": "object"
     },
     "Sha1HashListEntry": {
@@ -9346,7 +7287,7 @@
         "state": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum36"
+              "$ref": "#/$defs/EnumerationEnum18"
             },
             {
               "type": "null"
@@ -9479,53 +7420,9 @@
       "type": "object"
     },
     "TcamContainer": {
-      "properties": {
-        "resource": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/ResourceListEntry6"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Resource"
-        }
-      },
-      "title": "TcamContainer",
-      "type": "object"
-    },
-    "TcamContainer2": {
       "description": "Container for managing the allocation of TCAM banks to different applications.",
-      "properties": {
-        "dot1x_multi_host_authentication_tcam": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Dot1xMultiHostAuthenticationTcamContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "first_hop_security_tcam": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/FirstHopSecurityTcamContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        }
-      },
-      "title": "TcamContainer2",
+      "properties": {},
+      "title": "TcamContainer",
       "type": "object"
     },
     "TemperatureContainer": {
@@ -9805,83 +7702,9 @@
           ],
           "default": null,
           "title": "Alarm Status"
-        },
-        "margin": {
-          "anyOf": [
-            {
-              "maximum": 32767,
-              "minimum": -32768,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Margin"
         }
       },
       "title": "TemperatureContainer4",
-      "type": "object"
-    },
-    "TemperatureContainer5": {
-      "description": "State related to temperature for this component",
-      "properties": {
-        "instant": {
-          "anyOf": [
-            {
-              "maximum": 32767,
-              "minimum": -32768,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Instant"
-        },
-        "maximum": {
-          "anyOf": [
-            {
-              "maximum": 32767,
-              "minimum": -32768,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Maximum"
-        },
-        "maximum_time": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Maximum Time"
-        },
-        "alarm_status": {
-          "anyOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Alarm Status"
-        }
-      },
-      "title": "TemperatureContainer5",
       "type": "object"
     },
     "TotalContainer": {
@@ -10060,7 +7883,7 @@
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ControlListEntry"
+                "$ref": "#/$defs/ControlListEntry2"
               },
               "type": "array"
             },
@@ -10078,17 +7901,6 @@
     "TrustContainer": {
       "description": "State information related to Platform Trust",
       "properties": {
-        "tpm": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/TpmContainer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
         "secure_boot": {
           "anyOf": [
             {
@@ -10099,105 +7911,20 @@
             }
           ],
           "default": null
+        },
+        "tpm": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TpmContainer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "title": "TrustContainer",
-      "type": "object"
-    },
-    "TunnelsContainer": {
-      "description": "Container for the FIB programming state of tunnels",
-      "properties": {
-        "entries_remaining_to_add": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entries Remaining To Add"
-        },
-        "entries_remaining_to_modify": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entries Remaining To Modify"
-        },
-        "last_sync_time": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Sync Time"
-        }
-      },
-      "title": "TunnelsContainer",
-      "type": "object"
-    },
-    "TunnelsContainer2": {
-      "description": "Container for the FIB programming state of tunnels",
-      "properties": {
-        "entries_remaining_to_add": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entries Remaining To Add"
-        },
-        "entries_remaining_to_modify": {
-          "anyOf": [
-            {
-              "maximum": 18446744073709551615,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Entries Remaining To Modify"
-        },
-        "last_sync_time": {
-          "anyOf": [
-            {
-              "pattern": "^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Last Sync Time"
-        }
-      },
-      "title": "TunnelsContainer2",
       "type": "object"
     },
     "UefiVariablesListEntry": {
@@ -10372,7 +8099,7 @@
         "alpm": {
           "anyOf": [
             {
-              "$ref": "#/$defs/EnumerationEnum33"
+              "$ref": "#/$defs/EnumerationEnum19"
             },
             {
               "type": "null"
@@ -10580,7 +8307,7 @@
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ResourceListEntry2"
+                "$ref": "#/$defs/ResourceListEntry4"
               },
               "type": "array"
             },
@@ -10596,13 +8323,13 @@
       "type": "object"
     },
     "XdpContainer3": {
-      "description": "Container for monitoring datapath resources that typically generic",
+      "description": "Container for monitoring datapath resources that are generic in concept.",
       "properties": {
         "resource": {
           "anyOf": [
             {
               "items": {
-                "$ref": "#/$defs/ResourceListEntry7"
+                "$ref": "#/$defs/ResourceListEntry8"
               },
               "type": "array"
             },
@@ -10615,28 +8342,6 @@
         }
       },
       "title": "XdpContainer3",
-      "type": "object"
-    },
-    "XdpContainer4": {
-      "description": "Container for monitoring datapath resources that are generic in concept.",
-      "properties": {
-        "resource": {
-          "anyOf": [
-            {
-              "items": {
-                "$ref": "#/$defs/ResourceListEntry9"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Resource"
-        }
-      },
-      "title": "XdpContainer4",
       "type": "object"
     }
   },

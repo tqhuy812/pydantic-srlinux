@@ -1,0 +1,183 @@
+{
+  "name": "system0",
+  "admin_state": "enable",
+  "subinterface": [
+    {
+      "index": 0,
+      "ipv4": {
+        "admin_state": "enable",
+        "address": [
+          {
+            "ip_prefix": "10.10.10.10/32"
+          }
+        ]
+      }
+    }
+  ]
+}
+
+
+{
+  "prefix_set": [
+    {
+      "name": "system-loopbacks",
+      "prefix": [
+        {
+          "ip_prefix": "10.0.0.0/8",
+          "mask_length_range": "32..32"
+        }
+      ]
+    }
+  ],
+  "policy": [
+    {
+      "name": "system-loopbacks-policy",
+      "statement": [
+        {
+          "name": "1",
+          "match": {
+            "prefix": {
+              "prefix_set": "system-loopbacks"
+            }
+          },
+          "action": {
+            "policy_result": "accept"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+{
+  "name": "ethernet-1/1",
+  "admin_state": "enable",
+  "subinterface": [
+    {
+      "index": 1,
+      "ipv6": {
+        "admin_state": "enable",
+        "router_advertisement": {
+          "router_role": {
+            "admin_state": "enable"
+          }
+        }
+      }
+    }
+  ]
+}
+
+
+{
+  "name": "ethernet-1/2",
+  "admin_state": "enable",
+  "subinterface": [
+    {
+      "index": 1,
+      "ipv6": {
+        "admin_state": "enable",
+        "router_advertisement": {
+          "router_role": {
+            "admin_state": "enable"
+          }
+        }
+      }
+    }
+  ]
+}
+
+
+{
+  "name": "default",
+  "ip_forwarding": {
+    "receive_ipv4_check": false
+  },
+  "interface": [
+    {
+      "name": "ethernet-1/1.1"
+    },
+    {
+      "name": "ethernet-1/2.1"
+    },
+    {
+      "name": "system0.0"
+    }
+  ],
+  "protocols": {
+    "bgp": {
+      "autonomous_system": 4200000010,
+      "router_id": "10.10.10.10",
+      "dynamic_neighbors": {
+        "accept": {
+          "match": [
+            {
+              "prefix": "0.0.0.0/0",
+              "peer_group": "overlay"
+            }
+          ]
+        },
+        "interface": [
+          {
+            "interface_name": "ethernet-1/1.1",
+            "allowed_peer_as": [
+              "4200000001..4200000010"
+            ],
+            "peer_group": "underlay"
+          },
+          {
+            "interface_name": "ethernet-1/2.1",
+            "allowed_peer_as": [
+              "4200000001..4200000010"
+            ],
+            "peer_group": "underlay"
+          }
+        ]
+      },
+      "afi_safi": [
+        {
+          "afi_safi_name": "ipv4-unicast",
+          "admin_state": "enable"
+        }
+      ],
+      "group": [
+        {
+          "group_name": "underlay",
+          "export_policy": [
+            "system-loopbacks-policy"
+          ],
+          "import_policy": [
+            "system-loopbacks-policy"
+          ]
+        },
+        {
+          "group_name": "overlay",
+          "peer_as": 65535,
+          "afi_safi": [
+            {
+              "afi_safi_name": "ipv4-unicast",
+              "admin_state": "disable"
+            },
+            {
+              "afi_safi_name": "evpn",
+              "admin_state": "enable"
+            }
+          ],
+          "local_as": {
+            "as_number": 65535
+          },
+          "route_reflector": {
+            "client": true
+          }
+        }
+      ],
+      "neighbor": [
+        {
+          "peer_address": "10.10.10.10",
+          "admin_state": "enable",
+          "peer_group": "overlay"
+        }
+      ]
+    }
+  }
+}

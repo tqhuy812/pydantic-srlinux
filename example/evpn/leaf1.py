@@ -1,6 +1,5 @@
 import json
 import subprocess
-import sys
 import pydantic_srlinux.models.interfaces as srl_if
 import pydantic_srlinux.models.network_instance as srl_ni
 import pydantic_srlinux.models.routing_policy as srl_rp
@@ -322,26 +321,31 @@ ni_tenant2 = srl_ni.NetworkInstanceListEntry(
     )
 )
 
+is_by_alias = False
 cmd_list = [
-    e1_49.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=True, exclude_defaults=True),
-    e0_0.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=True, exclude_defaults=True),
-    rp.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=True, exclude_defaults=True),
-    e1_1.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=True, exclude_defaults=True),
-    e1_2.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=True, exclude_defaults=True),
-    ti_vxlan1.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=True, exclude_defaults=True),
-    ni_default.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=True, exclude_defaults=True),
-    ni_tenant1.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=True, exclude_defaults=True),
-    ni_tenant2.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=True, exclude_defaults=True)
+    e1_49.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=is_by_alias, exclude_defaults=True),
+    e0_0.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=is_by_alias, exclude_defaults=True),
+    rp.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=is_by_alias, exclude_defaults=True),
+    e1_1.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=is_by_alias, exclude_defaults=True),
+    e1_2.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=is_by_alias, exclude_defaults=True),
+    ti_vxlan1.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=is_by_alias, exclude_defaults=True),
+    ni_default.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=is_by_alias, exclude_defaults=True),
+    ni_tenant1.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=is_by_alias, exclude_defaults=True),
+    ni_tenant2.model_dump_json(indent=2, exclude_none=True, exclude_unset=True, by_alias=is_by_alias, exclude_defaults=True)
 ]
 ## Print 
-# for cmd in cmd_list:
-#     print("\n---\n")
-#     print(cmd)
+for cmd in cmd_list:
+    # print("\n---\n")
+    print(cmd)
+    print("\n")
+import sys
+sys.exit(0)
 
 # SRL_VERSION=25.10.1 SRL_TYPE=ixr-d2l clab deploy -c -t srlinux.dev/clab-srl
 # SRL_VERSION=25.10.1 SRL_TYPE=ixr-d2l clab destroy -c -t srlinux.dev/clab-srl
 # slr_name = "leaf1"
 # slr_name = "srl"
+
 slr_name = "l3evpn-leaf1"
 slr_ip = get_container_ip(slr_name)
 print(slr_ip)

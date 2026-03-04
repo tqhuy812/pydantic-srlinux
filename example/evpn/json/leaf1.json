@@ -1,0 +1,313 @@
+{
+  "name": "ethernet-1/49",
+  "admin_state": "enable",
+  "subinterface": [
+    {
+      "index": 1,
+      "ipv6": {
+        "admin_state": "enable",
+        "router_advertisement": {
+          "router_role": {
+            "admin_state": "enable"
+          }
+        }
+      }
+    }
+  ]
+}
+
+
+{
+  "name": "system0",
+  "admin_state": "enable",
+  "subinterface": [
+    {
+      "index": 0,
+      "ipv4": {
+        "admin_state": "enable",
+        "address": [
+          {
+            "ip_prefix": "10.0.0.1/32"
+          }
+        ]
+      }
+    }
+  ]
+}
+
+
+{
+  "prefix_set": [
+    {
+      "name": "system-loopbacks",
+      "prefix": [
+        {
+          "ip_prefix": "10.0.0.0/8",
+          "mask_length_range": "32..32"
+        }
+      ]
+    }
+  ],
+  "policy": [
+    {
+      "name": "system-loopbacks-policy",
+      "statement": [
+        {
+          "name": "1",
+          "match": {
+            "prefix": {
+              "prefix_set": "system-loopbacks"
+            }
+          },
+          "action": {
+            "policy_result": "accept"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+{
+  "name": "ethernet-1/1",
+  "admin_state": "enable",
+  "subinterface": [
+    {
+      "index": 1,
+      "ipv4": {
+        "admin_state": "enable",
+        "address": [
+          {
+            "ip_prefix": "192.168.1.1/24"
+          }
+        ]
+      }
+    }
+  ]
+}
+
+
+{
+  "name": "ethernet-1/2",
+  "admin_state": "enable",
+  "subinterface": [
+    {
+      "index": 1,
+      "ipv4": {
+        "admin_state": "enable",
+        "address": [
+          {
+            "ip_prefix": "192.168.99.1/30"
+          }
+        ]
+      }
+    }
+  ]
+}
+
+
+{
+  "name": "vxlan1",
+  "vxlan_interface": [
+    {
+      "index": 100,
+      "type": "routed",
+      "ingress": {
+        "vni": 100
+      }
+    },
+    {
+      "index": 200,
+      "type": "routed",
+      "ingress": {
+        "vni": 200
+      }
+    }
+  ]
+}
+
+
+{
+  "name": "default",
+  "ip_forwarding": {
+    "receive_ipv4_check": false
+  },
+  "interface": [
+    {
+      "name": "ethernet-1/49.1"
+    },
+    {
+      "name": "system0.0"
+    }
+  ],
+  "protocols": {
+    "bgp": {
+      "autonomous_system": 4200000001,
+      "router_id": "10.0.0.1",
+      "dynamic_neighbors": {
+        "interface": [
+          {
+            "interface_name": "ethernet-1/49.1",
+            "allowed_peer_as": [
+              "4200000001..4200000010"
+            ],
+            "peer_group": "underlay"
+          }
+        ]
+      },
+      "afi_safi": [
+        {
+          "afi_safi_name": "ipv4-unicast",
+          "admin_state": "enable"
+        }
+      ],
+      "group": [
+        {
+          "group_name": "underlay",
+          "export_policy": [
+            "system-loopbacks-policy"
+          ],
+          "import_policy": [
+            "system-loopbacks-policy"
+          ]
+        },
+        {
+          "group_name": "overlay",
+          "peer_as": 65535,
+          "afi_safi": [
+            {
+              "afi_safi_name": "ipv4-unicast",
+              "admin_state": "disable"
+            },
+            {
+              "afi_safi_name": "evpn",
+              "admin_state": "enable"
+            }
+          ],
+          "local_as": {
+            "as_number": 65535
+          }
+        }
+      ],
+      "neighbor": [
+        {
+          "peer_address": "10.10.10.10",
+          "admin_state": "enable",
+          "peer_group": "overlay"
+        }
+      ]
+    }
+  }
+}
+
+
+{
+  "name": "tenant-1",
+  "type": "ip-vrf",
+  "admin_state": "enable",
+  "interface": [
+    {
+      "name": "ethernet-1/1.1"
+    }
+  ],
+  "vxlan_interface": [
+    {
+      "name": "vxlan1.100"
+    }
+  ],
+  "protocols": {
+    "bgp_evpn": {
+      "bgp_instance": [
+        {
+          "id": 1,
+          "admin_state": "enable",
+          "vxlan_interface": "vxlan1.100",
+          "evi": 1,
+          "ecmp": 8
+        }
+      ]
+    },
+    "bgp_vpn": {
+      "bgp_instance": [
+        {
+          "id": 1,
+          "route_target": {
+            "export_rt": "target:65535:1",
+            "import_rt": "target:65535:1"
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+{
+  "name": "tenant-2",
+  "type": "ip-vrf",
+  "admin_state": "enable",
+  "interface": [
+    {
+      "name": "ethernet-1/2.1"
+    }
+  ],
+  "vxlan_interface": [
+    {
+      "name": "vxlan1.200"
+    }
+  ],
+  "protocols": {
+    "bgp_evpn": {
+      "bgp_instance": [
+        {
+          "id": 1,
+          "admin_state": "enable",
+          "vxlan_interface": "vxlan1.200",
+          "evi": 2,
+          "ecmp": 8
+        }
+      ]
+    },
+    "bgp": {
+      "autonomous_system": 65001,
+      "router_id": "10.0.0.1",
+      "ebgp_default_policy": {
+        "import_reject_all": false,
+        "export_reject_all": false
+      },
+      "afi_safi": [
+        {
+          "afi_safi_name": "ipv4-unicast",
+          "admin_state": "enable"
+        }
+      ],
+      "group": [
+        {
+          "group_name": "client",
+          "send_default_route": {
+            "ipv4_unicast": true
+          }
+        }
+      ],
+      "neighbor": [
+        {
+          "peer_address": "192.168.99.2",
+          "peer_as": 65002,
+          "peer_group": "client"
+        }
+      ]
+    },
+    "bgp_vpn": {
+      "bgp_instance": [
+        {
+          "id": 1,
+          "route_target": {
+            "export_rt": "target:65001:2",
+            "import_rt": "target:65001:2"
+          }
+        }
+      ]
+    }
+  }
+}
