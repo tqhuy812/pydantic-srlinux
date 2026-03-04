@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
+from typing_extensions import Annotated
 
 
 class FailedSlotsLeafList(RootModel[int]):
@@ -66,6 +67,11 @@ class EnumerationEnum(Enum):
     down = 'down'
 
 
+class EnumerationEnum10(Enum):
+    no_destination_index = 'no-destination-index'
+    multicast_limit = 'multicast-limit'
+
+
 class EnumerationEnum2(Enum):
     mac_failed = 'mac-failed'
     ingress_hash_failed = 'ingress-hash-failed'
@@ -82,19 +88,11 @@ class EnumerationEnum4(Enum):
 
 
 class EnumerationEnum5(Enum):
-    none = 'none'
-    bum = 'BUM'
-    unknown_unicast = 'unknown-unicast'
-    broadcast_mcast = 'broadcast-mcast'
-    mcast = 'mcast'
+    enable = 'enable'
+    disable = 'disable'
 
 
 class EnumerationEnum6(Enum):
-    no_destination_index = 'no-destination-index'
-    multicast_limit = 'multicast-limit'
-
-
-class EnumerationEnum7(Enum):
     static = 'static'
     duplicate = 'duplicate'
     learnt = 'learnt'
@@ -108,6 +106,13 @@ class EnumerationEnum7(Enum):
     irb_interface_vrrp = 'irb-interface-vrrp'
 
 
+class EnumerationEnum7(Enum):
+    mac_limit = 'mac-limit'
+    failed_on_slots = 'failed-on-slots'
+    no_destination_index = 'no-destination-index'
+    reserved = 'reserved'
+
+
 class EnumerationEnum8(Enum):
     mac_limit = 'mac-limit'
     failed_on_slots = 'failed-on-slots'
@@ -116,10 +121,10 @@ class EnumerationEnum8(Enum):
 
 
 class EnumerationEnum9(Enum):
-    mac_limit = 'mac-limit'
-    failed_on_slots = 'failed-on-slots'
-    no_destination_index = 'no-destination-index'
-    reserved = 'reserved'
+    none = 'none'
+    bum = 'BUM'
+    unknown_unicast = 'unknown-unicast'
+    broadcast_mcast = 'broadcast-mcast'
 
 
 class IngressContainer(BaseModel):
@@ -135,6 +140,31 @@ class IngressContainer(BaseModel):
 
     The egress VNI is determined by the static egress-vni configured in the associated destination
     or by the dynamic egress-vni learned from the control plane.
+    """
+
+
+class InnerEthernetHeaderContainer2(BaseModel):
+    """
+    Parameters of the inner VXLAN ethernet payload when the VXLAN tunnel is used in an ip-vrf.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    destination_mac: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-tunnel-interfaces:destination-mac',
+            pattern='^(?=^[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}$).*$',
+        ),
+    ] = None
+    """
+    VXLAN inner ethernet destination mac-address.
+
+    Configured when the VXLAN tunnel is associated with a ip-vrf network-instance and the egress-vtep
+    and egress-vni are statically configured. If not configured, the destination mac-address is obtained from one
+    of the EVPN IP Prefix routes for the destination, out of the Router's MAC extended community.
     """
 
 
@@ -166,8 +196,84 @@ class Ipv6AddressType(RootModel[str]):
         ),
     ]
     """
-    An IPv6 address represented as either a full address, shortened or mixed-shortened formats
+    An IPv6 address represented as either a full address; shortened
+    or mixed-shortened formats.
     """
+
+
+class DestinationListEntry(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    index: Annotated[
+        int, Field(alias='srl_nokia-tunnel-interfaces:index', ge=0, le=65535)
+    ]
+    """
+    Numerical index of the destination member
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum5],
+        Field(alias='srl_nokia-tunnel-interfaces:admin-state'),
+    ] = 'enable'
+    """
+    Used to enable or disable a particular destination.
+    """
+    vni: Annotated[
+        Optional[int], Field(alias='srl_nokia-tunnel-interfaces:vni', ge=1, le=16777215)
+    ] = None
+    """
+    Egress VXLAN Network Identifier of the vxlan-interface.
+
+    The egress VNI is statically configured or dynamically learned from the control plane.
+    """
+    inner_ethernet_header: Annotated[
+        Optional[InnerEthernetHeaderContainer2],
+        Field(alias='srl_nokia-tunnel-interfaces:inner-ethernet-header'),
+    ] = None
+
+
+class GroupListEntry(BaseModel):
+    """
+    Specifies the destination group.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-tunnel-interfaces:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Specifies the destination group name
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum5],
+        Field(alias='srl_nokia-tunnel-interfaces:admin-state'),
+    ] = 'enable'
+    """
+    Used to enable or disable a destination group
+    """
+    esi: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-tunnel-interfaces:esi',
+            pattern='^(?=^[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){9}$).*$',
+        ),
+    ] = None
+    """
+    The 10-byte Ethernet Segment Identifier of the ethernet segment.
+    ESI-0 or MAX-ESI values are not allowed.
+    """
+    destination: Annotated[
+        Optional[List[DestinationListEntry]],
+        Field(alias='srl_nokia-tunnel-interfaces:destination'),
+    ] = None
 
 
 class InnerEthernetHeaderContainer(BaseModel):
@@ -202,7 +308,7 @@ class InnerEthernetHeaderContainer(BaseModel):
 
 class MacTypeListEntry(BaseModel):
     """
-    The type of the mac on the sub-interface.
+    the type of the mac on the sub-interface.
     """
 
     model_config = ConfigDict(
@@ -210,8 +316,10 @@ class MacTypeListEntry(BaseModel):
         regex_engine="python-re",
     )
     type: Annotated[
-        EnumerationEnum7,
-        Field(alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:type'),
+        EnumerationEnum6,
+        Field(
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:type'
+        ),
     ]
     """
     type of mac addresses in the system
@@ -219,7 +327,7 @@ class MacTypeListEntry(BaseModel):
     active_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:active-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:active-entries',
             ge=0,
             le=18446744073709551615,
         ),
@@ -230,24 +338,24 @@ class MacTypeListEntry(BaseModel):
     total_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:total-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:total-entries',
             ge=0,
             le=18446744073709551615,
         ),
     ] = 0
     """
-    The total number of macs of this type, active and inactive, on the sub-interface.
+    The total number of macs of this type , active and inactive, on the sub-interface.
     """
     failed_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:failed-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:failed-entries',
             ge=0,
             le=18446744073709551615,
         ),
     ] = 0
     """
-    The total number of macs of this type, which have not been programmed on at least one slot
+    The total number of macs of this type, which have not been programmed on atleast one slot
     """
 
 
@@ -261,7 +369,7 @@ class MacTypeListEntry2(BaseModel):
         regex_engine="python-re",
     )
     type: Annotated[
-        EnumerationEnum7,
+        EnumerationEnum6,
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:type'
         ),
@@ -306,7 +414,7 @@ class MacTypeListEntry2(BaseModel):
 
 class MacTypeListEntry3(BaseModel):
     """
-    the type of the mac on the sub-interface.
+    The type of the mac on the sub-interface.
     """
 
     model_config = ConfigDict(
@@ -314,10 +422,8 @@ class MacTypeListEntry3(BaseModel):
         regex_engine="python-re",
     )
     type: Annotated[
-        EnumerationEnum7,
-        Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:type'
-        ),
+        EnumerationEnum6,
+        Field(alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:type'),
     ]
     """
     type of mac addresses in the system
@@ -325,7 +431,7 @@ class MacTypeListEntry3(BaseModel):
     active_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:active-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:active-entries',
             ge=0,
             le=18446744073709551615,
         ),
@@ -336,24 +442,24 @@ class MacTypeListEntry3(BaseModel):
     total_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:total-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:total-entries',
             ge=0,
             le=18446744073709551615,
         ),
     ] = 0
     """
-    The total number of macs of this type , active and inactive, on the sub-interface.
+    The total number of macs of this type, active and inactive, on the sub-interface.
     """
     failed_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:failed-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:failed-entries',
             ge=0,
             le=18446744073709551615,
         ),
     ] = 0
     """
-    The total number of macs of this type, which have not been programmed on atleast one slot
+    The total number of macs of this type, which have not been programmed on at least one slot
     """
 
 
@@ -381,7 +487,7 @@ class MacListEntry(BaseModel):
     to the MacAddress textual convention of the SMIv2.
     """
     type: Annotated[
-        Optional[EnumerationEnum7],
+        Optional[EnumerationEnum6],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:type'
         ),
@@ -400,7 +506,7 @@ class MacListEntry(BaseModel):
     The date and time of the last update of this mac
     """
     not_programmed_reason: Annotated[
-        Optional[EnumerationEnum8],
+        Optional[EnumerationEnum7],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:not-programmed-reason'
         ),
@@ -443,7 +549,7 @@ class MacListEntry2(BaseModel):
     to the MacAddress textual convention of the SMIv2.
     """
     type: Annotated[
-        Optional[EnumerationEnum7],
+        Optional[EnumerationEnum6],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:type'
         ),
@@ -462,7 +568,7 @@ class MacListEntry2(BaseModel):
     The date and time of the last update of this mac
     """
     not_programmed_reason: Annotated[
-        Optional[EnumerationEnum9],
+        Optional[EnumerationEnum8],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:not-programmed-reason'
         ),
@@ -489,7 +595,7 @@ class StatisticsContainer(BaseModel):
     active_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:active-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:active-entries',
             ge=0,
             le=18446744073709551615,
         ),
@@ -500,7 +606,7 @@ class StatisticsContainer(BaseModel):
     total_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:total-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:total-entries',
             ge=0,
             le=18446744073709551615,
         ),
@@ -511,18 +617,18 @@ class StatisticsContainer(BaseModel):
     failed_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:failed-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:failed-entries',
             ge=0,
             le=18446744073709551615,
         ),
     ] = 0
     """
-    The total number of macs, which have not been programmed on at least one slot
+    The total number of macs, which have not been programmed on atleast one slot
     """
     mac_type: Annotated[
         Optional[List[MacTypeListEntry]],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:mac-type'
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:mac-type'
         ),
     ] = None
 
@@ -581,7 +687,7 @@ class StatisticsContainer3(BaseModel):
     active_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:active-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:active-entries',
             ge=0,
             le=18446744073709551615,
         ),
@@ -592,7 +698,7 @@ class StatisticsContainer3(BaseModel):
     total_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:total-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:total-entries',
             ge=0,
             le=18446744073709551615,
         ),
@@ -603,23 +709,33 @@ class StatisticsContainer3(BaseModel):
     failed_entries: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:failed-entries',
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:failed-entries',
             ge=0,
             le=18446744073709551615,
         ),
     ] = 0
     """
-    The total number of macs, which have not been programmed on atleast one slot
+    The total number of macs, which have not been programmed on at least one slot
     """
     mac_type: Annotated[
         Optional[List[MacTypeListEntry3]],
         Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:mac-type'
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:mac-type'
         ),
     ] = None
 
 
-class DestinationListEntry(BaseModel):
+class DestinationGroupsContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    group: Annotated[
+        Optional[List[GroupListEntry]], Field(alias='srl_nokia-tunnel-interfaces:group')
+    ] = None
+
+
+class DestinationListEntry3(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -631,7 +747,7 @@ class DestinationListEntry(BaseModel):
         ),
     ]
     """
-    IP address identifying the remote VXLAN Termination Endpoint (VTEP)
+    The IP address that identifies the remote VXLAN Termination Endpoint (VTEP).
     """
     vni: Annotated[
         int,
@@ -642,16 +758,16 @@ class DestinationListEntry(BaseModel):
         ),
     ]
     """
-    VXLAN Network Identifier (VNI) of the destination
+    VXLAN Network Identifier of the destination.
     """
     multicast_forwarding: Annotated[
-        Optional[EnumerationEnum5],
+        Optional[EnumerationEnum9],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-multicast-destinations:multicast-forwarding'
         ),
     ] = None
     """
-    Type of multicast data forwarded by this VXLAN destination
+    The type of multicast data forwarded by this vxlan destination.
     """
     destination_index: Annotated[
         Optional[int],
@@ -662,10 +778,10 @@ class DestinationListEntry(BaseModel):
         ),
     ] = None
     """
-    System-wide unique identifier of this VXLAN destination object (system allocated)
+    A system-wide unique identifier of this vxlan destination object (system allocated).
     """
     not_programmed_reason: Annotated[
-        Optional[EnumerationEnum6],
+        Optional[EnumerationEnum10],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-multicast-destinations:not-programmed-reason'
         ),
@@ -689,6 +805,10 @@ class EgressContainer(BaseModel):
     inner_ethernet_header: Annotated[
         Optional[InnerEthernetHeaderContainer],
         Field(alias='srl_nokia-tunnel-interfaces:inner-ethernet-header'),
+    ] = None
+    destination_groups: Annotated[
+        Optional[DestinationGroupsContainer],
+        Field(alias='srl_nokia-tunnel-interfaces:destination-groups'),
     ] = None
 
 
@@ -730,7 +850,7 @@ class MulticastDestinationsContainer(BaseModel):
         ),
     ] = None
     destination: Annotated[
-        Optional[List[DestinationListEntry]],
+        Optional[List[DestinationListEntry3]],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-multicast-destinations:destination'
         ),
@@ -801,7 +921,7 @@ class DestinationListEntry2(BaseModel):
     A system-wide unique identifier of this vxlan destination object (system allocated).
     """
     statistics: Annotated[
-        Optional[StatisticsContainer2],
+        Optional[StatisticsContainer],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:statistics'
         ),
@@ -842,7 +962,7 @@ class EsDestinationListEntry(BaseModel):
     A system-wide unique identifier of this vxlan destination object (system allocated).
     """
     statistics: Annotated[
-        Optional[StatisticsContainer3],
+        Optional[StatisticsContainer2],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:statistics'
         ),
@@ -885,6 +1005,12 @@ class BridgeTableContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
+    unicast_destinations: Annotated[
+        Optional[UnicastDestinationsContainer],
+        Field(
+            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:unicast-destinations'
+        ),
+    ] = None
     multicast_destinations: Annotated[
         Optional[MulticastDestinationsContainer],
         Field(
@@ -892,15 +1018,9 @@ class BridgeTableContainer(BaseModel):
         ),
     ] = None
     statistics: Annotated[
-        Optional[StatisticsContainer],
+        Optional[StatisticsContainer3],
         Field(
             alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table:statistics'
-        ),
-    ] = None
-    unicast_destinations: Annotated[
-        Optional[UnicastDestinationsContainer],
-        Field(
-            alias='srl_nokia-tunnel-interfaces-vxlan-interface-bridge-table-unicast-destinations:unicast-destinations'
         ),
     ] = None
 

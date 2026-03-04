@@ -1,0 +1,43 @@
+name: l3evpn
+prefix: __lab-name
+
+mgmt:
+  network: l3evpn   # management network name
+  ipv4-subnet: 172.100.106.32/28  
+
+
+topology:
+  defaults:
+    kind: nokia_srlinux
+  kinds:
+    nokia_srlinux:
+      image: ghcr.io/nokia/srlinux:25.10.1
+    linux:
+      image: quay.io/frrouting/frr:10.5.0
+
+  nodes:
+    spine:
+      mgmt-ipv4: 172.100.106.34
+      type: ixr-d3l
+    leaf1:
+      mgmt-ipv4: 172.100.106.35
+      type: ixr-d2l
+    leaf2:
+      mgmt-ipv4: 172.100.106.36
+      type: ixr-d2l
+
+    srv1:
+      mgmt-ipv4: 172.100.106.37
+      kind: linux
+
+    srv2:
+      mgmt-ipv4: 172.100.106.38
+      kind: linux
+
+
+  links:
+    - endpoints: ["spine:e1-1", "leaf1:e1-49"]
+    - endpoints: ["spine:e1-2", "leaf2:e1-49"]
+    - endpoints: ["leaf1:e1-1", "srv1:eth1"]
+    - endpoints: ["leaf2:e1-1", "srv2:eth1"]
+

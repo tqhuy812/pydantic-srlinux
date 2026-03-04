@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import List, Optional, Union
+from typing import Annotated, List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
-from typing_extensions import Annotated
 
 
 class AsicLoopbackContainer(BaseModel):
@@ -18,6 +17,17 @@ class AsicLoopbackContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
+
+
+class BpduGuardRecoveryTimeExpiresLeaf1(RootModel[int]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[int, Field(ge=0, le=4294967295)]
+    """
+    The remaining time until the bpdu-guard-down-time expires and the error is cleared on the interface
+    """
 
 
 class DomainNameType(RootModel[str]):
@@ -69,6 +79,86 @@ class DomainNameType(RootModel[str]):
     """
 
 
+class DomainSearchListLeafList(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^((([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.)*([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.?)|\\.$).*$'
+        ),
+    ]
+    """
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames - option 119
+    """
+
+
+class DomainSearchListLeafList2(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^((([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.)*([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.?)|\\.$).*$'
+        ),
+    ]
+    """
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames - option 119
+    """
+
+
+class DomainSearchListLeafList3(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^((([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.)*([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.?)|\\.$).*$'
+        ),
+    ]
+    """
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames - option 119
+    """
+
+
+class DomainSearchListLeafList4(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^((([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.)*([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.?)|\\.$).*$'
+        ),
+    ]
+    """
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames
+    """
+
+
+class DomainSearchListLeafList5(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^((([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.)*([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.?)|\\.$).*$'
+        ),
+    ]
+    """
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames
+    """
+
+
 class DscpValueType(RootModel[int]):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -80,6 +170,58 @@ class DscpValueType(RootModel[int]):
     """
 
 
+class FilterLeafList(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str, Field(pattern='^(?=^([0-9a-zA-Z\\-_.@!%^*()\\[\\]{}|\\\\/<>,;])+$).*$')
+    ]
+    """
+    A set of all-matching criteria that messages must fulfill in order to be captured
+    """
+
+
+class FilterLeafList2(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str, Field(pattern='^(?=^([0-9a-zA-Z\\-_.@!%^*()\\[\\]{}|\\\\/<>,;])+$).*$')
+    ]
+    """
+    A set of all-matching criteria that messages must fulfill in order to be captured
+    """
+
+
+class FilterLeafList3(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str, Field(pattern='^(?=^([0-9a-zA-Z\\-_.@!%^*()\\[\\]{}|\\\\/<>,;])+$).*$')
+    ]
+    """
+    A set of all-matching criteria that messages must fulfill in order to be captured
+    """
+
+
+class FilterLeafList4(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str, Field(pattern='^(?=^([0-9a-zA-Z\\-_.@!%^*()\\[\\]{}|\\\\/<>,;])+$).*$')
+    ]
+    """
+    A set of all-matching criteria that messages must fulfill in order to be captured
+    """
+
+
 class GnssContainer(BaseModel):
     pass
     model_config = ConfigDict(
@@ -88,7 +230,34 @@ class GnssContainer(BaseModel):
     )
 
 
-class IndexLeaf3(RootModel[int]):
+class HealthCheckLeaf1(RootModel[int]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[int, Field(ge=6, le=1500)]
+    """
+    RADIUS and TACACS+ health check interval
+    """
+
+
+class HoldDownTimerLeaf1(RootModel[int]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[int, Field(ge=1, le=500)]
+    """
+    Specifies a hold-down timer value when seamless-bfd is enabled
+
+    The timer is started when the number of S-BFD sessions that are up drops below the threshold. The TE-policy path is not considered to be up again until the hold-down timer has expired and the number of S-BFD sessions that are up equals or exceeds the threshold.
+    A grace preiod after session down such that sBFD session flaps does not impact active path.
+
+    The default is 4 seconds.
+    """
+
+
+class IndexLeaf4(RootModel[int]):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -144,7 +313,7 @@ class Ipv6AddressWithZoneType(RootModel[str]):
     root: Annotated[
         str,
         Field(
-            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(%.+)?$)(?=^(([^:]+:){6}(([^:]+:[^:]+)|(.*\\..*)))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)(%.+)?$)(?=^([^%]+)(%(mgmt0\\.0|system0\\.0|sync0\\.0|lo(0|1[0-9][0-9]|2([0-4][0-9]|5[0-5])|[1-9][0-9]|[1-9])\\.(0|[1-9](\\d){0,3})|lif-.*\\.(0|[1-9](\\d){0,3})|vhn-.*\\.(0|[1-9](\\d){0,3})|enp(0|1[0-9][0-9]|2([0-4][0-9]|5[0-5])|[1-9][0-9]|[1-9])s(0|[1-9]|[1-2][0-9]|3[0-1])f[0-7]\\.(0|[1-9](\\d){0,3})|ethernet-([1-9](\\d){0,1}(/[abcdef])?(/[1-9](\\d){0,1})?/(([1-9](\\d){0,1})|(1[0-1]\\d)|(12[0-8])))\\.([0]|[1-9](\\d){0,3})|irb(0|1[0-9][0-9]|2([0-4][0-9]|5[0-5])|[1-9][0-9]|[1-9])\\.(0|[1-9](\\d){0,3})|lag(([1-9](\\d){0,2})|(1000))\\.(0|[1-9](\\d){0,3})))?$).*$'
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(%.+)?$)(?=^(([^:]+:){6}(([^:]+:[^:]+)|(.*\\..*)))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)(%.+)?$)(?=^([^%]+)(%(mgmt0\\.0|system0\\.0|lo(0|1[0-9][0-9]|2([0-4][0-9]|5[0-5])|[1-9][0-9]|[1-9])\\.(0|[1-9](\\d){0,3})|lif-.*\\.(0|[1-9](\\d){0,3})|vhn-.*\\.(0|[1-9](\\d){0,3})|enp(0|1[0-9][0-9]|2([0-4][0-9]|5[0-5])|[1-9][0-9]|[1-9])s(0|[1-9]|[1-2][0-9]|3[0-1])f[0-7]\\.(0|[1-9](\\d){0,3})|ethernet-([1-9](\\d){0,1}(/m[1-6])?(/[1-9](\\d){0,1})?/(([1-9](\\d){0,1})|(1[0-1]\\d)|(12[0-8])))\\.([0]|[1-9](\\d){0,3})|irb(0|1[0-9][0-9]|2([0-4][0-9]|5[0-5])|[1-9][0-9]|[1-9])\\.(0|[1-9](\\d){0,3})|lag(([1-9](\\d){0,2})|(1000))\\.(0|[1-9](\\d){0,3})))?$).*$'
         ),
     ]
     """
@@ -171,63 +340,6 @@ class Ipv6Type(RootModel[str]):
     ]
 
 
-class LiHourlyStatusContainer(BaseModel):
-    """
-    An hourly notification to the LI monitoring system where li deployment status is success and in-use
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    allow_local_save: Annotated[
-        Optional[bool], Field(alias='srl_nokia-lawful-intercept:allow-local-save')
-    ] = None
-    hourly_count: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-lawful-intercept:hourly-count',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The date-and-time type is a profile of the ISO 8601
-    standard for representation of dates and times using the
-    Gregorian calendar.  The profile is defined by the
-    date-time production in Section 5.6 of RFC 3339.
-
-    The date-and-time type is compatible with the dateTime XML
-    schema type with the following notable exceptions:
-
-    (a) The date-and-time type does not allow negative years.
-
-    (b) The date-and-time time-offset -00:00 indicates an unknown
-        time zone (see RFC 3339) while -00:00 and +00:00 and Z
-        all represent the same time zone in dateTime.
-
-    (c) The canonical format (see below) of data-and-time values
-        differs from the canonical format used by the dateTime XML
-        schema type, which requires all times to be in UTC using
-        the time-offset 'Z'.
-
-    This type is not equivalent to the DateAndTime textual
-    convention of the SMIv2 since RFC 3339 uses a different
-    separator between full-date and full-time and provides
-    higher resolution of time-secfrac.
-
-    The canonical format for date-and-time values with a known time
-    zone uses a numeric time zone offset that is calculated using
-    the device's configured known offset to UTC time.  A change of
-    the device's offset to UTC time will cause date-and-time values
-    to change accordingly.  Such changes might happen periodically
-    in case a server follows automatically daylight saving time
-    (DST) time zone offset changes.  The canonical format for
-    date-and-time values with an unknown time zone (usually
-    referring to the notion of local time) uses the time-offset
-    -00:00.
-    """
-
-
 class MtuContainer(BaseModel):
     """
     Top-level container for configuration and state data related to the system MTU
@@ -243,7 +355,7 @@ class MtuContainer(BaseModel):
     """
     System default port MTU in bytes including ethernet overhead but excluding 4-bytes FCS
 
-    The 7220 IXR-D1, 7220 IXR-D2, 7220 IXR-D3, 7220 IXR-D4, 7220 IXR-D5, 7220 IXR-H2, 7220 IXR-H3, and 7220 IXR-H4 systems support a maximum port MTU of 9412 bytes.
+    The 7220 IXR systems support a maximum port MTU of 9412 bytes.
 
     The 7730 SXR systems support a maximum port MTU of 9408 bytes.
     """
@@ -257,8 +369,7 @@ class MtuContainer(BaseModel):
     is also used as the oper-mac-vrf-mtu and oper-vpws-mtu value if the network-instance does
     not have subinterfaces.
 
-    The 7220 IXR-D1, 7220 IXR-D2, 7220 IXR-D3, 7220 IXR-D4, 7220 IXR-D5, 7220 IXR-H2, 7220 IXR-H3, and
-    7220 IXR-H4 systems support a maximum L2 MTU of 9412 bytes.
+    The 7220 IXR systems support a maximum L2 MTU of 9412 bytes.
 
     The 7730 SXR systems support a maximum L2 MTU of 9408 bytes.
     """
@@ -268,7 +379,7 @@ class MtuContainer(BaseModel):
     """
     System default IP MTU in bytes including the IP header but excluding Ethernet overhead
 
-    The 7220 IXR-D1, 7220 IXR-D2, 7220 IXR-D3, 7220 IXR-D4, 7220 IXR-D5, 7220 IXR-H2, 7220 IXR-H3, and 7220 IXR-H4 systems support a maximum IP MTU of 9398 bytes.
+    The 7220 IXR systems support a maximum IP MTU of 9398 bytes.
 
     The 7730 SXR systems support a maximum IP MTU of 9394 bytes.
     """
@@ -292,7 +403,7 @@ class MtuContainer(BaseModel):
     """
 
 
-class MulticastContainer(BaseModel):
+class MulticastContainer2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -342,7 +453,7 @@ class PathsLeafList(RootModel[str]):
     """
 
 
-class PtpContainer(BaseModel):
+class PtpContainer2(BaseModel):
     pass
     model_config = ConfigDict(
         populate_by_name=True,
@@ -404,6 +515,21 @@ class RateLimitPerHostContainer2(BaseModel):
     """
 
 
+class RevertTimerLeaf1(RootModel[int]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[int, Field(ge=0, le=4320)]
+    """
+    Revert timer for the segment-list.
+
+    Timer till a revert to primary/best path after it is recovered from a failure. In case of uncolored te-policy, applies to primary segment-list and in case of colored te-policy applies to best candidate path.
+
+    The default is 0 seconds.
+    """
+
+
 class RouteDistinguisherType0Type(RootModel[str]):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -451,24 +577,102 @@ class RouteDistinguisherType2bType(RootModel[str]):
     root: Annotated[
         str,
         Field(
-            pattern='^(?=^(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9]).(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$'
+            pattern='^(?=^(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])\\.(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$'
         ),
     ]
 
 
-class SearchListLeafList(RootModel[str]):
+class SampleCountBasedContainer(BaseModel):
+    """
+    Systematic count-based packet Sampling.
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    root: Annotated[
-        str,
-        Field(
-            pattern='^(?=^((([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.)*([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.?)|\\.$).*$'
-        ),
+    packet_interval: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:packet-interval', ge=1, le=1)
+    ] = None
+    """
+    The number of packets that are consecutively
+    sampled between gaps of length packetSpace.
+    This parameter corresponds to the Information Element
+    samplingPacketInterval and to psampSampCountBasedInterval
+    in the PSAMP MIB module.
+    """
+    packet_space: Annotated[
+        int, Field(alias='srl_nokia-ipfix:packet-space', ge=0, le=4294967295)
     ]
     """
-    An ordered list of domains to search when resolving a host name
+    The number of unsampled packets between two
+    Sampling intervals.
+    This parameter corresponds to the Information Element
+    samplingPacketSpace and to psampSampCountBasedSpace
+    in the PSAMP MIB module.
+    """
+
+
+class Server6PreferenceContainer(BaseModel):
+    """
+    Specifies value to be verified with the received DHCPv6 server preference option
+
+    Verifies that DHCPv6 server preference option value is in the range between min and max.
+    If DHCPv6 server preference option is not received then the preference value is set to zero.
+    If not specified then the verification is skipped.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    min: Annotated[
+        Optional[int], Field(alias='srl_nokia-dhcp-server-guard:min', ge=0, le=255)
+    ] = None
+    """
+    Specifies the minimum value expected in DHCPv6 server preference option
+    """
+    max: Annotated[
+        Optional[int], Field(alias='srl_nokia-dhcp-server-guard:max', ge=0, le=255)
+    ] = None
+    """
+    Specifies the maximum value expected in DHCPv6 server preference option
+    """
+
+
+class ServiceRequestContainer(BaseModel):
+    """
+    Tacacs VSA config to be retrieved from server
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    nokia_srl_authorization_role: Annotated[
+        Optional[bool], Field(alias='srl_nokia-aaa:nokia-srl-authorization-role')
+    ] = False
+    """
+    Request nokia-srl-authorization-role service VSAs
+    """
+    nokia_srl_authorization_role_cli: Annotated[
+        Optional[bool], Field(alias='srl_nokia-aaa:nokia-srl-authorization-role-cli')
+    ] = False
+    """
+    Request nokia-srl-authorization-role-cli service VSAs
+    """
+    nokia_srl_authorization_role_netconf: Annotated[
+        Optional[bool],
+        Field(alias='srl_nokia-aaa:nokia-srl-authorization-role-netconf'),
+    ] = False
+    """
+    Request nokia-srl-authorization-role-netconf service VSAs
+    """
+    nokia_srl_configuration_role: Annotated[
+        Optional[bool], Field(alias='srl_nokia-aaa:nokia-srl-configuration-role')
+    ] = False
+    """
+    Request nokia-srl-configuration-role service VSAs
     """
 
 
@@ -487,18 +691,37 @@ class SpiffeIdsLeafList(RootModel[str]):
     """
 
 
-class SpiffeIdsLeafList2(RootModel[str]):
+class StaticFunctionContainer(BaseModel):
+    """
+    Enter the static-function context
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    root: Annotated[str, Field(pattern='^(?=^spiffe://.*$).*$')]
+    max_entries: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:max-entries', ge=1, le=1048575)
+    ] = 1
     """
-    The SPIFFE ID list for the user, including the spiffe:// URI
+    Maximum number of static micro-segment functions
+    """
 
-    This list of IDs is evaluated by TLS-consuming servers (e.g. gNMI, JSON-RPC) that use a TLS server-profile with authenticate-client set to true.
 
-    If a match is found in any incoming offered client certificates, the provider of the certificate is associated with this local user, and given resulting permissions.
+class StaticFunctionContainer2(BaseModel):
+    """
+    Enter the static-function context
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    max_entries: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:max-entries', ge=1, le=1048575)
+    ] = 1
+    """
+    Maximum number of static SID functions
     """
 
 
@@ -521,24 +744,24 @@ class Sync0Container(BaseModel):
     )
 
 
-class Sync0Container2(BaseModel):
-    pass
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-
-
-class SynchronizedLeaf1(RootModel[str]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[str, Field(pattern='^(?=^unsynchronized$).*$')]
+class SystemContainer(BaseModel):
     """
-    Address of the NTP server that the local client is synchronized to
-    This field is set to 'unsynchronized', if the local client is not
-    synchronized
+    Properties of the LI system
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-lawful-intercept:name',
+            pattern='^(?=^([a-zA-Z0-9]+[\\-\\.])*[a-zA-Z0-9]+$).*$',
+        ),
+    ] = None
+    """
+    Hostname of the LI management system
     """
 
 
@@ -558,6 +781,41 @@ class TacacsContainer(BaseModel):
     The TACACS+ priv-lvl to map to this role
 
     All roles matching each specific priv-lvl, and their lessers are merged together to create the final ruleset applied to the user.
+    """
+
+
+class TacacsContainer2(BaseModel):
+    """
+    Top-level container for TACACS servergroup data
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    service_request: Annotated[
+        Optional[ServiceRequestContainer], Field(alias='srl_nokia-aaa:service-request')
+    ] = None
+
+
+class TacacsContainer3(BaseModel):
+    """
+    Top-level container for TACACS+ server data
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    port: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:port', ge=0, le=65535)
+    ] = 49
+    """
+    The port number on which to contact the TACACS+ server
+    """
+    secret_key: Annotated[Optional[str], Field(alias='srl_nokia-aaa:secret-key')] = None
+    """
+    The unencrypted shared key used between the system and server, up to 128 characters cleartext
     """
 
 
@@ -741,23 +999,6 @@ class UnicastMsgRateContainer(BaseModel):
     """
 
 
-class UnixSocketContainer2(BaseModel):
-    """
-    Create a new unix socket and bind the NETCONF service to it
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    socket_path: Annotated[
-        Optional[str], Field(alias='srl_nokia-netconf-server:socket-path')
-    ] = None
-    """
-    Path to the unix socket used by NETCONF
-    """
-
-
 class UserListEntry2(BaseModel):
     """
     The list of protocols that are using this label block. If the block is not shared there will only be 1 user
@@ -804,6 +1045,17 @@ class UserListEntry3(BaseModel):
     """
 
 
+class VlanIdLeaf1(RootModel[int]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[int, Field(ge=0, le=4094)]
+    """
+    VLAN tagging requirements for the application type, VLAN-ID (range 0..4094) or untagged
+    """
+
+
 class YangContainer(BaseModel):
     """
     Top-level container for application state related to YANG
@@ -836,20 +1088,10 @@ class EnumerationEnum(Enum):
 
 
 class EnumerationEnum10(Enum):
-    remote = 'remote'
-    remote_and_console = 'remote-and-console'
-
-
-class EnumerationEnum11(Enum):
-    ar2 = 'ar2'
-    sha2 = 'sha2'
-    yescrypt = 'yescrypt'
-
-
-class EnumerationEnum12(Enum):
     cli = 'cli'
     gnmi = 'gnmi'
     gnoi = 'gnoi'
+    gnpsi = 'gnpsi'
     gnsi = 'gnsi'
     gribi = 'gribi'
     netconf = 'netconf'
@@ -859,7 +1101,108 @@ class EnumerationEnum12(Enum):
     grpc_reflection = 'grpc-reflection'
 
 
-class EnumerationEnum13(Enum):
+class EnumerationEnum100(Enum):
+    admin_disabled = 'admin-disabled'
+    failed_to_compile = 'failed-to-compile'
+    exception = 'exception'
+    timeout = 'timeout'
+    subscription_failed = 'subscription-failed'
+    script_unavailable = 'script-unavailable'
+    script_error = 'script-error'
+    missing_function = 'missing-function'
+    system_error = 'system-error'
+    ephemeral_action_failed = 'ephemeral-action-failed'
+    cfg_action_failed = 'cfg-action-failed'
+    tools_action_failed = 'tools-action-failed'
+    state_action_failed = 'state-action-failed'
+    script_action_failed = 'script-action-failed'
+
+
+class EnumerationEnum101(Enum):
+    request = 'request'
+    response = 'response'
+    common = 'common'
+
+
+class EnumerationEnum102(Enum):
+    accept = 'accept'
+    discard = 'discard'
+
+
+class EnumerationEnum103(Enum):
+    input = 'input'
+    output = 'output'
+    both = 'both'
+
+
+class EnumerationEnum104(Enum):
+    unused = 'unused'
+    prs = 'prs'
+    stu = 'stu'
+    st2 = 'st2'
+    tnc = 'tnc'
+    st3e = 'st3e'
+    st3 = 'st3'
+    prc = 'prc'
+    ssua = 'ssua'
+    ssub = 'ssub'
+    sec = 'sec'
+    eec1 = 'eec1'
+    eec2 = 'eec2'
+
+
+class EnumerationEnum105(Enum):
+    unknown = 'unknown'
+    prs = 'prs'
+    stu = 'stu'
+    st2 = 'st2'
+    tnc = 'tnc'
+    st3e = 'st3e'
+    st3 = 'st3'
+    smc = 'smc'
+    st4 = 'st4'
+    dus = 'dus'
+    prc = 'prc'
+    ssua = 'ssua'
+    ssub = 'ssub'
+    sec = 'sec'
+    dnu = 'dnu'
+    inv = 'inv'
+    pno = 'pno'
+    eec1 = 'eec1'
+    eec2 = 'eec2'
+    failed = 'failed'
+
+
+class EnumerationEnum106(Enum):
+    qualified = 'qualified'
+    not_qualified = 'not-qualified'
+
+
+class EnumerationEnum107(Enum):
+    not_applicable = 'not-applicable'
+    los = 'los'
+    ssm_quality = 'ssm-quality'
+    out_of_range = 'out-of-range'
+    wtr = 'wtr'
+    admin_disabled = 'admin-disabled'
+
+
+class EnumerationEnum108(Enum):
+    sdh = 'sdh'
+    sonet = 'sonet'
+
+
+class EnumerationEnum109(Enum):
+    field_1 = '1'
+    field_2 = '2'
+    field_3 = '3'
+    field_4 = '4'
+    field_5 = '5'
+    internal = 'internal'
+
+
+class EnumerationEnum11(Enum):
     action = 'action'
     cancel_commit = 'cancel-commit'
     close_session = 'close-session'
@@ -879,24 +1222,231 @@ class EnumerationEnum13(Enum):
     validate = 'validate'
 
 
-class EnumerationEnum14(Enum):
+class EnumerationEnum110(Enum):
+    not_present = 'not-present'
+    master_free_run = 'master-free-run'
+    master_holdover = 'master-holdover'
+    master_locked = 'master-locked'
+    slave = 'slave'
+    acquiring = 'acquiring'
+
+
+class EnumerationEnum111(Enum):
+    itug8275dot1 = 'itug8275dot1'
+    itug8275dot2 = 'itug8275dot2'
+
+
+class EnumerationEnum112(Enum):
+    bc = 'bc'
+
+
+class EnumerationEnum113(Enum):
+    backup = 'backup'
+    time_source = 'time-source'
+
+
+class EnumerationEnum114(Enum):
+    sync0_a = 'sync0-a'
+    sync0_b = 'sync0-b'
+
+
+class EnumerationEnum115(Enum):
+    not_applicable = 'not-applicable'
+    initial = 'initial'
+    acquiring = 'acquiring'
+    holdover = 'holdover'
+    locked = 'locked'
+
+
+class EnumerationEnum116(Enum):
+    not_applicable = 'not-applicable'
+    initial = 'initial'
+    acquiring = 'acquiring'
+    phase_tracking = 'phase-tracking'
+    holdover = 'holdover'
+    locked = 'locked'
+
+
+class EnumerationEnum117(Enum):
+    atomic_clock = 'atomic-clock'
+    gps = 'gps'
+    terrestrial_radio = 'terrestrial-radio'
+    ptp = 'ptp'
+    ntp = 'ntp'
+    hand_set = 'hand-set'
+    other = 'other'
+    internal_oscillator = 'internal-oscillator'
+    reserved = 'reserved'
+
+
+class EnumerationEnum118(Enum):
+    initializing = 'initializing'
+    faulty = 'faulty'
+    disabled = 'disabled'
+    listening = 'listening'
+    pre_master = 'pre-master'
+    master = 'master'
+    passive = 'passive'
+    uncalibrated = 'uncalibrated'
+    slave = 'slave'
+
+
+class EnumerationEnum119(Enum):
+    forwardable = 'forwardable'
+    non_forwardable = 'non-forwardable'
+
+
+class EnumerationEnum12(Enum):
+    none = 'none'
+
+
+class EnumerationEnum120(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum121(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum122(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum123(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum124(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum125(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum126(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum127(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum128(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum129(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum13(Enum):
     request = 'request'
     response = 'response'
+    stream = 'stream'
     common = 'common'
     grpc = 'grpc'
 
 
-class EnumerationEnum15(Enum):
+class EnumerationEnum130(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum131(Enum):
+    pending = 'pending'
+    granted = 'granted'
+    denied = 'denied'
+    expired = 'expired'
+    canceled = 'canceled'
+
+
+class EnumerationEnum132(Enum):
+    forwardable = 'forwardable'
+    non_forwardable = 'non-forwardable'
+
+
+class EnumerationEnum133(Enum):
+    gnss_a = 'gnss-a'
+    gnss_b = 'gnss-b'
+
+
+class EnumerationEnum134(Enum):
+    gnss_a = 'gnss-a'
+    gnss_b = 'gnss-b'
+
+
+class EnumerationEnum135(Enum):
+    unknown = 'unknown'
+    locked = 'locked'
+    not_locked = 'not-locked'
+
+
+class EnumerationEnum136(Enum):
+    unknown = 'unknown'
+    unsupported = 'unsupported'
+    ok = 'ok'
+    over_current = 'over-current'
+    under_current = 'under-current'
+    no_bias_voltage = 'no-bias-voltage'
+
+
+class EnumerationEnum14(Enum):
     native = 'native'
     openconfig = 'openconfig'
 
 
-class EnumerationEnum16(Enum):
+class EnumerationEnum15(Enum):
     gnmi = 'gnmi'
     acctz = 'acctz'
+    gribi = 'gribi'
+    p4rt = 'p4rt'
 
 
-class EnumerationEnum17(Enum):
+class EnumerationEnum16(Enum):
     on_change = 'ON_CHANGE'
     sample = 'SAMPLE'
     target_defined = 'TARGET_DEFINED'
@@ -904,88 +1454,202 @@ class EnumerationEnum17(Enum):
     once = 'ONCE'
 
 
-class EnumerationEnum18(Enum):
+class EnumerationEnum17(Enum):
     preserve = 'preserve'
     delete = 'delete'
 
 
+class EnumerationEnum18(Enum):
+    static = 'static'
+    duplicate = 'duplicate'
+    learnt = 'learnt'
+    irb_interface = 'irb-interface'
+    evpn = 'evpn'
+    evpn_static = 'evpn-static'
+    irb_interface_anycast = 'irb-interface-anycast'
+    proxy_anti_spoof = 'proxy-anti-spoof'
+    reserved = 'reserved'
+    eth_cfm = 'eth-cfm'
+    irb_interface_vrrp = 'irb-interface-vrrp'
+
+
 class EnumerationEnum19(Enum):
-    ready = 'ready'
-    not_ready = 'not-ready'
-    delete_pending = 'delete-pending'
-    updating = 'updating'
+    static = 'static'
+    dynamic = 'dynamic'
+    evpn = 'evpn'
+    duplicate = 'duplicate'
 
 
 class EnumerationEnum2(Enum):
-    enable = 'enable'
-    disable = 'disable'
+    idevid = 'idevid'
+    oidevid = 'oidevid'
 
 
 class EnumerationEnum20(Enum):
-    ready = 'ready'
-    not_ready = 'not-ready'
-    delete_pending = 'delete-pending'
-    updating = 'updating'
+    both = 'both'
+    input = 'input'
+    output = 'output'
 
 
 class EnumerationEnum21(Enum):
-    tcp_md5 = 'tcp-md5'
-    isis = 'isis'
-    ospf = 'ospf'
-    tcp_ao = 'tcp-ao'
-    vrrp = 'vrrp'
-    macsec = 'macsec'
+    action = 'action'
+    cancel_commit = 'cancel-commit'
+    close_session = 'close-session'
+    commit = 'commit'
+    copy_config = 'copy-config'
+    delete_config = 'delete-config'
+    discard_changes = 'discard-changes'
+    edit_config = 'edit-config'
+    edit_data = 'edit-data'
+    get_config = 'get-config'
+    get_data = 'get-data'
+    get_schema = 'get-schema'
+    get = 'get'
+    hello = 'hello'
+    kill_session = 'kill-session'
+    lock = 'lock'
+    unknown = 'unknown'
+    unlock = 'unlock'
+    validate = 'validate'
 
 
 class EnumerationEnum22(Enum):
-    none = 'none'
+    rsyslog_file_format = 'RSYSLOG_FileFormat'
+    rsyslog_traditional_file_format = 'RSYSLOG_TraditionalFileFormat'
+    rsyslog_debug_format = 'RSYSLOG_DebugFormat'
 
 
 class EnumerationEnum23(Enum):
-    cleartext = 'cleartext'
-    md5 = 'md5'
-    hmac_md5 = 'hmac-md5'
-    hmac_sha_1 = 'hmac-sha-1'
-    hmac_sha_256 = 'hmac-sha-256'
-    aes_128_cmac = 'aes-128-cmac'
-    aes_256_cmac = 'aes-256-cmac'
+    all = 'all'
+    audit = 'audit'
+    auth = 'auth'
+    authpriv = 'authpriv'
+    console = 'console'
+    cron = 'cron'
+    daemon = 'daemon'
+    ftp = 'ftp'
+    kern = 'kern'
+    lpr = 'lpr'
+    mail = 'mail'
+    news = 'news'
+    ntp = 'ntp'
+    syslog = 'syslog'
+    user = 'user'
+    uucp = 'uucp'
+    local0 = 'local0'
+    local1 = 'local1'
+    local2 = 'local2'
+    local3 = 'local3'
+    local4 = 'local4'
+    local5 = 'local5'
+    local6 = 'local6'
+    local7 = 'local7'
 
 
 class EnumerationEnum24(Enum):
-    forever = 'forever'
+    emergency = 'emergency'
+    alert = 'alert'
+    critical = 'critical'
+    error = 'error'
+    warning = 'warning'
+    notice = 'notice'
+    informational = 'informational'
+    debug = 'debug'
 
 
 class EnumerationEnum25(Enum):
+    udp = 'udp'
+    tcp = 'tcp'
+    tls = 'tls'
+
+
+class EnumerationEnum26(Enum):
+    rsyslog_forward_format = 'RSYSLOG_ForwardFormat'
+    rsyslog_syslog_protocol23_format = 'RSYSLOG_SyslogProtocol23Format'
+    rsyslog_traditional_forward_format = 'RSYSLOG_TraditionalForwardFormat'
+
+
+class EnumerationEnum27(Enum):
+    store_and_forward = 'store-and-forward'
+    cut_through = 'cut-through'
+
+
+class EnumerationEnum28(Enum):
+    active = 'active'
+    inactive = 'inactive'
+
+
+class EnumerationEnum29(Enum):
     mirror_inst_admin_down = 'mirror-inst-admin-down'
     no_mirror_source = 'no-mirror-source'
     local_mirror_subif_down = 'local-mirror-subif-down'
     remote_mirror_dst_unreachable = 'remote-mirror-dst-unreachable'
 
 
-class EnumerationEnum26(Enum):
+class EnumerationEnum3(Enum):
+    enable = 'enable'
+    disable = 'disable'
+
+
+class EnumerationEnum30(Enum):
     ingress_only = 'ingress-only'
     egress_only = 'egress-only'
     ingress_egress = 'ingress-egress'
 
 
-class EnumerationEnum27(Enum):
+class EnumerationEnum31(Enum):
     mirror_source_ingress_table_full = 'mirror-source-ingress-table-full'
     mirror_source_egress_table_full = 'mirror-source-egress-table-full'
     not_applicable = 'not-applicable'
 
 
-class EnumerationEnum28(Enum):
+class EnumerationEnum32(Enum):
+    ipv4 = 'ipv4'
+    ipv6 = 'ipv6'
+    mac = 'mac'
+
+
+class EnumerationEnum33(Enum):
     l2ogre = 'l2ogre'
     l3ogre = 'l3ogre'
-    mpls_gre = 'mpls-gre'
+    mpls = 'mpls'
 
 
-class EnumerationEnum29(Enum):
-    store_and_forward = 'store-and-forward'
-    cut_through = 'cut-through'
+class EnumerationEnum34(Enum):
+    destination_nexthop_not_resolved = 'destination-nexthop-not-resolved'
+    destination_tunnel_nexthop_resolve_failed = (
+        'destination-tunnel-nexthop-resolve-failed'
+    )
+    destination_nexthop_group_id_failed = 'destination-nexthop-group-id-failed'
+    not_applicable = 'not-applicable'
 
 
-class EnumerationEnum3(Enum):
+class EnumerationEnum35(Enum):
+    messages = 'messages'
+
+
+class EnumerationEnum36(Enum):
+    messages = 'messages'
+
+
+class EnumerationEnum37(Enum):
+    inline = 'inline'
+    popup = 'popup'
+
+
+class EnumerationEnum38(Enum):
+    fuzzy = 'fuzzy'
+    prefix = 'prefix'
+    smart = 'smart'
+    substring = 'substring'
+
+
+class EnumerationEnum39(Enum):
+    basic = 'basic'
+    advanced = 'advanced'
+
+
+class EnumerationEnum4(Enum):
     up = 'up'
     down = 'down'
     empty = 'empty'
@@ -1001,63 +1665,178 @@ class EnumerationEnum3(Enum):
     waiting = 'waiting'
 
 
-class EnumerationEnum30(Enum):
-    static = 'static'
-    duplicate = 'duplicate'
-    learnt = 'learnt'
-    irb_interface = 'irb-interface'
-    evpn = 'evpn'
-    evpn_static = 'evpn-static'
-    irb_interface_anycast = 'irb-interface-anycast'
-    proxy_anti_spoof = 'proxy-anti-spoof'
-    reserved = 'reserved'
-    eth_cfm = 'eth-cfm'
-    irb_interface_vrrp = 'irb-interface-vrrp'
+class EnumerationEnum40(Enum):
+    json = 'json'
+    table = 'table'
+    text = 'text'
+    xml = 'xml'
+    yaml = 'yaml'
 
 
-class EnumerationEnum31(Enum):
-    static = 'static'
-    dynamic = 'dynamic'
-    evpn = 'evpn'
-    duplicate = 'duplicate'
+class EnumerationEnum41(Enum):
+    off = 'off'
+    on = 'on'
 
 
-class EnumerationEnum32(Enum):
+class EnumerationEnum42(Enum):
+    oc = 'oc'
+    srl = 'srl'
+
+
+class EnumerationEnum43(Enum):
+    mac_vrf = 'mac-vrf'
+    vxlan_interface = 'vxlan-interface'
+    l2_proxy_arp_nd = 'l2-proxy-arp-nd'
+    mfib = 'mfib'
+    mac_vrf_bgp_evpn = 'mac-vrf-bgp-evpn'
+    mldp = 'mldp'
+
+
+class EnumerationEnum44(Enum):
+    ready = 'ready'
+    not_ready = 'not-ready'
+    delete_pending = 'delete-pending'
+    updating = 'updating'
+
+
+class EnumerationEnum45(Enum):
+    ready = 'ready'
+    not_ready = 'not-ready'
+    delete_pending = 'delete-pending'
+    updating = 'updating'
+
+
+class EnumerationEnum46(Enum):
+    tcp_md5 = 'tcp-md5'
+    isis = 'isis'
+    ospf = 'ospf'
+    tcp_ao = 'tcp-ao'
+    vrrp = 'vrrp'
+    macsec = 'macsec'
+    macsec_fallback = 'macsec-fallback'
+
+
+class EnumerationEnum47(Enum):
+    none = 'none'
+
+
+class EnumerationEnum48(Enum):
+    cleartext = 'cleartext'
+    md5 = 'md5'
+    hmac_md5 = 'hmac-md5'
+    hmac_sha_1 = 'hmac-sha-1'
+    hmac_sha_256 = 'hmac-sha-256'
+    aes_128_cmac = 'aes-128-cmac'
+    aes_256_cmac = 'aes-256-cmac'
+
+
+class EnumerationEnum49(Enum):
+    forever = 'forever'
+
+
+class EnumerationEnum5(Enum):
+    password = 'password'
+    publickey = 'publickey'
+    keyboard_interactive = 'keyboard-interactive'
+
+
+class EnumerationEnum50(Enum):
+    shared = 'shared'
+    private = 'private'
+
+
+class EnumerationEnum51(Enum):
+    validating = 'validating'
+    publishing = 'publishing'
+    unconfirmed = 'unconfirmed'
+    checkpoint = 'checkpoint'
+    save = 'save'
+    complete = 'complete'
+    reverting = 'reverting'
+    failed = 'failed'
+
+
+class EnumerationEnum52(Enum):
+    active = 'ACTIVE'
+    sandbox = 'SANDBOX'
+
+
+class EnumerationEnum53(Enum):
+    read = 'read'
+    write = 'write'
+    deny = 'deny'
+
+
+class EnumerationEnum54(Enum):
+    disable = 'disable'
+
+
+class EnumerationEnum55(Enum):
+    disable = 'disable'
+
+
+class EnumerationEnum56(Enum):
+    monitored = 'monitored'
+    ecmp_protected = 'ecmp-protected'
+    linear = 'linear'
+
+
+class EnumerationEnum57(Enum):
+    psp = 'psp'
+    usp = 'usp'
+    psp_usd = 'psp-usd'
+    usp_usd = 'usp-usd'
+    psp_usp_usd = 'psp-usp-usd'
+
+
+class EnumerationEnum58(Enum):
+    accept = 'accept'
+    discard = 'discard'
+
+
+class EnumerationEnum59(Enum):
+    high = 'high'
+    medium = 'medium'
+    low = 'low'
+
+
+class EnumerationEnum6(Enum):
+    hiba_chk = 'hiba-chk'
+
+
+class EnumerationEnum60(Enum):
     none = 'none'
     virtual = 'virtual'
 
 
-class EnumerationEnum33(Enum):
+class EnumerationEnum61(Enum):
     all_active = 'all-active'
     single_active = 'single-active'
 
 
-class EnumerationEnum34(Enum):
+class EnumerationEnum62(Enum):
     default = 'default'
     preference = 'preference'
     manual = 'manual'
 
 
-class EnumerationEnum35(Enum):
+class EnumerationEnum63(Enum):
     include = 'include'
     exclude = 'exclude'
 
 
-class EnumerationEnum36(Enum):
+class EnumerationEnum64(Enum):
     use_system_ipv4_address = 'use-system-ipv4-address'
+    use_system_ipv6_address = 'use-system-ipv6-address'
 
 
-class EnumerationEnum37(Enum):
-    use_system_ipv4_address = 'use-system-ipv4-address'
-
-
-class EnumerationEnum38(Enum):
+class EnumerationEnum65(Enum):
     mpls_label = 'mpls-label'
     vni = 'vni'
     transposed_srv6_function = 'transposed-srv6-function'
 
 
-class EnumerationEnum39(Enum):
+class EnumerationEnum66(Enum):
     admin_disabled = 'admin-disabled'
     no_nexthop_address = 'no-nexthop-address'
     no_originating_address = 'no-originating-address'
@@ -1065,9 +1844,190 @@ class EnumerationEnum39(Enum):
     associated_interface_oper_down = 'associated-interface-oper-down'
     no_esi = 'no-esi'
     no_esi_label = 'no-esi-label'
+    tag_set_not_resolved = 'tag-set-not-resolved'
 
 
-class EnumerationEnum4(Enum):
+class EnumerationEnum67(Enum):
+    auto_derived_from_system_ip_0 = 'auto-derived-from-system-ip:0'
+    none = 'none'
+
+
+class EnumerationEnum68(Enum):
+    auto_derived_from_esi_bytes_1_6 = 'auto-derived-from-esi-bytes-1-6'
+    none = 'none'
+
+
+class EnumerationEnum69(Enum):
+    auto_derived_from_esi_bytes_1_6 = 'auto-derived-from-esi-bytes-1-6'
+    none = 'none'
+
+
+class EnumerationEnum7(Enum):
+    ssh_rsa_3076 = 'ssh-rsa-3076'
+    ecdsa_sha2_nistp256 = 'ecdsa-sha2-nistp256'
+    ecdsa_sha2_nistp521 = 'ecdsa-sha2-nistp521'
+    ssh_ed25519 = 'ssh-ed25519'
+    ssh_rsa_2048 = 'ssh-rsa-2048'
+    ssh_rsa_4096 = 'ssh-rsa-4096'
+
+
+class EnumerationEnum70(Enum):
+    no_loopback_address = 'no-loopback-address'
+    no_esi = 'no-esi'
+    none = 'none'
+    network_instance_oper_down = 'network-instance-oper-down'
+    bad_rd_format = 'bad-rd-format'
+
+
+class EnumerationEnum71(Enum):
+    rstp = 'rstp'
+    mstp = 'mstp'
+
+
+class EnumerationEnum72(Enum):
+    all = 'all'
+    bpdu = 'bpdu'
+    connectivity = 'connectivity'
+    exception = 'exception'
+    fsm_state = 'fsm-state'
+    fsm_timers = 'fsm-timers'
+    port_role = 'port-role'
+    port_state = 'port-state'
+
+
+class EnumerationEnum73(Enum):
+    root = 'ROOT'
+    none = 'NONE'
+
+
+class EnumerationEnum74(Enum):
+    stp = 'stp'
+    rstp = 'rstp'
+    mstp = 'mstp'
+
+
+class EnumerationEnum75(Enum):
+    dot1d = 'dot1d'
+    pvst = 'pvst'
+
+
+class EnumerationEnum76(Enum):
+    dhcp = 'dhcp'
+    dhcp_pd = 'dhcp-pd'
+    nd = 'nd'
+    static = 'static'
+
+
+class EnumerationEnum77(Enum):
+    endpoint = 'endpoint'
+    switch = 'switch'
+
+
+class EnumerationEnum78(Enum):
+    init = 'init'
+    in_progress = 'in-progress'
+    complete = 'complete'
+
+
+class EnumerationEnum79(Enum):
+    dhcp_discover = 'dhcp_discover'
+    dhcp_offer = 'dhcp_offer'
+    dhcp_request = 'dhcp_request'
+    dhcp_decline = 'dhcp_decline'
+    dhcp_ack = 'dhcp_ack'
+    dhcp_nak = 'dhcp_nak'
+    dhcp_release = 'dhcp_release'
+    dhcp_inform = 'dhcp_inform'
+
+
+class EnumerationEnum8(Enum):
+    remote = 'remote'
+    console = 'console'
+
+
+class EnumerationEnum80(Enum):
+    dhcp6_solicit = 'dhcp6_solicit'
+    dhcp6_advertise = 'dhcp6_advertise'
+    dhcp6_request = 'dhcp6_request'
+    dhcp6_confirm = 'dhcp6_confirm'
+    dhcp6_renew = 'dhcp6_renew'
+    dhcp6_rebind = 'dhcp6_rebind'
+    dhcp6_reply = 'dhcp6_reply'
+    dhcp6_release = 'dhcp6_release'
+    dhcp6_decline = 'dhcp6_decline'
+    dhcp6_reconfigure = 'dhcp6_reconfigure'
+    dhcp6_info_request = 'dhcp6_info_request'
+    dhcp6_relay_forward = 'dhcp6_relay_forward'
+    dhcp6_relay_reply = 'dhcp6_relay_reply'
+
+
+class EnumerationEnum81(Enum):
+    running = 'running'
+    waiting_for_config = 'waiting-for-config'
+    error = 'error'
+    starting = 'starting'
+    stopped = 'stopped'
+
+
+class EnumerationEnum82(Enum):
+    synchronized = 'synchronized'
+    not_synchronized = 'not-synchronized'
+    not_applicable = 'not-applicable'
+
+
+class EnumerationEnum83(Enum):
+    hot = 'hot'
+    warm = 'warm'
+    cold = 'cold'
+
+
+class EnumerationEnum84(Enum):
+    restart = 'restart'
+    stop = 'stop'
+    start = 'start'
+    reload = 'reload'
+    quit = 'quit'
+    kill = 'kill'
+
+
+class EnumerationEnum85(Enum):
+    ingress_only = 'ingress-only'
+    egress_only = 'egress-only'
+    ingress_egress = 'ingress-egress'
+
+
+class EnumerationEnum86(Enum):
+    received = 'received'
+    transmitted = 'transmitted'
+    common = 'common'
+
+
+class EnumerationEnum87(Enum):
+    chassis_component = 'CHASSIS_COMPONENT'
+    interface_alias = 'INTERFACE_ALIAS'
+    port_component = 'PORT_COMPONENT'
+    mac_address = 'MAC_ADDRESS'
+    network_address = 'NETWORK_ADDRESS'
+    interface_name = 'INTERFACE_NAME'
+    local = 'LOCAL'
+
+
+class EnumerationEnum88(Enum):
+    i_pv4 = 'IPv4'
+    i_pv6 = 'IPv6'
+
+
+class EnumerationEnum89(Enum):
+    untagged = 'untagged'
+
+
+class EnumerationEnum9(Enum):
+    ar2 = 'ar2'
+    sha2 = 'sha2'
+    yescrypt = 'yescrypt'
+
+
+class EnumerationEnum90(Enum):
     cs0 = 'CS0'
     le = 'LE'
     cs1 = 'CS1'
@@ -1092,102 +2052,270 @@ class EnumerationEnum4(Enum):
     cs7 = 'CS7'
 
 
-class EnumerationEnum40(Enum):
-    auto_derived_from_system_ip_0 = 'auto-derived-from-system-ip:0'
-    none = 'none'
-
-
-class EnumerationEnum41(Enum):
-    auto_derived_from_esi_bytes_1_6 = 'auto-derived-from-esi-bytes-1-6'
-    none = 'none'
-
-
-class EnumerationEnum42(Enum):
-    auto_derived_from_esi_bytes_1_6 = 'auto-derived-from-esi-bytes-1-6'
-    none = 'none'
-
-
-class EnumerationEnum43(Enum):
-    no_loopback_address = 'no-loopback-address'
-    no_esi = 'no-esi'
-    none = 'none'
-    network_instance_oper_down = 'network-instance-oper-down'
-    bad_rd_format = 'bad-rd-format'
-
-
-class EnumerationEnum44(Enum):
-    both = 'both'
-    input = 'input'
-    output = 'output'
-
-
-class EnumerationEnum45(Enum):
-    action = 'action'
-    cancel_commit = 'cancel-commit'
-    close_session = 'close-session'
-    commit = 'commit'
-    copy_config = 'copy-config'
-    delete_config = 'delete-config'
-    discard_changes = 'discard-changes'
-    edit_config = 'edit-config'
-    edit_data = 'edit-data'
-    get_config = 'get-config'
-    get_data = 'get-data'
-    get_schema = 'get-schema'
-    get = 'get'
-    hello = 'hello'
-    kill_session = 'kill-session'
-    lock = 'lock'
+class EnumerationEnum91(Enum):
     unknown = 'unknown'
-    unlock = 'unlock'
-    validate = 'validate'
+    true = 'true'
+    false = 'false'
+    tlv_not_enabled = 'tlv-not-enabled'
 
 
-class EnumerationEnum46(Enum):
-    admin_disabled = 'admin-disabled'
-    failed_to_compile = 'failed-to-compile'
-    exception = 'exception'
-    timeout = 'timeout'
-    subscription_failed = 'subscription-failed'
-    script_unavailable = 'script-unavailable'
-    script_error = 'script-error'
-    missing_function = 'missing-function'
-    system_error = 'system-error'
-    ephemeral_action_failed = 'ephemeral-action-failed'
-    cfg_action_failed = 'cfg-action-failed'
-    tools_action_failed = 'tools-action-failed'
-    state_action_failed = 'state-action-failed'
-    script_action_failed = 'script-action-failed'
+class EnumerationEnum92(Enum):
+    unknown = 'unknown'
+    true = 'true'
+    false = 'false'
+    tlv_not_enabled = 'tlv-not-enabled'
 
 
-class EnumerationEnum47(Enum):
-    received = 'received'
-    transmitted = 'transmitted'
-    common = 'common'
+class EnumerationEnum93(Enum):
+    other = 'other'
+    field_10base_t = '10baseT'
+    field_10base_tfd = '10baseTFD'
+    field_100base_t4 = '100baseT4'
+    field_100base_tx = '100baseTX'
+    field_100base_txfd = '100baseTXFD'
+    field_100base_t2 = '100baseT2'
+    field_100base_t2_fd = '100baseT2FD'
+    fdx_pause = 'FdxPause'
+    fdx_a_pause = 'FdxAPause'
+    fdx_s_pause = 'FdxSPause'
+    fdx_b_pause = 'FdxBPause'
+    field_1000base_x = '1000baseX'
+    field_1000base_xfd = '1000baseXFD'
+    field_1000base_t = '1000baseT'
+    field_1000base_tfd = '1000baseTFD'
 
 
-class EnumerationEnum48(Enum):
-    chassis_component = 'CHASSIS_COMPONENT'
-    interface_alias = 'INTERFACE_ALIAS'
-    port_component = 'PORT_COMPONENT'
-    mac_address = 'MAC_ADDRESS'
-    network_address = 'NETWORK_ADDRESS'
-    interface_name = 'INTERFACE_NAME'
-    local = 'LOCAL'
+class EnumerationEnum94(Enum):
+    other = 'Other'
+    aui = 'AUI'
+    field_10base5 = '10base5'
+    foirl = 'Foirl'
+    field_10base2 = '10base2'
+    field_10base_t = '10baseT'
+    field_10base_fp = '10baseFP'
+    field_10base_fb = '10baseFB'
+    field_10base_fl = '10baseFL'
+    field_10broad36 = '10broad36'
+    field_10base_thd = '10baseTHD'
+    field_10base_tfd = '10baseTFD'
+    field_10base_flhd = '10baseFLHD'
+    field_10base_flfd = '10baseFLFD'
+    field_100base_t4 = '100baseT4'
+    field_100base_txhd = '100baseTXHD'
+    field_100base_txfd = '100baseTXFD'
+    field_100base_fxhd = '100baseFXHD'
+    field_100base_fxfd = '100baseFXFD'
+    field_100base_t2_hd = '100baseT2HD'
+    field_100base_t2_fd = '100baseT2FD'
+    field_1000base_xhd = '1000baseXHD'
+    field_1000base_xfd = '1000baseXFD'
+    field_1000base_lxhd = '1000baseLXHD'
+    field_1000base_lxfd = '1000baseLXFD'
+    field_1000base_sxhd = '1000baseSXHD'
+    field_1000base_sxfd = '1000baseSXFD'
+    field_1000base_cxhd = '1000baseCXHD'
+    field_1000base_cxfd = '1000baseCXFD'
+    field_1000base_thd = '1000baseTHD'
+    field_1000base_tfd = '1000baseTFD'
+    field_10_gbase_x = '10GbaseX'
+    field_10_gbase_lx4 = '10GbaseLX4'
+    field_10_gbase_r = '10GbaseR'
+    field_10_gbase_er = '10GbaseER'
+    field_10_gbase_lr = '10GbaseLR'
+    field_10_gbase_sr = '10GbaseSR'
+    field_10_gbase_w = '10GbaseW'
+    field_10_gbase_ew = '10GbaseEW'
+    field_10_gbase_lw = '10GbaseLW'
+    field_10_gbase_sw = '10GbaseSW'
+    field_10_gbase_cx4 = '10GbaseCX4'
+    field_2_base_tl = '2BaseTL'
+    field_10_pass_ts = '10PassTS'
+    field_100_base_bx10_d = '100BaseBX10D'
+    field_100_base_bx10_u = '100BaseBX10U'
+    field_100_base_lx10 = '100BaseLX10'
+    field_1000_base_bx10_d = '1000BaseBX10D'
+    field_1000_base_bx10_u = '1000BaseBX10U'
+    field_1000_base_lx10 = '1000BaseLX10'
+    field_1000_base_px10_d = '1000BasePX10D'
+    field_1000_base_px10_u = '1000BasePX10U'
+    field_1000_base_px20_d = '1000BasePX20D'
+    field_1000_base_px20_u = '1000BasePX20U'
+    field_10_gbase_t = '10GbaseT'
+    field_10_gbase_lrm = '10GbaseLRM'
+    field_1000base_kx = '1000baseKX'
+    field_10_gbase_kx4 = '10GbaseKX4'
+    field_10_gbase_kr = '10GbaseKR'
+    field_10_g1_gbase_prxd1 = '10G1GbasePRXD1'
+    field_10_g1_gbase_prxd2 = '10G1GbasePRXD2'
+    field_10_g1_gbase_prxd3 = '10G1GbasePRXD3'
+    field_10_g1_gbase_prxu1 = '10G1GbasePRXU1'
+    field_10_g1_gbase_prxu2 = '10G1GbasePRXU2'
+    field_10_g1_gbase_prxu3 = '10G1GbasePRXU3'
+    field_10_gbase_prd1 = '10GbasePRD1'
+    field_10_gbase_prd2 = '10GbasePRD2'
+    field_10_gbase_prd3 = '10GbasePRD3'
+    field_10_gbase_pru1 = '10GbasePRU1'
+    field_10_gbase_pru3 = '10GbasePRU3'
+    field_40_gbase_kr4 = '40GbaseKR4'
+    field_40_gbase_cr4 = '40GbaseCR4'
+    field_40_gbase_sr4 = '40GbaseSR4'
+    field_40_gbase_fr = '40GbaseFR'
+    field_40_gbase_lr4 = '40GbaseLR4'
+    field_100_gbase_cr10 = '100GbaseCR10'
+    field_100_gbase_sr10 = '100GbaseSR10'
+    field_100_gbase_lr4 = '100GbaseLR4'
+    field_100_gbase_er4 = '100GbaseER4'
+    field_1000base_t1 = '1000baseT1'
+    field_1000base_px30_d = '1000basePX30D'
+    field_1000base_px30_u = '1000basePX30U'
+    field_1000base_px40_d = '1000basePX40D'
+    field_1000base_px40_u = '1000basePX40U'
+    field_10_g1_gbase_prxd4 = '10G1GbasePRXD4'
+    field_10_g1_gbase_prxu4 = '10G1GbasePRXU4'
+    field_10_gbase_prd4 = '10GbasePRD4'
+    field_10_gbase_pru4 = '10GbasePRU4'
+    field_25_gbase_cr = '25GbaseCR'
+    field_25_gbase_crs = '25GbaseCRS'
+    field_25_gbase_kr = '25GbaseKR'
+    field_25_gbase_krs = '25GbaseKRS'
+    field_25_gbase_r = '25GbaseR'
+    field_25_gbase_sr = '25GbaseSR'
+    field_25_gbase_t = '25GbaseT'
+    field_40_gbase_er4 = '40GbaseER4'
+    field_40_gbase_r = '40GbaseR'
+    field_40_gbase_t = '40GbaseT'
+    field_100_gbase_cr4 = '100GbaseCR4'
+    field_100_gbase_kr4 = '100GbaseKR4'
+    field_100_gbase_kp4 = '100GbaseKP4'
+    field_100_gbase_r = '100GbaseR'
+    field_100_gbase_sr4 = '100GbaseSR4'
+    field_2p5_gbase_t = '2p5GbaseT'
+    field_5_gbase_t = '5GbaseT'
+    field_100base_t1 = '100baseT1'
+    field_1000base_rha = '1000baseRHA'
+    field_1000base_rhb = '1000baseRHB'
+    field_1000base_rhc = '1000baseRHC'
+    field_2p5_gbase_kx = '2p5GbaseKX'
+    field_2p5_gbase_x = '2p5GbaseX'
+    field_5_gbase_kr = '5GbaseKR'
+    field_5_gbase_r = '5GbaseR'
+    field_10_gpass_xr = '10GpassXR'
+    field_25_gbase_lr = '25GbaseLR'
+    field_25_gbase_er = '25GbaseER'
+    field_50_gbase_r = '50GbaseR'
+    field_50_gbase_cr = '50GbaseCR'
+    field_50_gbase_kr = '50GbaseKR'
+    field_50_gbase_sr = '50GbaseSR'
+    field_50_gbase_fr = '50GbaseFR'
+    field_50_gbase_lr = '50GbaseLR'
+    field_50_gbase_er = '50GbaseER'
+    field_100_gbase_cr2 = '100GbaseCR2'
+    field_100_gbase_kr2 = '100GbaseKR2'
+    field_100_gbase_sr2 = '100GbaseSR2'
+    field_100_gbase_dr = '100GbaseDR'
+    field_200_gbase_r = '200GbaseR'
+    field_200_gbase_dr4 = '200GbaseDR4'
+    field_200_gbase_fr4 = '200GbaseFR4'
+    field_200_gbase_lr4 = '200GbaseLR4'
+    field_200_gbase_cr4 = '200GbaseCR4'
+    field_200_gbase_kr4 = '200GbaseKR4'
+    field_200_gbase_sr4 = '200GbaseSR4'
+    field_200_gbase_er4 = '200GbaseER4'
+    field_400_gbase_r = '400GbaseR'
+    field_400_gbase_sr16 = '400GbaseSR16'
+    field_400_gbase_dr4 = '400GbaseDR4'
+    field_400_gbase_fr8 = '400GbaseFR8'
+    field_400_gbase_lr8 = '400GbaseLR8'
+    field_400_gbase_er8 = '400GbaseER8'
+    field_10base_t1_l = '10baseT1L'
+    field_10base_t1_shd = '10baseT1SHD'
+    field_10base_t1_smd = '10baseT1SMD'
+    field_10base_t1_sfd = '10baseT1SFD'
+    field_100_gbase_fr1 = '100GbaseFR1'
+    field_100_gbase_lr1 = '100GbaseLR1'
+    field_400_gbase_fr4 = '400GbaseFR4'
+    field_400_gbase_lr46 = '400GbaseLR46'
+    field_400_gbase_sr8 = '400GbaseSR8'
+    field_400_gbase_sr4p2 = '400GbaseSR4p2'
+    field_2p5_gbase_t1 = '2p5GbaseT1'
+    field_5_gbase_t1 = '5GbaseT1'
+    field_10_gbase_t1 = '10GbaseT1'
+    field_25_g10_gbase_pqgd2 = '25G10GbasePQGD2'
+    field_25_g10_gbase_pqgd3 = '25G10GbasePQGD3'
+    field_25_g10_gbase_pqgu2 = '25G10GbasePQGU2'
+    field_25_g10_gbase_pqgu3 = '25G10GbasePQGU3'
+    field_25_g10_gbase_pqxd2 = '25G10GbasePQXD2'
+    field_25_g10_gbase_pqxd3 = '25G10GbasePQXD3'
+    field_25_g10_gbase_pqxu2 = '25G10GbasePQXU2'
+    field_25_g10_gbase_pqxu3 = '25G10GbasePQXU3'
+    field_25_gbase_pqgd2 = '25GbasePQGD2'
+    field_25_gbase_pqgd3 = '25GbasePQGD3'
+    field_25_gbase_pqgu2 = '25GbasePQGU2'
+    field_25_gbase_pqgu3 = '25GbasePQGU3'
+    field_25_gbase_pqxd2 = '25GbasePQXD2'
+    field_25_gbase_pqxd3 = '25GbasePQXD3'
+    field_25_gbase_pqxu2 = '25GbasePQXU2'
+    field_25_gbase_pqxu3 = '25GbasePQXU3'
+    field_50_g10_gbase_pqgd2 = '50G10GbasePQGD2'
+    field_50_g10_gbase_pqgd3 = '50G10GbasePQGD3'
+    field_50_g10_gbase_pqgu2 = '50G10GbasePQGU2'
+    field_50_g10_gbase_pqgu3 = '50G10GbasePQGU3'
+    field_50_g10_gbase_pqxd2 = '50G10GbasePQXD2'
+    field_50_g10_gbase_pqxd3 = '50G10GbasePQXD3'
+    field_50_g10_gbase_pqxu2 = '50G10GbasePQXU2'
+    field_50_g10_gbase_pqxu3 = '50G10GbasePQXU3'
+    field_50_g25_gbase_pqgd2 = '50G25GbasePQGD2'
+    field_50_g25_gbase_pqgd3 = '50G25GbasePQGD3'
+    field_50_g25_gbase_pqgu2 = '50G25GbasePQGU2'
+    field_50_g25_gbase_pqgu3 = '50G25GbasePQGU3'
+    field_50_g25_gbase_pqxd2 = '50G25GbasePQXD2'
+    field_50_g25_gbase_pqxd3 = '50G25GbasePQXD3'
+    field_50_g25_gbase_pqxu2 = '50G25GbasePQXU2'
+    field_50_g25_gbase_pqxu3 = '50G25GbasePQXU3'
+    field_50_gbase_pqgd2 = '50GbasePQGD2'
+    field_50_gbase_pqgd3 = '50GbasePQGD3'
+    field_50_gbase_pqgu2 = '50GbasePQGU2'
+    field_50_gbase_pqgu3 = '50GbasePQGU3'
+    field_50_gbase_pqxd2 = '50GbasePQXD2'
+    field_50_gbase_pqxd3 = '50GbasePQXD3'
+    field_50_gbase_pqxu2 = '50GbasePQXU2'
+    field_50_gbase_pqxu3 = '50GbasePQXU3'
+    field_100_gbase_zr = '100GbaseZR'
+    field_10_gbase_br10_d = '10GbaseBR10D'
+    field_10_gbase_br10_u = '10GbaseBR10U'
+    field_10_gbase_br20_d = '10GbaseBR20D'
+    field_10_gbase_br20_u = '10GbaseBR20U'
+    field_10_gbase_br40_d = '10GbaseBR40D'
+    field_10_gbase_br40_u = '10GbaseBR40U'
+    field_25_gbase_br10_d = '25GbaseBR10D'
+    field_25_gbase_br10_u = '25GbaseBR10U'
+    field_25_gbase_br20_d = '25GbaseBR20D'
+    field_25_gbase_br20_u = '25GbaseBR20U'
+    field_25_gbase_br40_d = '25GbaseBR40D'
+    field_25_gbase_br40_u = '25GbaseBR40U'
+    field_50_gbase_br10_d = '50GbaseBR10D'
+    field_50_gbase_br10_u = '50GbaseBR10U'
+    field_50_gbase_br20_d = '50GbaseBR20D'
+    field_50_gbase_br20_u = '50GbaseBR20U'
+    field_50_gbase_br40_d = '50GbaseBR40D'
+    field_50_gbase_br40_u = '50GbaseBR40U'
+    field_2p5_gbase_au = '2p5GbaseAU'
+    field_5_gbase_au = '5GbaseAU'
+    field_10_gbase_au = '10GbaseAU'
+    field_25_gbase_au = '25GbaseAU'
+    field_50_gbase_au = '50GbaseAU'
+    field_25_gbase_t1 = '25GbaseT1'
+    field_400_gbase_dr42 = '400GbaseDR42'
+    field_800_gbase_cr8 = '800GbaseCR8'
+    field_800_gbase_dr8 = '800GbaseDR8'
+    field_800_gbase_dr82 = '800GbaseDR82'
+    field_800_gbase_kr8 = '800GbaseKR8'
+    field_800_gbase_r = '800GbaseR'
+    field_800_gbase_sr8 = '800GbaseSR8'
+    field_800_gbase_vr8 = '800GbaseVR8'
 
 
-class EnumerationEnum49(Enum):
-    i_pv4 = 'IPv4'
-    i_pv6 = 'IPv6'
-
-
-class EnumerationEnum5(Enum):
-    ipv4 = 'ipv4'
-    ipv6 = 'ipv6'
-    mac = 'mac'
-
-
-class EnumerationEnum50(Enum):
+class EnumerationEnum95(Enum):
     interface_alias = 'INTERFACE_ALIAS'
     port_component = 'PORT_COMPONENT'
     mac_address = 'MAC_ADDRESS'
@@ -1197,816 +2325,82 @@ class EnumerationEnum50(Enum):
     local = 'LOCAL'
 
 
-class EnumerationEnum51(Enum):
+class EnumerationEnum96(Enum):
+    unknown = 'unknown'
+    known = 'known'
+
+
+class EnumerationEnum97(Enum):
     unknown = 'unknown'
 
 
-class EnumerationEnum52(Enum):
+class EnumerationEnum98(Enum):
     serial = 'serial'
 
 
-class EnumerationEnum53(Enum):
-    shared = 'shared'
-    private = 'private'
+class EnumerationEnum99(Enum):
+    ztp = 'ztp'
+    secure = 'secure'
+    inband = 'inband'
+    ooband = 'ooband'
 
 
-class EnumerationEnum54(Enum):
-    validating = 'validating'
-    publishing = 'publishing'
-    unconfirmed = 'unconfirmed'
-    checkpoint = 'checkpoint'
-    save = 'save'
-    complete = 'complete'
-    reverting = 'reverting'
-    failed = 'failed'
-
-
-class EnumerationEnum55(Enum):
-    active = 'ACTIVE'
-    sandbox = 'SANDBOX'
-
-
-class EnumerationEnum56(Enum):
-    read = 'read'
-    write = 'write'
-    deny = 'deny'
-
-
-class EnumerationEnum57(Enum):
-    accept = 'accept'
-    discard = 'discard'
-
-
-class EnumerationEnum58(Enum):
-    high = 'high'
-    medium = 'medium'
-    low = 'low'
-
-
-class EnumerationEnum59(Enum):
-    running = 'running'
-    waiting_for_config = 'waiting-for-config'
-    error = 'error'
-    starting = 'starting'
-    stopped = 'stopped'
-
-
-class EnumerationEnum6(Enum):
-    password = 'password'
-    publickey = 'publickey'
-    keyboard_interactive = 'keyboard-interactive'
-
-
-class EnumerationEnum60(Enum):
-    warm = 'warm'
-    cold = 'cold'
-
-
-class EnumerationEnum61(Enum):
-    restart = 'restart'
-    stop = 'stop'
-    start = 'start'
-    reload = 'reload'
-    quit = 'quit'
-    kill = 'kill'
-
-
-class EnumerationEnum62(Enum):
-    messages = 'messages'
-
-
-class EnumerationEnum63(Enum):
-    messages = 'messages'
-
-
-class EnumerationEnum64(Enum):
-    request = 'request'
-    response = 'response'
-    common = 'common'
-
-
-class EnumerationEnum65(Enum):
-    mac_vrf = 'mac-vrf'
-    vxlan_interface = 'vxlan-interface'
-    l2_proxy_arp_nd = 'l2-proxy-arp-nd'
-    mfib = 'mfib'
-    mac_vrf_bgp_evpn = 'mac-vrf-bgp-evpn'
-
-
-class EnumerationEnum66(Enum):
-    africa_abidjan = 'Africa/Abidjan'
-    africa_accra = 'Africa/Accra'
-    africa_addis_ababa = 'Africa/Addis_Ababa'
-    africa_algiers = 'Africa/Algiers'
-    africa_asmara = 'Africa/Asmara'
-    africa_bamako = 'Africa/Bamako'
-    africa_bangui = 'Africa/Bangui'
-    africa_banjul = 'Africa/Banjul'
-    africa_bissau = 'Africa/Bissau'
-    africa_blantyre = 'Africa/Blantyre'
-    africa_brazzaville = 'Africa/Brazzaville'
-    africa_bujumbura = 'Africa/Bujumbura'
-    africa_cairo = 'Africa/Cairo'
-    africa_casablanca = 'Africa/Casablanca'
-    africa_ceuta = 'Africa/Ceuta'
-    africa_conakry = 'Africa/Conakry'
-    africa_dakar = 'Africa/Dakar'
-    africa_dar_es_salaam = 'Africa/Dar_es_Salaam'
-    africa_djibouti = 'Africa/Djibouti'
-    africa_douala = 'Africa/Douala'
-    africa_el_aaiun = 'Africa/El_Aaiun'
-    africa_freetown = 'Africa/Freetown'
-    africa_gaborone = 'Africa/Gaborone'
-    africa_harare = 'Africa/Harare'
-    africa_johannesburg = 'Africa/Johannesburg'
-    africa_juba = 'Africa/Juba'
-    africa_kampala = 'Africa/Kampala'
-    africa_khartoum = 'Africa/Khartoum'
-    africa_kigali = 'Africa/Kigali'
-    africa_kinshasa = 'Africa/Kinshasa'
-    africa_lagos = 'Africa/Lagos'
-    africa_libreville = 'Africa/Libreville'
-    africa_lome = 'Africa/Lome'
-    africa_luanda = 'Africa/Luanda'
-    africa_lubumbashi = 'Africa/Lubumbashi'
-    africa_lusaka = 'Africa/Lusaka'
-    africa_malabo = 'Africa/Malabo'
-    africa_maputo = 'Africa/Maputo'
-    africa_maseru = 'Africa/Maseru'
-    africa_mbabane = 'Africa/Mbabane'
-    africa_mogadishu = 'Africa/Mogadishu'
-    africa_monrovia = 'Africa/Monrovia'
-    africa_nairobi = 'Africa/Nairobi'
-    africa_ndjamena = 'Africa/Ndjamena'
-    africa_niamey = 'Africa/Niamey'
-    africa_nouakchott = 'Africa/Nouakchott'
-    africa_ouagadougou = 'Africa/Ouagadougou'
-    africa_porto_novo = 'Africa/Porto-Novo'
-    africa_sao_tome = 'Africa/Sao_Tome'
-    africa_tripoli = 'Africa/Tripoli'
-    africa_tunis = 'Africa/Tunis'
-    africa_windhoek = 'Africa/Windhoek'
-    america_adak = 'America/Adak'
-    america_anchorage = 'America/Anchorage'
-    america_anguilla = 'America/Anguilla'
-    america_antigua = 'America/Antigua'
-    america_araguaina = 'America/Araguaina'
-    america_argentina_buenos_aires = 'America/Argentina/Buenos_Aires'
-    america_argentina_catamarca = 'America/Argentina/Catamarca'
-    america_argentina_cordoba = 'America/Argentina/Cordoba'
-    america_argentina_jujuy = 'America/Argentina/Jujuy'
-    america_argentina_la_rioja = 'America/Argentina/La_Rioja'
-    america_argentina_mendoza = 'America/Argentina/Mendoza'
-    america_argentina_rio_gallegos = 'America/Argentina/Rio_Gallegos'
-    america_argentina_salta = 'America/Argentina/Salta'
-    america_argentina_san_juan = 'America/Argentina/San_Juan'
-    america_argentina_san_luis = 'America/Argentina/San_Luis'
-    america_argentina_tucuman = 'America/Argentina/Tucuman'
-    america_argentina_ushuaia = 'America/Argentina/Ushuaia'
-    america_aruba = 'America/Aruba'
-    america_asuncion = 'America/Asuncion'
-    america_atikokan = 'America/Atikokan'
-    america_bahia = 'America/Bahia'
-    america_bahia_banderas = 'America/Bahia_Banderas'
-    america_barbados = 'America/Barbados'
-    america_belem = 'America/Belem'
-    america_belize = 'America/Belize'
-    america_blanc_sablon = 'America/Blanc-Sablon'
-    america_boa_vista = 'America/Boa_Vista'
-    america_bogota = 'America/Bogota'
-    america_boise = 'America/Boise'
-    america_cambridge_bay = 'America/Cambridge_Bay'
-    america_campo_grande = 'America/Campo_Grande'
-    america_cancun = 'America/Cancun'
-    america_caracas = 'America/Caracas'
-    america_cayenne = 'America/Cayenne'
-    america_cayman = 'America/Cayman'
-    america_chicago = 'America/Chicago'
-    america_chihuahua = 'America/Chihuahua'
-    america_costa_rica = 'America/Costa_Rica'
-    america_creston = 'America/Creston'
-    america_cuiaba = 'America/Cuiaba'
-    america_curacao = 'America/Curacao'
-    america_danmarkshavn = 'America/Danmarkshavn'
-    america_dawson = 'America/Dawson'
-    america_dawson_creek = 'America/Dawson_Creek'
-    america_denver = 'America/Denver'
-    america_detroit = 'America/Detroit'
-    america_dominica = 'America/Dominica'
-    america_edmonton = 'America/Edmonton'
-    america_eirunepe = 'America/Eirunepe'
-    america_el_salvador = 'America/El_Salvador'
-    america_fort_nelson = 'America/Fort_Nelson'
-    america_fortaleza = 'America/Fortaleza'
-    america_glace_bay = 'America/Glace_Bay'
-    america_godthab = 'America/Godthab'
-    america_goose_bay = 'America/Goose_Bay'
-    america_grand_turk = 'America/Grand_Turk'
-    america_grenada = 'America/Grenada'
-    america_guadeloupe = 'America/Guadeloupe'
-    america_guatemala = 'America/Guatemala'
-    america_guayaquil = 'America/Guayaquil'
-    america_guyana = 'America/Guyana'
-    america_halifax = 'America/Halifax'
-    america_havana = 'America/Havana'
-    america_hermosillo = 'America/Hermosillo'
-    america_indiana_indianapolis = 'America/Indiana/Indianapolis'
-    america_indiana_knox = 'America/Indiana/Knox'
-    america_indiana_marengo = 'America/Indiana/Marengo'
-    america_indiana_petersburg = 'America/Indiana/Petersburg'
-    america_indiana_tell_city = 'America/Indiana/Tell_City'
-    america_indiana_vevay = 'America/Indiana/Vevay'
-    america_indiana_vincennes = 'America/Indiana/Vincennes'
-    america_indiana_winamac = 'America/Indiana/Winamac'
-    america_inuvik = 'America/Inuvik'
-    america_iqaluit = 'America/Iqaluit'
-    america_jamaica = 'America/Jamaica'
-    america_juneau = 'America/Juneau'
-    america_kentucky_louisville = 'America/Kentucky/Louisville'
-    america_kentucky_monticello = 'America/Kentucky/Monticello'
-    america_kralendijk = 'America/Kralendijk'
-    america_la_paz = 'America/La_Paz'
-    america_lima = 'America/Lima'
-    america_los_angeles = 'America/Los_Angeles'
-    america_lower_princes = 'America/Lower_Princes'
-    america_maceio = 'America/Maceio'
-    america_managua = 'America/Managua'
-    america_manaus = 'America/Manaus'
-    america_marigot = 'America/Marigot'
-    america_martinique = 'America/Martinique'
-    america_matamoros = 'America/Matamoros'
-    america_mazatlan = 'America/Mazatlan'
-    america_menominee = 'America/Menominee'
-    america_merida = 'America/Merida'
-    america_metlakatla = 'America/Metlakatla'
-    america_mexico_city = 'America/Mexico_City'
-    america_miquelon = 'America/Miquelon'
-    america_moncton = 'America/Moncton'
-    america_monterrey = 'America/Monterrey'
-    america_montevideo = 'America/Montevideo'
-    america_montserrat = 'America/Montserrat'
-    america_nassau = 'America/Nassau'
-    america_new_york = 'America/New_York'
-    america_nipigon = 'America/Nipigon'
-    america_nome = 'America/Nome'
-    america_noronha = 'America/Noronha'
-    america_north_dakota_beulah = 'America/North_Dakota/Beulah'
-    america_north_dakota_center = 'America/North_Dakota/Center'
-    america_north_dakota_new_salem = 'America/North_Dakota/New_Salem'
-    america_ojinaga = 'America/Ojinaga'
-    america_panama = 'America/Panama'
-    america_pangnirtung = 'America/Pangnirtung'
-    america_paramaribo = 'America/Paramaribo'
-    america_phoenix = 'America/Phoenix'
-    america_port_au_prince = 'America/Port-au-Prince'
-    america_port_of_spain = 'America/Port_of_Spain'
-    america_porto_velho = 'America/Porto_Velho'
-    america_puerto_rico = 'America/Puerto_Rico'
-    america_punta_arenas = 'America/Punta_Arenas'
-    america_rainy_river = 'America/Rainy_River'
-    america_rankin_inlet = 'America/Rankin_Inlet'
-    america_recife = 'America/Recife'
-    america_regina = 'America/Regina'
-    america_resolute = 'America/Resolute'
-    america_rio_branco = 'America/Rio_Branco'
-    america_santarem = 'America/Santarem'
-    america_santiago = 'America/Santiago'
-    america_santo_domingo = 'America/Santo_Domingo'
-    america_sao_paulo = 'America/Sao_Paulo'
-    america_scoresbysund = 'America/Scoresbysund'
-    america_sitka = 'America/Sitka'
-    america_st_barthelemy = 'America/St_Barthelemy'
-    america_st_johns = 'America/St_Johns'
-    america_st_kitts = 'America/St_Kitts'
-    america_st_lucia = 'America/St_Lucia'
-    america_st_thomas = 'America/St_Thomas'
-    america_st_vincent = 'America/St_Vincent'
-    america_swift_current = 'America/Swift_Current'
-    america_tegucigalpa = 'America/Tegucigalpa'
-    america_thule = 'America/Thule'
-    america_thunder_bay = 'America/Thunder_Bay'
-    america_tijuana = 'America/Tijuana'
-    america_toronto = 'America/Toronto'
-    america_tortola = 'America/Tortola'
-    america_vancouver = 'America/Vancouver'
-    america_whitehorse = 'America/Whitehorse'
-    america_winnipeg = 'America/Winnipeg'
-    america_yakutat = 'America/Yakutat'
-    america_yellowknife = 'America/Yellowknife'
-    antarctica_casey = 'Antarctica/Casey'
-    antarctica_davis = 'Antarctica/Davis'
-    antarctica_dumont_d_urville = 'Antarctica/DumontDUrville'
-    antarctica_macquarie = 'Antarctica/Macquarie'
-    antarctica_mawson = 'Antarctica/Mawson'
-    antarctica_mc_murdo = 'Antarctica/McMurdo'
-    antarctica_palmer = 'Antarctica/Palmer'
-    antarctica_rothera = 'Antarctica/Rothera'
-    antarctica_syowa = 'Antarctica/Syowa'
-    antarctica_troll = 'Antarctica/Troll'
-    antarctica_vostok = 'Antarctica/Vostok'
-    arctic_longyearbyen = 'Arctic/Longyearbyen'
-    asia_aden = 'Asia/Aden'
-    asia_almaty = 'Asia/Almaty'
-    asia_amman = 'Asia/Amman'
-    asia_anadyr = 'Asia/Anadyr'
-    asia_aqtau = 'Asia/Aqtau'
-    asia_aqtobe = 'Asia/Aqtobe'
-    asia_ashgabat = 'Asia/Ashgabat'
-    asia_atyrau = 'Asia/Atyrau'
-    asia_baghdad = 'Asia/Baghdad'
-    asia_bahrain = 'Asia/Bahrain'
-    asia_baku = 'Asia/Baku'
-    asia_bangkok = 'Asia/Bangkok'
-    asia_barnaul = 'Asia/Barnaul'
-    asia_beirut = 'Asia/Beirut'
-    asia_bishkek = 'Asia/Bishkek'
-    asia_brunei = 'Asia/Brunei'
-    asia_chita = 'Asia/Chita'
-    asia_choibalsan = 'Asia/Choibalsan'
-    asia_colombo = 'Asia/Colombo'
-    asia_damascus = 'Asia/Damascus'
-    asia_dhaka = 'Asia/Dhaka'
-    asia_dili = 'Asia/Dili'
-    asia_dubai = 'Asia/Dubai'
-    asia_dushanbe = 'Asia/Dushanbe'
-    asia_famagusta = 'Asia/Famagusta'
-    asia_gaza = 'Asia/Gaza'
-    asia_hebron = 'Asia/Hebron'
-    asia_ho_chi_minh = 'Asia/Ho_Chi_Minh'
-    asia_hong_kong = 'Asia/Hong_Kong'
-    asia_hovd = 'Asia/Hovd'
-    asia_irkutsk = 'Asia/Irkutsk'
-    asia_jakarta = 'Asia/Jakarta'
-    asia_jayapura = 'Asia/Jayapura'
-    asia_jerusalem = 'Asia/Jerusalem'
-    asia_kabul = 'Asia/Kabul'
-    asia_kamchatka = 'Asia/Kamchatka'
-    asia_karachi = 'Asia/Karachi'
-    asia_kathmandu = 'Asia/Kathmandu'
-    asia_khandyga = 'Asia/Khandyga'
-    asia_kolkata = 'Asia/Kolkata'
-    asia_krasnoyarsk = 'Asia/Krasnoyarsk'
-    asia_kuala_lumpur = 'Asia/Kuala_Lumpur'
-    asia_kuching = 'Asia/Kuching'
-    asia_kuwait = 'Asia/Kuwait'
-    asia_macau = 'Asia/Macau'
-    asia_magadan = 'Asia/Magadan'
-    asia_makassar = 'Asia/Makassar'
-    asia_manila = 'Asia/Manila'
-    asia_muscat = 'Asia/Muscat'
-    asia_nicosia = 'Asia/Nicosia'
-    asia_novokuznetsk = 'Asia/Novokuznetsk'
-    asia_novosibirsk = 'Asia/Novosibirsk'
-    asia_omsk = 'Asia/Omsk'
-    asia_oral = 'Asia/Oral'
-    asia_phnom_penh = 'Asia/Phnom_Penh'
-    asia_pontianak = 'Asia/Pontianak'
-    asia_pyongyang = 'Asia/Pyongyang'
-    asia_qatar = 'Asia/Qatar'
-    asia_qostanay = 'Asia/Qostanay'
-    asia_qyzylorda = 'Asia/Qyzylorda'
-    asia_riyadh = 'Asia/Riyadh'
-    asia_sakhalin = 'Asia/Sakhalin'
-    asia_samarkand = 'Asia/Samarkand'
-    asia_seoul = 'Asia/Seoul'
-    asia_shanghai = 'Asia/Shanghai'
-    asia_singapore = 'Asia/Singapore'
-    asia_srednekolymsk = 'Asia/Srednekolymsk'
-    asia_taipei = 'Asia/Taipei'
-    asia_tashkent = 'Asia/Tashkent'
-    asia_tbilisi = 'Asia/Tbilisi'
-    asia_tehran = 'Asia/Tehran'
-    asia_thimphu = 'Asia/Thimphu'
-    asia_tokyo = 'Asia/Tokyo'
-    asia_tomsk = 'Asia/Tomsk'
-    asia_ulaanbaatar = 'Asia/Ulaanbaatar'
-    asia_urumqi = 'Asia/Urumqi'
-    asia_ust_nera = 'Asia/Ust-Nera'
-    asia_vientiane = 'Asia/Vientiane'
-    asia_vladivostok = 'Asia/Vladivostok'
-    asia_yakutsk = 'Asia/Yakutsk'
-    asia_yangon = 'Asia/Yangon'
-    asia_yekaterinburg = 'Asia/Yekaterinburg'
-    asia_yerevan = 'Asia/Yerevan'
-    atlantic_azores = 'Atlantic/Azores'
-    atlantic_bermuda = 'Atlantic/Bermuda'
-    atlantic_canary = 'Atlantic/Canary'
-    atlantic_cape_verde = 'Atlantic/Cape_Verde'
-    atlantic_faroe = 'Atlantic/Faroe'
-    atlantic_madeira = 'Atlantic/Madeira'
-    atlantic_reykjavik = 'Atlantic/Reykjavik'
-    atlantic_south_georgia = 'Atlantic/South_Georgia'
-    atlantic_st_helena = 'Atlantic/St_Helena'
-    atlantic_stanley = 'Atlantic/Stanley'
-    australia_adelaide = 'Australia/Adelaide'
-    australia_brisbane = 'Australia/Brisbane'
-    australia_broken_hill = 'Australia/Broken_Hill'
-    australia_currie = 'Australia/Currie'
-    australia_darwin = 'Australia/Darwin'
-    australia_eucla = 'Australia/Eucla'
-    australia_hobart = 'Australia/Hobart'
-    australia_lindeman = 'Australia/Lindeman'
-    australia_lord_howe = 'Australia/Lord_Howe'
-    australia_melbourne = 'Australia/Melbourne'
-    australia_perth = 'Australia/Perth'
-    australia_sydney = 'Australia/Sydney'
-    europe_amsterdam = 'Europe/Amsterdam'
-    europe_andorra = 'Europe/Andorra'
-    europe_astrakhan = 'Europe/Astrakhan'
-    europe_athens = 'Europe/Athens'
-    europe_belgrade = 'Europe/Belgrade'
-    europe_berlin = 'Europe/Berlin'
-    europe_bratislava = 'Europe/Bratislava'
-    europe_brussels = 'Europe/Brussels'
-    europe_bucharest = 'Europe/Bucharest'
-    europe_budapest = 'Europe/Budapest'
-    europe_busingen = 'Europe/Busingen'
-    europe_chisinau = 'Europe/Chisinau'
-    europe_copenhagen = 'Europe/Copenhagen'
-    europe_dublin = 'Europe/Dublin'
-    europe_gibraltar = 'Europe/Gibraltar'
-    europe_guernsey = 'Europe/Guernsey'
-    europe_helsinki = 'Europe/Helsinki'
-    europe_isle_of_man = 'Europe/Isle_of_Man'
-    europe_istanbul = 'Europe/Istanbul'
-    europe_jersey = 'Europe/Jersey'
-    europe_kaliningrad = 'Europe/Kaliningrad'
-    europe_kiev = 'Europe/Kiev'
-    europe_kirov = 'Europe/Kirov'
-    europe_lisbon = 'Europe/Lisbon'
-    europe_ljubljana = 'Europe/Ljubljana'
-    europe_london = 'Europe/London'
-    europe_luxembourg = 'Europe/Luxembourg'
-    europe_madrid = 'Europe/Madrid'
-    europe_malta = 'Europe/Malta'
-    europe_mariehamn = 'Europe/Mariehamn'
-    europe_minsk = 'Europe/Minsk'
-    europe_monaco = 'Europe/Monaco'
-    europe_moscow = 'Europe/Moscow'
-    europe_oslo = 'Europe/Oslo'
-    europe_paris = 'Europe/Paris'
-    europe_podgorica = 'Europe/Podgorica'
-    europe_prague = 'Europe/Prague'
-    europe_riga = 'Europe/Riga'
-    europe_rome = 'Europe/Rome'
-    europe_samara = 'Europe/Samara'
-    europe_san_marino = 'Europe/San_Marino'
-    europe_sarajevo = 'Europe/Sarajevo'
-    europe_saratov = 'Europe/Saratov'
-    europe_simferopol = 'Europe/Simferopol'
-    europe_skopje = 'Europe/Skopje'
-    europe_sofia = 'Europe/Sofia'
-    europe_stockholm = 'Europe/Stockholm'
-    europe_tallinn = 'Europe/Tallinn'
-    europe_tirane = 'Europe/Tirane'
-    europe_ulyanovsk = 'Europe/Ulyanovsk'
-    europe_uzhgorod = 'Europe/Uzhgorod'
-    europe_vaduz = 'Europe/Vaduz'
-    europe_vatican = 'Europe/Vatican'
-    europe_vienna = 'Europe/Vienna'
-    europe_vilnius = 'Europe/Vilnius'
-    europe_volgograd = 'Europe/Volgograd'
-    europe_warsaw = 'Europe/Warsaw'
-    europe_zagreb = 'Europe/Zagreb'
-    europe_zaporozhye = 'Europe/Zaporozhye'
-    europe_zurich = 'Europe/Zurich'
-    indian_antananarivo = 'Indian/Antananarivo'
-    indian_chagos = 'Indian/Chagos'
-    indian_christmas = 'Indian/Christmas'
-    indian_cocos = 'Indian/Cocos'
-    indian_comoro = 'Indian/Comoro'
-    indian_kerguelen = 'Indian/Kerguelen'
-    indian_mahe = 'Indian/Mahe'
-    indian_maldives = 'Indian/Maldives'
-    indian_mauritius = 'Indian/Mauritius'
-    indian_mayotte = 'Indian/Mayotte'
-    indian_reunion = 'Indian/Reunion'
-    pacific_apia = 'Pacific/Apia'
-    pacific_auckland = 'Pacific/Auckland'
-    pacific_bougainville = 'Pacific/Bougainville'
-    pacific_chatham = 'Pacific/Chatham'
-    pacific_chuuk = 'Pacific/Chuuk'
-    pacific_easter = 'Pacific/Easter'
-    pacific_efate = 'Pacific/Efate'
-    pacific_enderbury = 'Pacific/Enderbury'
-    pacific_fakaofo = 'Pacific/Fakaofo'
-    pacific_fiji = 'Pacific/Fiji'
-    pacific_funafuti = 'Pacific/Funafuti'
-    pacific_galapagos = 'Pacific/Galapagos'
-    pacific_gambier = 'Pacific/Gambier'
-    pacific_guadalcanal = 'Pacific/Guadalcanal'
-    pacific_guam = 'Pacific/Guam'
-    pacific_honolulu = 'Pacific/Honolulu'
-    pacific_kiritimati = 'Pacific/Kiritimati'
-    pacific_kosrae = 'Pacific/Kosrae'
-    pacific_kwajalein = 'Pacific/Kwajalein'
-    pacific_majuro = 'Pacific/Majuro'
-    pacific_marquesas = 'Pacific/Marquesas'
-    pacific_midway = 'Pacific/Midway'
-    pacific_nauru = 'Pacific/Nauru'
-    pacific_niue = 'Pacific/Niue'
-    pacific_norfolk = 'Pacific/Norfolk'
-    pacific_noumea = 'Pacific/Noumea'
-    pacific_pago_pago = 'Pacific/Pago_Pago'
-    pacific_palau = 'Pacific/Palau'
-    pacific_pitcairn = 'Pacific/Pitcairn'
-    pacific_pohnpei = 'Pacific/Pohnpei'
-    pacific_port_moresby = 'Pacific/Port_Moresby'
-    pacific_rarotonga = 'Pacific/Rarotonga'
-    pacific_saipan = 'Pacific/Saipan'
-    pacific_tahiti = 'Pacific/Tahiti'
-    pacific_tarawa = 'Pacific/Tarawa'
-    pacific_tongatapu = 'Pacific/Tongatapu'
-    pacific_wake = 'Pacific/Wake'
-    pacific_wallis = 'Pacific/Wallis'
-    utc = 'UTC'
-
-
-class EnumerationEnum67(Enum):
-    ingress_only = 'ingress-only'
-    egress_only = 'egress-only'
-    ingress_egress = 'ingress-egress'
-
-
-class EnumerationEnum68(Enum):
-    unused = 'unused'
-    prs = 'prs'
-    stu = 'stu'
-    st2 = 'st2'
-    tnc = 'tnc'
-    st3e = 'st3e'
-    st3 = 'st3'
-    prc = 'prc'
-    ssua = 'ssua'
-    ssub = 'ssub'
-    sec = 'sec'
-    eec1 = 'eec1'
-    eec2 = 'eec2'
-
-
-class EnumerationEnum69(Enum):
-    unknown = 'unknown'
-    prs = 'prs'
-    stu = 'stu'
-    st2 = 'st2'
-    tnc = 'tnc'
-    st3e = 'st3e'
-    st3 = 'st3'
-    smc = 'smc'
-    st4 = 'st4'
-    dus = 'dus'
-    prc = 'prc'
-    ssua = 'ssua'
-    ssub = 'ssub'
-    sec = 'sec'
-    dnu = 'dnu'
-    inv = 'inv'
-    pno = 'pno'
-    eec1 = 'eec1'
-    eec2 = 'eec2'
-    failed = 'failed'
-
-
-class EnumerationEnum7(Enum):
-    hiba_chk = 'hiba-chk'
-
-
-class EnumerationEnum70(Enum):
-    qualified = 'qualified'
-    not_qualified = 'not-qualified'
-
-
-class EnumerationEnum71(Enum):
-    not_applicable = 'not-applicable'
-    los = 'los'
-    ssm_quality = 'ssm-quality'
-    out_of_range = 'out-of-range'
-    wtr = 'wtr'
-    admin_disabled = 'admin-disabled'
-
-
-class EnumerationEnum72(Enum):
-    sdh = 'sdh'
-    sonet = 'sonet'
-
-
-class EnumerationEnum73(Enum):
-    field_1 = '1'
-    field_2 = '2'
-    field_3 = '3'
-    field_4 = '4'
-    field_5 = '5'
-    internal = 'internal'
-
-
-class EnumerationEnum74(Enum):
-    not_present = 'not-present'
-    master_free_run = 'master-free-run'
-    master_holdover = 'master-holdover'
-    master_locked = 'master-locked'
-    slave = 'slave'
-    acquiring = 'acquiring'
-
-
-class EnumerationEnum75(Enum):
-    itug8275dot1 = 'itug8275dot1'
-    itug8275dot2 = 'itug8275dot2'
-
-
-class EnumerationEnum76(Enum):
-    bc = 'bc'
-
-
-class EnumerationEnum77(Enum):
-    not_applicable = 'not-applicable'
-    initial = 'initial'
-    acquiring = 'acquiring'
-    holdover = 'holdover'
-    locked = 'locked'
-
-
-class EnumerationEnum78(Enum):
-    not_applicable = 'not-applicable'
-    initial = 'initial'
-    acquiring = 'acquiring'
-    phase_tracking = 'phase-tracking'
-    holdover = 'holdover'
-    locked = 'locked'
-
-
-class EnumerationEnum79(Enum):
-    atomic_clock = 'atomic-clock'
-    gps = 'gps'
-    terrestrial_radio = 'terrestrial-radio'
-    ptp = 'ptp'
-    ntp = 'ntp'
-    hand_set = 'hand-set'
-    other = 'other'
-    internal_oscillator = 'internal-oscillator'
-    reserved = 'reserved'
-
-
-class EnumerationEnum8(Enum):
-    ssh_rsa_3076 = 'ssh-rsa-3076'
-    ecdsa_sha2_nistp256 = 'ecdsa-sha2-nistp256'
-    ecdsa_sha2_nistp521 = 'ecdsa-sha2-nistp521'
-    ssh_ed25519 = 'ssh-ed25519'
-    ssh_rsa_2048 = 'ssh-rsa-2048'
-    ssh_rsa_4096 = 'ssh-rsa-4096'
-
-
-class EnumerationEnum80(Enum):
-    initializing = 'initializing'
-    faulty = 'faulty'
-    disabled = 'disabled'
-    listening = 'listening'
-    pre_master = 'pre-master'
-    master = 'master'
-    passive = 'passive'
-    uncalibrated = 'uncalibrated'
-    slave = 'slave'
-
-
-class EnumerationEnum81(Enum):
-    forwardable = 'forwardable'
-    non_forwardable = 'non-forwardable'
-
-
-class EnumerationEnum82(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum83(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum84(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum85(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum86(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum87(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum88(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum89(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum9(Enum):
-    idevid = 'idevid'
-    oidevid = 'oidevid'
-
-
-class EnumerationEnum90(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum91(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum92(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum93(Enum):
-    pending = 'pending'
-    granted = 'granted'
-    denied = 'denied'
-    expired = 'expired'
-    canceled = 'canceled'
-
-
-class EnumerationEnum94(Enum):
-    gnss_a = 'gnss-a'
-    gnss_b = 'gnss-b'
-
-
-class EnumerationEnum95(Enum):
-    unknown = 'unknown'
-    locked = 'locked'
-    not_locked = 'not-locked'
-
-
-class EnumerationEnum96(Enum):
-    unknown = 'unknown'
-    unsupported = 'unsupported'
-    ok = 'ok'
-    over_current = 'over-current'
-    under_current = 'under-current'
-    no_bias_voltage = 'no-bias-voltage'
-
-
-class AcctzContainer(BaseModel):
+class AliasListEntry(BaseModel):
     """
-    Top-level container for acctz accounting
+    Create or overwrite an alias
+
+    Aliases can be entered at the start of the input line, and must represent a complete command.
+
+    The alias name can contain the following:
+       - One or more fixed keywords, for example 'display stuff' and 'my-alias' are valid names.
+       - One or more required arguments, entered between '{' and '}'.
+         These arguments will then be substituted in the alias value before executing.
+
+    For example, if you create this alias:
+        environment alias 'display interface {name}' 'info / interface {name} | as table'
+
+    Then entering 'display interface ethernet-1/1' will execute 'info / interface ethernet-1/1 | as table'.
+
+    The alias value can contain the following keywords:
+        - '{}' will add an optional unnamed parameter.
+            It defaults to '*' if it is not entered.
+        - '{<name>}' will add an optional named parameter with name '<name>'.
+            It defaults to '*' if it is not entered.
+
+    For example, if you create this alias:
+        environment alias 'display interface' 'info / interface {} subinterface {subinterface} | as table'
+
+    Then entering the following are all equivalent:
+        display interface
+        display interface *
+        display interface * subinterface *
+    But you can of course also use other values
+        display interface my_interface subinterface 1
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    history_size: Annotated[
-        Optional[int], Field(alias='srl_nokia-aaa:history-size', ge=1, le=100000)
-    ] = 1000
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-system-cli:name',
+            pattern='^(?=^[^|\\[\\]>\\t\\n"]*$)(?=^[^\']*$)(?=^[^\\s{}].*$)(?=^.*[^\\s]$)(?=^([^{}]*(\\{([^{}\\s]*)\\})?)*[^{}]*$).*$',
+        ),
+    ]
     """
-    Size of the kept accounting events history
+    Name of the alias
+    """
+    command: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-system-cli:command',
+            pattern='^(?=^[^\\s].*$)(?=^.*[^\\s]$).*$',
+        ),
+    ]
+    """
+    Aliased command
     """
 
 
@@ -2068,28 +2462,13 @@ class BgpAutoDiscoveryContainer3(BaseModel):
     """
 
 
-class BgpContainer(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    restart_max_wait: Annotated[
-        Optional[int], Field(alias='srl_nokia-bgp:restart-max-wait', ge=0, le=3600)
-    ] = 600
-    """
-    The maximum amount of time that BGP will wait to receive End of RIB markers from all peers and for all address families that were up prior to restart.
-
-    After this time elapses BGP declares that convergence has occurred and sends its own EOR markers to its peers.
-    """
-
-
 class CapabilitiesContainer(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
     ac_df: Annotated[
-        Optional[EnumerationEnum35],
+        Optional[EnumerationEnum63],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:ac-df'
         ),
@@ -2105,6 +2484,21 @@ class CapabilitiesContainer(BaseModel):
     ] = False
     """
     Non Revertive mode. If set to true, the 'Don't Preempt Me' capability is advertised in the ES route.
+    """
+
+
+class CapabilitiesListEntry(BaseModel):
+    """
+    List name
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[str, Field(alias='srl_nokia-lldp:name')]
+    """
+    Neighbor supported capabilities
     """
 
 
@@ -2264,6 +2658,14 @@ class ComplexityRulesContainer(BaseModel):
     """
     Enable or disable using username as part of the user password
     """
+    disallow_sequence_keys: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:disallow-sequence-keys', ge=0, le=8)
+    ] = 0
+    """
+    The minimum length of disallowed sequential characters
+    to appear (letters or numbers) from left to right,
+    right to left, down to up-right/left, or up to down-right/left.
+    """
 
 
 class ConstellationContainer(BaseModel):
@@ -2277,6 +2679,38 @@ class ConstellationContainer(BaseModel):
     )
     gps: Annotated[Optional[bool], Field(alias='srl_nokia-sync:gps')] = True
     galileo: Annotated[Optional[bool], Field(alias='srl_nokia-sync:galileo')] = False
+
+
+class CoordinatesContainer(BaseModel):
+    """
+    Contains configuration and state related to system coordinates
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    latitude: Annotated[
+        Optional[float],
+        Field(alias='srl_nokia-system-coordinates:latitude', ge=-90.0, le=90.0),
+    ] = None
+    """
+    Decimal latitude between -90 and 90 to a maximum of 6 decimal places
+    """
+    longitude: Annotated[
+        Optional[float],
+        Field(alias='srl_nokia-system-coordinates:longitude', ge=-180.0, le=180.0),
+    ] = None
+    """
+    Decimal longitude between -180 and 180 to a maximum of 6 decimal places
+    """
+    height: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-coordinates:height', ge=0, le=65535),
+    ] = None
+    """
+    Height in meters
+    """
 
 
 class CustomTlvListEntry(BaseModel):
@@ -2318,6 +2752,105 @@ class CustomTlvListEntry(BaseModel):
     ] = None
     """
     A variable-length octet-string containing the value for this TLV
+    """
+
+
+class CustomListEntry(BaseModel):
+    """
+    List of custom DHCP options
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    code: Annotated[int, Field(alias='srl_nokia-dhcp-server:code', ge=1, le=254)]
+    """
+    The code of the DHCP option
+    """
+    value: Annotated[
+        str, Field(alias='srl_nokia-dhcp-server:value', max_length=255, min_length=1)
+    ]
+    """
+    The value of the DHCP option
+    """
+    always_send: Annotated[
+        Optional[bool], Field(alias='srl_nokia-dhcp-server:always-send')
+    ] = False
+    """
+    If true, the option will always be sent to the client, even if it is not configured in the client request
+    """
+    encoding: Annotated[
+        Optional[str], Field(alias='srl_nokia-dhcp-server:encoding')
+    ] = 'string'
+    """
+    The encoding of the value of the DHCP option
+    """
+
+
+class CustomListEntry2(BaseModel):
+    """
+    List of custom DHCP options
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    code: Annotated[int, Field(alias='srl_nokia-dhcp-server:code', ge=1, le=254)]
+    """
+    The code of the DHCP option
+    """
+    value: Annotated[
+        str, Field(alias='srl_nokia-dhcp-server:value', max_length=255, min_length=1)
+    ]
+    """
+    The value of the DHCP option
+    """
+    always_send: Annotated[
+        Optional[bool], Field(alias='srl_nokia-dhcp-server:always-send')
+    ] = False
+    """
+    If true, the option will always be sent to the client, even if it is not configured in the client request
+    """
+    encoding: Annotated[
+        Optional[str], Field(alias='srl_nokia-dhcp-server:encoding')
+    ] = 'string'
+    """
+    The encoding of the value of the DHCP option
+    """
+
+
+class CustomListEntry3(BaseModel):
+    """
+    List of custom DHCP options
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    code: Annotated[int, Field(alias='srl_nokia-dhcp-server:code', ge=1, le=254)]
+    """
+    The code of the DHCP option
+    """
+    value: Annotated[
+        str, Field(alias='srl_nokia-dhcp-server:value', max_length=255, min_length=1)
+    ]
+    """
+    The value of the DHCP option
+    """
+    always_send: Annotated[
+        Optional[bool], Field(alias='srl_nokia-dhcp-server:always-send')
+    ] = False
+    """
+    If true, the option will always be sent to the client, even if it is not configured in the client request
+    """
+    encoding: Annotated[
+        Optional[str], Field(alias='srl_nokia-dhcp-server:encoding')
+    ] = 'string'
+    """
+    The encoding of the value of the DHCP option
     """
 
 
@@ -2524,6 +3057,52 @@ class DiscardsContainer4(BaseModel):
     """
 
 
+class DiscardsContainer5(BaseModel):
+    """
+    Aggregate discard statistics for the PTP clock
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    bad_domain: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:bad-domain', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of bad domain messages that were discarded
+    """
+    alternate_master: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:alternate-master', ge=0, le=4294967295),
+    ] = None
+    """
+    Specifies the number of alternate master messages that were discarded
+    """
+    out_of_sequence: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:out-of-sequence', ge=0, le=4294967295),
+    ] = None
+    """
+    Specifies the number of out of sequence messages that were discarded
+    """
+    peer_disabled: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:peer-disabled', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of PTP messages that were discarded from disabled PTP peer
+
+    Occurs when a PTP peer has been administratively disabled.
+    This information is only available for configured and discovered peers.
+    """
+    other: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:other', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of other messages that were discarded
+    """
+
+
 class EventListEntry(BaseModel):
     """
     List of events subject to accounting
@@ -2565,19 +3144,70 @@ class EviListEntry(BaseModel):
     """
 
 
-class FeaturesLeafList(RootModel[str]):
+class FieldListEntry(BaseModel):
+    """
+    This list contains the (Options) Template
+    fields of which the (Options) Template is defined.
+    The order of the list corresponds to the order of the fields
+    in the (Option) Template Record.
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    root: Annotated[
-        str,
-        Field(
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$'
-        ),
-    ]
+    element_id: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:element-id', ge=1, le=32767)
+    ] = None
     """
-    Features enabled on this platform
+    This parameter indicates the Information
+    Element identifier of the field.
+    Note that this parameter corresponds to
+    ipfixTemplateDefinitionIeId in the IPFIX MIB module.
+    """
+    element_length: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:element-length', ge=0, le=65535)
+    ] = None
+    """
+    This parameter indicates the length of the
+    Information Element of the field.
+    Note that this parameter corresponds to
+    ipfixTemplateDefinitionIeLength in the IPFIX MIB
+    module.
+    """
+    ie_enterprise_number: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:ie-enterprise-number', ge=0, le=4294967295),
+    ] = None
+    """
+    This parameter indicates the IANA enterprise
+    number of the authority defining the Information Element
+    identifier.
+    If the Information Element is not enterprise-specific,
+    this state parameter is zero.
+    Note that this parameter corresponds to
+    ipfixTemplateDefinitionIeEnterpriseNumber in the IPFIX
+    MIB module.
+    """
+    is_flow_key: Annotated[
+        Optional[List[None]],
+        Field(alias='srl_nokia-ipfix:is-flowKey', max_length=1, min_length=1),
+    ] = None
+    """
+    If present, this is a Flow Key field.
+
+    Note that this corresponds to flowKey(1) being set in
+    ipfixTemplateDefinitionFlags.
+    """
+    is_scope: Annotated[
+        Optional[List[None]],
+        Field(alias='srl_nokia-ipfix:is-scope', max_length=1, min_length=1),
+    ] = None
+    """
+    If present, this is a scope field.
+
+    Note that this corresponds to scope(0) being set in
+    ipfixTemplateDefinitionFlags.
     """
 
 
@@ -2791,6 +3421,41 @@ class InstanceListEntry4(BaseModel):
     """
 
 
+class InventoryContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    hardware_revision: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-lldp:hardware-revision', max_length=32, min_length=0),
+    ] = None
+    firmware_revision: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-lldp:firmware-revision', max_length=32, min_length=0),
+    ] = None
+    software_revision: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-lldp:software-revision', max_length=32, min_length=0),
+    ] = None
+    serial_number: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-lldp:serial-number', max_length=32, min_length=0),
+    ] = None
+    manufacturer_number: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-lldp:manufacturer-number', max_length=32, min_length=0),
+    ] = None
+    model_name: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-lldp:model-name', max_length=32, min_length=0),
+    ] = None
+    asset_id: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-lldp:asset-id', max_length=32, min_length=0),
+    ] = None
+
+
 class Ipv4AddressType(RootModel[str]):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -2819,8 +3484,7 @@ class Ipv6AddressType(RootModel[str]):
         ),
     ]
     """
-    An IPv6 address represented as either a full address; shortened
-    or mixed-shortened formats.
+    An IPv6 address represented as either a full address, shortened or mixed-shortened formats
     """
 
 
@@ -2912,10 +3576,45 @@ class LocalLinuxUsersContainer(BaseModel):
         regex_engine="python-re",
     )
     disable_login: Annotated[
-        Optional[List[EnumerationEnum10]], Field(alias='srl_nokia-aaa:disable-login')
+        Optional[List[EnumerationEnum8]], Field(alias='srl_nokia-aaa:disable-login')
     ] = []
     """
-    disable the loging for all local linux users via remote login or remote login and console
+    disable the loging for all local linux users via remote login or console
+    """
+    allow_fallback: Annotated[
+        Optional[bool], Field(alias='srl_nokia-aaa:allow-fallback')
+    ] = False
+    """
+    enable linux users login in case aaa_mgr is not working
+    """
+
+
+class LocationContainer(BaseModel):
+    """
+    Selection of location information to transmit when the endpoint supports location capability
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    system_coordinates: Annotated[
+        Optional[bool], Field(alias='srl_nokia-lldp:system-coordinates')
+    ] = False
+    """
+    Transmit the configured system coordinate values
+
+    All values will be included in the LLDPDU location TLV.  If no /system/location/coordinates are configured
+    the location TLV will not include coordinate information
+    """
+    elin: Annotated[
+        Optional[str], Field(alias='srl_nokia-lldp:elin', max_length=25, min_length=10)
+    ] = None
+    """
+    Emergency Location Identification Number
+
+    Included in the location TLV using civic-address encoded as CA-type 128.  The ../system-civic-address does
+    not have to be configured or enabled to send this value.
     """
 
 
@@ -2997,6 +3696,75 @@ class MacLimitContainer(BaseModel):
     Percentage of the configured max-number-macs over which a warning is triggered.
     The warning message is cleared when the percentage drops below the configured
     percentage minus 5%
+    """
+
+
+class MstInstanceListEntry(BaseModel):
+    """
+    List of the mstp instances
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    mst_id: Annotated[
+        int, Field(alias='srl_nokia-system-protocols-mgmt-stp:mst-id', ge=1, le=15)
+    ]
+    """
+    In an MSTP Bridge, an MSTID, is used to identify a multiple-spanning-tree-instance.
+    """
+    mst_priority: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:mst-priority')
+    ] = None
+    """
+    Priority component of the Bridge Identifier
+    """
+    vlan_range: Annotated[
+        Optional[List[str]],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:vlan-range'),
+    ] = []
+    """
+    List of vlans mapped to the MST instance
+    """
+    regional_root: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:regional-root')
+    ] = None
+    """
+    The bridge identifier of the regional root determined by the Mst Instance STP
+    """
+    internal_root_cost: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:internal-root-cost',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The cost of the path to the regional root bridge as seen from this bridge
+    """
+    remaining_hop_count: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:remaining-hop-count',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The value specifies the remaining number of hops.
+    """
+    root_port: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:root-port',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The port number of port which offers the lowest cost path from this bridge to the regional root bridge.
     """
 
 
@@ -3233,13 +4001,71 @@ class NeighborListListEntry(BaseModel):
     """
     Indicates if this neighbor is the current parent clock of this PTP clock
     """
-    no_port_timestamping: Annotated[
-        Optional[bool], Field(alias='srl_nokia-sync:no-port-timestamping')
+    port_timestamping: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:port-timestamping')
     ] = None
     """
-    Indicates that the last PTP event message exchanged with this neighbor did not get timestamped at the port
+    Indicates if this port supports timestamping of PTP event messages
 
-    This is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping
+    If this is false, this is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping
+    """
+
+
+class NeighborListListEntry2(BaseModel):
+    """
+    List of MAC address of all the neighbors of this port
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    clock_identity: Annotated[
+        str, Field(alias='srl_nokia-sync:clock-identity', max_length=8, min_length=8)
+    ]
+    """
+    The clockIdentity of this neighbor clock
+    """
+    port_number: Annotated[
+        int, Field(alias='srl_nokia-sync:port-number', ge=0, le=65535)
+    ]
+    """
+    The port number of this neighbor clock
+    """
+    mac_address: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-sync:mac-address',
+            pattern='^(?=^[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}$).*$',
+        ),
+    ] = None
+    """
+    Specifies the MAC address of this neighbor
+    """
+    rx_message_rate: Annotated[
+        Optional[float],
+        Field(
+            alias='srl_nokia-sync:rx-message-rate',
+            ge=-9.223372036854776e17,
+            le=9.223372036854776e17,
+        ),
+    ] = None
+    """
+    The receive message rate from this neighbor clock
+    """
+    parent_clock: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:parent-clock')
+    ] = None
+    """
+    Indicates if this neighbor is the current parent clock of this PTP clock
+    """
+    port_timestamping: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:port-timestamping')
+    ] = None
+    """
+    Indicates if this port supports timestamping of PTP event messages
+
+    If this is false, this is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping
     """
 
 
@@ -3253,7 +4079,7 @@ class NetconfContainer(BaseModel):
         regex_engine="python-re",
     )
     allowed_operations: Annotated[
-        Optional[List[EnumerationEnum13]],
+        Optional[List[EnumerationEnum11]],
         Field(alias='srl_nokia-aaa:allowed-operations'),
     ] = []
     """
@@ -3295,6 +4121,24 @@ class NetworkInstancesLeafList(RootModel[str]):
     """
 
 
+class NetworkPolicyLeafList(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$'
+        ),
+    ]
+    """
+    Name of the network policy for a specific application type
+
+    Multiple network policies can be assigned to a single interface, one per application type.
+    """
+
+
 class NtpServerLeafList(RootModel[str]):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -3324,6 +4168,101 @@ class NtpServerLeafList2(RootModel[str]):
     ]
     """
     List of NTP Servers to return to the dhcp client - option 42
+    """
+
+
+class NtpServerLeafList3(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$'
+        ),
+    ]
+    """
+    List of NTP Servers to return to the dhcp client - option 42
+    """
+
+
+class OptionsListEntry(BaseModel):
+    """
+    List of options reported by the Exporting
+    Process.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-ipfix:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Key of this list.
+    """
+    options_type: Annotated[str, Field(alias='srl_nokia-ipfix:options-type')]
+    """
+    Type of the exported options data.
+    """
+    options_timeout: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:options-timeout', ge=0, le=4294967295),
+    ] = None
+    """
+    Time interval for periodic export of the options
+    data.  If set to zero, the export is triggered when the
+    options data has changed.
+    If not configured by the user, this parameter is set by the
+    Monitoring Device.
+    """
+
+
+class OutputModifierAliasListEntry(BaseModel):
+    """
+    Create or overwrite an output modifier alias
+
+    Output modifier aliases can be entered after '|'.
+    They can represent a complete command or part of a target command.
+
+    For example, if you create the following aliases, the output will be the same:
+    count = "grep --count"
+    match_if = "grep interface"
+    count_if = "count interface"
+    info | count interface
+    info | match_if --count
+    info | count_if
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-system-cli:name',
+            pattern='^(?=^[^|\\[\\]>\\t\\n" ]*$)(?=^[^\']*$)(?=^[^\\s].*$)(?=^.*[^\\s]$).*$',
+        ),
+    ]
+    """
+    Name of the alias
+    """
+    command: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-system-cli:command',
+            pattern='^(?=^[^\\s].*$)(?=^.*[^\\s]$).*$',
+        ),
+    ]
+    """
+    Aliased command
     """
 
 
@@ -3435,7 +4374,7 @@ class PasswordContainer4(BaseModel):
         Optional[LockoutPolicyContainer], Field(alias='srl_nokia-aaa:lockout-policy')
     ] = None
     hash_method: Annotated[
-        Optional[EnumerationEnum11], Field(alias='srl_nokia-aaa:hash-method')
+        Optional[EnumerationEnum9], Field(alias='srl_nokia-aaa:hash-method')
     ] = None
     """
     The hash algorithm for the passwords entered as plain text
@@ -3464,12 +4403,6 @@ class PasswordContainer4(BaseModel):
     """
     Defines how many previous passwords a new password is matched against, such that a new password can't be one of the previous n passwords
     """
-    require_ntp_sync: Annotated[
-        Optional[bool], Field(alias='srl_nokia-aaa:require-ntp-sync')
-    ] = True
-    """
-    Enable or disable dependence of password aging and user lockout on NTP sync status
-    """
 
 
 class PathsListEntry(BaseModel):
@@ -3489,7 +4422,7 @@ class PathsListEntry(BaseModel):
     """
     Path being subscribed to
     """
-    mode: Annotated[Optional[EnumerationEnum17], Field(alias='srl_nokia-grpc:mode')] = (
+    mode: Annotated[Optional[EnumerationEnum16], Field(alias='srl_nokia-grpc:mode')] = (
         None
     )
     """
@@ -3524,7 +4457,7 @@ class PeerGroupLeafList(RootModel[str]):
 
 class PfcpContainer(BaseModel):
     """
-    Configuration related to the PFCP interface between mag-c and upf
+    Configure the PFCP interface between the cMAG-c and the MAG-u
     """
 
     model_config = ConfigDict(
@@ -3535,7 +4468,20 @@ class PfcpContainer(BaseModel):
         str, Field(alias='srl_nokia-lawful-intercept:shared-secret')
     ]
     """
-    Shared secret between mag-c and upf
+    Secret shared between the cMAG-c and the MAG-u
+    """
+
+
+class PortDsCfgIpContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    index: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:index', ge=1, le=999)
+    ] = None
+    """
+    Peer used as the source of PTP messages into the recovery engine
     """
 
 
@@ -3616,27 +4562,15 @@ class PrimaryEviRangeListEntry(BaseModel):
     """
 
 
-class ProtocolsContainer(BaseModel):
-    """
-    The routing protocols that are supported by the system
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    bgp: Annotated[Optional[BgpContainer], Field(alias='srl_nokia-bgp:bgp')] = None
-
-
 class PtpCase(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    ptp: Annotated[Optional[PtpContainer], Field(alias='srl_nokia-sync:ptp')] = None
+    ptp: Annotated[Optional[PtpContainer2], Field(alias='srl_nokia-sync:ptp')] = None
 
 
-class PtpContainer3(BaseModel):
+class PtpContainer(BaseModel):
     """
     Container for Precision Time Protocol Peer-Delay protocol.
     """
@@ -3687,21 +4621,36 @@ class PtpContainer3(BaseModel):
     """
 
 
-class QosContainer(BaseModel):
+class RadiusContainer(BaseModel):
     """
-    Parameters describing QoS handling of system generated traffic
+    Top-level container for RADIUS server data
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    management_protocols_dscp: Annotated[
-        Optional[Union[DscpValueType, EnumerationEnum4]],
-        Field(alias='srl_nokia-qos:management-protocols-dscp'),
-    ] = '32'
+    auth_port: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:auth-port', ge=0, le=65535)
+    ] = 1812
     """
-    Defines dscp value the system generated traffic by management-protocols should be marked with
+    Port number for authentication requests
+    """
+    acct_port: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:acct-port', ge=0, le=65535)
+    ] = 1813
+    """
+    Port number for accounting requests
+    """
+    secret_key: Annotated[Optional[str], Field(alias='srl_nokia-aaa:secret-key')] = None
+    """
+    The unencrypted shared key used between the system and server, up to 64 characters cleartext
+    """
+    retransmit_attempts: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:retransmit-attempts', ge=0, le=255)
+    ] = 3
+    """
+    Number of times the system may send a request to the unresponsive server
     """
 
 
@@ -3770,26 +4719,6 @@ class RoleLeafList(RootModel[str]):
         ),
     ]
     """
-    List of roles to assign to all dynamic SPIFFE clients
-
-    Dynamic SPIFFE clients are clients authenticated using a client certificate containing SPIFFE ID value that
-    is not configured under any local user. The most specific rule for a particular role takes precedence. Rules
-    from all user roles are evaluated together, most permissive privilege taking precedence.
-    """
-
-
-class RoleLeafList2(RootModel[str]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[
-        str,
-        Field(
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$'
-        ),
-    ]
-    """
     List of roles to assign to this user
 
     The most specific rule for a particular role takes precedence.
@@ -3797,7 +4726,7 @@ class RoleLeafList2(RootModel[str]):
     """
 
 
-class RoleLeafList3(RootModel[str]):
+class RoleLeafList2(RootModel[str]):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -3841,7 +4770,7 @@ class RouteDistinguisherContainer(BaseModel):
     as <ip-address>:0 where 'ip-address' is the ipv4 address associated to the subinterface lo0.1.
     """
     route_distinguisher_origin: Annotated[
-        Optional[EnumerationEnum40],
+        Optional[EnumerationEnum67],
         Field(
             alias='srl_nokia-system-network-instance-bgp-vpn:route-distinguisher-origin'
         ),
@@ -3864,7 +4793,7 @@ class RouteTargetContainer(BaseModel):
         regex_engine="python-re",
     )
     export_route_target_origin: Annotated[
-        Optional[EnumerationEnum41],
+        Optional[EnumerationEnum68],
         Field(
             alias='srl_nokia-system-network-instance-bgp-vpn:export-route-target-origin'
         ),
@@ -3876,7 +4805,7 @@ class RouteTargetContainer(BaseModel):
      Identifier of the route.
     """
     import_route_target_origin: Annotated[
-        Optional[EnumerationEnum42],
+        Optional[EnumerationEnum69],
         Field(
             alias='srl_nokia-system-network-instance-bgp-vpn:import-route-target-origin'
         ),
@@ -4050,6 +4979,17 @@ class RpcListEntry2(BaseModel):
     """
 
 
+class SampleCountBasedCase(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    sample_count_based: Annotated[
+        Optional[SampleCountBasedContainer],
+        Field(alias='srl_nokia-ipfix:sample-count-based'),
+    ] = None
+
+
 class SatellitesInUseContainer(BaseModel):
     """
     The list of satellites currently in use
@@ -4071,86 +5011,77 @@ class SatellitesInUseContainer(BaseModel):
     ] = None
 
 
-class ServerListEntry2(BaseModel):
+class SelectionProcessLeafList(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$'
+        ),
+    ]
     """
-    List of NTP servers to use for system clock synchronization
+    Selection Processes in this list process
+    packets in parallel.
+    """
+
+
+class SelectorListEntry(BaseModel):
+    """
+    List of Selectors that define the action of the
+    Selection Process on a single packet.  The Selectors are
+    serially invoked in the same order as they appear in this
+    list.
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    address: Annotated[
-        Union[Ipv4Type, Ipv6Type, DomainNameType], Field(alias='srl_nokia-ntp:address')
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-ipfix:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
     ]
     """
-    Domain or IP address of the NTP server
-
-    IP address may be either IPv4 or IPv6.
-
-    Domain resolution requires working DNS configuration in the same network-instance.
+    Key of this list.
     """
-    iburst: Annotated[Optional[bool], Field(alias='srl_nokia-ntp:iburst')] = False
-    """
-    Indicates whether this server should enable burst synchronization or not
-    iburst, or initial burst, improves the time taken for initial synchronization
-    by sending a burst of eight packets instead of the usual one, these packets are
-    spaced by a two second delay
-    """
-    prefer: Annotated[Optional[bool], Field(alias='srl_nokia-ntp:prefer')] = False
-    """
-    Indicates whether this server should be preferred or not
-    All other things being equal, this host will be chosen for synchronization among
-    a set of correctly operating NTP servers
-    """
-    stratum: Annotated[
-        Optional[int], Field(alias='srl_nokia-ntp:stratum', ge=0, le=255)
-    ] = None
-    """
-    Indicates the level of the server in the NTP hierarchy
-    as number increases, the accuracy is degraded.
-    Primary servers are stratum 1 while a maximum value of 16
-    indicates unsynchronized. The values have the following meanings:
-    0 unspecified or invalid
-    1 primary server (e.g., equipped with a GPS receiver)
-    2-15 secondary server (via NTP)
-    16 unsynchronized
-    17-255 reserved
-    """
-    jitter: Annotated[
+    method: Annotated[SampleCountBasedCase, Field(alias='srl_nokia-ipfix:method')]
+    packets_observed: Annotated[
         Optional[int],
-        Field(alias='srl_nokia-ntp:jitter', ge=0, le=18446744073709551615),
-    ] = None
+        Field(alias='srl_nokia-ipfix:packets-observed', ge=0, le=18446744073709551615),
+    ] = 0
     """
-    Measurement of the variance in latency on the network
+    The number of packets observed at the input of
+    the Selector.
     """
-    offset: Annotated[
+    packets_dropped: Annotated[
         Optional[int],
-        Field(alias='srl_nokia-ntp:offset', ge=0, le=18446744073709551615),
+        Field(alias='srl_nokia-ipfix:packets-dropped', ge=0, le=18446744073709551615),
+    ] = 0
+    """
+    The total number of packets discarded by the
+    Selector.
+    Discontinuities in the value of this counter can occur at
+    re-initialization of the management system, and at other
+    times as indicated by the value of
+    selectorDiscontinuityTime.
+    """
+    selector_discontinuity_time: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-ipfix:selector-discontinuity-time',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
     ] = None
     """
-    Estimate of the current time offset from the peer
-    This is the time difference between the local and reference clock.
-    """
-    root_delay: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-ntp:root-delay', ge=0, le=18446744073709551615),
-    ] = None
-    """
-    The round-trip delay to the server
-    """
-    root_dispersion: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-ntp:root-dispersion', ge=0, le=18446744073709551615),
-    ] = None
-    """
-    Dispersion (epsilon) represents the maximum error inherent in the measurement
-    """
-    poll_interval: Annotated[
-        Optional[int], Field(alias='srl_nokia-ntp:poll-interval', ge=0, le=4294967295)
-    ] = None
-    """
-    Polling interval of the peer
+    Timestamp of the most recent occasion at which
+    one or more of the Selector counters suffered a
+    discontinuity.
     """
 
 
@@ -4197,6 +5128,12 @@ class SessionListEntry(BaseModel):
     """
     Terminal type
     """
+    pid: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:pid', ge=-2147483648, le=2147483647)
+    ] = None
+    """
+    Process identifier
+    """
     remote_host: Annotated[Optional[str], Field(alias='srl_nokia-aaa:remote-host')] = (
         None
     )
@@ -4216,6 +5153,22 @@ class SessionListEntry(BaseModel):
     role: Annotated[Optional[List[str]], Field(alias='srl_nokia-aaa:role')] = []
     """
     List of roles assigned to this user
+    """
+
+
+class SetTagSetLeafList(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$'
+        ),
+    ]
+    """
+    Reference to a tag-set defined under routing-policy
     """
 
 
@@ -4992,7 +5945,158 @@ class SshCase(BaseModel):
     """
 
 
+class StaticRouteListEntry(BaseModel):
+    """
+    This option can contain one or more static routes, each of which consists of a destination descriptor and the IP address of the router that should be used to reach that destination - option 121
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    destination: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-dhcp-server:destination',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))$).*$',
+        ),
+    ]
+    """
+    A destination descriptor
+    """
+    router: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:router',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
+        ),
+    ] = None
+    """
+    IP address of the router that should be used to reach that destination
+    """
+
+
+class StaticRouteListEntry2(BaseModel):
+    """
+    This option can contain one or more static routes, each of which consists of a destination descriptor and the IP address of the router that should be used to reach that destination - option 121
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    destination: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-dhcp-server:destination',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))$).*$',
+        ),
+    ]
+    """
+    A destination descriptor
+    """
+    router: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:router',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
+        ),
+    ] = None
+    """
+    IP address of the router that should be used to reach that destination
+    """
+
+
+class StaticRouteListEntry3(BaseModel):
+    """
+    This option can contain one or more static routes, each of which consists of a destination descriptor and the IP address of the router that should be used to reach that destination - option 121
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    destination: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-dhcp-server:destination',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))$).*$',
+        ),
+    ]
+    """
+    A destination descriptor
+    """
+    router: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:router',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
+        ),
+    ] = None
+    """
+    IP address of the router that should be used to reach that destination
+    """
+
+
 class StatisticsContainer10(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    client_packets_received: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-dhcp-server:client-packets-received',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    Total received dhcp packets from dhcp client(s)
+    """
+    client_packets_discarded: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-dhcp-server:client-packets-discarded',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    Total discarded dhcp packets from dhcp client(s)
+    """
+    server_packets_sent: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-dhcp-server:server-packets-sent',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    Total dhcp packets sent from DHCP server towards dhcp client(s)
+    """
+
+
+class StatisticsContainer13(BaseModel):
+    """
+    Top-level container for application statistics
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    restart_count: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-app-mgmt:restart-count', ge=0, le=4294967295),
+    ] = 0
+    """
+    The number of times this application instance has restarted
+    """
+
+
+class StatisticsContainer17(BaseModel):
     """
     Top-level container for event handler statistics
     """
@@ -5021,7 +6125,7 @@ class StatisticsContainer10(BaseModel):
         ),
     ] = 0
     """
-    Indicates the total number of executions of this script
+    Total number of executions of this script
     """
     execution_successes: Annotated[
         Optional[int],
@@ -5032,7 +6136,7 @@ class StatisticsContainer10(BaseModel):
         ),
     ] = 0
     """
-    Indicates the total number of successful executions of this script
+    Total number of successful executions of this script
     """
     execution_timeouts: Annotated[
         Optional[int],
@@ -5043,7 +6147,7 @@ class StatisticsContainer10(BaseModel):
         ),
     ] = 0
     """
-    Indicates the total number of timeouts in executions of this script
+    Total number of timeouts in executions of this script
     """
     execution_errors: Annotated[
         Optional[int],
@@ -5054,182 +6158,56 @@ class StatisticsContainer10(BaseModel):
         ),
     ] = 0
     """
-    Indicates the total number of errors in executions of this script
-    """
-
-
-class StatisticsContainer13(BaseModel):
-    """
-    Top-level container for application statistics
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    restart_count: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-app-mgmt:restart-count', ge=0, le=4294967295),
-    ] = 0
-    """
-    The number of times this application instance has restarted
-    """
-
-
-class StatisticsContainer14(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    client_packets_received: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-dhcp-server:client-packets-received',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    Total received dhcp packets from dhcp client(s)
-    """
-    client_packets_discarded: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-dhcp-server:client-packets-discarded',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    Total discarded dhcp packets from dhcp client(s)
-    """
-    server_packets_sent: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-dhcp-server:server-packets-sent',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    Total dhcp packets sent from DHCP server towards dhcp client(s)
-    """
-
-
-class StatisticsContainer15(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    client_packets_received: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-dhcp-server:client-packets-received',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    Total received dhcp packets from dhcp client(s)
-    """
-    client_packets_discarded: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-dhcp-server:client-packets-discarded',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    Total discarded dhcp packets from dhcp client(s)
-    """
-    server_packets_sent: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-dhcp-server:server-packets-sent',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    Total dhcp packets sent from DHCP server towards dhcp client(s)
+    Total number of errors in executions of this script
     """
 
 
 class StatisticsContainer2(BaseModel):
     """
-    Enclosing container for server statistics
+    Statistics related to the gRPC server
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    login_success: Annotated[
-        Optional[int], Field(alias='srl_nokia-aaa:login-success', ge=0, le=4294967295)
-    ] = 0
-    """
-    Number of login successes
-    """
-    login_connection_failures: Annotated[
+    access_rejects: Annotated[
         Optional[int],
-        Field(alias='srl_nokia-aaa:login-connection-failures', ge=0, le=4294967295),
-    ] = 0
+        Field(alias='srl_nokia-grpc:access-rejects', ge=0, le=18446744073709551615),
+    ] = None
     """
-    Number of login connection failures
+    The total number of times the gRPC server denied access to the server
     """
-    login_rejects: Annotated[
-        Optional[int], Field(alias='srl_nokia-aaa:login-rejects', ge=0, le=4294967295)
-    ] = 0
-    """
-    Number of login rejections
-    """
-    accounting_success: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-aaa:accounting-success', ge=0, le=4294967295),
-    ] = 0
-    """
-    Number of accounting successes
-    """
-    accounting_rejects: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-aaa:accounting-rejects', ge=0, le=4294967295),
-    ] = 0
-    """
-    Number of accounting rejections
-    """
-    accounting_connection_failures: Annotated[
-        Optional[int],
+    last_access_reject: Annotated[
+        Optional[str],
         Field(
-            alias='srl_nokia-aaa:accounting-connection-failures', ge=0, le=4294967295
+            alias='srl_nokia-grpc:last-access-reject',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
         ),
-    ] = 0
+    ] = None
     """
-    Number of accounting connection failures
+    A timestamp of the last time the gRPC server denied access to the server
     """
-    authorization_success: Annotated[
+    access_accepts: Annotated[
         Optional[int],
-        Field(alias='srl_nokia-aaa:authorization-success', ge=0, le=4294967295),
-    ] = 0
+        Field(alias='srl_nokia-grpc:access-accepts', ge=0, le=18446744073709551615),
+    ] = None
     """
-    Number of authorization successes
+    The total number of times the gPRC allowed access to the server
     """
-    authorization_rejects: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-aaa:authorization-rejects', ge=0, le=4294967295),
-    ] = 0
-    """
-    Number of authorization rejections
-    """
-    authorization_connection_failures: Annotated[
-        Optional[int],
+    last_access_accept: Annotated[
+        Optional[str],
         Field(
-            alias='srl_nokia-aaa:authorization-connection-failures', ge=0, le=4294967295
+            alias='srl_nokia-grpc:last-access-accept',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
         ),
-    ] = 0
+    ] = None
     """
-    Number of authorization connection failures
+    A timestamp of the last time the gRPC allowed access to the server
     """
+    rpc: Annotated[Optional[List[RpcListEntry2]], Field(alias='srl_nokia-grpc:rpc')] = (
+        None
+    )
 
 
 class StatisticsContainer21(BaseModel):
@@ -5536,55 +6514,154 @@ class StatisticsContainer23(BaseModel):
     ] = None
 
 
-class StatisticsContainer3(BaseModel):
+class StatisticsContainer24(BaseModel):
     """
-    Statistics related to the gRPC server
+    Total messages for a specific PTP port
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    access_rejects: Annotated[
+    anno_msg_tx: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:anno-msg-tx', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of announce messages transmitted
+    """
+    anno_msg_rx: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:anno-msg-rx', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of announce messages received
+    """
+    sync_msg_tx: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:sync-msg-tx', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of sync messages transmitted
+    """
+    sync_msg_rx: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:sync-msg-rx', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of sync messages received
+    """
+    del_req_msg_tx: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:del-req-msg-tx', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of delay-req messages transmitted
+    """
+    del_req_msg_rx: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:del-req-msg-rx', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of delay-req messages received
+    """
+    del_resp_msg_tx: Annotated[
         Optional[int],
-        Field(alias='srl_nokia-grpc:access-rejects', ge=0, le=18446744073709551615),
+        Field(alias='srl_nokia-sync:del-resp-msg-tx', ge=0, le=4294967295),
     ] = None
     """
-    The total number of times the gRPC server denied access to the server
+    Specifies the number of delay-resp messages transmitted
     """
-    last_access_reject: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-grpc:last-access-reject',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    A timestamp of the last time the gRPC server denied access to the server
-    """
-    access_accepts: Annotated[
+    del_resp_msg_rx: Annotated[
         Optional[int],
-        Field(alias='srl_nokia-grpc:access-accepts', ge=0, le=18446744073709551615),
+        Field(alias='srl_nokia-sync:del-resp-msg-rx', ge=0, le=4294967295),
     ] = None
     """
-    The total number of times the gPRC allowed access to the server
+    Specifies the number of delay-resp messages received
     """
-    last_access_accept: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-grpc:last-access-accept',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
+    follow_up_msg_tx: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:follow-up-msg-tx', ge=0, le=4294967295),
     ] = None
     """
-    A timestamp of the last time the gRPC allowed access to the server
+    Specifies the number of follow-up messages transmitted
     """
-    rpc: Annotated[Optional[List[RpcListEntry2]], Field(alias='srl_nokia-grpc:rpc')] = (
-        None
+    follow_up_msg_rx: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:follow-up-msg-rx', ge=0, le=4294967295),
+    ] = None
+    """
+    Specifies the number of follow-up messages received
+    """
+    signaling_msg_tx: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:signaling-msg-tx', ge=0, le=4294967295),
+    ] = None
+    """
+    Specifies the number of follow-up messages transmitted
+    """
+    signaling_msg_rx: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:signaling-msg-rx', ge=0, le=4294967295),
+    ] = None
+    """
+    Specifies the number of follow-up messages received
+    """
+    other_rx: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:other-rx', ge=0, le=4294967295)
+    ] = None
+    """
+    Specifies the number of other messages received
+    """
+    discards: Annotated[
+        Optional[DiscardsContainer5], Field(alias='srl_nokia-sync:discards')
+    ] = None
+
+
+class StatisticsContainer25(BaseModel):
+    """
+    Enclosing container for system dot1x tunneling statistics
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
     )
+    in_tunneled_packets: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-dot1x-tunneling:in-tunneled-packets',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    System or interface level incoming 802.1x tunneled frames
+
+    Cumulative of all Ethernet interfaces including all the tunneled 802.1x frames.
+    802.1x frames are identified by a destination MAC value of 01:80:c2:00:00:03 and EtherType value of 0x888e.
+    """
+    in_trap_to_cpu_packets: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-dot1x-tunneling:in-trap-to-cpu-packets',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    System or interface level incoming 802.1x frames copied to CPU
+
+    Cumulative of all Ethernet interfaces including all the copy-to-cpu 802.1x frames.
+    802.1x frames are identified by a destination MAC value of 01:80:c2:00:00:03 and EtherType value of 0x888e.
+    """
+    last_clear: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dot1x-tunneling:last-clear',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Timestamp of the last time the 802.1x counters were cleared
+    """
 
 
-class StatisticsContainer4(BaseModel):
+class StatisticsContainer8(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -5635,6 +6712,46 @@ class StatisticsContainer4(BaseModel):
     """
 
 
+class StatisticsContainer9(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    client_packets_received: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-dhcp-server:client-packets-received',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    Total received dhcp packets from dhcp client(s)
+    """
+    client_packets_discarded: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-dhcp-server:client-packets-discarded',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    Total discarded dhcp packets from dhcp client(s)
+    """
+    server_packets_sent: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-dhcp-server:server-packets-sent',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    Total dhcp packets sent from DHCP server towards dhcp client(s)
+    """
+
+
 class Sync0Case(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -5645,14 +6762,90 @@ class Sync0Case(BaseModel):
     )
 
 
-class Sync0Case2(BaseModel):
+class TemplateListEntry(BaseModel):
+    """
+    This list contains the Templates and Options
+    Templates that are transmitted by the Exporting Process
+    or received by the Collecting Process.
+    Withdrawn or invalidated (Options) Templates MUST be removed
+    from this list.
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    sync0: Annotated[Optional[Sync0Container2], Field(alias='srl_nokia-sync:sync0')] = (
-        None
-    )
+    observation_domain_id: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:observation-domain-id', ge=0, le=4294967295),
+    ] = None
+    """
+    The ID of the Observation Domain for which this
+    Template is defined.
+    """
+    template_id: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:template-id', ge=256, le=65535)
+    ] = None
+    """
+    This number indicates the Template ID in the IPFIX
+    message.
+    """
+    set_id: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:set-id', ge=0, le=65535)
+    ] = None
+    """
+    This number indicates the Set ID of the Template.
+    Currently, there are two values defined.  The value 2 is used
+    for Sets containing Template definitions.  The value 3 is
+    used for Sets containing Options Template definitions.
+    """
+    access_time: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-ipfix:access-time',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Used for Exporting Processes, this parameter
+    contains the time when this (Options) Template was last
+    sent to the Collector(s) or written to the file.
+    Used for Collecting Processes, this parameter contains the
+    time when this (Options) Template was last received from the
+    Exporter.
+    """
+    template_data_records: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-ipfix:template-data-records', ge=0, le=18446744073709551615
+        ),
+    ] = 0
+    """
+    The number of transmitted or received Data
+    Records defined by this (Options) Template.
+    Discontinuities in the value of this counter can occur at
+    re-initialization of the management system, and at other
+    times as indicated by the value of
+    templateDiscontinuityTime.
+    """
+    template_discontinuity_time: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-ipfix:template-discontinuity-time',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Timestamp of the most recent occasion at which
+    the counter templateDataRecords suffered a discontinuity.
+    Note that this parameter functionally corresponds to
+    ipfixTemplateDiscontinuityTime in the IPFIX MIB module.
+    In contrast to ipfixTemplateDiscontinuityTime, the time
+    is absolute and not relative to sysUpTime.
+    """
+    field: Annotated[
+        Optional[List[FieldListEntry]], Field(alias='srl_nokia-ipfix:field')
+    ] = None
 
 
 class TftpServerAddressLeafList(RootModel[str]):
@@ -5687,6 +6880,104 @@ class TftpServerAddressLeafList2(RootModel[str]):
     """
 
 
+class TftpServerAddressLeafList3(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$'
+        ),
+    ]
+    """
+    List of IP address of the TFTP servers the client will use to download bootfile/configuration script - option 150
+    """
+
+
+class TimeoutCacheContainer(BaseModel):
+    """
+    Flow expiration after active and idle
+    timeout; generation of Flow Records.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    maximum_flows: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:maximum-flows', ge=0, le=4294967295)
+    ] = 250000
+    """
+    This parameter configures the maximum number of flows in the Cache
+
+    This values is the maximum number of Flows that can be monitored simultaneously.
+    The Monitoring Device MUST ensure that sufficient resources
+    are available to store the configured maximum number of Flows.
+    If the maximum number of Flows is measured, an additional
+    Flow can be measured only if an existing entry is removed
+    and exported to available collectors.
+    """
+    active_timeout: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:active-timeout', ge=0, le=4294967295),
+    ] = 1800
+    """
+    This parameters specified the active timeout for active flows within the cache
+
+    This parameter configures the time in seconds after which a Flow is expired even though packets matching this Flow are still received by the Cache.
+    The parameter value zero indicates infinity, meaning that there is no active timeout.
+    """
+    idle_timeout: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:idle-timeout', ge=0, le=4294967295)
+    ] = 15
+    """
+    This parameters specified the idle timeout for in-active flows within the cache.
+
+    This parameter configures the time in seconds after which a Flow is expired if no more packets matching this Flow are received by the Cache.
+    The parameter value zero indicates infinity, meaning that there is no idle timeout.
+    If not configured by the user, the Monitoring Device sets this parameter.
+    """
+    active_flows: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:active-flows', ge=0, le=4294967295)
+    ] = None
+    """
+    The number of Flows currently active in this Cache.
+
+    Note that this parameter corresponds to ipfixMeteringProcessCacheActiveFlows in the IPFIX MIB module.
+    """
+    unused_cache_entries: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:unused-cache-entries', ge=0, le=4294967295),
+    ] = None
+    """
+    The number of unused Cache entries in this Cache.
+    Note that this parameter corresponds to ipfixMeteringProcessCacheUnusedCacheEntries in the IPFIX MIB module.
+    """
+    overflow_flush: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:overflow-flush', ge=0, le=255)
+    ] = 1
+    """
+    Set the percentage of the cache that is flushed when an overflow event occurs
+    """
+
+
+class TunnelContainer(BaseModel):
+    """
+    Enclosing container for system dot1x tunneling
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    statistics: Annotated[
+        Optional[StatisticsContainer25],
+        Field(alias='srl_nokia-dot1x-tunneling:statistics'),
+    ] = None
+
+
 class TxAnnounceContainer(BaseModel):
     """
     Statistics for transmit announce sessions
@@ -5697,7 +6988,7 @@ class TxAnnounceContainer(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum85], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum123], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -5736,7 +7027,7 @@ class TxAnnounceContainer2(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum91], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum129], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -5775,7 +7066,7 @@ class TxDelayRespContainer(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum87], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum125], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -5814,7 +7105,7 @@ class TxDelayRespContainer2(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum93], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum131], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -5853,7 +7144,7 @@ class TxSyncContainer(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum86], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum124], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -5892,7 +7183,7 @@ class TxSyncContainer2(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum92], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum130], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -5930,7 +7221,7 @@ class TypeListEntry(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    type: Annotated[EnumerationEnum8, Field(alias='srl_nokia-ssh:type')]
+    type: Annotated[EnumerationEnum7, Field(alias='srl_nokia-ssh:type')]
     """
     Type of generated host key
     """
@@ -5958,17 +7249,6 @@ class TypeListEntry(BaseModel):
     """
 
 
-class UnixSocketCase(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    unix_socket: Annotated[
-        Optional[UnixSocketContainer2],
-        Field(alias='srl_nokia-netconf-server:unix-socket'),
-    ] = None
-
-
 class ValueCase(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -5976,7 +7256,7 @@ class ValueCase(BaseModel):
     )
     value: Annotated[Optional[str], Field(alias='srl_nokia-event-handler:value')] = None
     """
-    A single value to associate with this object
+    Single value to associate with this object
     """
 
 
@@ -5989,7 +7269,9 @@ class ValuesCase(BaseModel):
         Optional[List[str]], Field(alias='srl_nokia-event-handler:values')
     ] = []
     """
-    List of values to associate with this object, these are serialized as a JSON array when provided as input to the script
+    List of values to associate with this object
+
+    These are serialized as a JSON array when provided as input to the script.
     """
 
 
@@ -6136,14 +7418,11 @@ class AccountingContainer(BaseModel):
     event: Annotated[
         Optional[List[EventListEntry]], Field(alias='srl_nokia-aaa:event')
     ] = None
-    acctz: Annotated[Optional[AcctzContainer], Field(alias='srl_nokia-aaa:acctz')] = (
-        None
-    )
 
 
 class AdmfContainer(BaseModel):
     """
-    Configuration related to ADMF IP address and port
+    Configure IP address and port of the administration function (ADMF)
     """
 
     model_config = ConfigDict(
@@ -6158,13 +7437,13 @@ class AdmfContainer(BaseModel):
         ),
     ]
     """
-    Specify the IP address of ADMF server
+    IP address of the ADMF server
     """
     port: Annotated[
         Optional[int], Field(alias='srl_nokia-lawful-intercept:port', ge=0, le=65535)
     ] = None
     """
-    Specify the port number of ADMF server
+    Port number of the ADMF server
     """
 
 
@@ -6196,7 +7475,7 @@ class BgpAutoDiscoveryContainer(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-lldp:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-lldp:admin-state')
     ] = 'disable'
     """
     Enable or disable LLDP BGP auto discovery at the system level
@@ -6248,7 +7527,7 @@ class BgpInstanceListEntry3(BaseModel):
         Field(alias='srl_nokia-system-network-instance-bgp-vpn:route-target'),
     ] = None
     oper_down_reason: Annotated[
-        Optional[EnumerationEnum43],
+        Optional[EnumerationEnum70],
         Field(alias='srl_nokia-system-network-instance-bgp-vpn:oper-down-reason'),
     ] = None
     """
@@ -6287,7 +7566,7 @@ class CandidateListEntry(BaseModel):
     Name of the configuration candidate
     """
     type: Annotated[
-        Optional[EnumerationEnum53], Field(alias='srl_nokia-configuration:type')
+        Optional[EnumerationEnum50], Field(alias='srl_nokia-configuration:type')
     ] = None
     """
     Type of configuration candidate
@@ -6314,6 +7593,72 @@ class CandidateListEntry(BaseModel):
     """
 
 
+class CliEngineContainer(BaseModel):
+    """
+    CLI engine settings
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    completion_ignore_case: Annotated[
+        Optional[bool], Field(alias='srl_nokia-system-cli:completion-ignore-case')
+    ] = False
+    """
+    Ignore case when filtering completion results
+    """
+    completion_display: Annotated[
+        Optional[EnumerationEnum37],
+        Field(alias='srl_nokia-system-cli:completion-display'),
+    ] = 'popup'
+    """
+    Display style of possible commands
+
+    Note: The basic CLI engine supports only completion display 'inline'.
+    """
+    completion_type: Annotated[
+        Optional[EnumerationEnum38], Field(alias='srl_nokia-system-cli:completion-type')
+    ] = 'smart'
+    """
+    Set completion type used for auto completions and auto suggestions in the CLI
+
+    Note: The basic CLI engine supports only completion type 'prefix'.
+    """
+    history_filename: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-cli:history-filename')
+    ] = '~/.srlinux_history'
+    """
+    Set the filename where history is stored
+    """
+    max_history_items: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-cli:max-history-items', ge=1, le=1000),
+    ] = 1000
+    """
+    Set the maximum history items to be stored in persistent storage
+    """
+    refresh_interval: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-cli:refresh-interval', ge=0, le=86400),
+    ] = 5
+    """
+    Set refresh interval in seconds (0 means refresh is disabled)
+    """
+    type: Annotated[
+        Optional[EnumerationEnum39], Field(alias='srl_nokia-system-cli:type')
+    ] = 'advanced'
+    """
+    Set CLI engine type for interactive logins
+    """
+    vi_editing_mode: Annotated[
+        Optional[bool], Field(alias='srl_nokia-system-cli:vi-editing-mode')
+    ] = False
+    """
+    Set vi editing mode
+    """
+
+
 class CommitListEntry(BaseModel):
     """
     List of configuration transactions
@@ -6328,7 +7673,7 @@ class CommitListEntry(BaseModel):
     System identifier for the commit
     """
     type: Annotated[
-        Optional[EnumerationEnum53], Field(alias='srl_nokia-configuration:type')
+        Optional[EnumerationEnum50], Field(alias='srl_nokia-configuration:type')
     ] = None
     """
     Type of configuration candidate the commit was triggered from
@@ -6344,7 +7689,7 @@ class CommitListEntry(BaseModel):
     Name of the configuration candidate the commit was triggered from
     """
     status: Annotated[
-        Optional[EnumerationEnum54], Field(alias='srl_nokia-configuration:status')
+        Optional[EnumerationEnum51], Field(alias='srl_nokia-configuration:status')
     ] = None
     """
     Current status of the commit
@@ -6600,31 +7945,46 @@ class CurrentTimeContainer(BaseModel):
     """
 
 
-class DatapathContainer(BaseModel):
+class DhcpServerGuardPolicyListEntry(BaseModel):
     """
-    Context for system wide forwarding options
+    List containing DHCP server Guard Policy and parameters
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    forwarding_mode: Annotated[
-        Optional[EnumerationEnum29],
-        Field(alias='srl_nokia-system-datapath:forwarding-mode'),
-    ] = 'store-and-forward'
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-dhcp-server-guard:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
+        ),
+    ]
     """
-    The forwarding mode for Ethernet frames received on all eligible ports of the system
-
-    In store-and-forward mode, the forwarding of an Ethernet frame received on a particular port must wait until the entire Ethernet frame has been received, including the trailing 4-byte CRC; if the CRC is valid the packet is forwarded to the egress port based on the L2/L3 lookup result but if the CRC is invalid the frame is discarded and the in-error-packets counter is incremented.
-
-    In cut-through mode, the forwarding ASIC does the L2/L3 forwarding lookup as soon as it has read the necessary packet headers. If the target egress queue of the egress port is not congested the bytes of the received frame are transmitted across the switch fabric as they are received. The fully intact frame is transmitted from the egress port as soon as all the bytes have been received.
+    DHCP server guard policy name
     """
-    icmp: Annotated[
-        Optional[IcmpContainer], Field(alias='srl_nokia-system-datapath:icmp')
+    action: Annotated[
+        Optional[EnumerationEnum102], Field(alias='srl_nokia-dhcp-server-guard:action')
+    ] = 'discard'
+    """
+    Describes the DHCP server guard policy action for DHCP server Messages matching specified attributes
+    DHCP server messages not matching the specified attributes will be handled in the opposite manner.
+    """
+    source_prefix_set: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server-guard:source-prefix-set',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
     ] = None
-    icmp6: Annotated[
-        Optional[Icmp6Container], Field(alias='srl_nokia-system-datapath:icmp6')
+    """
+    Reference to a prefix set to match DHCP server source address
+    If not specified the verification is skipped.
+    """
+    server6_preference: Annotated[
+        Optional[Server6PreferenceContainer],
+        Field(alias='srl_nokia-dhcp-server-guard:server6-preference'),
     ] = None
 
 
@@ -6668,11 +8028,11 @@ class DnsServerLeafList3(RootModel[str]):
     root: Annotated[
         str,
         Field(
-            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$'
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$'
         ),
     ]
     """
-    An Ordered List of DNS servers to return to the dhcp client
+    An Ordered List of DNS servers to return to the dhcp client - option 6
     """
 
 
@@ -6692,84 +8052,34 @@ class DnsServerLeafList4(RootModel[str]):
     """
 
 
-class Dot1xContainer2(BaseModel):
+class DnsServerLeafList5(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$'
+        ),
+    ]
     """
-    Container for 802.1x protocols.
+    An Ordered List of DNS servers to return to the dhcp client
+    """
+
+
+class Dot1xContainer(BaseModel):
+    """
+    Enclosing container for system dot1x
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    in_tunneled_packets: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-interfaces-l2cp:in-tunneled-packets',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    System level incoming 802.1x tunneled frames.
-
-    Cumulative of all Ethernet interfaces including all the tunneled 802.1x frames. 802.1x
-    frames are identified by a destination MAC value of 01:80:c2:00:00:03 and EtherType value
-    of 0x888e.
-    """
-    in_trap_to_cpu_packets: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-interfaces-l2cp:in-trap-to-cpu-packets',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    System level incoming 802.1x frames copied to CPU.
-
-    Cumulative of all Ethernet interfaces including all the copy-to-cpu 802.1x frames. 802.1x
-    frames are identified by a destination MAC value of 01:80:c2:00:00:03 and EtherType value
-    of 0x888e.
-    """
-    last_clear: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-interfaces-l2cp:last-clear',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
+    tunnel: Annotated[
+        Optional[TunnelContainer], Field(alias='srl_nokia-dot1x-tunneling:tunnel')
     ] = None
-    """
-    Timestamp of the last time the LACP counters were cleared.
-    """
-
-
-class DynamicSpiffeContainer(BaseModel):
-    """
-    Dynamic SPIFFE settings
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    allow: Annotated[Optional[bool], Field(alias='srl_nokia-aaa:allow')] = False
-    """
-    Accept clients with SPIFFE ID values that are not configured under any local user
-
-    With this behaviour enabled, when a client using a client certificate containing SPIFFE ID connects the system
-    will accept the client. Otherwise the SPIFFE ID must be configured under some local user. Even if enabled, any
-    client using local user's configured SPIFFE ID will use that user's identity in all operations
-    """
-    role: Annotated[Optional[List[RoleLeafList]], Field(alias='srl_nokia-aaa:role')] = (
-        []
-    )
-    """
-    List of roles to assign to all dynamic SPIFFE clients
-
-    Dynamic SPIFFE clients are clients authenticated using a client certificate containing SPIFFE ID value that
-    is not configured under any local user. The most specific rule for a particular role takes precedence. Rules
-    from all user roles are evaluated together, most permissive privilege taking precedence.
-    """
 
 
 class DynamicListEntry(BaseModel):
@@ -6833,7 +8143,7 @@ class DynamicListEntry(BaseModel):
     When the status is not-ready or updating, the state value may be different from the configured value
     """
     status: Annotated[
-        Optional[EnumerationEnum20],
+        Optional[EnumerationEnum45],
         Field(alias='srl_nokia-mpls-label-management:status'),
     ] = None
     """
@@ -6956,6 +8266,409 @@ class EntryListEntry(BaseModel):
     """
 
 
+class EnvironmentContainer(BaseModel):
+    """
+    Top-level container for global environment data
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    alias: Annotated[
+        Optional[List[AliasListEntry]], Field(alias='srl_nokia-system-cli:alias')
+    ] = None
+    basic_prompt: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-cli:basic-prompt')
+    ] = '\\n--{{ {banner}{startup_config_state}{modified_flags}{short_yang_models}{mode_and_session} }}--[ {pwc} ]--\\n{short_redundancy}{hw_slot}:{aaa_user}@{host}# '
+    """
+    Change the prompt for 'basic' cli-engine type displayed before every input line
+
+    The following list of keywords will be replaced automatically:
+        aaa_session_id  The session id of the current AAA session.
+        aaa_user        The user name from the current AAA session.
+        banner          Shows server status banner if there is any (for example
+                        [WARM BOOT])
+        candidate_name  The current candidate name or empty string if not in
+                        candidate mode.
+        commit_confirmed
+                        Shows [commit confirmed] if there is commit confirmed in
+                        progress.
+        commit_confirmed_with_remaining_time
+                        Shows [commit confirmed] and the remaining time if there is
+                        commit confirmed in progress.
+        configuration_session_type
+                        The current configuration session type (e.g. shared,
+                        shared-exclusive or private or private-exclusive).
+                        Will output empty string when no configuration session
+                        has been established.
+        domain          The domain name (as returned by domainname program, same as
+                        sysctl kernel.domainname).
+        fqdn            Returns FQDN (if the domain name is not defined or unknown,
+                        then returns the host name).
+        host            The host name.
+        hw_slot         Slot letter of the CPM slot ('A' or 'B').
+        jspath_pwc      The present working context, formatted as a jspath.
+                        Example: .interface{.name=="mgmt0"}.subinterface{.index==0}
+        last_executed_command_duration
+                        Duration of the last executed command in seconds.
+        last_executed_command_status
+                        Status of the last executed command ('0' if successful, '1'
+                        if the last command failed to parse or execute).
+        mode            The current CLI mode (e.g. candidate, running, show, state
+                        or tools).
+        mode_and_session
+                        The current CLI mode and configuration session type and
+                        candidate name (e.g. candidate shared default, candidate
+                        private-exclusive mycandidate, running, show, state or
+                        tools).
+        mode_and_session_type
+                        The current CLI mode and configuration session type (e.g.
+                        candidate shared, candidate shared-exclusive, running, show,
+                        state or tools).
+        modified        Same as {banner}{startup_config_state}{modified_flags}
+        modified_flags  Shows + if the running configuration is different from the
+                        saved configuration (unsaved changes).
+                        Shows ! if the baseline is out of sync with the running
+                        configuration.
+                        Shows * if there are any changes in the candidate
+                        configuration to commit or discard.
+        modified_with_change_count
+                        Same as {modified} but shows count of changed objects in
+                        addition to '*' if there are any changes in the candidate
+                        configuration.
+        pwc             The present working context, formatted as a CLI command.
+                        Example: interface mgmt0 subinterface 0
+        pwd             The present working directory
+                        Example: /home/admin
+        redundancy      Active/standby CPM redundancy status ('standby ' or ' ').
+        short_pwc       The nodes in the present working context, separated by '>'.
+                        Note this does not include any key values.
+                        Example: interface>subinterface
+        short_redundancy
+                        Short active/standby CPM redundancy status ('s' or '').
+        short_yang_models
+                        The currently used yang models ('' or 'oc ')
+        startup_config_state
+                        Shows [RESCUE], [FACTORY] or [FAILED] if the initial
+                        configuration has issues or does not exist.
+                        Is empty when the initial configuration exists and was
+                        loaded/saved without problems.
+                        [RESCUE] means that the initial (startup) configuration
+                        failed to load or commit, but rescue configuration was
+                        successfully loaded and committed.
+                        [FACTORY] means that neither initial (startup) configuration
+                        or rescue configuration exists and hard-coded factory
+                        configuration was successfully loaded and committed.
+                        [FAILED] means that no configuration was successfully loaded
+                        and committed. The default candidate may contain initial
+                        (startup) or rescue configuration content (it can be empty
+                        if it is not possible to load them because they are
+                        invalid).
+        time_12         Current day of the week and local time (e.g. Fri 1:23PM).
+        time_24         Same as {time_12} but using 24h format (e.g. Fri 13:23).
+        user            The user name.
+        vi_editing_mode
+                        The current vi editing mode (if vi-editing-mode is enabled).
+                        Shows one of INSERT, REPLACE, REPLACE_SINGLE, NAVIGATION
+        xpath_pwc       The present working context, formatted as a xpath path.
+                        Example: /interface[name=mgmt0]/subinterface[index=0]
+    To enter a keyword, enclose it with '{' and '}', e.g. '{pwc}'.
+    To create a multiline prompt, use '
+    ' for newlines.
+    To print a '{' or '}', use '{{' or '}}', respectively. e.g. '{{pwc}}'.
+    In addition | can be used to separate left and right aligned part.
+    Use || for literal '|'.
+    """
+    bottom_toolbar: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-cli:bottom-toolbar')
+    ] = '{banner}{startup_config_state}{commit_confirmed_with_remaining_time}|{time_24}'
+    """
+    Change the text displayed in the bottom toolbar
+
+    The following list of keywords will be replaced automatically:
+        aaa_session_id  The session id of the current AAA session.
+        aaa_user        The user name from the current AAA session.
+        banner          Shows server status banner if there is any (for example
+                        [WARM BOOT])
+        candidate_name  The current candidate name or empty string if not in
+                        candidate mode.
+        commit_confirmed
+                        Shows [commit confirmed] if there is commit confirmed in
+                        progress.
+        commit_confirmed_with_remaining_time
+                        Shows [commit confirmed] and the remaining time if there is
+                        commit confirmed in progress.
+        configuration_session_type
+                        The current configuration session type (e.g. shared,
+                        shared-exclusive or private or private-exclusive).
+                        Will output empty string when no configuration session
+                        has been established.
+        domain          The domain name (as returned by domainname program, same as
+                        sysctl kernel.domainname).
+        fqdn            Returns FQDN (if the domain name is not defined or unknown,
+                        then returns the host name).
+        host            The host name.
+        hw_slot         Slot letter of the CPM slot ('A' or 'B').
+        jspath_pwc      The present working context, formatted as a jspath.
+                        Example: .interface{.name=="mgmt0"}.subinterface{.index==0}
+        last_executed_command_duration
+                        Duration of the last executed command in seconds.
+        last_executed_command_status
+                        Status of the last executed command ('0' if successful, '1'
+                        if the last command failed to parse or execute).
+        mode            The current CLI mode (e.g. candidate, running, show, state
+                        or tools).
+        mode_and_session
+                        The current CLI mode and configuration session type and
+                        candidate name (e.g. candidate shared default, candidate
+                        private-exclusive mycandidate, running, show, state or
+                        tools).
+        mode_and_session_type
+                        The current CLI mode and configuration session type (e.g.
+                        candidate shared, candidate shared-exclusive, running, show,
+                        state or tools).
+        modified        Same as {banner}{startup_config_state}{modified_flags}
+        modified_flags  Shows + if the running configuration is different from the
+                        saved configuration (unsaved changes).
+                        Shows ! if the baseline is out of sync with the running
+                        configuration.
+                        Shows * if there are any changes in the candidate
+                        configuration to commit or discard.
+        modified_with_change_count
+                        Same as {modified} but shows count of changed objects in
+                        addition to '*' if there are any changes in the candidate
+                        configuration.
+        pwc             The present working context, formatted as a CLI command.
+                        Example: interface mgmt0 subinterface 0
+        pwd             The present working directory
+                        Example: /home/admin
+        redundancy      Active/standby CPM redundancy status ('standby ' or ' ').
+        short_pwc       The nodes in the present working context, separated by '>'.
+                        Note this does not include any key values.
+                        Example: interface>subinterface
+        short_redundancy
+                        Short active/standby CPM redundancy status ('s' or '').
+        short_yang_models
+                        The currently used yang models ('' or 'oc ')
+        startup_config_state
+                        Shows [RESCUE], [FACTORY] or [FAILED] if the initial
+                        configuration has issues or does not exist.
+                        Is empty when the initial configuration exists and was
+                        loaded/saved without problems.
+                        [RESCUE] means that the initial (startup) configuration
+                        failed to load or commit, but rescue configuration was
+                        successfully loaded and committed.
+                        [FACTORY] means that neither initial (startup) configuration
+                        or rescue configuration exists and hard-coded factory
+                        configuration was successfully loaded and committed.
+                        [FAILED] means that no configuration was successfully loaded
+                        and committed. The default candidate may contain initial
+                        (startup) or rescue configuration content (it can be empty
+                        if it is not possible to load them because they are
+                        invalid).
+        time_12         Current day of the week and local time (e.g. Fri 1:23PM).
+        time_24         Same as {time_12} but using 24h format (e.g. Fri 13:23).
+        user            The user name.
+        vi_editing_mode
+                        The current vi editing mode (if vi-editing-mode is enabled).
+                        Shows one of INSERT, REPLACE, REPLACE_SINGLE, NAVIGATION
+        xpath_pwc       The present working context, formatted as a xpath path.
+                        Example: /interface[name=mgmt0]/subinterface[index=0]
+    To enter a keyword, enclose it with '{' and '}', e.g. '{pwc}'.
+    To create a multiline prompt, use '
+    ' for newlines.
+    To print a '{' or '}', use '{{' or '}}', respectively. e.g. '{{pwc}}'.
+    In addition | can be used to separate left and right aligned part.
+    Use || for literal '|'.
+    """
+    cli_engine: Annotated[
+        Optional[CliEngineContainer], Field(alias='srl_nokia-system-cli:cli-engine')
+    ] = None
+    complete_on_enter: Annotated[
+        Optional[bool], Field(alias='srl_nokia-system-cli:complete-on-enter')
+    ] = False
+    """
+    Trigger auto-completion whenever you type an Enter
+
+    Disabled by default.
+    """
+    complete_on_space: Annotated[
+        Optional[bool], Field(alias='srl_nokia-system-cli:complete-on-space')
+    ] = False
+    """
+    Trigger auto-completion whenever you type a Space
+
+    Disabled by default.
+    """
+    complete_on_tab: Annotated[
+        Optional[bool], Field(alias='srl_nokia-system-cli:complete-on-tab')
+    ] = True
+    """
+    Trigger auto-completion whenever you type a Tab
+
+    Enabled by default.
+    """
+    network_instance: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-system-cli:network-instance',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
+        ),
+    ] = None
+    """
+    The default network-instance to be used if not specified
+    """
+    key_completer_limit: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-cli:key-completer-limit', ge=1, le=1000),
+    ] = 100
+    """
+    The limit on number of keys shown in auto-completion
+    """
+    output_format: Annotated[
+        Optional[EnumerationEnum40], Field(alias='srl_nokia-system-cli:output-format')
+    ] = 'text'
+    """
+    The CLI output display format. Set to 'text' by default
+    """
+    output_modifier_alias: Annotated[
+        Optional[List[OutputModifierAliasListEntry]],
+        Field(alias='srl_nokia-system-cli:output-modifier-alias'),
+    ] = None
+    pagination: Annotated[
+        Optional[EnumerationEnum41], Field(alias='srl_nokia-system-cli:pagination')
+    ] = None
+    """
+    Pagination override of the CLI output, either 'on' or 'off'
+
+    If turned on, then any CLI command behaves as if '| more' was entered at the
+    end of the input command.
+    Default value is unset (empty string). Unset value means there is no override.
+    """
+    prompt: Annotated[Optional[str], Field(alias='srl_nokia-system-cli:prompt')] = (
+        '\\n--{{ {modified_flags}{short_yang_models}{mode_and_session} }}--[ {pwc} ]--\\n{short_redundancy}{hw_slot}:{aaa_user}@{host}# '
+    )
+    """
+    Change the prompt for 'advanced' cli-engine type displayed before every input line
+
+    The following list of keywords will be replaced automatically:
+        aaa_session_id  The session id of the current AAA session.
+        aaa_user        The user name from the current AAA session.
+        banner          Shows server status banner if there is any (for example
+                        [WARM BOOT])
+        candidate_name  The current candidate name or empty string if not in
+                        candidate mode.
+        commit_confirmed
+                        Shows [commit confirmed] if there is commit confirmed in
+                        progress.
+        commit_confirmed_with_remaining_time
+                        Shows [commit confirmed] and the remaining time if there is
+                        commit confirmed in progress.
+        configuration_session_type
+                        The current configuration session type (e.g. shared,
+                        shared-exclusive or private or private-exclusive).
+                        Will output empty string when no configuration session
+                        has been established.
+        domain          The domain name (as returned by domainname program, same as
+                        sysctl kernel.domainname).
+        fqdn            Returns FQDN (if the domain name is not defined or unknown,
+                        then returns the host name).
+        host            The host name.
+        hw_slot         Slot letter of the CPM slot ('A' or 'B').
+        jspath_pwc      The present working context, formatted as a jspath.
+                        Example: .interface{.name=="mgmt0"}.subinterface{.index==0}
+        last_executed_command_duration
+                        Duration of the last executed command in seconds.
+        last_executed_command_status
+                        Status of the last executed command ('0' if successful, '1'
+                        if the last command failed to parse or execute).
+        mode            The current CLI mode (e.g. candidate, running, show, state
+                        or tools).
+        mode_and_session
+                        The current CLI mode and configuration session type and
+                        candidate name (e.g. candidate shared default, candidate
+                        private-exclusive mycandidate, running, show, state or
+                        tools).
+        mode_and_session_type
+                        The current CLI mode and configuration session type (e.g.
+                        candidate shared, candidate shared-exclusive, running, show,
+                        state or tools).
+        modified        Same as {banner}{startup_config_state}{modified_flags}
+        modified_flags  Shows + if the running configuration is different from the
+                        saved configuration (unsaved changes).
+                        Shows ! if the baseline is out of sync with the running
+                        configuration.
+                        Shows * if there are any changes in the candidate
+                        configuration to commit or discard.
+        modified_with_change_count
+                        Same as {modified} but shows count of changed objects in
+                        addition to '*' if there are any changes in the candidate
+                        configuration.
+        pwc             The present working context, formatted as a CLI command.
+                        Example: interface mgmt0 subinterface 0
+        pwd             The present working directory
+                        Example: /home/admin
+        redundancy      Active/standby CPM redundancy status ('standby ' or ' ').
+        short_pwc       The nodes in the present working context, separated by '>'.
+                        Note this does not include any key values.
+                        Example: interface>subinterface
+        short_redundancy
+                        Short active/standby CPM redundancy status ('s' or '').
+        short_yang_models
+                        The currently used yang models ('' or 'oc ')
+        startup_config_state
+                        Shows [RESCUE], [FACTORY] or [FAILED] if the initial
+                        configuration has issues or does not exist.
+                        Is empty when the initial configuration exists and was
+                        loaded/saved without problems.
+                        [RESCUE] means that the initial (startup) configuration
+                        failed to load or commit, but rescue configuration was
+                        successfully loaded and committed.
+                        [FACTORY] means that neither initial (startup) configuration
+                        or rescue configuration exists and hard-coded factory
+                        configuration was successfully loaded and committed.
+                        [FAILED] means that no configuration was successfully loaded
+                        and committed. The default candidate may contain initial
+                        (startup) or rescue configuration content (it can be empty
+                        if it is not possible to load them because they are
+                        invalid).
+        time_12         Current day of the week and local time (e.g. Fri 1:23PM).
+        time_24         Same as {time_12} but using 24h format (e.g. Fri 13:23).
+        user            The user name.
+        vi_editing_mode
+                        The current vi editing mode (if vi-editing-mode is enabled).
+                        Shows one of INSERT, REPLACE, REPLACE_SINGLE, NAVIGATION
+        xpath_pwc       The present working context, formatted as a xpath path.
+                        Example: /interface[name=mgmt0]/subinterface[index=0]
+    To enter a keyword, enclose it with '{' and '}', e.g. '{pwc}'.
+    To create a multiline prompt, use '
+    ' for newlines.
+    To print a '{' or '}', use '{{' or '}}', respectively. e.g. '{{pwc}}'.
+    In addition | can be used to separate left and right aligned part.
+    Use || for literal '|'.
+    """
+    session_idle_timeout: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-cli:session-idle-timeout', ge=0, le=86400),
+    ] = None
+    """
+    The idle timeout override for the CLI session in seconds
+
+    Can be used to override the value of the idle timer value received from AAA session.
+    Value of 0 means idle timeout is disabled.
+    Unset value means there is no override.
+    """
+    yang_models: Annotated[
+        Optional[EnumerationEnum42], Field(alias='srl_nokia-system-cli:yang-models')
+    ] = 'srl'
+    """
+    The default yang-models to be used when starting the CLI
+
+    Default is 'srl'.
+    """
+
+
 class EsmcContainer(BaseModel):
     """
     Container for Ethernet Synchronization Messaging Channel protocol
@@ -7005,23 +8718,7 @@ class EsmcContainer(BaseModel):
     """
 
 
-class EthernetSegmentContainer(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    originating_ip: Annotated[
-        Optional[EnumerationEnum36],
-        Field(
-            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:originating-ip'
-        ),
-    ] = 'use-system-ipv4-address'
-    """
-    The originating ip-address that the inclusive multicast route will be advertised with in this evpn instance
-    """
-
-
-class EvpnContainer(BaseModel):
+class EvpnContainer2(BaseModel):
     """
     Container for system wide Services EVPN MPLS label management
     """
@@ -7038,8 +8735,115 @@ class EvpnContainer(BaseModel):
         ),
     ]
     """
-    Reference to a dynamic label block
+    The dynamic label block used by EVPN in the system network-instance
+
+    The label block is used by all EVPN services that require MPLS labels in the
+    system network-instance. For example, EVPN-MPLS multi-homing (ESI label).
     """
+
+
+class ExportingProcessLeafList(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$'
+        ),
+    ]
+    """
+    Records are exported by all Exporting Processes
+    in the list.
+    """
+
+
+class FhsClassidMgmtContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    first_hop_security: Annotated[
+        Optional[EnumerationEnum3],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:first-hop-security'),
+    ] = 'disable'
+    """
+    Controls the first hop security feature.
+    """
+    ra_guard: Annotated[
+        Optional[EnumerationEnum3],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:ra-guard'),
+    ] = 'enable'
+    """
+    Controls the ra-guard security feature.
+    """
+    first_hop_security_ip_source_guard_entries: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-first-hop-security-ip-mac-binding:first-hop-security-ip-source-guard-entries',
+            ge=0,
+            le=1280,
+        ),
+    ] = 0
+    """
+    Number of hardware TCAM entries to use for First Hop Security (FHS) IP Source Guard
+
+    The number of hardware TCAM entries to allocate when First Hop Security
+    IP source guard is enabled on a subinterface. This number must be set to be
+    equal to or more than the number of IP-MAC association entries in the
+    First Hop security ip-mac-binding-table. Software will allocate the required
+    number of hardware TCAM entries.
+    """
+
+
+class FirstHopSecurityPolicyListEntry(BaseModel):
+    """
+    List of First Hop Security policies
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-first-hop-security-ip-mac-binding:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    First Hop Security (FHS) policy name
+    """
+    protocols: Annotated[
+        Optional[List[EnumerationEnum76]],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:protocols'),
+    ] = ['static', 'dhcp', 'dhcp-pd', 'nd']
+    """
+    List of protocols to build IP-MAC association
+
+    List of protocols used to build IP-MAC association and can be
+     configured by the user. User can specify one or more values.
+    """
+    limit_entries: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-first-hop-security-ip-mac-binding:limit-entries',
+            ge=0,
+            le=8192,
+        ),
+    ] = None
+    """
+    Maximum number of IP-MAC association entries to learn
+
+    Maximum number of IP-MAC association allowed to be associated with an
+      entity (e.g. sub-interface, etc.)  where this policy is attached.
+    """
+    device_role: Annotated[
+        Optional[EnumerationEnum77],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:device-role'),
+    ] = 'switch'
 
 
 class GnmiContainer2(BaseModel):
@@ -7066,7 +8870,7 @@ class GribiContainer(BaseModel):
         regex_engine="python-re",
     )
     persistence_mode: Annotated[
-        Optional[EnumerationEnum18], Field(alias='srl_nokia-grpc:persistence-mode')
+        Optional[EnumerationEnum17], Field(alias='srl_nokia-grpc:persistence-mode')
     ] = None
     """
     The defined persistence mode as signaled by the client
@@ -7218,6 +9022,38 @@ class InformationContainer(BaseModel):
 
     This field represents the version of the management server
     """
+    coordinates: Annotated[
+        Optional[CoordinatesContainer],
+        Field(alias='srl_nokia-system-coordinates:coordinates'),
+    ] = None
+
+
+class InterfaceContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    auto_negotiation_support: Annotated[
+        Optional[EnumerationEnum91],
+        Field(alias='srl_nokia-lldp:auto-negotiation-support'),
+    ] = None
+    """
+    Support of auto-negotiation
+    """
+    auto_negotiation_enabled: Annotated[
+        Optional[EnumerationEnum92],
+        Field(alias='srl_nokia-lldp:auto-negotiation-enabled'),
+    ] = None
+    """
+    Enable state of auto-negotiation
+    """
+    auto_negotiation_capabilities: Annotated[
+        Optional[List[EnumerationEnum93]],
+        Field(alias='srl_nokia-lldp:auto-negotiation-capabilities'),
+    ] = []
+    """
+    List of auto-negotiation capabilities advertised
+    """
 
 
 class InterfaceListEntry(BaseModel):
@@ -7234,7 +9070,7 @@ class InterfaceListEntry(BaseModel):
     Reference type to a specific subinterface of the form <interface-name>
     """
     direction: Annotated[
-        Optional[EnumerationEnum26], Field(alias='srl_nokia-mirroring:direction')
+        Optional[EnumerationEnum30], Field(alias='srl_nokia-mirroring:direction')
     ] = 'egress-only'
     """
     The direction of traffic to be mirrored
@@ -7254,6 +9090,85 @@ class InterfaceListEntry2(BaseModel):
     ]
     """
     Interface associated with the ethernet segment.
+    """
+
+
+class InterfaceListEntry5(BaseModel):
+    """
+    List of interfaces associated with the observation-point
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[str, Field(alias='srl_nokia-ipfix:name')]
+    """
+     Subinterface to associate with Observation-point and perform sampling
+    """
+    direction: Annotated[
+        Optional[EnumerationEnum103], Field(alias='srl_nokia-ipfix:direction')
+    ] = 'input'
+    """
+    The direction of traffic to be sampled
+    """
+    ifindex: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:ifindex', ge=0, le=4294967295)
+    ] = None
+    """
+    System-wide persistent unique ifIndex assigned to the subinterface
+    """
+
+
+class InternalTagsContainer(BaseModel):
+    """
+    Configuration and state of internal tags
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    set_tag_set: Annotated[
+        Optional[List[SetTagSetLeafList]],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:set-tag-set'
+        ),
+    ] = []
+    """
+    Reference to a tag-set defined under routing-policy
+    """
+
+
+class Ipv4AddressUnicastType(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$'
+        ),
+    ]
+    """
+    A unicast IPv4 address in dotted quad notation
+    """
+
+
+class Ipv6AddressUnicastType(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$'
+        ),
+    ]
+    """
+    A unicast IPv6 address represented as either a full address, shortened or mixed-shortened formats
     """
 
 
@@ -7316,7 +9231,7 @@ class LabelContainer(BaseModel):
     this leaf is set to zero.
     """
     value_type: Annotated[
-        Optional[EnumerationEnum38],
+        Optional[EnumerationEnum65],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:value-type'
         ),
@@ -7387,11 +9302,11 @@ class LastErroredExecutionContainer(BaseModel):
         regex_engine="python-re",
     )
     oper_down_reason: Annotated[
-        Optional[EnumerationEnum46],
+        Optional[EnumerationEnum100],
         Field(alias='srl_nokia-event-handler:oper-down-reason'),
     ] = None
     """
-    The reason this instance is or was in its last operational state
+    Reason this instance is or was in its last operational state
     """
     oper_down_reason_detail: Annotated[
         Optional[str], Field(alias='srl_nokia-event-handler:oper-down-reason-detail')
@@ -7407,7 +9322,7 @@ class LastErroredExecutionContainer(BaseModel):
         ),
     ] = None
     """
-    The time this instance last started execution
+    Time this instance last started execution
     """
     end_time: Annotated[
         Optional[str],
@@ -7417,7 +9332,7 @@ class LastErroredExecutionContainer(BaseModel):
         ),
     ] = None
     """
-    The time this instance last finished execution
+    Time this instance last finished execution
 
     This timestamp includes any actions provided as output from the execution
     """
@@ -7434,13 +9349,13 @@ class LastErroredExecutionContainer(BaseModel):
     """
     input: Annotated[Optional[str], Field(alias='srl_nokia-event-handler:input')] = None
     """
-    The input provided to the script
+    Input provided to the script
     """
     output: Annotated[Optional[str], Field(alias='srl_nokia-event-handler:output')] = (
         None
     )
     """
-    The output received from the script
+    Output received from the script
 
     If empty, no response was received.
     """
@@ -7448,7 +9363,7 @@ class LastErroredExecutionContainer(BaseModel):
         Optional[str], Field(alias='srl_nokia-event-handler:stdout-stderr')
     ] = None
     """
-    The output printed on STDOUT or STDERR during this execution
+    Output printed on STDOUT or STDERR during this execution
     """
 
 
@@ -7462,11 +9377,11 @@ class LastExecutionContainer(BaseModel):
         regex_engine="python-re",
     )
     oper_down_reason: Annotated[
-        Optional[EnumerationEnum46],
+        Optional[EnumerationEnum100],
         Field(alias='srl_nokia-event-handler:oper-down-reason'),
     ] = None
     """
-    The reason this instance is or was in its last operational state
+    Reason this instance is or was in its last operational state
     """
     oper_down_reason_detail: Annotated[
         Optional[str], Field(alias='srl_nokia-event-handler:oper-down-reason-detail')
@@ -7482,7 +9397,7 @@ class LastExecutionContainer(BaseModel):
         ),
     ] = None
     """
-    The time this instance last started execution
+    Time this instance last started execution
     """
     end_time: Annotated[
         Optional[str],
@@ -7492,7 +9407,7 @@ class LastExecutionContainer(BaseModel):
         ),
     ] = None
     """
-    The time this instance last finished execution
+    Time this instance last finished execution
 
     This timestamp includes any actions provided as output from the execution
     """
@@ -7509,13 +9424,13 @@ class LastExecutionContainer(BaseModel):
     """
     input: Annotated[Optional[str], Field(alias='srl_nokia-event-handler:input')] = None
     """
-    The input provided to the script
+    Input provided to the script
     """
     output: Annotated[Optional[str], Field(alias='srl_nokia-event-handler:output')] = (
         None
     )
     """
-    The output received from the script
+    Output received from the script
 
     If empty, no response was received.
     """
@@ -7523,7 +9438,7 @@ class LastExecutionContainer(BaseModel):
         Optional[str], Field(alias='srl_nokia-event-handler:stdout-stderr')
     ] = None
     """
-    The output printed on STDOUT or STDERR during this execution
+    Output printed on STDOUT or STDERR during this execution
     """
 
 
@@ -7560,7 +9475,7 @@ class LicenseListEntry(BaseModel):
     Unique identifier for this license
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-license:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-license:admin-state')
     ] = 'disable'
     """
     Enable or disable the use of this license
@@ -7709,7 +9624,7 @@ class MacTypeListEntry(BaseModel):
         regex_engine="python-re",
     )
     type: Annotated[
-        EnumerationEnum30, Field(alias='srl_nokia-system-bridge-table:type')
+        EnumerationEnum18, Field(alias='srl_nokia-system-bridge-table:type')
     ]
     """
     type of mac addresses in the system
@@ -7759,31 +9674,28 @@ class MacsecContainer(BaseModel):
         regex_engine="python-re",
     )
     cak: Annotated[
-        Optional[str],
-        Field(alias='srl_nokia-keychains:cak', pattern='^(?=^[0-9a-fA-F]+$).*$'),
-    ] = None
+        str, Field(alias='srl_nokia-keychains:cak', pattern='^(?=^[0-9a-fA-F]+$).*$')
+    ]
     """
     MACsec CAK, a hexadecimal name is only valid
     """
     key_name: Annotated[
-        Optional[str],
+        str,
         Field(
             alias='srl_nokia-keychains:key-name',
             pattern='^(?=^([0-9a-fA-F][0-9a-fA-F])+$).*$',
         ),
-    ] = None
+    ]
     """
-    MACsec CKN, a hexadecimal name is onlynumber
+    MACsec CKN, a hexadecimal name is only valid
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-keychains:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-keychains:admin-state')
     ] = 'disable'
     """
     When set to disable, this key entry is inactive
 
-    For macsec the cak and key-name can only be changed
-
-    when the key entry id disabled
+    For macsec the cak and key-name can only be changed when the key entry id disabled
     """
 
 
@@ -7797,7 +9709,7 @@ class MaintenanceModeContainer(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2],
+        Optional[EnumerationEnum3],
         Field(alias='srl_nokia-maintenance-mode:admin-state'),
     ] = 'disable'
     """
@@ -7825,7 +9737,7 @@ class ManagementAddressListEntry(BaseModel):
     Reference to the subinterface to source management addresses
     """
     type: Annotated[
-        Optional[List[EnumerationEnum49]], Field(alias='srl_nokia-lldp:type')
+        Optional[List[EnumerationEnum88]], Field(alias='srl_nokia-lldp:type')
     ] = []
     """
     Types of addresses sent in the management address TLV
@@ -7855,7 +9767,7 @@ class ManagementAddressListEntry2(BaseModel):
     can be used to reach the agent on the port identified in the
     Port ID TLV.
     """
-    type: Annotated[Optional[EnumerationEnum49], Field(alias='srl_nokia-lldp:type')] = (
+    type: Annotated[Optional[EnumerationEnum88], Field(alias='srl_nokia-lldp:type')] = (
         None
     )
     """
@@ -7890,7 +9802,7 @@ class MulticastIdUserTypeListEntry(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    user: Annotated[EnumerationEnum65, Field(alias='srl_nokia-system-multicast:user')]
+    user: Annotated[EnumerationEnum43, Field(alias='srl_nokia-system-multicast:user')]
     """
     type of multicast ids users in the system
     """
@@ -7918,9 +9830,28 @@ class MulticastIdUserTypeListEntry(BaseModel):
     """
 
 
+class NdkServerContainer(BaseModel):
+    """
+    Top-level container for configuration and state related to NDK server instance.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-ndk:admin-state')
+    ] = 'disable'
+    """
+    Globally enable or disable the NDK server
+
+    Disabling the NDK server will disable its unix domain and tcp/ip sockets.
+    """
+
+
 class NeighborOriginListEntry(BaseModel):
     """
-    the origin of the proxy entry installed in the table.
+    the origin of the proxy ARP installed in the table.
     """
 
     model_config = ConfigDict(
@@ -7928,7 +9859,7 @@ class NeighborOriginListEntry(BaseModel):
         regex_engine="python-re",
     )
     origin: Annotated[
-        EnumerationEnum31, Field(alias='srl_nokia-system-bridge-table-proxy-arp:origin')
+        EnumerationEnum19, Field(alias='srl_nokia-system-bridge-table-proxy-arp:origin')
     ]
     """
     The origin of the neighbor entry.
@@ -7942,7 +9873,7 @@ class NeighborOriginListEntry(BaseModel):
         ),
     ] = 0
     """
-    The total number of proxy entries.
+    The total number of proxy ARP entries.
     """
     active_entries: Annotated[
         Optional[int],
@@ -7953,7 +9884,7 @@ class NeighborOriginListEntry(BaseModel):
         ),
     ] = 0
     """
-    The total number of active proxy entries.
+    The total number of active proxy ARP entries.
     """
     in_active_entries: Annotated[
         Optional[int],
@@ -7964,7 +9895,7 @@ class NeighborOriginListEntry(BaseModel):
         ),
     ] = 0
     """
-    The total number of inactive proxy entries.
+    The total number of inactive proxy ARP entries.
     """
     pending_entries: Annotated[
         Optional[int],
@@ -7975,13 +9906,13 @@ class NeighborOriginListEntry(BaseModel):
         ),
     ] = 0
     """
-    The total number of pending proxy entries.
+    The total number of pending proxy ARP entries.
     """
 
 
 class NeighborOriginListEntry2(BaseModel):
     """
-    the origin of the proxy entry installed in the table.
+    the origin of the proxy ARP installed in the table.
     """
 
     model_config = ConfigDict(
@@ -7989,7 +9920,7 @@ class NeighborOriginListEntry2(BaseModel):
         regex_engine="python-re",
     )
     origin: Annotated[
-        EnumerationEnum31, Field(alias='srl_nokia-system-bridge-table-proxy-arp:origin')
+        EnumerationEnum19, Field(alias='srl_nokia-system-bridge-table-proxy-arp:origin')
     ]
     """
     The origin of the neighbor entry.
@@ -8003,7 +9934,7 @@ class NeighborOriginListEntry2(BaseModel):
         ),
     ] = 0
     """
-    The total number of proxy entries.
+    The total number of proxy ARP entries.
     """
     active_entries: Annotated[
         Optional[int],
@@ -8014,7 +9945,7 @@ class NeighborOriginListEntry2(BaseModel):
         ),
     ] = 0
     """
-    The total number of active proxy entries.
+    The total number of active proxy ARP entries.
     """
     in_active_entries: Annotated[
         Optional[int],
@@ -8025,7 +9956,7 @@ class NeighborOriginListEntry2(BaseModel):
         ),
     ] = 0
     """
-    The total number of inactive proxy entries.
+    The total number of inactive proxy ARP entries.
     """
     pending_entries: Annotated[
         Optional[int],
@@ -8036,7 +9967,47 @@ class NeighborOriginListEntry2(BaseModel):
         ),
     ] = 0
     """
-    The total number of pending proxy entries.
+    The total number of pending proxy ARP entries.
+    """
+
+
+class NeighborContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    clock_identity: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-sync:clock-identity', max_length=8, min_length=8),
+    ] = None
+    """
+    The clockIdentity of this neighbor clock
+    """
+    port_number: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:port-number', ge=0, le=65535)
+    ] = None
+    """
+    The port number of this neighbor clock
+    """
+
+
+class NeighborContainer2(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    clock_identity: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-sync:clock-identity', max_length=8, min_length=8),
+    ] = None
+    """
+    The clockIdentity of this neighbor clock
+    """
+    port_number: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:port-number', ge=0, le=65535)
+    ] = None
+    """
+    The port number of this neighbor clock
     """
 
 
@@ -8091,7 +10062,7 @@ class NetworkInstanceContainer(BaseModel):
     """
 
 
-class NetworkInstanceListEntry4(BaseModel):
+class NetworkInstanceListEntry3(BaseModel):
     """
     List of network instances with one or more peers to be placed in maintenance mode
     """
@@ -8129,6 +10100,95 @@ class NetworkInstanceListEntry4(BaseModel):
     It is not necessary to list neighbors that are members of peer-groups that are already listed.
 
     If this list is empty and so is the group list, then the system interprets the meaning as ALL static and dynamic sessions belonging to the specified network-instance.
+    """
+
+
+class NetworkPolicyApplicationTypeListEntry(BaseModel):
+    """
+    List name
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[str, Field(alias='srl_nokia-lldp:name')]
+    """
+    Application name in received network policy TLV
+    """
+    policy_flag: Annotated[
+        Optional[EnumerationEnum96], Field(alias='srl_nokia-lldp:policy-flag')
+    ] = None
+    """
+    State of the network policy received from the endpoint
+    """
+    vlan_tagging: Annotated[
+        Optional[bool], Field(alias='srl_nokia-lldp:vlan-tagging')
+    ] = None
+    """
+    VLAN tagging for the specified application
+    """
+    vlan_id: Annotated[
+        Optional[int], Field(alias='srl_nokia-lldp:vlan-id', ge=0, le=4094)
+    ] = None
+    """
+    VLAN ID used for tagged applications, conditional leaf
+    """
+    dot1p: Annotated[Optional[int], Field(alias='srl_nokia-lldp:dot1p', ge=0, le=7)] = 0
+    """
+    L2 QoS dot1p priority
+    """
+    dscp: Annotated[
+        Optional[Union[DscpValueType, EnumerationEnum90]],
+        Field(alias='srl_nokia-lldp:dscp'),
+    ] = 'CS0'
+    """
+    L3 QoS DSCP value
+    """
+
+
+class NetworkPolicyListEntry(BaseModel):
+    """
+    Network policy distribution of configuration attributes based on application type
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-lldp:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
+        ),
+    ]
+    """
+    List name
+    """
+    application_type: Annotated[
+        Optional[str], Field(alias='srl_nokia-lldp:application-type')
+    ] = None
+    """
+    Application type for network policy
+    """
+    vlan_id: Annotated[
+        Optional[Union[VlanIdLeaf1, EnumerationEnum89]],
+        Field(alias='srl_nokia-lldp:vlan-id'),
+    ] = 'untagged'
+    """
+    VLAN tagging requirements for the application type, VLAN-ID (range 0..4094) or untagged
+    """
+    dot1p: Annotated[Optional[int], Field(alias='srl_nokia-lldp:dot1p', ge=0, le=7)] = 0
+    """
+    L2 QoS dot1p priority
+    """
+    dscp: Annotated[
+        Optional[Union[DscpValueType, EnumerationEnum90]],
+        Field(alias='srl_nokia-lldp:dscp'),
+    ] = 'CS0'
+    """
+    L3 QoS DSCP value
     """
 
 
@@ -8202,12 +10262,56 @@ class ObjectListEntry(BaseModel):
         ),
     ]
     """
-    The name of this object
+    Name of this object
     """
     object: Annotated[
         Optional[Union[ValuesCase, ValueCase]],
         Field(alias='srl_nokia-event-handler:object'),
     ] = None
+
+
+class ObservationPointListEntry(BaseModel):
+    """
+    Observation Point of the Monitoring Device.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-ipfix:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Key of this list.
+    """
+    observation_domain_id: Annotated[
+        int, Field(alias='srl_nokia-ipfix:observation-domain-id', ge=0, le=4294967295)
+    ]
+    """
+    The Observation Domain ID associates the Observation Point to an Observation Domain.
+
+    Observation Points with identical Observation Domain IDs belong to the
+    same Observation Domain.
+    Note that this parameter corresponds to
+    ipfixObservationPointObservationDomainId in the IPFIX MIB
+    module.
+    """
+    interface: Annotated[
+        Optional[List[InterfaceListEntry5]], Field(alias='srl_nokia-ipfix:interface')
+    ] = None
+    selection_process: Annotated[
+        Optional[List[SelectionProcessLeafList]],
+        Field(alias='srl_nokia-ipfix:selection-process'),
+    ] = []
+    """
+    Selection Processes in this list process
+    packets in parallel.
+    """
 
 
 class OnePpsContainer(BaseModel):
@@ -8216,7 +10320,7 @@ class OnePpsContainer(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-sync:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-sync:admin-state')
     ] = 'disable'
     """
     Configure the administrative state of the 1PPS (50 ohm) output port
@@ -8226,20 +10330,6 @@ class OnePpsContainer(BaseModel):
 
 
 class OptionsContainer(BaseModel):
-    """
-    Options to be passed on each execution of the script
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    object: Annotated[
-        Optional[List[ObjectListEntry]], Field(alias='srl_nokia-event-handler:object')
-    ] = None
-
-
-class OptionsContainer2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -8270,6 +10360,13 @@ class OptionsContainer2(BaseModel):
     """
     The domain name to return to the dhcp client that the client should use when resolving hostnames via the Domain Name System - option 15
     """
+    domain_search_list: Annotated[
+        Optional[List[DomainSearchListLeafList]],
+        Field(alias='srl_nokia-dhcp-server:domain-search-list'),
+    ] = []
+    """
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames - option 119
+    """
     hostname: Annotated[
         Optional[str],
         Field(
@@ -8279,6 +10376,13 @@ class OptionsContainer2(BaseModel):
     ] = None
     """
     Host Name option of the dhcp client - option 12
+    """
+    interface_mtu: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-dhcp-server:interface-mtu', ge=68, le=9412),
+    ] = None
+    """
+    This option specifies the MTU to use on this interface - option 26
     """
     ntp_server: Annotated[
         Optional[List[NtpServerLeafList]],
@@ -8308,6 +10412,10 @@ class OptionsContainer2(BaseModel):
     IP address the dhcp server must match any address within the network_instance e.g. sub-interface primary address, loopback address,
     anycast gateway address in case of multihoming - option 54
     """
+    static_route: Annotated[
+        Optional[List[StaticRouteListEntry]],
+        Field(alias='srl_nokia-dhcp-server:static-route'),
+    ] = None
     tftp_server_address: Annotated[
         Optional[List[TftpServerAddressLeafList]],
         Field(alias='srl_nokia-dhcp-server:tftp-server-address'),
@@ -8325,9 +10433,29 @@ class OptionsContainer2(BaseModel):
     """
     FQDN of the TFTP server the client will use to download bootfile/configuration script - option 66
     """
+    lease_time: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-dhcp-server:lease-time', ge=60, le=4294967295),
+    ] = 86400
+    """
+    The time in seconds that the client should use the IP address before it must renew its lease - option 51
+    """
+    next_server: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:next-server',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
+        ),
+    ] = None
+    """
+    The IP address of the next server to use for booting - option 54
+    """
+    custom: Annotated[
+        Optional[List[CustomListEntry]], Field(alias='srl_nokia-dhcp-server:custom')
+    ] = None
 
 
-class OptionsContainer3(BaseModel):
+class OptionsContainer2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -8358,6 +10486,13 @@ class OptionsContainer3(BaseModel):
     """
     The domain name to return to the dhcp client that the client should use when resolving hostnames via the Domain Name System - option 15
     """
+    domain_search_list: Annotated[
+        Optional[List[DomainSearchListLeafList2]],
+        Field(alias='srl_nokia-dhcp-server:domain-search-list'),
+    ] = []
+    """
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames - option 119
+    """
     hostname: Annotated[
         Optional[str],
         Field(
@@ -8367,6 +10502,13 @@ class OptionsContainer3(BaseModel):
     ] = None
     """
     Host Name option of the dhcp client - option 12
+    """
+    interface_mtu: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-dhcp-server:interface-mtu', ge=68, le=9412),
+    ] = None
+    """
+    This option specifies the MTU to use on this interface - option 26
     """
     ntp_server: Annotated[
         Optional[List[NtpServerLeafList2]],
@@ -8396,6 +10538,10 @@ class OptionsContainer3(BaseModel):
     IP address the dhcp server must match any address within the network_instance e.g. sub-interface primary address, loopback address,
     anycast gateway address in case of multihoming - option 54
     """
+    static_route: Annotated[
+        Optional[List[StaticRouteListEntry2]],
+        Field(alias='srl_nokia-dhcp-server:static-route'),
+    ] = None
     tftp_server_address: Annotated[
         Optional[List[TftpServerAddressLeafList2]],
         Field(alias='srl_nokia-dhcp-server:tftp-server-address'),
@@ -8413,23 +10559,155 @@ class OptionsContainer3(BaseModel):
     """
     FQDN of the TFTP server the client will use to download bootfile/configuration script - option 66
     """
+    lease_time: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-dhcp-server:lease-time', ge=60, le=4294967295),
+    ] = 86400
+    """
+    The time in seconds that the client should use the IP address before it must renew its lease - option 51
+    """
+    next_server: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:next-server',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
+        ),
+    ] = None
+    """
+    The IP address of the next server to use for booting - option 54
+    """
+    custom: Annotated[
+        Optional[List[CustomListEntry2]], Field(alias='srl_nokia-dhcp-server:custom')
+    ] = None
 
 
-class OptionsContainer4(BaseModel):
+class OptionsContainer3(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
+    bootfile_name: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:bootfile-name', max_length=128, min_length=1
+        ),
+    ] = None
+    """
+    The name of the configuration file the client will use during booting - option 67
+    """
     dns_server: Annotated[
         Optional[List[DnsServerLeafList3]],
         Field(alias='srl_nokia-dhcp-server:dns-server'),
     ] = []
     """
-    An Ordered List of DNS servers to return to the dhcp client
+    An Ordered List of DNS servers to return to the dhcp client - option 6
     """
+    domain_name: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:domain-name',
+            pattern='^(?=^((([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.)*([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.?)|\\.$).*$',
+        ),
+    ] = None
+    """
+    The domain name to return to the dhcp client that the client should use when resolving hostnames via the Domain Name System - option 15
+    """
+    domain_search_list: Annotated[
+        Optional[List[DomainSearchListLeafList3]],
+        Field(alias='srl_nokia-dhcp-server:domain-search-list'),
+    ] = []
+    """
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames - option 119
+    """
+    hostname: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:hostname',
+            pattern='^(?=^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9._-]*[a-zA-Z0-9]))*([A-Za-z]|[A-Za-z][A-Za-z0-9._-]*[A-Za-z0-9])$).*$',
+        ),
+    ] = None
+    """
+    Host Name option of the dhcp client - option 12
+    """
+    interface_mtu: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-dhcp-server:interface-mtu', ge=68, le=9412),
+    ] = None
+    """
+    This option specifies the MTU to use on this interface - option 26
+    """
+    ntp_server: Annotated[
+        Optional[List[NtpServerLeafList3]],
+        Field(alias='srl_nokia-dhcp-server:ntp-server'),
+    ] = []
+    """
+    List of NTP Servers to return to the dhcp client - option 42
+    """
+    router: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:router',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
+        ),
+    ] = None
+    """
+    IPv4 address of the gateway for the dhcp client - option 3
+    """
+    server_id: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:server-id',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
+        ),
+    ] = None
+    """
+    IP address the dhcp server must match any address within the network_instance e.g. sub-interface primary address, loopback address,
+    anycast gateway address in case of multihoming - option 54
+    """
+    static_route: Annotated[
+        Optional[List[StaticRouteListEntry3]],
+        Field(alias='srl_nokia-dhcp-server:static-route'),
+    ] = None
+    tftp_server_address: Annotated[
+        Optional[List[TftpServerAddressLeafList3]],
+        Field(alias='srl_nokia-dhcp-server:tftp-server-address'),
+    ] = []
+    """
+    List of IP address of the TFTP servers the client will use to download bootfile/configuration script - option 150
+    """
+    tftp_server_name: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:tftp-server-name',
+            pattern='^(?=^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9._-]*[a-zA-Z0-9]))*([A-Za-z]|[A-Za-z][A-Za-z0-9._-]*[A-Za-z0-9])$).*$',
+        ),
+    ] = None
+    """
+    FQDN of the TFTP server the client will use to download bootfile/configuration script - option 66
+    """
+    lease_time: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-dhcp-server:lease-time', ge=60, le=4294967295),
+    ] = 86400
+    """
+    The time in seconds that the client should use the IP address before it must renew its lease - option 51
+    """
+    next_server: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:next-server',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
+        ),
+    ] = None
+    """
+    The IP address of the next server to use for booting - option 54
+    """
+    custom: Annotated[
+        Optional[List[CustomListEntry3]], Field(alias='srl_nokia-dhcp-server:custom')
+    ] = None
 
 
-class OptionsContainer5(BaseModel):
+class OptionsContainer4(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -8441,18 +10719,48 @@ class OptionsContainer5(BaseModel):
     """
     An Ordered List of DNS servers to return to the dhcp client
     """
-
-
-class OutputContainer(BaseModel):
+    domain_search_list: Annotated[
+        Optional[List[DomainSearchListLeafList4]],
+        Field(alias='srl_nokia-dhcp-server:domain-search-list'),
+    ] = []
     """
-    Defines parameters determining the handling of system generated traffic.
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames
+    """
+
+
+class OptionsContainer5(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    dns_server: Annotated[
+        Optional[List[DnsServerLeafList5]],
+        Field(alias='srl_nokia-dhcp-server:dns-server'),
+    ] = []
+    """
+    An Ordered List of DNS servers to return to the dhcp client
+    """
+    domain_search_list: Annotated[
+        Optional[List[DomainSearchListLeafList5]],
+        Field(alias='srl_nokia-dhcp-server:domain-search-list'),
+    ] = []
+    """
+    An ordered list of domains to return to the dhcp client that the client should search when resolving hostnames
+    """
+
+
+class OptionsContainer6(BaseModel):
+    """
+    Options to be passed on each execution of the script
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    qos: Annotated[Optional[QosContainer], Field(alias='srl_nokia-qos:qos')] = None
+    object: Annotated[
+        Optional[List[ObjectListEntry]], Field(alias='srl_nokia-event-handler:object')
+    ] = None
 
 
 class PacketGeneratorCase(BaseModel):
@@ -8576,6 +10884,402 @@ class PathListEntry(BaseModel):
     ] = None
 
 
+class PeerContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    auto_negotiation_support: Annotated[
+        Optional[EnumerationEnum91],
+        Field(alias='srl_nokia-lldp:auto-negotiation-support'),
+    ] = None
+    """
+    Support of auto-negotiation
+    """
+    auto_negotiation_enabled: Annotated[
+        Optional[EnumerationEnum92],
+        Field(alias='srl_nokia-lldp:auto-negotiation-enabled'),
+    ] = None
+    """
+    Enable state of auto-negotiation
+    """
+    auto_negotiation_capabilities: Annotated[
+        Optional[List[EnumerationEnum93]],
+        Field(alias='srl_nokia-lldp:auto-negotiation-capabilities'),
+    ] = []
+    """
+    List of auto-negotiation capabilities advertised
+    """
+    mau_type: Annotated[
+        Optional[EnumerationEnum94], Field(alias='srl_nokia-lldp:mau-type')
+    ] = None
+    """
+    Operational MAU type
+    """
+
+
+class PortDsInterfaceContainer(BaseModel):
+    """
+    Interface used as the source of PTP messages into the recovery engine
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    port_index: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:port-index', ge=1, le=999)
+    ] = None
+    """
+    Physical interface used as the source of PTP messages into the recovery engine
+    """
+    neighbor: Annotated[
+        Optional[NeighborContainer], Field(alias='srl_nokia-sync:neighbor')
+    ] = None
+
+
+class PortListEntry(BaseModel):
+    """
+    Information for the specific sync0 port
+
+    This is used for both non-redundant and redundant platforms.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    sync0_id: Annotated[EnumerationEnum114, Field(alias='srl_nokia-sync:sync0-id')]
+    ptp_port_number: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:ptp-port-number', ge=0, le=65535)
+    ] = None
+    """
+    IEEE Std 1588 portNumber
+
+    This is the port-number that will appear in messages sent for this port-index.
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-sync:admin-state')
+    ] = 'disable'
+    """
+    The administrative state of the ptp port
+    """
+    port_state: Annotated[
+        Optional[EnumerationEnum118], Field(alias='srl_nokia-sync:port-state')
+    ] = None
+    """
+    Current state associated with the port
+    """
+    best_master: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:best-master')
+    ] = None
+    """
+    Indicates if this interface was selected by the BMCA to be the best master
+    """
+    parent_clock: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:parent-clock')
+    ] = None
+    """
+    Indicates if this interface is the current parent clock of this PTP clock
+
+    May differ from best-master due to use of local GNSS as time source.
+    """
+    log_announce_interval: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:log-announce-interval', ge=-3, le=4)
+    ] = None
+    """
+    The base-2 logarithm of the mean announceInterval
+
+    Mean time interval between successive Announce messages. To change this setting,
+    refer to log-announce-interval in the Default data set.
+    """
+    announce_receipt_timeout: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:announce-receipt-timeout', ge=2, le=10),
+    ] = None
+    """
+    Sets the time limit for missed Announce packets before the master clock is deemed down
+
+    This defines the number of Announce message intervals that must expire with no received
+    Announce messages before declaring an ANNOUNCE_RECEIPT_TIMEOUT event. To change this
+    setting, refer to announce-receipt-timeout in the Default data set.
+    """
+    major_version_number: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:major-version-number', ge=0, le=255)
+    ] = None
+    """
+    The PTP major version number in use on the port
+    """
+    minor_version_number: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:minor-version-number', ge=0, le=255)
+    ] = None
+    """
+    The PTP minor version number in use on the port
+    """
+    statistics: Annotated[
+        Optional[StatisticsContainer24], Field(alias='srl_nokia-sync:statistics')
+    ] = None
+    neighbor_count: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:neighbor-count', ge=0, le=4294967295)
+    ] = None
+    """
+    The number of neighbors for the port
+    """
+    neighbor_list: Annotated[
+        Optional[List[NeighborListListEntry2]],
+        Field(alias='srl_nokia-sync:neighbor-list'),
+    ] = None
+
+
+class PrefixContainer(BaseModel):
+    """
+    Enter the prefix context
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    ip_prefix: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-srv6:ip-prefix',
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$).*$',
+        ),
+    ]
+    """
+    SRv6 micro-segment block prefix
+    """
+
+
+class PrefixContainer2(BaseModel):
+    """
+    Enter the prefix context
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    ip_prefix: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-srv6:ip-prefix',
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$).*$',
+        ),
+    ]
+    """
+    SRv6 locator prefix
+    """
+
+
+class PriorityContainer(BaseModel):
+    """
+    Narrows the capture to a given severity, a range or a specific set of severities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    match_above: Annotated[
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-logging:match-above')
+    ] = None
+    """
+    At a given severity and above
+    """
+    match_exact: Annotated[
+        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-logging:match-exact')
+    ] = []
+    """
+    Individually specified severities
+    """
+
+
+class PriorityContainer2(BaseModel):
+    """
+    Narrows the capture to a given severity, a range or a specific set of severities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    match_above: Annotated[
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-logging:match-above')
+    ] = None
+    """
+    At a given severity and above
+    """
+    match_exact: Annotated[
+        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-logging:match-exact')
+    ] = []
+    """
+    Individually specified severities
+    """
+
+
+class PriorityContainer3(BaseModel):
+    """
+    Narrows the capture to a given severity, a range or a specific set of severities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    match_above: Annotated[
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-logging:match-above')
+    ] = None
+    """
+    At a given severity and above
+    """
+    match_exact: Annotated[
+        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-logging:match-exact')
+    ] = []
+    """
+    Individually specified severities
+    """
+
+
+class PriorityContainer4(BaseModel):
+    """
+    Narrows the capture to a given severity, a range or a specific set of severities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    match_above: Annotated[
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-logging:match-above')
+    ] = None
+    """
+    At a given severity and above
+    """
+    match_exact: Annotated[
+        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-logging:match-exact')
+    ] = []
+    """
+    Individually specified severities
+    """
+
+
+class PriorityContainer5(BaseModel):
+    """
+    Narrows the capture to a given severity, a range or a specific set of severities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    match_above: Annotated[
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-logging:match-above')
+    ] = None
+    """
+    At a given severity and above
+    """
+    match_exact: Annotated[
+        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-logging:match-exact')
+    ] = []
+    """
+    Individually specified severities
+    """
+
+
+class PriorityContainer6(BaseModel):
+    """
+    Narrows the capture to a given severity, a range or a specific set of severities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    match_above: Annotated[
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-logging:match-above')
+    ] = None
+    """
+    At a given severity and above
+    """
+    match_exact: Annotated[
+        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-logging:match-exact')
+    ] = []
+    """
+    Individually specified severities
+    """
+
+
+class PriorityContainer7(BaseModel):
+    """
+    Narrows the capture to a given severity, a range or a specific set of severities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    match_above: Annotated[
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-logging:match-above')
+    ] = None
+    """
+    At a given severity and above
+    """
+    match_exact: Annotated[
+        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-logging:match-exact')
+    ] = []
+    """
+    Individually specified severities
+    """
+
+
+class PriorityContainer8(BaseModel):
+    """
+    Narrows the capture to a given severity, a range or a specific set of severities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    match_above: Annotated[
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-logging:match-above')
+    ] = None
+    """
+    At a given severity and above
+    """
+    match_exact: Annotated[
+        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-logging:match-exact')
+    ] = []
+    """
+    Individually specified severities
+    """
+
+
+class PriorityContainer9(BaseModel):
+    """
+    Narrows the capture to a given severity, a range or a specific set of severities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    match_above: Annotated[
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-logging:match-above')
+    ] = None
+    """
+    At a given severity and above
+    """
+    match_exact: Annotated[
+        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-logging:match-exact')
+    ] = []
+    """
+    Individually specified severities
+    """
+
+
 class RaGuardPolicyListEntry(BaseModel):
     """
     List containing RA Guard Policy and parameters
@@ -8596,7 +11300,7 @@ class RaGuardPolicyListEntry(BaseModel):
     RA Guard Policy name
     """
     action: Annotated[
-        Optional[EnumerationEnum57], Field(alias='srl_nokia-ra_guard:action')
+        Optional[EnumerationEnum58], Field(alias='srl_nokia-ra_guard:action')
     ] = 'discard'
     """
     Describes the RA Guard Policy action for RA Messages matching the specified attributes.
@@ -8645,7 +11349,7 @@ class RaGuardPolicyListEntry(BaseModel):
     Reference to a prefix set to match advertised address within RA message
     """
     router_preference: Annotated[
-        Optional[EnumerationEnum58], Field(alias='srl_nokia-ra_guard:router-preference')
+        Optional[EnumerationEnum59], Field(alias='srl_nokia-ra_guard:router-preference')
     ] = None
     """
     Verifies that the advertised default router preference parameter value is
@@ -8674,7 +11378,7 @@ class ReceiveLifetimeContainer(BaseModel):
     If there are multiple keys in the keychain the one used for checking received authentication information is the key with the most recent receive-lifetime start-time that is earlier than the current date and time and that has not exceeded its receive-lifetime end-time by more than 'tolerance' seconds
     """
     end_time: Annotated[
-        Optional[Union[EnumerationEnum24, DateAndTimeDeltaType]],
+        Optional[Union[EnumerationEnum49, DateAndTimeDeltaType]],
         Field(alias='srl_nokia-keychains:end-time'),
     ] = None
     """
@@ -8693,15 +11397,15 @@ class ReceiverListEntry(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    gnss_id: Annotated[EnumerationEnum94, Field(alias='srl_nokia-sync:gnss-id')]
+    gnss_id: Annotated[EnumerationEnum134, Field(alias='srl_nokia-sync:gnss-id')]
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-sync:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-sync:admin-state')
     ] = 'disable'
     """
     Configure the administrative state of the GNSS port
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-sync:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-sync:oper-state')
     ] = None
     """
     Operational state of the GNSS port
@@ -8728,13 +11432,13 @@ class ReceiverListEntry(BaseModel):
     Specifies the current state of the GNSS receiver module
     """
     gnss_sync_status: Annotated[
-        Optional[EnumerationEnum95], Field(alias='srl_nokia-sync:gnss-sync-status')
+        Optional[EnumerationEnum135], Field(alias='srl_nokia-sync:gnss-sync-status')
     ] = None
     """
     Specifies the current state of the sync recovery from GNSS
     """
     gnss_antenna_status: Annotated[
-        Optional[EnumerationEnum96], Field(alias='srl_nokia-sync:gnss-antenna-status')
+        Optional[EnumerationEnum136], Field(alias='srl_nokia-sync:gnss-antenna-status')
     ] = None
     """
     Specifies the current state of the GNSS antenna
@@ -8817,6 +11521,44 @@ class ReceiverListEntry(BaseModel):
     satellites_in_use: Annotated[
         Optional[SatellitesInUseContainer],
         Field(alias='srl_nokia-sync:satellites-in-use'),
+    ] = None
+
+
+class RelayInformationListEntry(BaseModel):
+    """
+    DHCPv4 relay information
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    circuit_id: Annotated[
+        str,
+        Field(alias='srl_nokia-dhcp-server:circuit-id', max_length=255, min_length=1),
+    ]
+    """
+    The circuit ID of the DHCPv4 relay agent
+    """
+    remote_id: Annotated[
+        str,
+        Field(alias='srl_nokia-dhcp-server:remote-id', max_length=255, min_length=1),
+    ]
+    """
+    The remote ID of the DHCPv4 relay agent
+    """
+    ip_address: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-dhcp-server:ip-address',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))$).*$',
+        ),
+    ] = None
+    """
+    An IPv4 prefix with host bits.
+    """
+    options: Annotated[
+        Optional[OptionsContainer3], Field(alias='srl_nokia-dhcp-server:options')
     ] = None
 
 
@@ -8918,7 +11660,7 @@ class RoleListEntry(BaseModel):
     Assigned rolename for this role
     """
     services: Annotated[
-        Optional[List[EnumerationEnum12]], Field(alias='srl_nokia-aaa:services')
+        Optional[List[EnumerationEnum10]], Field(alias='srl_nokia-aaa:services')
     ] = []
     """
     Services that members of this role are authorized for
@@ -8940,28 +11682,6 @@ class RoleListEntry(BaseModel):
     netconf: Annotated[
         Optional[NetconfContainer], Field(alias='srl_nokia-aaa:netconf')
     ] = None
-
-
-class RoutesContainer(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    ethernet_segment: Annotated[
-        Optional[EthernetSegmentContainer],
-        Field(
-            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:ethernet-segment'
-        ),
-    ] = None
-    next_hop: Annotated[
-        Optional[EnumerationEnum37],
-        Field(
-            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:next-hop'
-        ),
-    ] = 'use-system-ipv4-address'
-    """
-    The ip-address that will be used as the bgp-next hop for all ES and AD per-ES routes advertised for this Ethernet Segment.
-    """
 
 
 class RpcCase(BaseModel):
@@ -9002,7 +11722,7 @@ class RuleListEntry(BaseModel):
         "/acl ipv4-filter foo* description"
     """
     action: Annotated[
-        EnumerationEnum56, Field(alias='srl_nokia-configuration-role:action')
+        EnumerationEnum53, Field(alias='srl_nokia-configuration-role:action')
     ]
     """
     Action to allow for this path
@@ -9019,7 +11739,7 @@ class RxAnnounceContainer(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum82], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum120], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -9058,7 +11778,7 @@ class RxAnnounceContainer2(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum88], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum126], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -9097,7 +11817,7 @@ class RxDelayRespContainer(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum84], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum122], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -9136,7 +11856,7 @@ class RxDelayRespContainer2(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum90], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum128], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -9175,7 +11895,7 @@ class RxSyncContainer(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum83], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum121], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -9214,7 +11934,7 @@ class RxSyncContainer2(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum89], Field(alias='srl_nokia-sync:state')
+        Optional[EnumerationEnum127], Field(alias='srl_nokia-sync:state')
     ] = None
     """
     Indicates the state of the negotiation
@@ -9240,6 +11960,151 @@ class RxSyncContainer2(BaseModel):
     ] = None
     """
     The time when status last changed or the unicast session between the PTP clocks was renewed
+    """
+
+
+class SeamlessBfdContainer(BaseModel):
+    """
+    When present, this node attempts to setup a seamless BFD session on every segment-list of every SR policy that uses protection-policy, but only if that SR policy is a primary or standby (secondary) candidate path. The transition of an SBFD session from up to down is a trigger for rerouting traffic around a failed primary path.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    detection_multiplier: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-protection-policies:detection-multiplier', ge=3, le=20),
+    ] = 3
+    """
+    The number of packets that must be missed to declare this session as down
+
+    The detection interval for the BFD session is calculated by multiplying the
+    value of the negotiated transmission interval by this value.
+    """
+    desired_minimum_transmit_interval: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-protection-policies:desired-minimum-transmit-interval',
+            ge=10000,
+            le=100000000,
+        ),
+    ] = 1000000
+    """
+    The minimum interval between transmission of BFD control packets
+
+    This value is advertised to the peer, however the actual interval used is specified
+    by taking the maximum of desired-minimum-transmit-interval and the value of the remote
+    required-minimum-receive interval value.
+    This value is specified as an integer number of microseconds.
+    """
+    hold_down_timer: Annotated[
+        Optional[Union[HoldDownTimerLeaf1, EnumerationEnum55]],
+        Field(alias='srl_nokia-protection-policies:hold-down-timer'),
+    ] = '4'
+    """
+    Specifies a hold-down timer value when seamless-bfd is enabled
+
+    The timer is started when the number of S-BFD sessions that are up drops below the threshold. The TE-policy path is not considered to be up again until the hold-down timer has expired and the number of S-BFD sessions that are up equals or exceeds the threshold.
+    A grace preiod after session down such that sBFD session flaps does not impact active path.
+
+    The default is 4 seconds.
+    """
+    wait_for_up_timer: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-protection-policies:wait-for-up-timer', ge=1, le=1800),
+    ] = 4
+    """
+    Specifies a wait-for-up timer value when seamless-bfd is enabled
+
+    This timer takes effect if BFD does not come up, or BFD goes from up to down. The timer is started when BFD is first enabled on a segment-list or BFD transitions from up to down. When the timer expires if BFD is not yet come up, then the path is torn down by removing it from the TTM and the PI and the retry timer is started.
+
+    The default is 4 seconds.
+    """
+    mode: Annotated[
+        Optional[EnumerationEnum56], Field(alias='srl_nokia-protection-policies:mode')
+    ] = 'monitored'
+    """
+    Specifies requested protection method
+
+    ecmp-protected is valid for colored te-policies and programs all the valid segment lists and manages their availability using seamless-BFD for each segment list. Switchover between candidate paths is triggered by the node if number of segment-lists up is less than the threshold on the active policy.ecmp-protected is not valid for uncolored sr-policies.
+
+    linear is valid for uncolored te-policies and triggers fail-over among active segment-lists, primary to standby / secondary.
+    """
+    threshold: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-protection-policies:threshold', ge=1, le=32),
+    ] = 1
+    """
+    Minimum number of up seamless-BFD sessions for up te-policy
+    """
+
+
+class SecondaryDefaultLookupContainer(BaseModel):
+    """
+    Container with options to control fallback routing achieved by doing a secondary FIB lookup in the default network-instance
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-system-datapath:admin-state')
+    ] = 'disable'
+    """
+    Enable or disable the secondary lookup
+
+    When set to enable all IPv4 and IPv6 routes of the default network-instance are programmed into the kaps-public table and fallback routing can be enabled in any ip-vrf network-instance by programming it with a default route having a redirect-to-default next-hop action.
+
+    A change in the value of this leaf does not take effect until the next chassis reboot.
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum28], Field(alias='srl_nokia-system-datapath:oper-state')
+    ] = None
+    """
+    Indicates whether secondary default lookup is active in the system or not
+    """
+    chassis_reboot_required: Annotated[
+        Optional[bool], Field(alias='srl_nokia-system-datapath:chassis-reboot-required')
+    ] = None
+    """
+    Reads true if the user has committed a change in the configuration of secondary-default-lookup but has not yet saved the config and restarted the system, so previous configuration is still in effect
+    """
+
+
+class SelectionProcessListEntry(BaseModel):
+    """
+    Selection Process of the Monitoring Device.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-ipfix:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Key of this list.
+    """
+    selector: Annotated[
+        Optional[List[SelectorListEntry]], Field(alias='srl_nokia-ipfix:selector')
+    ] = None
+    cache: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-ipfix:cache',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ] = None
+    """
+    Cache that receives the output of the
+    Selection Process.
     """
 
 
@@ -9285,15 +12150,15 @@ class ServicesContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    evpn: Annotated[
-        Optional[EvpnContainer],
-        Field(alias='srl_nokia-mpls-services-evpn-label-management:evpn'),
-    ] = None
     network_instance: Annotated[
         Optional[NetworkInstanceContainer],
         Field(
             alias='srl_nokia-mpls-services-network-instance-label-management:network-instance'
         ),
+    ] = None
+    evpn: Annotated[
+        Optional[EvpnContainer2],
+        Field(alias='srl_nokia-mpls-services-evpn-label-management:evpn'),
     ] = None
 
 
@@ -9525,7 +12390,7 @@ class SessionListEntry3(BaseModel):
     System generated ID for the configuration session
     """
     type: Annotated[
-        Optional[EnumerationEnum53], Field(alias='srl_nokia-configuration:type')
+        Optional[EnumerationEnum50], Field(alias='srl_nokia-configuration:type')
     ] = None
     """
     Type of configuration session
@@ -9635,7 +12500,7 @@ class StaticListEntry(BaseModel):
     When the status is not-ready or updating, the state value may be different from the configured value
     """
     status: Annotated[
-        Optional[EnumerationEnum19],
+        Optional[EnumerationEnum44],
         Field(alias='srl_nokia-mpls-label-management:status'),
     ] = None
     """
@@ -9648,71 +12513,282 @@ class StaticListEntry(BaseModel):
 
 
 class StatisticsContainer(BaseModel):
+    """
+    Enclosing container for server statistics
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    total_in_packets: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-dot1x:total-in-packets', ge=0, le=18446744073709551615),
+    login_success: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:login-success', ge=0, le=4294967295)
     ] = 0
     """
-    System or interface level total incoming dot1x frames
-
-    Cumulative of all Ethernet interfaces or specific interface including the tunneled, discarded and copy-to-cpu dot1x frames.
+    Number of login successes
     """
-    total_in_discarded_packets: Annotated[
+    login_connection_failures: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-aaa:login-connection-failures', ge=0, le=4294967295),
+    ] = 0
+    """
+    Number of login connection failures
+    """
+    login_rejects: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:login-rejects', ge=0, le=4294967295)
+    ] = 0
+    """
+    Number of login rejections
+    """
+    accounting_success: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-aaa:accounting-success', ge=0, le=4294967295),
+    ] = 0
+    """
+    Number of accounting successes
+    """
+    accounting_rejects: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-aaa:accounting-rejects', ge=0, le=4294967295),
+    ] = 0
+    """
+    Number of accounting rejections
+    """
+    accounting_connection_failures: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-dot1x:total-in-discarded-packets',
-            ge=0,
-            le=18446744073709551615,
+            alias='srl_nokia-aaa:accounting-connection-failures', ge=0, le=4294967295
         ),
     ] = 0
     """
-    System or interface level incoming do1x discarded frames
-
-    Cumulative of all Ethernet interfaces or specific interface including all the discarded dot1x frames.
+    Number of accounting connection failures
     """
-    in_tunneled_packets: Annotated[
+    authorization_success: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-aaa:authorization-success', ge=0, le=4294967295),
+    ] = 0
+    """
+    Number of authorization successes
+    """
+    authorization_rejects: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-aaa:authorization-rejects', ge=0, le=4294967295),
+    ] = 0
+    """
+    Number of authorization rejections
+    """
+    authorization_connection_failures: Annotated[
         Optional[int],
         Field(
-            alias='srl_nokia-dot1x:in-tunneled-packets', ge=0, le=18446744073709551615
+            alias='srl_nokia-aaa:authorization-connection-failures', ge=0, le=4294967295
         ),
     ] = 0
     """
-    System or interface level incoming 802.1x tunneled frames
-
-    Cumulative of all Ethernet interfaces including all the tunneled 802.1x frames.
-    802.1x frames are identified by a destination MAC value of 01:80:c2:00:00:03 and EtherType value of 0x888e.
+    Number of authorization connection failures
     """
-    in_trap_to_cpu_packets: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-dot1x:in-trap-to-cpu-packets',
-            ge=0,
-            le=18446744073709551615,
-        ),
+    invalid_vsas: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:invalid-vsas', ge=0, le=4294967295)
     ] = 0
     """
-    System or interface level incoming 802.1x frames copied to CPU
-
-    Cumulative of all Ethernet interfaces including all the copy-to-cpu 802.1x frames.
-    802.1x frames are identified by a destination MAC value of 01:80:c2:00:00:03 and EtherType value of 0x888e.
+    Number of invalid VSAs received
     """
-    last_clear: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-dot1x:last-clear',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
+    malformed_vsas: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:malformed-vsas', ge=0, le=4294967295)
+    ] = 0
     """
-    Timestamp of the last time the 802.1x counters were cleared
+    Number of malformed VSAs received
+    """
+    unknown_vsas: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:unknown-vsas', ge=0, le=4294967295)
+    ] = 0
+    """
+    Number of unknown VSAs received
+    """
+    valid_vsas: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:valid-vsas', ge=0, le=4294967295)
+    ] = 0
+    """
+    Number of valid VSAs received
     """
 
 
 class StatisticsContainer11(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    maximum_ids: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-multicast:maximum-ids',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    Maximum number of multicast ids available in the system.
+    """
+    current_usage: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-multicast:current-usage',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The total number of multicast ids that are in use on the system.
+    """
+    total_pending: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-multicast:total-pending',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The total number of multicast ids pending allocation on the system.
+    """
+    multicast_id_user_type: Annotated[
+        Optional[List[MulticastIdUserTypeListEntry]],
+        Field(alias='srl_nokia-system-multicast:multicast-id-user-type'),
+    ] = None
+
+
+class StatisticsContainer12(BaseModel):
+    """
+    Packet transmition statistics
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    bad_bpdus_received: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:bad-bpdus-received',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of Invalid BPDUs received
+    """
+    cfg_bpdus_received: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:cfg-bpdus-received',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of configuration BPDUs received on this interface
+    """
+    cfg_bpdus_transmitted: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:cfg-bpdus-transmitted',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of configuration BPDUs sent on this interface
+    """
+    tcn_bpdus_received: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:tcn-bpdus-received',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of topology change notification BPDUs received on this interface
+    """
+    tcn_bpdus_transmitted: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:tcn-bpdus-transmitted',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of topology change notification BPDUs sent on this interface
+    """
+    tc_bit_bpdus_received: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:tc-bit-bpdus-received',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of BPDUs received on this interface with the Topology Change bit set
+    """
+    tc_bit_bpdus_transmitted: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:tc-bit-bpdus-transmitted',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of BPDUs sent on this interface with the Topology Change bit set
+    """
+    rst_bpdus_received: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:rst-bpdus-received',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of RST BPDUs received on this interface
+    """
+    rst_bpdus_transmitted: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:rst-bpdus-transmitted',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of RST BPDUs sent on this interface
+    """
+    mst_bpdus_received: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:mst-bpdus-received',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of MST BPDUs received on this interface
+    """
+    mst_bpdus_transmitted: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:mst-bpdus-transmitted',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of MST BPDUs sent on this interface
+    """
+
+
+class StatisticsContainer15(BaseModel):
     """
     Global LLDP counters
     """
@@ -9789,7 +12865,7 @@ class StatisticsContainer11(BaseModel):
     """
 
 
-class StatisticsContainer12(BaseModel):
+class StatisticsContainer16(BaseModel):
     """
     LLDP counters on each interface
     """
@@ -9857,50 +12933,6 @@ class StatisticsContainer12(BaseModel):
     """
     The number of frame transmit errors on the interface
     """
-
-
-class StatisticsContainer16(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    maximum_ids: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-system-multicast:maximum-ids',
-            ge=-2147483648,
-            le=2147483647,
-        ),
-    ] = None
-    """
-    Maximum number of multicast ids available in the system.
-    """
-    current_usage: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-system-multicast:current-usage',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    The total number of multicast ids that are in use on the system.
-    """
-    total_pending: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-system-multicast:total-pending',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    The total number of multicast ids pending allocation on the system.
-    """
-    multicast_id_user_type: Annotated[
-        Optional[List[MulticastIdUserTypeListEntry]],
-        Field(alias='srl_nokia-system-multicast:multicast-id-user-type'),
-    ] = None
 
 
 class StatisticsContainer18(BaseModel):
@@ -10166,7 +13198,7 @@ class StatisticsContainer20(BaseModel):
     """
 
 
-class StatisticsContainer5(BaseModel):
+class StatisticsContainer3(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -10210,7 +13242,7 @@ class StatisticsContainer5(BaseModel):
     ] = None
 
 
-class StatisticsContainer6(BaseModel):
+class StatisticsContainer4(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -10250,7 +13282,7 @@ class StatisticsContainer6(BaseModel):
     """
 
 
-class StatisticsContainer7(BaseModel):
+class StatisticsContainer5(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -10264,7 +13296,7 @@ class StatisticsContainer7(BaseModel):
         ),
     ] = 0
     """
-    The total number of proxy entries.
+    The total number of proxy ARP entries.
     """
     active_entries: Annotated[
         Optional[int],
@@ -10275,7 +13307,7 @@ class StatisticsContainer7(BaseModel):
         ),
     ] = 0
     """
-    The total number of active proxy entries.
+    The total number of active proxy ARP entries.
     """
     in_active_entries: Annotated[
         Optional[int],
@@ -10286,7 +13318,7 @@ class StatisticsContainer7(BaseModel):
         ),
     ] = 0
     """
-    The total number of inactive proxy entries.
+    The total number of inactive proxy ARP entries.
     """
     pending_entries: Annotated[
         Optional[int],
@@ -10297,7 +13329,7 @@ class StatisticsContainer7(BaseModel):
         ),
     ] = 0
     """
-    The total number of pending proxy entries.
+    The total number of pending proxy ARP entries.
     """
     neighbor_origin: Annotated[
         Optional[List[NeighborOriginListEntry]],
@@ -10305,7 +13337,7 @@ class StatisticsContainer7(BaseModel):
     ] = None
 
 
-class StatisticsContainer8(BaseModel):
+class StatisticsContainer6(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -10319,7 +13351,7 @@ class StatisticsContainer8(BaseModel):
         ),
     ] = 0
     """
-    The total number of proxy entries.
+    The total number of proxy ARP entries.
     """
     active_entries: Annotated[
         Optional[int],
@@ -10330,7 +13362,7 @@ class StatisticsContainer8(BaseModel):
         ),
     ] = 0
     """
-    The total number of active proxy entries.
+    The total number of active proxy ARP entries.
     """
     in_active_entries: Annotated[
         Optional[int],
@@ -10341,7 +13373,7 @@ class StatisticsContainer8(BaseModel):
         ),
     ] = 0
     """
-    The total number of inactive proxy entries.
+    The total number of inactive proxy ARP entries.
     """
     pending_entries: Annotated[
         Optional[int],
@@ -10352,7 +13384,7 @@ class StatisticsContainer8(BaseModel):
         ),
     ] = 0
     """
-    The total number of pending proxy entries.
+    The total number of pending proxy ARP entries.
     """
     neighbor_origin: Annotated[
         Optional[List[NeighborOriginListEntry2]],
@@ -10360,14 +13392,14 @@ class StatisticsContainer8(BaseModel):
     ] = None
 
 
-class StatisticsContainer9(BaseModel):
+class StatisticsContainer7(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
     active_sessions: Annotated[
         Optional[int],
-        Field(alias='srl_nokia-netconf-server:active-sessions', ge=1, le=64),
+        Field(alias='srl_nokia-netconf-server:active-sessions', ge=0, le=64),
     ] = None
     """
     Active NETCONF sessions
@@ -10681,28 +13713,28 @@ class SubinterfaceListEntry(BaseModel):
     Reference type to a specific subinterface of the form <interface-name>.<subinterface-index>
     """
     direction: Annotated[
-        Optional[EnumerationEnum26], Field(alias='srl_nokia-mirroring:direction')
+        Optional[EnumerationEnum30], Field(alias='srl_nokia-mirroring:direction')
     ] = 'egress-only'
     """
     The direction of traffic to be mirrored
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-mirroring:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-mirroring:oper-state')
     ] = None
     """
-    This leaf contains the operational state of the mirror-source.
+    Indicates the operational state of the mirror subinterface
     """
     oper_down_reason: Annotated[
-        Optional[EnumerationEnum27], Field(alias='srl_nokia-mirroring:oper-down-reason')
+        Optional[EnumerationEnum31], Field(alias='srl_nokia-mirroring:oper-down-reason')
     ] = None
     """
-    The reason for the mirror source being operational down.  When the reason is not applicable, it is due to the mirror instance being shutdown or the mirror source is operational up.
+    The reason for the mirror subinterface being operationally down.  The not-applicable reason is when mirror instance is shutdown or the mirror source is operational
     """
 
 
 class SubscriberListEntry(BaseModel):
     """
-    Indicates the LI target is a broadband subsriber
+    List of broadband network gateway (BNG) subscribers
     """
 
     model_config = ConfigDict(
@@ -10717,7 +13749,7 @@ class SubscriberListEntry(BaseModel):
         ),
     ]
     """
-    Specify the LI target is a wireline subscriber and is identified by the subscriber name/id
+    Name of the wireline subscriber
     """
     description: Annotated[
         Optional[str],
@@ -10726,27 +13758,27 @@ class SubscriberListEntry(BaseModel):
         ),
     ] = None
     """
-    A user-entered description of this LI target
+    Text description
     """
     intercept_id: Annotated[
         Optional[int],
         Field(alias='srl_nokia-lawful-intercept:intercept-id', ge=1, le=4294967295),
     ] = None
     """
-    Specifies the shim header intercept-id
+    Intercept ID in the shim header
     """
     session_id: Annotated[
         Optional[int],
         Field(alias='srl_nokia-lawful-intercept:session-id', ge=1, le=4294967295),
     ] = None
     """
-    Specifies the shim header session-id
+    Session ID in the shim header
     """
     direction: Annotated[
-        EnumerationEnum67, Field(alias='srl_nokia-lawful-intercept:direction')
+        EnumerationEnum85, Field(alias='srl_nokia-lawful-intercept:direction')
     ]
     """
-    The direction of traffic to be mirrored
+    Direction of traffic to be mirrored
     """
     mirror_instance_name: Annotated[
         str,
@@ -10756,23 +13788,29 @@ class SubscriberListEntry(BaseModel):
         ),
     ]
     """
-    Specifies that the mirror instance name would be used to identify the mirror destination.  In the case of MAG-c the mirror-instance-name should match the mirror service name on the User Plane
+    Name of the mirror instance target
+
+    The name of the mirror instance must match the name of the mirror service on the MAG-u.
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-lawful-intercept:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-lawful-intercept:oper-state')
     ] = None
     """
-    Indicates the lawful intercept operational state of the subscriber, true indicates that the subscriber is online and interception is active, false indicates the interception has not started
+    Operational state
     """
     oper_down_reason: Annotated[
         Optional[str], Field(alias='srl_nokia-lawful-intercept:oper-down-reason')
     ] = None
     """
-    Indicates the interception has not started because either the subscriber is not online or a problem occured
+    Interception has not started because the subscriber is not online or a problem occurred
     """
 
 
 class SubscribersContainer(BaseModel):
+    """
+    Subscriber statistics
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -10786,7 +13824,7 @@ class SubscribersContainer(BaseModel):
         ),
     ] = 0
     """
-    Total number of subscribers provisioned as LI target in the system
+    Total number of subscribers provisioned as LI targets in the system
     """
     total_active: Annotated[
         Optional[int],
@@ -10797,7 +13835,7 @@ class SubscribersContainer(BaseModel):
         ),
     ] = 0
     """
-    Total number of subscribers that are currently in active LI session on the system
+    Total number of subscribers in active LI sessions
     """
     total_down: Annotated[
         Optional[int],
@@ -10806,7 +13844,7 @@ class SubscribersContainer(BaseModel):
         ),
     ] = 0
     """
-    Total number of subscribers that are not currently in active LI session on the system
+    Total number of subscribers not in active LI sessions
     """
     total_error: Annotated[
         Optional[int],
@@ -10817,36 +13855,80 @@ class SubscribersContainer(BaseModel):
         ),
     ] = 0
     """
-    Total number of subscribers that have failed LI
+    Total number of subscribers with failed LI sessions
     """
 
 
-class TacacsContainer2(BaseModel):
+class SubsystemListEntry(BaseModel):
     """
-    Top-level container for TACACS+ server data
+    Entity or entities that may produce messages to be captured
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    port: Annotated[
-        Optional[int], Field(alias='srl_nokia-aaa:port', ge=0, le=65535)
-    ] = 49
+    subsystem_name: Annotated[str, Field(alias='srl_nokia-logging:subsystem-name')]
     """
-    The port number on which to contact the TACACS+ server
+    Reference to an available subsystem to source messages from
     """
-    secret_key: Annotated[Optional[str], Field(alias='srl_nokia-aaa:secret-key')] = None
-    """
-    The unencrypted shared key used between the system and server
-    """
-    source_address: Annotated[
-        Optional[Union[Ipv4AddressType, Ipv6AddressType]],
-        Field(alias='srl_nokia-aaa:source-address'),
+    priority: Annotated[
+        Optional[PriorityContainer2], Field(alias='srl_nokia-logging:priority')
     ] = None
+
+
+class SubsystemListEntry2(BaseModel):
     """
-    Source address for TACACS to use for messages sent to a remote server
+    Entity or entities that may produce messages to be captured
     """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    subsystem_name: Annotated[str, Field(alias='srl_nokia-logging:subsystem-name')]
+    """
+    Reference to an available subsystem to source messages from
+    """
+    priority: Annotated[
+        Optional[PriorityContainer5], Field(alias='srl_nokia-logging:priority')
+    ] = None
+
+
+class SubsystemListEntry3(BaseModel):
+    """
+    Entity or entities that may produce messages to be captured
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    subsystem_name: Annotated[str, Field(alias='srl_nokia-logging:subsystem-name')]
+    """
+    Reference to an available subsystem to source messages from
+    """
+    priority: Annotated[
+        Optional[PriorityContainer7], Field(alias='srl_nokia-logging:priority')
+    ] = None
+
+
+class SubsystemListEntry4(BaseModel):
+    """
+    Entity or entities that may produce messages to be captured
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    subsystem_name: Annotated[str, Field(alias='srl_nokia-logging:subsystem-name')]
+    """
+    Reference to an available subsystem to source messages from
+    """
+    priority: Annotated[
+        Optional[PriorityContainer9], Field(alias='srl_nokia-logging:priority')
+    ] = None
 
 
 class TepListEntry(BaseModel):
@@ -10941,7 +14023,7 @@ class TimePropertiesDsContainer(BaseModel):
     If true clock timescale of the grandmaster is PTP; false it is ARB (arbitrary)
     """
     time_source: Annotated[
-        Optional[EnumerationEnum79], Field(alias='srl_nokia-sync:time-source')
+        Optional[EnumerationEnum117], Field(alias='srl_nokia-sync:time-source')
     ] = None
     """
     The source of time used by the grandmaster clock
@@ -10950,50 +14032,13 @@ class TimePropertiesDsContainer(BaseModel):
     """
 
 
-class TimeRecoveryEngineContainer(BaseModel):
+class TimeoutCacheCase(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    recovery_state: Annotated[
-        Optional[EnumerationEnum77], Field(alias='srl_nokia-sync:recovery-state')
-    ] = None
-    """
-    Specifies the current state of the time recovery engine in the PTP clock
-    """
-    state_last_changed: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-sync:state-last-changed',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Specifies the last occurrence of a ptp state change for the time recovery engine
-    """
-    last_adjustment: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-sync:last-adjustment',
-            ge=-9223372036854775808,
-            le=9223372036854775807,
-        ),
-    ] = None
-    """
-    Specifies the last adjustment in nanoseconds to the local time of the PTP clock
-    """
-    last_adjustment_timestamp: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-sync:last-adjustment-timestamp',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The time when last-adjustment was last calculated
-    """
-    statistics: Annotated[
-        Optional[StatisticsContainer19], Field(alias='srl_nokia-sync:statistics')
+    timeout_cache: Annotated[
+        Optional[TimeoutCacheContainer], Field(alias='srl_nokia-ipfix:timeout-cache')
     ] = None
 
 
@@ -11054,13 +14099,13 @@ class TraceOptionsContainer(BaseModel):
         regex_engine="python-re",
     )
     direction: Annotated[
-        Optional[EnumerationEnum44], Field(alias='srl_nokia-netconf-server:direction')
+        Optional[EnumerationEnum20], Field(alias='srl_nokia-netconf-server:direction')
     ] = 'both'
     """
     Direction to trace messages
     """
     rpc: Annotated[
-        Optional[List[EnumerationEnum45]], Field(alias='srl_nokia-netconf-server:rpc')
+        Optional[List[EnumerationEnum21]], Field(alias='srl_nokia-netconf-server:rpc')
     ] = []
     """
     RPC messages to trace
@@ -11077,7 +14122,7 @@ class TraceOptionsContainer2(BaseModel):
         regex_engine="python-re",
     )
     trace: Annotated[
-        Optional[List[EnumerationEnum62]], Field(alias='srl_nokia-dhcp-server:trace')
+        Optional[List[EnumerationEnum35]], Field(alias='srl_nokia-dhcp-server:trace')
     ] = []
     """
     List of events to trace
@@ -11094,10 +14139,28 @@ class TraceOptionsContainer3(BaseModel):
         regex_engine="python-re",
     )
     trace: Annotated[
-        Optional[List[EnumerationEnum63]], Field(alias='srl_nokia-dhcp-server:trace')
+        Optional[List[EnumerationEnum36]], Field(alias='srl_nokia-dhcp-server:trace')
     ] = []
     """
     List of events to trace
+    """
+
+
+class TraceOptionsContainer4(BaseModel):
+    """
+    Interface Stp debug trace options
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    trace: Annotated[
+        Optional[List[EnumerationEnum72]],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:trace'),
+    ] = []
+    """
+    List of tracing options
     """
 
 
@@ -11196,6 +14259,27 @@ class TrustedUserCaKeysContainer(BaseModel):
     """
 
 
+class UnContainer(BaseModel):
+    """
+    Enter the un context
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    srh_mode: Annotated[
+        Optional[EnumerationEnum57], Field(alias='srl_nokia-srv6:srh-mode')
+    ] = 'psp'
+    """
+    Segment Routing Header (SRH) mode
+    """
+    value: Annotated[int, Field(alias='srl_nokia-srv6:value', ge=1, le=1048575)]
+    """
+    SRv6 uN function value
+    """
+
+
 class UnicastNegotiationContainer(BaseModel):
     """
     Details of each negotiation session
@@ -11264,37 +14348,14 @@ class UnixSocketContainer(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-grpc:admin-state')
-    ] = 'disable'
-    """
-    Administratively enable or disable the gRPC server
-    """
-    socket_path: Annotated[Optional[str], Field(alias='srl_nokia-grpc:socket-path')] = (
-        None
-    )
-    """
-    Path to the unix socket used by gRPC
-    """
-
-
-class UnixSocketContainer3(BaseModel):
-    """
-    Top-level container for configuration and state related to unix sockets
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-json-rpc:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-json-rpc:admin-state')
     ] = 'disable'
     """
     Administratively enable or disable the JSON RPC server via unix socket
     This requires the JSON RPC server to be globally enabled
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-json-rpc:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-json-rpc:oper-state')
     ] = None
     """
     Details if the JSON RPC server is operationally available
@@ -11304,6 +14365,13 @@ class UnixSocketContainer3(BaseModel):
     ] = True
     """
     Enable or disable the use of username/password authentication for every JSON RPC request
+    """
+    session_limit: Annotated[
+        Optional[int], Field(alias='srl_nokia-json-rpc:session-limit', ge=1, le=100)
+    ] = None
+    """
+    The number of concurrent requests the server will allow
+    If a request comes in while this limit is reached, the request will block until another request is finished.
     """
     socket_path: Annotated[
         Optional[str], Field(alias='srl_nokia-json-rpc:socket-path')
@@ -11342,25 +14410,6 @@ class UtilizationContainer(BaseModel):
 
 class AclFilterListEntry(BaseModel):
     """
-    List MAC, IPv4, IPv6 ACL filter(s) to be applied on this subinterface direction
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-acl:name')]
-    """
-    Referencence to the ACL Filter policy name
-    """
-    type: Annotated[EnumerationEnum5, Field(alias='srl_nokia-acl:type')]
-    """
-    Referencence to the ACL Filter policy type
-    """
-
-
-class AclFilterListEntry2(BaseModel):
-    """
     List  IPv4, IPv6 ACL filters
     """
 
@@ -11368,11 +14417,17 @@ class AclFilterListEntry2(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[str, Field(alias='srl_nokia-mirroring:name')]
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-mirroring:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
     """
     ACL Filter policy name
     """
-    type: Annotated[EnumerationEnum5, Field(alias='srl_nokia-mirroring:type')]
+    type: Annotated[EnumerationEnum32, Field(alias='srl_nokia-mirroring:type')]
     """
     Reference to the ACL filter policy type
     """
@@ -11382,27 +14437,53 @@ class AclFilterListEntry2(BaseModel):
 
 
 class AclContainer(BaseModel):
-    """
-    Container for ACL.
-    """
-
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
     acl_filter: Annotated[
-        Optional[List[AclFilterListEntry]], Field(alias='srl_nokia-acl:acl-filter')
+        Optional[List[AclFilterListEntry]],
+        Field(alias='srl_nokia-mirroring:acl-filter'),
     ] = None
 
 
-class AclContainer2(BaseModel):
+class AdvertiseIflHostAdRoutesContainer(BaseModel):
+    """
+    Enables the advertisement of IP AD per EVI/ES routes for IP Aliasing
+
+    When configured, AD per-EVI/ES routes are advertised for the IP-VRF and bgp-evpn instances with MAC-VRFs
+    attached to the Ethernet Segment. The AD per-EVI routes for the IP-VRFs contain the route distinguisher,
+    route targets and label/VNI of the IP-VRF bgp-evpn instance (with the instance indicated in the
+    bgp-evpn-instance command). The AD per-ES routes for the IP-VRFs contain the route distinguisher and
+    route targets of the IP-VRF bgp-evpn-instance. On the remote PEs, the reception of BGP-EVPN-IFL-HOST routes
+    with an ESI matching the ESI of the IP-VRF AD per-EVI/ES routes, will enable the IP Aliasing procedures for
+    BGP-EVPN-IFL-HOST routes.
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    acl_filter: Annotated[
-        Optional[List[AclFilterListEntry2]],
-        Field(alias='srl_nokia-mirroring:acl-filter'),
+    bgp_evpn_instance: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:bgp-evpn-instance',
+            ge=1,
+            le=2,
+        ),
+    ] = '1'
+    """
+    The bgp-evpn instance of the IP-VRF network-instance using the Ethernet Segment
+
+    It indicates from which EVPN interface-less bgp-instance the label/VNI, route distinguisher and route
+    targets are taken when advertising the AD per-EVI routes and the AD per-ES routes (except for the VNI/label
+    in AD per-ES routes).
+    """
+    internal_tags: Annotated[
+        Optional[InternalTagsContainer],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:internal-tags'
+        ),
     ] = None
 
 
@@ -11412,7 +14493,7 @@ class AlgorithmContainer(BaseModel):
         regex_engine="python-re",
     )
     type: Annotated[
-        Optional[EnumerationEnum34],
+        Optional[EnumerationEnum62],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:type'
         ),
@@ -11421,7 +14502,7 @@ class AlgorithmContainer(BaseModel):
     Designated Forwarder algorithm type for this ethernet-segment.
     """
     oper_type: Annotated[
-        Optional[EnumerationEnum34],
+        Optional[EnumerationEnum62],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:oper-type'
         ),
@@ -11463,10 +14544,19 @@ class ApplicationListEntry(BaseModel):
     Process ID of this application instance
     """
     state: Annotated[
-        Optional[EnumerationEnum59], Field(alias='srl_nokia-app-mgmt:state')
+        Optional[EnumerationEnum81], Field(alias='srl_nokia-app-mgmt:state')
     ] = None
     """
     Current state of this application instance
+    """
+    synchronization_state: Annotated[
+        Optional[EnumerationEnum82],
+        Field(alias='srl_nokia-app-mgmt:synchronization-state'),
+    ] = None
+    """
+    Indicates if this application is available for a warm or hot restart
+
+    An application supports either hot or warm restarts, not both.
     """
     last_change: Annotated[
         Optional[str],
@@ -11479,13 +14569,13 @@ class ApplicationListEntry(BaseModel):
     Date and time the application instance last changed state
     """
     last_start_type: Annotated[
-        Optional[EnumerationEnum60], Field(alias='srl_nokia-app-mgmt:last-start-type')
+        Optional[EnumerationEnum83], Field(alias='srl_nokia-app-mgmt:last-start-type')
     ] = None
     """
     Indicates the type of the most recent start or restart of this application instance
     """
     supported_restart_types: Annotated[
-        Optional[List[EnumerationEnum60]],
+        Optional[List[EnumerationEnum83]],
         Field(alias='srl_nokia-app-mgmt:supported-restart-types'),
     ] = []
     """
@@ -11543,7 +14633,7 @@ class ApplicationListEntry(BaseModel):
     The version of the application
     """
     restricted_operations: Annotated[
-        Optional[List[EnumerationEnum61]],
+        Optional[List[EnumerationEnum84]],
         Field(alias='srl_nokia-app-mgmt:restricted-operations'),
     ] = []
     """
@@ -11796,7 +14886,7 @@ class AutobootContainer(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-boot:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-boot:admin-state')
     ] = None
     """
     Administratively enable or disable autoboot functionality
@@ -11819,22 +14909,21 @@ class AutobootContainer(BaseModel):
     """
     Sets the amount of executions to try autoboot, before rebooting the system
     """
-    interface: Annotated[Optional[str], Field(alias='srl_nokia-boot:interface')] = (
-        'mgmt0'
-    )
+    interface: Annotated[
+        Optional[List[str]], Field(alias='srl_nokia-boot:interface')
+    ] = ['mgmt0']
     """
-    Sets the interface to use for autoboot functionality
+    Sets the interface(s) to use for autoboot functionality
     """
     client_id: Annotated[
-        Optional[EnumerationEnum52], Field(alias='srl_nokia-boot:client-id')
+        Optional[EnumerationEnum98], Field(alias='srl_nokia-boot:client-id')
     ] = None
     """
     The client ID to use on outgoing DHCP requests
     """
-    mode: Annotated[Optional[List[str]], Field(alias='srl_nokia-boot:mode')] = []
-    """
-    Ztp operation modes. One or more modes can passed
-    """
+    mode: Annotated[
+        Optional[List[EnumerationEnum99]], Field(alias='srl_nokia-boot:mode')
+    ] = []
 
 
 class AutodiscoveryPerEthernetSegmentRoutesContainer(BaseModel):
@@ -11905,6 +14994,19 @@ class AutodiscoveryPerEthernetSegmentRoutesContainer(BaseModel):
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:label'
         ),
     ] = None
+    complete_srv6_sid: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:complete-srv6-sid',
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$',
+        ),
+    ] = None
+    """
+    The entire 128 bit srv6 segment identifier included in srv6 routes
+
+    It shows the complete srv6 sid value including locator, function and argument, even if transposition is
+    used and the function or argument is encoded in the label field.
+    """
     attr_id: Annotated[
         Optional[int],
         Field(
@@ -11928,7 +15030,7 @@ class BgpAutoDiscoveryContainer2(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-lldp:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-lldp:admin-state')
     ] = 'enable'
     """
     Enable or disable LLDP BGP auto discovery on this interface
@@ -11960,7 +15062,7 @@ class BgpAutoDiscoveryContainer2(BaseModel):
     """
 
 
-class BgpContainer2(BaseModel):
+class BgpContainer(BaseModel):
     """
     Container for specifying the BGP members of the maintenance group
     """
@@ -11970,12 +15072,12 @@ class BgpContainer2(BaseModel):
         regex_engine="python-re",
     )
     network_instance: Annotated[
-        Optional[List[NetworkInstanceListEntry4]],
+        Optional[List[NetworkInstanceListEntry3]],
         Field(alias='srl_nokia-maintenance-mode:network-instance'),
     ] = None
 
 
-class BgpContainer3(BaseModel):
+class BgpContainer2(BaseModel):
     """
     Container for BGP policies used to achieve traffic draining
     """
@@ -12003,6 +15105,75 @@ class BgpContainer3(BaseModel):
     ] = None
     """
     A reference to the pre-configured routing policy to apply as an additional/final export policy on BGP sessions in the maintenance group
+    """
+
+
+class BlockListEntry(BaseModel):
+    """
+    Enter the block list instance
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    block_name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-srv6:block-name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Micro-SID block name
+    """
+    prefix: Annotated[
+        Optional[PrefixContainer], Field(alias='srl_nokia-srv6:prefix')
+    ] = None
+    static_function: Annotated[
+        Optional[StaticFunctionContainer], Field(alias='srl_nokia-srv6:static-function')
+    ] = None
+
+
+class CacheListEntry(BaseModel):
+    """
+    Cache of the Monitoring Device.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-ipfix:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Key of this list.
+    """
+    data_records: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:data-records', ge=0, le=18446744073709551615),
+    ] = 0
+    """
+    The number of Data Records generated by this Cache.
+
+    Discontinuities in the value of this counter can occur at
+    re-initialization of the management system, and at other
+    times as indicated by the value of
+    cacheDiscontinuityTime.
+    """
+    cache_type: Annotated[TimeoutCacheCase, Field(alias='srl_nokia-ipfix:cache-type')]
+    exporting_process: Annotated[
+        Optional[List[ExportingProcessLeafList]],
+        Field(alias='srl_nokia-ipfix:exporting-process'),
+    ] = []
+    """
+    Records are exported by all Exporting Processes
+    in the list.
     """
 
 
@@ -12185,6 +15356,20 @@ class CheckpointListEntry(BaseModel):
     """
 
 
+class CliContainer2(BaseModel):
+    """
+    Top-level container for CLI services
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    environment: Annotated[
+        Optional[EnvironmentContainer], Field(alias='srl_nokia-system-cli:environment')
+    ] = None
+
+
 class ClientListEntry(BaseModel):
     """
     List of active gRPC client sessions
@@ -12198,7 +15383,7 @@ class ClientListEntry(BaseModel):
     """
     System generated ID for for the client
     """
-    type: Annotated[Optional[EnumerationEnum16], Field(alias='srl_nokia-grpc:type')] = (
+    type: Annotated[Optional[EnumerationEnum15], Field(alias='srl_nokia-grpc:type')] = (
         None
     )
     user: Annotated[Optional[str], Field(alias='srl_nokia-grpc:user')] = None
@@ -12263,24 +15448,6 @@ class ClientListEntry(BaseModel):
         None
     )
     p4rt: Annotated[Optional[P4rtContainer], Field(alias='srl_nokia-grpc:p4rt')] = None
-
-
-class ClockContainer(BaseModel):
-    """
-    Top-level container for system clock configuration and state
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    timezone: Annotated[
-        Optional[EnumerationEnum66], Field(alias='srl_nokia-ntp:timezone')
-    ] = None
-    """
-    The timezone to use for the system
-    Based on IANAs Time Zone database
-    """
 
 
 class CountersContainer3(BaseModel):
@@ -12390,6 +15557,38 @@ class CredentialzContainer4(BaseModel):
     ] = None
 
 
+class DatapathContainer(BaseModel):
+    """
+    Context for system wide forwarding options
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    forwarding_mode: Annotated[
+        Optional[EnumerationEnum27],
+        Field(alias='srl_nokia-system-datapath:forwarding-mode'),
+    ] = 'store-and-forward'
+    """
+    The forwarding mode for Ethernet frames received on all eligible ports of the system
+
+    In store-and-forward mode, the forwarding of an Ethernet frame received on a particular port must wait until the entire Ethernet frame has been received, including the trailing 4-byte CRC; if the CRC is valid the packet is forwarded to the egress port based on the L2/L3 lookup result but if the CRC is invalid the frame is discarded and the in-error-packets counter is incremented.
+
+    In cut-through mode, the forwarding ASIC does the L2/L3 forwarding lookup as soon as it has read the necessary packet headers. If the target egress queue of the egress port is not congested the bytes of the received frame are transmitted across the switch fabric as they are received. The fully intact frame is transmitted from the egress port as soon as all the bytes have been received.
+    """
+    icmp: Annotated[
+        Optional[IcmpContainer], Field(alias='srl_nokia-system-datapath:icmp')
+    ] = None
+    icmp6: Annotated[
+        Optional[Icmp6Container], Field(alias='srl_nokia-system-datapath:icmp6')
+    ] = None
+    secondary_default_lookup: Annotated[
+        Optional[SecondaryDefaultLookupContainer],
+        Field(alias='srl_nokia-system-datapath:secondary-default-lookup'),
+    ] = None
+
+
 class DesignatedForwarderCandidateListEntry(BaseModel):
     """
     designated forwarder candidates for this evi
@@ -12451,20 +15650,6 @@ class DfElectionContainer(BaseModel):
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:algorithm'
         ),
-    ] = None
-
-
-class Dot1xContainer(BaseModel):
-    """
-    Enclosing container for system level dot1x
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    statistics: Annotated[
-        Optional[StatisticsContainer], Field(alias='srl_nokia-dot1x:statistics')
     ] = None
 
 
@@ -12541,6 +15726,264 @@ class EthernetSegmentRoutesContainer(BaseModel):
     """
 
 
+class EthernetSegmentContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    originating_ip: Annotated[
+        Optional[Union[EnumerationEnum64, Union[Ipv4AddressType, Ipv6AddressType]]],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:originating-ip'
+        ),
+    ] = 'use-system-ipv4-address'
+    """
+    The originating ip-address with which the Ethernet Segment route will be advertised in this evpn instance
+    """
+
+
+class FacilityListEntry(BaseModel):
+    """
+    List of facilities to source messages from
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    facility_name: Annotated[
+        EnumerationEnum23, Field(alias='srl_nokia-logging:facility-name')
+    ]
+    """
+    Name of a Linux syslog facility
+    """
+    priority: Annotated[
+        Optional[PriorityContainer], Field(alias='srl_nokia-logging:priority')
+    ] = None
+
+
+class FacilityListEntry2(BaseModel):
+    """
+    List of facilities to source messages from
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    facility_name: Annotated[
+        EnumerationEnum23, Field(alias='srl_nokia-logging:facility-name')
+    ]
+    """
+    Name of a Linux syslog facility
+    """
+    priority: Annotated[
+        Optional[PriorityContainer3], Field(alias='srl_nokia-logging:priority')
+    ] = None
+
+
+class FacilityListEntry3(BaseModel):
+    """
+    List of facilities to source messages from
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    facility_name: Annotated[
+        EnumerationEnum23, Field(alias='srl_nokia-logging:facility-name')
+    ]
+    """
+    Name of a Linux syslog facility
+    """
+    priority: Annotated[
+        Optional[PriorityContainer4], Field(alias='srl_nokia-logging:priority')
+    ] = None
+
+
+class FacilityListEntry4(BaseModel):
+    """
+    List of facilities to source messages from
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    facility_name: Annotated[
+        EnumerationEnum23, Field(alias='srl_nokia-logging:facility-name')
+    ]
+    """
+    Name of a Linux syslog facility
+    """
+    priority: Annotated[
+        Optional[PriorityContainer6], Field(alias='srl_nokia-logging:priority')
+    ] = None
+
+
+class FacilityListEntry5(BaseModel):
+    """
+    List of facilities to source messages from
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    facility_name: Annotated[
+        EnumerationEnum23, Field(alias='srl_nokia-logging:facility-name')
+    ]
+    """
+    Name of a Linux syslog facility
+    """
+    priority: Annotated[
+        Optional[PriorityContainer8], Field(alias='srl_nokia-logging:priority')
+    ] = None
+
+
+class FileListEntry(BaseModel):
+    """
+    Log files maintained on disk, persistent across system reboots
+
+    When a maximum file size is reached, the file is renamed and a maximum
+    rotate number of them are kept.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    file_name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-logging:file-name',
+            pattern='^(?=^([^./][^/]*)|(\\.[^\\./]+)|(\\.\\.[^/])+$).*$',
+        ),
+    ]
+    """
+    Base name of the file(s) to be stored on disk
+    """
+    directory: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-logging:directory', pattern='^(?=^/(.)*$).*$'),
+    ] = '/var/log/srlinux/file'
+    """
+    Fully qualified path of a directory where the log file(s) shall be maintained
+    """
+    format: Annotated[
+        Optional[Union[str, EnumerationEnum22]], Field(alias='srl_nokia-logging:format')
+    ] = 'RSYSLOG_FileFormat'
+    """
+    Text format of syslog messages to a local output (buffer, file or console), in legacy rsyslog $template style or one of the predefined templates
+
+    The default presents a date timestamp according to rfc3339.
+    The predefined templates are the ones supported by rsyslogd.
+    """
+    rotate: Annotated[
+        Optional[int], Field(alias='srl_nokia-logging:rotate', ge=0, le=65535)
+    ] = 4
+    """
+    Number of files to keep in rotation when a maximum file size is reached
+    """
+    rotations: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-logging:rotations', ge=0, le=18446744073709551615),
+    ] = 0
+    """
+    Number of file rotations occurred
+    """
+    size: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-logging:size',
+            pattern='^(?=^[1-9][0-9]{0,15}(K|M|G){0,1}$).*$',
+        ),
+    ] = '10M'
+    """
+    Number of bytes an individual output file cannot exceed
+
+    The field allows the 'K, M, or G' suffixes as shorthand.
+    When reaching that size, a rotation happens and subsequent data is stored
+    in a new file with the same base name.
+    """
+    facility: Annotated[
+        Optional[List[FacilityListEntry4]], Field(alias='srl_nokia-logging:facility')
+    ] = None
+    subsystem: Annotated[
+        Optional[List[SubsystemListEntry3]], Field(alias='srl_nokia-logging:subsystem')
+    ] = None
+    filter: Annotated[
+        Optional[List[FilterLeafList3]], Field(alias='srl_nokia-logging:filter')
+    ] = []
+    """
+    A set of all-matching criteria that messages must fulfill in order to be captured
+    """
+
+
+class FilterListEntry(BaseModel):
+    """
+    Describes a set of critieria that captured messages are required to fulfill
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    filter_name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-logging:filter-name',
+            pattern='^(?=^([0-9a-zA-Z\\-_.@!%^*()\\[\\]{}|\\\\/<>,;])+$).*$',
+        ),
+    ]
+    """
+    Name of the filter
+    """
+    prefix: Annotated[Optional[str], Field(alias='srl_nokia-logging:prefix')] = None
+    """
+    Text to be present at the beginning of the MSG property of a message
+    This is a fast lookup.
+    """
+    not_prefix: Annotated[
+        Optional[str], Field(alias='srl_nokia-logging:not-prefix')
+    ] = None
+    """
+    Text to be not present at the beginning of the MSG property of a message
+    This is a fast lookup.
+    """
+    contains: Annotated[Optional[str], Field(alias='srl_nokia-logging:contains')] = None
+    """
+    Text to find in the MSG property of messages to capture from the stream
+    This is slower than prefix.
+    """
+    not_contains: Annotated[
+        Optional[str], Field(alias='srl_nokia-logging:not-contains')
+    ] = None
+    """
+    Text to not find in the MSG property of messages to capture from the stream
+    This is slower than prefix.
+    """
+    tag: Annotated[Optional[str], Field(alias='srl_nokia-logging:tag')] = None
+    """
+    Text to be searched in the SYSLOGTAG property of messages
+    Usually a program name or part of it.
+    """
+    regex: Annotated[Optional[str], Field(alias='srl_nokia-logging:regex')] = None
+    """
+    Extended regular expression to search in the MSG property of messages
+    """
+    not_regex: Annotated[Optional[str], Field(alias='srl_nokia-logging:not-regex')] = (
+        None
+    )
+    """
+    Extended regular expression to not have in the MSG property of messages
+    """
+    facility: Annotated[
+        Optional[List[FacilityListEntry2]], Field(alias='srl_nokia-logging:facility')
+    ] = None
+
+
 class Fips140Container(BaseModel):
     """
     Boot up the router in fips-provider mode
@@ -12554,19 +15997,19 @@ class Fips140Container(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-boot:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-boot:admin-state')
     ] = 'disable'
     """
     This leaf contains the configured, desired state of the fips-provider.
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-boot:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-boot:oper-state')
     ] = None
     """
     This leaf contains the operational state of fips-provider.
     """
     oper_down_reason: Annotated[
-        Optional[EnumerationEnum51], Field(alias='srl_nokia-boot:oper-down-reason')
+        Optional[EnumerationEnum97], Field(alias='srl_nokia-boot:oper-down-reason')
     ] = None
     """
     The reason for not enabling fips operational down
@@ -12579,7 +16022,7 @@ class FreqClockContainer(BaseModel):
         regex_engine="python-re",
     )
     ql_input_threshold: Annotated[
-        Optional[EnumerationEnum68], Field(alias='srl_nokia-sync:ql-input-threshold')
+        Optional[EnumerationEnum104], Field(alias='srl_nokia-sync:ql-input-threshold')
     ] = 'unused'
     """
     This command configures the minimum acceptable QL value
@@ -12588,7 +16031,7 @@ class FreqClockContainer(BaseModel):
     Options: unused, prs, stu, st2, tnc, st3e, st3, prc, ssua, ssub, sec, eec1, eec2
     """
     network_type: Annotated[
-        Optional[EnumerationEnum72], Field(alias='srl_nokia-sync:network-type')
+        Optional[EnumerationEnum108], Field(alias='srl_nokia-sync:network-type')
     ] = 'sonet'
     """
     Configures SyncE for SSM code-type as SONET or SDH mode
@@ -12620,7 +16063,7 @@ class FreqClockContainer(BaseModel):
     When the mode is non-revertive, a failed clock source is not automatically selected.
     """
     active_reference: Annotated[
-        Optional[EnumerationEnum73], Field(alias='srl_nokia-sync:active-reference')
+        Optional[EnumerationEnum109], Field(alias='srl_nokia-sync:active-reference')
     ] = None
     """
     Indicates the current selected reference
@@ -12639,13 +16082,13 @@ class FreqClockContainer(BaseModel):
     The frequency offset between the central frequency clock and the selected reference in ppb
     """
     freq_clock_state: Annotated[
-        Optional[EnumerationEnum74], Field(alias='srl_nokia-sync:freq-clock-state')
+        Optional[EnumerationEnum110], Field(alias='srl_nokia-sync:freq-clock-state')
     ] = None
     """
     Shows the frequency clock mode state
     """
     system_ql_value: Annotated[
-        Optional[EnumerationEnum69], Field(alias='srl_nokia-sync:system-ql-value')
+        Optional[EnumerationEnum105], Field(alias='srl_nokia-sync:system-ql-value')
     ] = None
     """
     System QL value based on the reference selected
@@ -12658,7 +16101,7 @@ class FreqRecoveryEngineContainer(BaseModel):
         regex_engine="python-re",
     )
     recovery_state: Annotated[
-        Optional[EnumerationEnum78], Field(alias='srl_nokia-sync:recovery-state')
+        Optional[EnumerationEnum116], Field(alias='srl_nokia-sync:recovery-state')
     ] = None
     """
     Specifies the current state of the time recovery engine in the PTP clock
@@ -12702,6 +16145,48 @@ class FreqRecoveryEngineContainer(BaseModel):
     ] = None
 
 
+class FullSegmentContainer(BaseModel):
+    """
+    Enter the context to configure the full-segment locator
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    block_length: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:block-length', ge=0, le=96)
+    ] = 0
+    """
+    SRv6 locator block address length
+    """
+    function_length: Annotated[
+        int, Field(alias='srl_nokia-srv6:function-length', ge=16, le=16)
+    ]
+    """
+    Function length
+    """
+    argument_length: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:argument-length', ge=0, le=16)
+    ] = 0
+    """
+    Argument length
+    """
+    algorithm: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:algorithm', ge=0, le=255)
+    ] = 0
+    """
+    IGP flexible algorithm ID
+    """
+    prefix: Annotated[
+        Optional[PrefixContainer2], Field(alias='srl_nokia-srv6:prefix')
+    ] = None
+    static_function: Annotated[
+        Optional[StaticFunctionContainer2],
+        Field(alias='srl_nokia-srv6:static-function'),
+    ] = None
+
+
 class GnssContainer2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -12713,47 +16198,6 @@ class GnssContainer2(BaseModel):
     receiver: Annotated[
         Optional[List[ReceiverListEntry]], Field(alias='srl_nokia-sync:receiver')
     ] = None
-
-
-class HostEntryListEntry(BaseModel):
-    """
-    List of static host entries
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-dns:name',
-            pattern='^(?=^((([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.)*([a-zA-Z0-9_]([a-zA-Z0-9\\-_]){0,61})?[a-zA-Z0-9]\\.?)|\\.$).*$',
-        ),
-    ]
-    """
-    Name of host entry
-    """
-    ipv4_address: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-dns:ipv4-address',
-            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
-        ),
-    ] = None
-    """
-    IPv4 address for the host entry
-    """
-    ipv6_address: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-dns:ipv6-address',
-            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$',
-        ),
-    ] = None
-    """
-    IPv6 address for the host entry
-    """
 
 
 class HostListEntry(BaseModel):
@@ -12790,7 +16234,7 @@ class HostListEntry(BaseModel):
     An IPv4 prefix with host bits.
     """
     options: Annotated[
-        Optional[OptionsContainer3], Field(alias='srl_nokia-dhcp-server:options')
+        Optional[OptionsContainer2], Field(alias='srl_nokia-dhcp-server:options')
     ] = None
 
 
@@ -12842,14 +16286,14 @@ class HttpContainer(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-json-rpc:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-json-rpc:admin-state')
     ] = 'disable'
     """
     Administratively enable or disable the HTTP JSON RPC server
     This requires the JSON RPC server to be globally enabled
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-json-rpc:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-json-rpc:oper-state')
     ] = None
     """
     Details if the JSON RPC server is operationally available
@@ -12892,14 +16336,14 @@ class HttpsContainer(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-json-rpc:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-json-rpc:admin-state')
     ] = 'disable'
     """
     Administratively enable or disable the HTTPS JSON RPC server
     This requires the JSON RPC server to be globally enabled
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-json-rpc:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-json-rpc:oper-state')
     ] = None
     """
     Details if the JSON RPC server is operationally available
@@ -12942,23 +16386,11 @@ class HttpsContainer(BaseModel):
     """
 
 
-class InputContainer(BaseModel):
-    """
-    Defines parameters determining the handling of system generated traffic.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    acl: Annotated[Optional[AclContainer], Field(alias='srl_nokia-acl:acl')] = None
-
-
 class InstanceListEntry(BaseModel):
     """
     List of all event handler instances
 
-    An event handler instance consists of a set of paths to be monitored for changes, and a Python script to execute if changes occur.
+    An event handler instance consists of a set of paths monitored for changes and a Python script to execute if changes occur.
     """
 
     model_config = ConfigDict(
@@ -12973,10 +16405,10 @@ class InstanceListEntry(BaseModel):
         ),
     ]
     """
-    A user-defined name for this event handler instance
+    User-defined name for this event handler instance
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-event-handler:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-event-handler:admin-state')
     ] = 'disable'
     """
     Administratively enable or disable this event handler instance
@@ -12996,7 +16428,7 @@ class InstanceListEntry(BaseModel):
         "acl ipv4-filter foo* description"
     """
     options: Annotated[
-        Optional[OptionsContainer], Field(alias='srl_nokia-event-handler:options')
+        Optional[OptionsContainer6], Field(alias='srl_nokia-event-handler:options')
     ] = None
     upython_script: Annotated[
         Optional[str],
@@ -13008,11 +16440,11 @@ class InstanceListEntry(BaseModel):
     """
     File name of a MicroPython script, including .py suffix
 
-    This script should exist in /etc/opt/srlinux/eventmgr or /opt/srlinux/eventmgr already.
+    This script should already exist in /etc/opt/srlinux/eventmgr or /opt/srlinux/eventmgr directories.
     Explicit paths outside of these two directories are not permitted.
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-event-handler:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-event-handler:oper-state')
     ] = None
     """
     Details if this event handler instance is operationally available
@@ -13026,9 +16458,26 @@ class InstanceListEntry(BaseModel):
         Field(alias='srl_nokia-event-handler:last-errored-execution'),
     ] = None
     statistics: Annotated[
-        Optional[StatisticsContainer10],
+        Optional[StatisticsContainer17],
         Field(alias='srl_nokia-event-handler:statistics'),
     ] = None
+
+
+class InterfaceRefContainer(BaseModel):
+    """
+    Reference to an interface
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    interface: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:interface')
+    ] = None
+    """
+    Reference to a base interface
+    """
 
 
 class InterfaceCase(BaseModel):
@@ -13049,15 +16498,21 @@ class InterfaceCase(BaseModel):
     lo<N>, N=0..255
     mgmt0
     mgmt0-standby
+    mgmtA
+    mgmtB
     ethernet-<slot>/<port>
-    ethernet-<slot>/<mda>/<port>
+    ethernet-<slot>/<connector>/<port>
+    ethernet-<slot>/m<mda>/<port>
+    ethernet-<slot>/m<mda>/<connector>/<port>
     system0
-    sync0
+    sync0-a
+    sync0-b
 
     <lif_name>=Linux interface name
     <vhn_name>=vhost interface name
     <slot>=slot number {1,2,3,..}
-    <mda>=mda id {a,b,c,d,e,f}
+    <mda>=mda id {1,2,3,..}
+    <connector>=connector id {1,2,3,..}
     <port>=port id {1,2,3,..}
 
     [note1] The maximum number of LAGs per platform is as follows:
@@ -13065,61 +16520,19 @@ class InterfaceCase(BaseModel):
      D2-D3: 128 (N must be 1..1000)
      D4-D5: 64 (N must be 1..64)
      H2-H3: 127 (N must be 1..127)
+     H4-32D: 127 (N must be 1..127)
      H4: 255 (N must be 1..255)
-     IXR: 128 (N must be 1..128)
+     H5-32D: 127 (N must be 1..127)
+     H5-64D: 127 (N must be 1..127)
+     H5-64O: 127 (N must be 1..127)
+     IXR: 512 (N must be 1..512)
      SXR-1d-32D: 128 (N must be 1..128)
      SXR-1x-44S: 128 (N must be 1..128)
+     vSRL: 8 (N must be 1..8)
      A1: 10 (N must be 1..10)
      IXR-X1b: 512 (N must be 1..512)
      IXR-X3b: 512 (N must be 1..512)
-    """
-
-
-class InterfaceCase2(BaseModel):
-    """
-    Local interface used for ptp over ethernet communication
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    interface: Annotated[Optional[str], Field(alias='srl_nokia-sync:interface')] = None
-    """
-    The name of the interface
-
-    Valid options are:
-    irb<N>, N=0..255
-    lif-<lif_name>
-    enp<bus>s<dev>f<fn>, bus=0..255, dev=0..31, fn=0..7
-    vhn-<vhn_name>
-    lag<N>, N=1..1000 [note1]
-    lo<N>, N=0..255
-    mgmt0
-    mgmt0-standby
-    ethernet-<slot>/<port>
-    ethernet-<slot>/<mda>/<port>
-    system0
-    sync0
-
-    <lif_name>=Linux interface name
-    <vhn_name>=vhost interface name
-    <slot>=slot number {1,2,3,..}
-    <mda>=mda id {a,b,c,d,e,f}
-    <port>=port id {1,2,3,..}
-
-    [note1] The maximum number of LAGs per platform is as follows:
-     D1: 32 (N must be 1..32)
-     D2-D3: 128 (N must be 1..1000)
-     D4-D5: 64 (N must be 1..64)
-     H2-H3: 127 (N must be 1..127)
-     H4: 255 (N must be 1..255)
-     IXR: 128 (N must be 1..128)
-     SXR-1d-32D: 128 (N must be 1..128)
-     SXR-1x-44S: 128 (N must be 1..128)
-     A1: 10 (N must be 1..10)
-     IXR-X1b: 512 (N must be 1..512)
-     IXR-X3b: 512 (N must be 1..512)
+     SSE-T8164: 127 (N must be 1..127)
     """
 
 
@@ -13161,7 +16574,7 @@ class KeyListEntry(BaseModel):
     Each key in a keychain requires a unique identifier, the index value specifies this identifier
     """
     algorithm: Annotated[
-        Optional[EnumerationEnum23], Field(alias='srl_nokia-keychains:algorithm')
+        Optional[EnumerationEnum48], Field(alias='srl_nokia-keychains:algorithm')
     ] = None
     """
     The cryptographic algorithm used with the keying material to secure the messages
@@ -13205,7 +16618,7 @@ class KeychainListEntry(BaseModel):
     The user configured name for the keychain
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-keychains:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-keychains:admin-state')
     ] = 'disable'
     """
     When set to disable, the keychain is inactive
@@ -13235,7 +16648,7 @@ class KeychainListEntry(BaseModel):
     If tolerance is Z then all receive keys remain valid up to the configured/applicable end-time plus an additional Z seconds.
     """
     type: Annotated[
-        Optional[EnumerationEnum21], Field(alias='srl_nokia-keychains:type')
+        Optional[EnumerationEnum46], Field(alias='srl_nokia-keychains:type')
     ] = None
     """
     Specifies the intended use of the keychain
@@ -13255,7 +16668,7 @@ class KeychainListEntry(BaseModel):
     Expired can mean past end-time or prior to start-time.
     """
     active_key_for_send: Annotated[
-        Optional[Union[EnumerationEnum22, IndexLeaf3]],
+        Optional[Union[EnumerationEnum47, IndexLeaf4]],
         Field(alias='srl_nokia-keychains:active-key-for-send'),
     ] = None
     """
@@ -13354,11 +16767,8 @@ class L2cpStatisticsContainer(BaseModel):
     xstp: Annotated[
         Optional[XstpContainer], Field(alias='srl_nokia-interfaces-l2cp:xstp')
     ] = None
-    dot1x: Annotated[
-        Optional[Dot1xContainer2], Field(alias='srl_nokia-interfaces-l2cp:dot1x')
-    ] = None
     ptp: Annotated[
-        Optional[PtpContainer3], Field(alias='srl_nokia-interfaces-l2cp:ptp')
+        Optional[PtpContainer], Field(alias='srl_nokia-interfaces-l2cp:ptp')
     ] = None
     esmc: Annotated[
         Optional[EsmcContainer], Field(alias='srl_nokia-interfaces-l2cp:esmc')
@@ -13461,6 +16871,76 @@ class LinuxadminUserContainer(BaseModel):
     ] = None
 
 
+class LldpMedContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    med_fast_transmit_interval: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-lldp:med-fast-transmit-interval', ge=1, le=3600),
+    ] = 1
+    """
+    Transmit interval activated whenever an LLDP-MED Capabilities TLV received is not associated with a remote system
+    """
+    med_fast_transmit_repeat_count: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-lldp:med-fast-transmit-repeat-count', ge=1, le=8),
+    ] = 4
+    """
+    Duration of the fast-start process, in number of packets
+    """
+    topology_change_notification: Annotated[
+        Optional[bool], Field(alias='srl_nokia-lldp:topology-change-notification')
+    ] = False
+    """
+    Indicate whether to generate topology change notifications for endpoints
+
+    Used to track the movement of portable equipment using of events.
+    """
+    network_policy: Annotated[
+        Optional[List[NetworkPolicyListEntry]],
+        Field(alias='srl_nokia-lldp:network-policy'),
+    ] = None
+
+
+class LldpMedContainer3(BaseModel):
+    """
+    LLDP-MED neighbor state
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    capabilities: Annotated[
+        Optional[List[CapabilitiesListEntry]],
+        Field(alias='srl_nokia-lldp:capabilities'),
+    ] = None
+    network_policy_application_type: Annotated[
+        Optional[List[NetworkPolicyApplicationTypeListEntry]],
+        Field(alias='srl_nokia-lldp:network-policy-application-type'),
+    ] = None
+    inventory: Annotated[
+        Optional[InventoryContainer], Field(alias='srl_nokia-lldp:inventory')
+    ] = None
+
+
+class MacPhyConfigurationStatusContainer(BaseModel):
+    """
+    MAC/PHY Configuration/Status TLV information
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    interface: Annotated[
+        Optional[InterfaceContainer], Field(alias='srl_nokia-lldp:interface')
+    ] = None
+    peer: Annotated[Optional[PeerContainer], Field(alias='srl_nokia-lldp:peer')] = None
+
+
 class MembersContainer(BaseModel):
     """
     Container for specifying the members of the maintenance group - i.e. the components that will eventually be taken out of service for repair or replacement.
@@ -13471,11 +16951,77 @@ class MembersContainer(BaseModel):
         regex_engine="python-re",
     )
     bgp: Annotated[
-        Optional[BgpContainer2], Field(alias='srl_nokia-maintenance-mode:bgp')
+        Optional[BgpContainer], Field(alias='srl_nokia-maintenance-mode:bgp')
     ] = None
     isis: Annotated[
         Optional[IsisContainer], Field(alias='srl_nokia-maintenance-mode:isis')
     ] = None
+
+
+class MicroSegmentContainer(BaseModel):
+    """
+    Enter the micro-segment context
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    block_length: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:block-length', ge=32, le=32)
+    ] = 32
+    """
+    Micro-SID block length
+    """
+    gib_size: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:gib-size', ge=4, le=60)
+    ] = 16
+    """
+    Maximum number of micro-segment locators network wide (x 1024)
+    """
+    sid_length: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:sid-length', ge=16, le=16)
+    ] = 16
+    """
+    Micro-SID length
+    """
+    block: Annotated[
+        Optional[List[BlockListEntry]], Field(alias='srl_nokia-srv6:block')
+    ] = None
+
+
+class MicroSegmentContainer2(BaseModel):
+    """
+    Enter the context to configure the micro-segment locator
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    block: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-srv6:block',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Pre-defined micro-SID block
+    """
+    argument_length: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:argument-length', ge=0, le=16)
+    ] = 0
+    """
+    Argument length
+    """
+    algorithm: Annotated[
+        Optional[int], Field(alias='srl_nokia-srv6:algorithm', ge=0, le=255)
+    ] = 0
+    """
+    IGP flexible algorithm ID
+    """
+    un: Annotated[Optional[UnContainer], Field(alias='srl_nokia-srv6:un')] = None
 
 
 class MirrorSourceContainer(BaseModel):
@@ -13494,9 +17040,61 @@ class MirrorSourceContainer(BaseModel):
         Optional[List[SubinterfaceListEntry]],
         Field(alias='srl_nokia-mirroring:subinterface'),
     ] = None
-    acl: Annotated[Optional[AclContainer2], Field(alias='srl_nokia-mirroring:acl')] = (
+    acl: Annotated[Optional[AclContainer], Field(alias='srl_nokia-mirroring:acl')] = (
         None
     )
+
+
+class ModuleListEntry(BaseModel):
+    """
+    Information for the specific gnss port
+
+    This is used for both non-redundant and redundant platforms.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    gnss_id: Annotated[EnumerationEnum133, Field(alias='srl_nokia-sync:gnss-id')]
+    ptp_port_number: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:ptp-port-number', ge=0, le=65535)
+    ] = None
+    """
+    IEEE Std 1588 portNumber
+    """
+    port_state: Annotated[
+        Optional[EnumerationEnum118], Field(alias='srl_nokia-sync:port-state')
+    ] = None
+    """
+    Current state associated with the port
+    """
+    best_master: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:best-master')
+    ] = None
+    """
+    Indicates if this peer was selected by the BMCA to be the best master
+    """
+    parent_clock: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:parent-clock')
+    ] = None
+    """
+    Indicates if this peer is the current parent clock of this PTP clock
+
+    May differ from best-master due to use of local GNSS as time source.
+    """
+    major_version_number: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:major-version-number', ge=0, le=255)
+    ] = None
+    """
+    The PTP major version number in use on the port
+    """
+    minor_version_number: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:minor-version-number', ge=0, le=255)
+    ] = None
+    """
+    The PTP minor version number in use on the port
+    """
 
 
 class MplsMulticastTepContainer(BaseModel):
@@ -13509,7 +17107,7 @@ class MplsMulticastTepContainer(BaseModel):
         regex_engine="python-re",
     )
     statistics: Annotated[
-        Optional[StatisticsContainer6],
+        Optional[StatisticsContainer4],
         Field(alias='srl_nokia-system-bridge-table-evpn-mpls-multicast-tep:statistics'),
     ] = None
     tep: Annotated[
@@ -13537,6 +17135,165 @@ class MplsContainer(BaseModel):
     ] = None
 
 
+class MstInstanceListEntry2(BaseModel):
+    """
+    List of the mstp instances
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    mst_id: Annotated[
+        int, Field(alias='srl_nokia-system-protocols-mgmt-stp:mst-id', ge=1, le=15)
+    ]
+    """
+    In an MSTP Bridge, an MST-ID, is used to identify a multiple-spanning-tree-instance
+    """
+    mst_path_cost: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:mst-path-cost',
+            ge=1,
+            le=200000000,
+        ),
+    ] = 10
+    """
+    Indicates the path cost of the interface
+    """
+    mst_port_priority: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:mst-port-priority', ge=0, le=255
+        ),
+    ] = 128
+    """
+    Indicates the port priority of the interface
+    """
+    oper_mst_port_priority: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:oper-mst-port-priority',
+            ge=0,
+            le=255,
+        ),
+    ] = None
+    """
+    Mst instance interface stp operational Port Priority
+    """
+    port_state: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:port-state')
+    ] = None
+    """
+    Interface Stp Port state
+    """
+    port_num: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:port-num', ge=0, le=4094),
+    ] = None
+    """
+    Interface Stp Port Number
+    """
+    oper_port_priority: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:oper-port-priority', ge=0, le=255
+        ),
+    ] = None
+    """
+    Interface Stp operational Port Priority
+    """
+    port_role: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:port-role')
+    ] = None
+    """
+    Interface Stp Port role
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-state'),
+    ] = None
+    """
+    Stp Operational status
+    """
+    designated_bridge: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:designated-bridge'),
+    ] = None
+    """
+    The bridge identifier of the designated bridge
+
+    The bridge identifer of the bridge recorded as the
+    root in the configuration BPDUs transmitted by the designated
+    bridge for the segment to which the port is attached.
+    format: bridge-priority.extended-system-id.mac-address
+    """
+    designated_port: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:designated-port',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The identifier of the port on the designated bridge
+    """
+    designated_port_priority: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:designated-port-priority',
+            ge=0,
+            le=255,
+        ),
+    ] = None
+    """
+    The Port priority of the port on the Designated Bridge for this port's segment
+    """
+    designated_port_num: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:designated-port-num',
+            ge=0,
+            le=4094,
+        ),
+    ] = None
+    """
+    The Port number of the port on the Designated Bridge for this port's segment
+    """
+    oper_protocol: Annotated[
+        Optional[EnumerationEnum74],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-protocol'),
+    ] = None
+    """
+    The protocol running on this interface
+    """
+    oper_bpdu_encap: Annotated[
+        Optional[EnumerationEnum75],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-bpdu-encap'),
+    ] = None
+    """
+    The operating encsapsulation type used on BPDUs sent and received on this interface
+    """
+    oper_edge: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-edge')
+    ] = None
+    """
+    The protocol running on this interface
+    """
+    forward_transitions: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:forward-transitions',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of times this port has transitioned from the Learning state to the Forwarding state
+    """
+
+
 class MulticastIdsContainer(BaseModel):
     """
     system multicast id information
@@ -13547,7 +17304,7 @@ class MulticastIdsContainer(BaseModel):
         regex_engine="python-re",
     )
     statistics: Annotated[
-        Optional[StatisticsContainer16],
+        Optional[StatisticsContainer11],
         Field(alias='srl_nokia-system-multicast:statistics'),
     ] = None
 
@@ -13613,7 +17370,7 @@ class MulticastRouteListEntry(BaseModel):
     """
 
 
-class MulticastContainer2(BaseModel):
+class MulticastContainer(BaseModel):
     """
     system multicast information
     """
@@ -13700,7 +17457,7 @@ class NeighborListEntry(BaseModel):
     the transmitting LLDP agent
     """
     chassis_id_type: Annotated[
-        Optional[EnumerationEnum48], Field(alias='srl_nokia-lldp:chassis-id-type')
+        Optional[EnumerationEnum87], Field(alias='srl_nokia-lldp:chassis-id-type')
     ] = 'MAC_ADDRESS'
     """
     The type of identifier used in the chassis-id field
@@ -13721,7 +17478,7 @@ class NeighborListEntry(BaseModel):
     802.3 Repeater port, then this TLV is optional.
     """
     port_id_type: Annotated[
-        Optional[EnumerationEnum50], Field(alias='srl_nokia-lldp:port-id-type')
+        Optional[EnumerationEnum95], Field(alias='srl_nokia-lldp:port-id-type')
     ] = None
     """
     The type of identifier used in the port-id field
@@ -13755,6 +17512,9 @@ class NeighborListEntry(BaseModel):
     capability: Annotated[
         Optional[List[CapabilityListEntry]], Field(alias='srl_nokia-lldp:capability')
     ] = None
+    lldp_med: Annotated[
+        Optional[LldpMedContainer3], Field(alias='srl_nokia-lldp:lldp-med')
+    ] = None
 
 
 class NetconfServerListEntry(BaseModel):
@@ -13777,16 +17537,22 @@ class NetconfServerListEntry(BaseModel):
     NETCONF service instance name
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-netconf-server:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-netconf-server:admin-state')
     ] = 'disable'
     """
     Administratively enable or disable the NETCONF server instance
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-netconf-server:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-netconf-server:oper-state')
     ] = None
     """
     Details if the NETCONF server instance is operationally available
+    """
+    oper_down_reason: Annotated[
+        Optional[str], Field(alias='srl_nokia-netconf-server:oper-down-reason')
+    ] = None
+    """
+    Details why the NETCONF server instance is operationally unavailable
     """
     last_oper_change: Annotated[
         Optional[str],
@@ -13805,9 +17571,8 @@ class NetconfServerListEntry(BaseModel):
         Field(alias='srl_nokia-netconf-server:trace-options'),
     ] = None
     transport: Annotated[
-        Optional[Union[SshCase, TlsCase, UnixSocketCase]],
-        Field(alias='srl_nokia-netconf-server:transport'),
-    ] = None
+        Union[SshCase, TlsCase], Field(alias='srl_nokia-netconf-server:transport')
+    ]
     session_limit: Annotated[
         Optional[int],
         Field(alias='srl_nokia-netconf-server:session-limit', ge=1, le=64),
@@ -13819,12 +17584,52 @@ class NetconfServerListEntry(BaseModel):
      by providing bi-directional <hello> messages
     """
     statistics: Annotated[
-        Optional[StatisticsContainer9],
+        Optional[StatisticsContainer7],
         Field(alias='srl_nokia-netconf-server:statistics'),
     ] = None
 
 
-class NetworkInstanceListEntry3(BaseModel):
+class NetworkInstanceListEntry4(BaseModel):
+    """
+    List of network instances to run a TFTP server in
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-tftp:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Reference to a configured network-instance
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-tftp:admin-state')
+    ] = 'disable'
+    """
+    Administratively enables or disables the TFTP server
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-tftp:oper-state')
+    ] = None
+    """
+    Details if the server is operationally available
+    """
+    root_directory: Annotated[
+        Optional[str], Field(alias='srl_nokia-tftp:root-directory')
+    ] = '/srv/tftpboot'
+    """
+    Set the root directory of the TFTP server. If the directory needs to be synchronized to the secondary control card,
+    it is recommended to use a directory under /opt or /srv.
+    """
+
+
+class NetworkInstanceListEntry5(BaseModel):
     """
     List of network instances to run the JSON RPC server in
     """
@@ -13859,31 +17664,6 @@ class NtpCase(BaseModel):
     ntp: Annotated[
         Optional[NtpContainer], Field(alias='srl_nokia-packet-link-qual:ntp')
     ] = None
-
-
-class OpenconfigContainer(BaseModel):
-    """
-    Top-level container for options relating to OpenConfig
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-openconfig:admin-state')
-    ] = None
-    """
-    Enable or disable the OpenConfig management server
-
-    This will disable OpenConfig throughout the system, and bring any gRPC servers that use it operationally down.
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-openconfig:oper-state')
-    ] = None
-    """
-    Indicates the operational state of the OpenConfig management server
-    """
 
 
 class PathzContainer(BaseModel):
@@ -13927,7 +17707,7 @@ class PathzContainer(BaseModel):
     ] = None
 
 
-class PeerContainer(BaseModel):
+class PeerContainer2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -13955,7 +17735,7 @@ class PeerContainer(BaseModel):
     """
 
 
-class PeerContainer2(BaseModel):
+class PeerContainer3(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -13992,7 +17772,7 @@ class PolicyListEntry(BaseModel):
         regex_engine="python-re",
     )
     instance: Annotated[
-        EnumerationEnum55, Field(alias='srl_nokia-configuration:instance')
+        EnumerationEnum52, Field(alias='srl_nokia-configuration:instance')
     ]
     version: Annotated[
         Optional[str], Field(alias='srl_nokia-configuration:version')
@@ -14021,6 +17801,38 @@ class PolicyListEntry(BaseModel):
 
     This maps to the policy field within a UploadRequest message in the Pathz protobuf.
     """
+
+
+class PolicyListEntry2(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    protection_policy_name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-protection-policies:protection-policy-name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    A unique identifying name for the protection policy
+    """
+    revert_timer: Annotated[
+        Optional[Union[RevertTimerLeaf1, EnumerationEnum54]],
+        Field(alias='srl_nokia-protection-policies:revert-timer'),
+    ] = 'disable'
+    """
+    Revert timer for the segment-list.
+
+    Timer till a revert to primary/best path after it is recovered from a failure. In case of uncolored te-policy, applies to primary segment-list and in case of colored te-policy applies to best candidate path.
+
+    The default is 0 seconds.
+    """
+    seamless_bfd: Annotated[
+        Optional[SeamlessBfdContainer],
+        Field(alias='srl_nokia-protection-policies:seamless-bfd'),
+    ] = None
 
 
 class PortDsCfgIpListListEntry(BaseModel):
@@ -14062,18 +17874,18 @@ class PortDsCfgIpListListEntry(BaseModel):
     This is the port-number that will appear in messages sent for this port-index.
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-sync:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-sync:admin-state')
     ] = 'disable'
     """
     The administrative state of the ptp port
     """
     port_state: Annotated[
-        Optional[EnumerationEnum80], Field(alias='srl_nokia-sync:port-state')
+        Optional[EnumerationEnum118], Field(alias='srl_nokia-sync:port-state')
     ] = None
     """
     Current state associated with the port
     """
-    peer: Annotated[Optional[PeerContainer], Field(alias='srl_nokia-sync:peer')] = None
+    peer: Annotated[Optional[PeerContainer2], Field(alias='srl_nokia-sync:peer')] = None
     best_master: Annotated[
         Optional[bool], Field(alias='srl_nokia-sync:best-master')
     ] = None
@@ -14203,21 +18015,51 @@ class PortDsCfgIpListListEntry(BaseModel):
     """
     Interface used for the last PTP message transmitted to this peer
     """
-    no_rx_port_timestamping: Annotated[
-        Optional[bool], Field(alias='srl_nokia-sync:no-rx-port-timestamping')
+    rx_port_timestamping: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:rx-port-timestamping')
     ] = None
     """
-    Indicates that the last PTP event message received from the peer did not get timestamped at the port
+    Indicates if the port that received the last PTP over IP message supports timestamping
 
-    This is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping
+    If this value is false, this is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping
     """
-    no_tx_port_timestamping: Annotated[
-        Optional[bool], Field(alias='srl_nokia-sync:no-tx-port-timestamping')
+    tx_port_timestamping: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:tx-port-timestamping')
     ] = None
     """
-    Indicates that the last PTP event message transmitted toward the peer did not get timestamped at the port
+    Indicates if the port selected by routing for the last transmitted PTP over IP message supports timestamping
 
-    This is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping and ptp-ip-timestamping is not disabled
+    If this value is false, this is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping
+    """
+    backup_source: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:backup-source')
+    ] = None
+    """
+    Indicates if this peer was selected as the reference to be used as the backup source
+    """
+    offset_from_local_clock: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-sync:offset-from-local-clock',
+            ge=-9223372036854775808,
+            le=9223372036854775807,
+        ),
+    ] = None
+    """
+    Indicates the time offset between the clock recovered from the peer and the local clock's time
+
+    This time offset may be caused by delay asymmetry in the path between the peer clock and the local clock.
+    The local clock would be referencing GNSS in the case of G.8275.2 APTS.
+    """
+    offset_last_update: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-sync:offset-last-update',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    The date and time the offset-from-local-clock was last computed.
     """
     statistics: Annotated[
         Optional[StatisticsContainer22], Field(alias='srl_nokia-sync:statistics')
@@ -14270,12 +18112,12 @@ class PortDsDscIpListListEntry(BaseModel):
     This is the port-number that will appear in messages sent for this port-index.
     """
     port_state: Annotated[
-        Optional[EnumerationEnum80], Field(alias='srl_nokia-sync:port-state')
+        Optional[EnumerationEnum118], Field(alias='srl_nokia-sync:port-state')
     ] = None
     """
     Current state associated with the port
     """
-    peer: Annotated[Optional[PeerContainer2], Field(alias='srl_nokia-sync:peer')] = None
+    peer: Annotated[Optional[PeerContainer3], Field(alias='srl_nokia-sync:peer')] = None
     log_min_delay_req_interval: Annotated[
         Optional[int],
         Field(alias='srl_nokia-sync:log-min-delay-req-interval', ge=-6, le=0),
@@ -14326,21 +18168,21 @@ class PortDsDscIpListListEntry(BaseModel):
     """
     Interface used for the last PTP message transmitted to this peer
     """
-    no_rx_port_timestamping: Annotated[
-        Optional[bool], Field(alias='srl_nokia-sync:no-rx-port-timestamping')
+    rx_port_timestamping: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:rx-port-timestamping')
     ] = None
     """
-    Indicates that the last PTP event message received from the peer did not get timestamped at the port
+    Indicates if the port that received the last PTP over IP message supports timestamping
 
-    This is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping
+    If this value is false, this is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping
     """
-    no_tx_port_timestamping: Annotated[
-        Optional[bool], Field(alias='srl_nokia-sync:no-tx-port-timestamping')
+    tx_port_timestamping: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:tx-port-timestamping')
     ] = None
     """
-    Indicates that the last PTP event message transmitted toward the peer did not get timestamped at the port
+    Indicates if the port selected by routing for the last transmitted PTP over IP message supports timestamping
 
-    This is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping and ptp-ip-timestamping is not disabled
+    If this value is false, this is an invalid setup for PTP.  All event messages must be timestamped at the port level.  Check that the IMM or MDA supports PTP message timestamping
     """
     statistics: Annotated[
         Optional[StatisticsContainer23], Field(alias='srl_nokia-sync:statistics')
@@ -14360,31 +18202,120 @@ class PortDsGnssContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
+    module: Annotated[
+        Optional[List[ModuleListEntry]], Field(alias='srl_nokia-sync:module')
+    ] = None
+
+
+class PortDsInterfaceListListEntry(BaseModel):
+    """
+    List of port data sets for interfaces
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    port_index: Annotated[int, Field(alias='srl_nokia-sync:port-index', ge=1, le=999)]
+    """
+    Index into the port-ds list
+
+    This is not the PTP port number.
+    Configurable ports use port indices 1 through 999 but there is a limit on the overall number of these configured ports based on the platform and software release.
+
+    The data sets (i.e., information model) of IEEE Std
+    1588-2008 specify a member portDS.portIdentity, which
+    uses a typed struct with members clockIdentity and
+    portNumber.
+
+    In this YANG data model, portIdentity is not modeled
+    in the port-ds.  However, its members are provided
+    as follows:
+    portIdentity.portNumber is provided as this
+    ptp-port-number leaf in port-ds, and
+    portIdentity.clockIdentity is provided as the
+    clock-identity leaf in default-ds of the instance
+    (i.e., ../../default-ds/clock-identity).
+    """
     ptp_port_number: Annotated[
         Optional[int], Field(alias='srl_nokia-sync:ptp-port-number', ge=0, le=65535)
     ] = None
     """
     IEEE Std 1588 portNumber
+
+    This is the port-number that will appear in messages sent for this port-index.
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-sync:admin-state')
+    ] = 'disable'
+    """
+    The administrative state of the ptp port
     """
     port_state: Annotated[
-        Optional[EnumerationEnum80], Field(alias='srl_nokia-sync:port-state')
+        Optional[EnumerationEnum118], Field(alias='srl_nokia-sync:port-state')
     ] = None
     """
     Current state associated with the port
+    """
+    interface: Annotated[str, Field(alias='srl_nokia-sync:interface')]
+    """
+    Local interface used for ptp over ethernet communication
     """
     best_master: Annotated[
         Optional[bool], Field(alias='srl_nokia-sync:best-master')
     ] = None
     """
-    Indicates if this peer was selected by the BMCA to be the best master
+    Indicates if this interface was selected by the BMCA to be the best master
     """
     parent_clock: Annotated[
         Optional[bool], Field(alias='srl_nokia-sync:parent-clock')
     ] = None
     """
-    Indicates if this peer is the current parent clock of this PTP clock
+    Indicates if this interface is the current parent clock of this PTP clock
 
     May differ from best-master due to use of local GNSS as time source.
+    """
+    log_min_delay_req_interval: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:log-min-delay-req-interval', ge=-6, le=0),
+    ] = None
+    """
+    The base-2 logarithm of the minDelayReqInterval
+
+    The minimum permitted mean time interval between successive Delay_Req messages.
+    The default log-min-delay-req-interval is defined by the profile.
+       itug8275dot1: -4 (16 messages per second)
+       itug8275dot2: -6 (64 messages per second)
+    """
+    log_announce_interval: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:log-announce-interval', ge=-3, le=4)
+    ] = None
+    """
+    The base-2 logarithm of the mean announceInterval
+
+    Mean time interval between successive Announce messages. To change this setting,
+    refer to log-announce-interval in the Default data set.
+    """
+    announce_receipt_timeout: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:announce-receipt-timeout', ge=2, le=10),
+    ] = None
+    """
+    Sets the time limit for missed Announce packets before the master clock is deemed down
+
+    This defines the number of Announce message intervals that must expire with no received
+    Announce messages before declaring an ANNOUNCE_RECEIPT_TIMEOUT event. To change this
+    setting, refer to announce-receipt-timeout in the Default data set.
+    """
+    log_sync_interval: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:log-sync-interval', ge=-6, le=0)
+    ] = None
+    """
+    The base-2 logarithm of the mean SyncInterval for multicast messages
+
+    The default log sync interval is defined by the profile.
+       itug8275dot1: -4 (16 messages per second)
+       itug8275dot2: -6 (64 messages per second)
     """
     major_version_number: Annotated[
         Optional[int], Field(alias='srl_nokia-sync:major-version-number', ge=0, le=255)
@@ -14398,9 +18329,129 @@ class PortDsGnssContainer(BaseModel):
     """
     The PTP minor version number in use on the port
     """
+    local_priority: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:local-priority', ge=1, le=255)
+    ] = 128
+    """
+    Specifies the local priority of the ptp port
+    """
+    master_only: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:master-only')
+    ] = True
+    """
+    Specifies the masterOnly attribute of the ptp port
+    """
+    dest_mac: Annotated[
+        Optional[EnumerationEnum119], Field(alias='srl_nokia-sync:dest-mac')
+    ] = 'forwardable'
+    """
+    Configure the MAC address associated with forwardable or non-forwardable
+    """
+    statistics: Annotated[
+        Optional[StatisticsContainer21], Field(alias='srl_nokia-sync:statistics')
+    ] = None
+    neighbor_count: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:neighbor-count', ge=0, le=4294967295)
+    ] = None
+    """
+    The number of neighbors for the port
+    """
+    neighbor_list: Annotated[
+        Optional[List[NeighborListListEntry]],
+        Field(alias='srl_nokia-sync:neighbor-list'),
+    ] = None
+
+
+class PortDsSync0Container(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    port: Annotated[
+        Optional[EnumerationEnum114], Field(alias='srl_nokia-sync:port')
+    ] = None
+    """
+    Physical interface used as the source of PTP messages into the recovery engine
+    """
+    neighbor: Annotated[
+        Optional[NeighborContainer2], Field(alias='srl_nokia-sync:neighbor')
+    ] = None
+
+
+class PortDsSync0Container2(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    log_sync_interval: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:log-sync-interval', ge=-6, le=0)
+    ] = None
+    """
+    The base-2 logarithm of the mean SyncInterval for multicast messages
+
+    The default log sync interval is defined by the profile.
+       itug8275dot1: -4 (16 messages per second)
+       itug8275dot2: -6 (64 messages per second)
+    """
+    log_min_delay_req_interval: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-sync:log-min-delay-req-interval', ge=-6, le=0),
+    ] = None
+    """
+    The base-2 logarithm of the minDelayReqInterval
+
+    The minimum permitted mean time interval between successive Delay_Req messages.
+    The default log-min-delay-req-interval is defined by the profile.
+       itug8275dot1: -4 (16 messages per second)
+       itug8275dot2: -6 (64 messages per second)
+    """
+    local_priority: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:local-priority', ge=1, le=255)
+    ] = 128
+    """
+    Specifies the local priority of the ptp port
+    """
+    master_only: Annotated[
+        Optional[bool], Field(alias='srl_nokia-sync:master-only')
+    ] = True
+    """
+    Specifies the masterOnly attribute of the ptp port
+    """
+    dest_mac: Annotated[
+        Optional[EnumerationEnum132], Field(alias='srl_nokia-sync:dest-mac')
+    ] = 'forwardable'
+    """
+    Configure the MAC address associated with forwardable or non-forwardable
+    """
+    port: Annotated[
+        Optional[List[PortListEntry]], Field(alias='srl_nokia-sync:port')
+    ] = None
 
 
 class ProfileListEntry(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-maintenance-mode:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Name of the maintenance profile
+    """
+    bgp: Annotated[
+        Optional[BgpContainer2], Field(alias='srl_nokia-maintenance-mode:bgp')
+    ] = None
+    isis: Annotated[
+        Optional[IsisContainer2], Field(alias='srl_nokia-maintenance-mode:isis')
+    ] = None
+
+
+class ProfileListEntry2(BaseModel):
     """
     List of configured Packet Link Qualification profiles
     """
@@ -14428,26 +18479,18 @@ class ProfileListEntry(BaseModel):
     ]
 
 
-class ProfileListEntry2(BaseModel):
+class ProtectionPoliciesContainer(BaseModel):
+    """
+    Container with protection policies
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-maintenance-mode:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    Name of the maintenance profile
-    """
-    bgp: Annotated[
-        Optional[BgpContainer3], Field(alias='srl_nokia-maintenance-mode:bgp')
-    ] = None
-    isis: Annotated[
-        Optional[IsisContainer2], Field(alias='srl_nokia-maintenance-mode:isis')
+    policy: Annotated[
+        Optional[List[PolicyListEntry2]],
+        Field(alias='srl_nokia-protection-policies:policy'),
     ] = None
 
 
@@ -14483,7 +18526,7 @@ class ProtocolAddressContainer(BaseModel):
 
 class ProxyArpContainer(BaseModel):
     """
-    system bridge-table proxy ARP entry information
+    system bridge-table proxy ARP information
     """
 
     model_config = ConfigDict(
@@ -14491,7 +18534,7 @@ class ProxyArpContainer(BaseModel):
         regex_engine="python-re",
     )
     statistics: Annotated[
-        Optional[StatisticsContainer7],
+        Optional[StatisticsContainer5],
         Field(alias='srl_nokia-system-bridge-table-proxy-arp:statistics'),
     ] = None
 
@@ -14506,48 +18549,71 @@ class ProxyNdContainer(BaseModel):
         regex_engine="python-re",
     )
     statistics: Annotated[
-        Optional[StatisticsContainer8],
+        Optional[StatisticsContainer6],
         Field(alias='srl_nokia-system-bridge-table-proxy-arp:statistics'),
     ] = None
 
 
-class RadiusContainer(BaseModel):
+class RemoteServerListEntry(BaseModel):
     """
-    Top-level container for RADIUS server data
+    List of output remote syslog servers
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    auth_port: Annotated[
-        Optional[int], Field(alias='srl_nokia-aaa:auth-port', ge=0, le=65535)
-    ] = 1812
+    host: Annotated[
+        Union[Ipv4Type, Ipv6Type, DomainNameType], Field(alias='srl_nokia-logging:host')
+    ]
     """
-    Port number for authentication requests
+    Domain or IP address of a remote syslog server destination
     """
-    acct_port: Annotated[
-        Optional[int], Field(alias='srl_nokia-aaa:acct-port', ge=0, le=65535)
-    ] = 1813
+    transport: Annotated[
+        Optional[EnumerationEnum25], Field(alias='srl_nokia-logging:transport')
+    ] = 'udp'
     """
-    Port number for accounting requests
+    Transport protocol for syslog to use for messages sent to a remote server
     """
-    secret_key: Annotated[Optional[str], Field(alias='srl_nokia-aaa:secret-key')] = None
-    """
-    The unencrypted shared key used between the system and server, up to 64 characters cleartext
-    """
-    source_address: Annotated[
-        Optional[Union[Ipv4AddressType, Ipv6AddressType]],
-        Field(alias='srl_nokia-aaa:source-address'),
+    tls_profile: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-logging:tls-profile',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
     ] = None
     """
-    Source IP address to use in messages to the RADIUS server
+    Reference to a TLS profile to use for the transport of syslog messages
+
+    If none is specified, then TLS is not used.
     """
-    retransmit_attempts: Annotated[
-        Optional[int], Field(alias='srl_nokia-aaa:retransmit-attempts', ge=0, le=255)
-    ] = 3
+    remote_port: Annotated[
+        Optional[int], Field(alias='srl_nokia-logging:remote-port', ge=0, le=65535)
+    ] = None
     """
-    Number of times the system may send a request to the unresponsive server
+    Transport port for syslog to use for messages sent to a remote server
+    By default, UDP/TCP uses port 514 and TLS uses port 6514.
+    """
+    format: Annotated[
+        Optional[Union[str, EnumerationEnum26]], Field(alias='srl_nokia-logging:format')
+    ] = 'RSYSLOG_SyslogProtocol23Format'
+    """
+    Text format of syslog messages to a remote server, in legacy rsyslog $template style or one of the predefined templates
+
+    The default presents a date timestamp according to rfc3339.
+    The predefined templates are the ones supported by rsyslogd.
+    """
+    facility: Annotated[
+        Optional[List[FacilityListEntry5]], Field(alias='srl_nokia-logging:facility')
+    ] = None
+    subsystem: Annotated[
+        Optional[List[SubsystemListEntry4]], Field(alias='srl_nokia-logging:subsystem')
+    ] = None
+    filter: Annotated[
+        Optional[List[FilterLeafList4]], Field(alias='srl_nokia-logging:filter')
+    ] = []
+    """
+    A set of all-matching criteria that messages must fulfill in order to be captured
     """
 
 
@@ -14575,6 +18641,28 @@ class RoleListEntry2(BaseModel):
     ] = None
 
 
+class RoutesContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    ethernet_segment: Annotated[
+        Optional[EthernetSegmentContainer],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:ethernet-segment'
+        ),
+    ] = None
+    next_hop: Annotated[
+        Optional[Union[EnumerationEnum64, Union[Ipv4AddressType, Ipv6AddressType]]],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:next-hop'
+        ),
+    ] = 'use-system-ipv4-address'
+    """
+    The ip-address that will be used as the bgp-next hop for all ES and AD per-ES routes advertised for this Ethernet Segment.
+    """
+
+
 class ServerProfileListEntry(BaseModel):
     """
     List of configured TLS server profiles
@@ -14598,8 +18686,8 @@ class ServerProfileListEntry(BaseModel):
     """
     Base64 encoded key to use with the server certificate
 
-    This includes the '-----BEGIN PRIVATE KEY-----', and '-----END PRIVATE KEY-----' header and footer
-    The value is hashed, and only the hashed value is kept
+    This includes the '-----BEGIN PRIVATE KEY-----', and '-----END PRIVATE KEY-----' header and footer.
+    The value is hashed, and only the hashed value is kept.
     """
     certificate: Annotated[Optional[str], Field(alias='srl_nokia-tls:certificate')] = (
         None
@@ -14607,10 +18695,12 @@ class ServerProfileListEntry(BaseModel):
     """
     Base64 encoded certificate to use with the private key
 
-    This includes the '-----BEGIN CERTIFICATE-----' and '-----END CERTIFICATE-----' header and footer
+    This includes the '-----BEGIN CERTIFICATE-----' and '-----END CERTIFICATE-----' header and footer.
+    Can contain a certificate chain containing multiple certificates separated by '-----BEGIN CERTIFICATE-----'
+    and '-----END CERTIFICATE-----' headers and footers. Must start with the client certificate.
     """
     use_tpm_devid: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-tls:use-tpm-devid')
+        Optional[EnumerationEnum2], Field(alias='srl_nokia-tls:use-tpm-devid')
     ] = None
     """
     Defines if the server profile key and certificate uses the TPM idevid or oidevid
@@ -14627,7 +18717,9 @@ class ServerProfileListEntry(BaseModel):
     """
     Base64 encoded certificate to use as a trust anchor
 
-    This includes the '-----BEGIN CERTIFICATE-----' and '-----END CERTIFICATE-----' header and footer
+    This includes the '-----BEGIN CERTIFICATE-----' and '-----END CERTIFICATE-----' header and footer.
+    Can contain multiple trust anchors separated by '-----BEGIN CERTIFICATE-----' and '-----END CERTIFICATE-----'
+    headers and footers.
     """
     certificate_revocation_list: Annotated[
         Optional[str], Field(alias='srl_nokia-tls:certificate-revocation-list')
@@ -14635,7 +18727,19 @@ class ServerProfileListEntry(BaseModel):
     """
     Base64 encoded certificate revocation list
 
-    This includes the '-----BEGIN X509 CRL' and '-----END X509 CRL' header and footer
+    This includes the '-----BEGIN X509 CRL' and '-----END X509 CRL' header and footer.
+    Can contain multiple crls separated by '-----BEGIN X509 CRL' and '-----END X509 CRL' headers and footers.
+    If empty, then no CRL verification is performed.
+    """
+    relaxed_crl_verification: Annotated[
+        Optional[bool], Field(alias='srl_nokia-tls:relaxed-crl-verification')
+    ] = False
+    """
+    Defines if the CRL verification is done in a relaxed (non-strict) way.
+
+    If set to true, the CRL verification allows nonexistent and/or expired CRLs in the client certificate chain.
+    If set to false, the CRL verification will fail if any CRL in the client certificate chain is not found or
+    expired.
     """
     cipher_list: Annotated[
         Optional[List[str]], Field(alias='srl_nokia-tls:cipher-list')
@@ -14654,6 +18758,33 @@ class ServerProfileListEntry(BaseModel):
     dynamic: Annotated[Optional[bool], Field(alias='srl_nokia-tls:dynamic')] = None
     """
     Defines if the profile was dynamically created by service (for example gNSI Authz/Certz)
+    """
+    valid_after: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-tls:valid-after',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Date and time the certificate becomes valid
+    """
+    expiration: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-tls:expiration',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Date and time the certificate expires
+    """
+    expired: Annotated[Optional[bool], Field(alias='srl_nokia-tls:expired')] = None
+    """
+    Indicates whether the certificate is expired.
+
+    The certificate is expired if current time is before valid-after time or current
+    time is after expiration time
     """
     certz: Annotated[
         Optional[CertzContainer], Field(alias='srl_nokia-gnsi-certz:certz')
@@ -14682,19 +18813,35 @@ class ServerListEntry(BaseModel):
     User defined name assigned to the server
     """
     address: Annotated[
-        Union[Ipv4AddressType, Ipv6AddressType], Field(alias='srl_nokia-aaa:address')
+        Union[Ipv4Type, Ipv6Type, DomainNameType], Field(alias='srl_nokia-aaa:address')
     ]
     """
-    Address used to reach the server
+    Address or domain name used to reach the server
+    """
+    tls_profile: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-aaa:tls-profile',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ] = None
+    """
+    TLS profile used to set up a TLS connection with this server
+    """
+    timeout: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:timeout', ge=1, le=3600)
+    ] = None
+    """
+    Set the timeout in seconds on responses from the server. If not specified, the timeout is taken from the value specified for the server-group
     """
     tacacs: Annotated[
-        Optional[TacacsContainer2], Field(alias='srl_nokia-aaa:tacacs')
+        Optional[TacacsContainer3], Field(alias='srl_nokia-aaa:tacacs')
     ] = None
     radius: Annotated[
         Optional[RadiusContainer], Field(alias='srl_nokia-aaa:radius')
     ] = None
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-aaa:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-aaa:oper-state')
     ] = None
     """
     Details the operational state of the server
@@ -14702,8 +18849,29 @@ class ServerListEntry(BaseModel):
     A server is defined as being down if it fails to respond before the timeout period, or if a path towards the server is not available.
     """
     statistics: Annotated[
-        Optional[StatisticsContainer2], Field(alias='srl_nokia-aaa:statistics')
+        Optional[StatisticsContainer], Field(alias='srl_nokia-aaa:statistics')
     ] = None
+
+
+class SourceAddressListEntry(BaseModel):
+    """
+    List of sourcess addresses
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    ip_address: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-srv6:ip-address',
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$',
+        ),
+    ]
+    """
+    Source address used in the SRv6 packet
+    """
 
 
 class SourceContainer(BaseModel):
@@ -14723,21 +18891,6 @@ class SourceContainer(BaseModel):
     ]
 
 
-class SourceContainer2(BaseModel):
-    """
-    Source interface used by this PTP port
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    interface_or_sync0: Annotated[
-        Union[InterfaceCase2, Sync0Case2],
-        Field(alias='srl_nokia-sync:interface-or-sync0'),
-    ]
-
-
 class SshServerListEntry(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -14754,23 +18907,16 @@ class SshServerListEntry(BaseModel):
     User-provided name of this server instance
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-ssh:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-ssh:admin-state')
     ] = 'disable'
     """
     Enable or disable the SSH server instance
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-ssh:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-ssh:oper-state')
     ] = None
     """
     Operational state of the SSH server instance
-    """
-    source_address: Annotated[
-        Optional[List[Union[Ipv4AddressType, Ipv6AddressType]]],
-        Field(alias='srl_nokia-ssh:source-address'),
-    ] = []
-    """
-    List of IP addresses for the SSH server to listen on within the network-instance
     """
     port: Annotated[
         Optional[int], Field(alias='srl_nokia-ssh:port', ge=0, le=65535)
@@ -14833,7 +18979,7 @@ class SshServerListEntry(BaseModel):
      This sets the RevokedKeys option within each SSH servers configuration file.
     """
     allowed_authentication_types: Annotated[
-        Optional[List[EnumerationEnum6]],
+        Optional[List[EnumerationEnum5]],
         Field(alias='srl_nokia-ssh:allowed-authentication-types'),
     ] = ['publickey', 'password']
     """
@@ -14844,7 +18990,7 @@ class SshServerListEntry(BaseModel):
      configuration file.
     """
     authorized_principal_check_tool: Annotated[
-        Optional[EnumerationEnum7],
+        Optional[EnumerationEnum6],
         Field(alias='srl_nokia-ssh:authorized-principal-check-tool'),
     ] = None
     """
@@ -14873,6 +19019,10 @@ class StaticAllocationContainer(BaseModel):
     host: Annotated[
         Optional[List[HostListEntry]], Field(alias='srl_nokia-dhcp-server:host')
     ] = None
+    relay_information: Annotated[
+        Optional[List[RelayInformationListEntry]],
+        Field(alias='srl_nokia-dhcp-server:relay-information'),
+    ] = None
 
 
 class StaticAllocationContainer2(BaseModel):
@@ -14885,7 +19035,11 @@ class StaticAllocationContainer2(BaseModel):
     ] = None
 
 
-class StatisticsContainer17(BaseModel):
+class StatisticsContainer14(BaseModel):
+    """
+    LI statistics
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -14898,7 +19052,7 @@ class StatisticsContainer17(BaseModel):
 
 class TargetsContainer(BaseModel):
     """
-    Lawful-intercept targets configured on the local system
+    Properties of LI targets on the local system
     """
 
     model_config = ConfigDict(
@@ -14910,8 +19064,19 @@ class TargetsContainer(BaseModel):
         Field(alias='srl_nokia-lawful-intercept:subscriber'),
     ] = None
     statistics: Annotated[
-        Optional[StatisticsContainer17],
+        Optional[StatisticsContainer14],
         Field(alias='srl_nokia-lawful-intercept:statistics'),
+    ] = None
+
+
+class TftpServerContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    network_instance: Annotated[
+        Optional[List[NetworkInstanceListEntry4]],
+        Field(alias='srl_nokia-tftp:network-instance'),
     ] = None
 
 
@@ -14927,6 +19092,186 @@ class TlsContainer(BaseModel):
     server_profile: Annotated[
         Optional[List[ServerProfileListEntry]],
         Field(alias='srl_nokia-tls:server-profile'),
+    ] = None
+
+
+class TransportSessionContainer(BaseModel):
+    """
+    State parameters of the Transport Session
+    directed to the given destination.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    ipfix_version: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:ipfix-version', ge=0, le=65535)
+    ] = None
+    """
+    This parameters contains the version of the IPFIX protocol
+
+    Used for Exporting Processes, this parameter contains the version number of the IPFIX protocol that the Exporter uses to export its data in this Transport Session
+    """
+    source_address: Annotated[
+        Optional[Union[Ipv4AddressType, Ipv6AddressType]],
+        Field(alias='srl_nokia-ipfix:source-address'),
+    ] = None
+    """
+    The source address of the Exporter of the IPFIX Transport Session
+    """
+    destination_address: Annotated[
+        Optional[Union[Ipv4AddressType, Ipv6AddressType]],
+        Field(alias='srl_nokia-ipfix:destination-address'),
+    ] = None
+    """
+    The destination address of the Collector of the IPFIX Transport Session
+    """
+    source_port: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:source-port', ge=0, le=65535)
+    ] = None
+    """
+    The transport-protocol port number of the Exporter of the IPFIX Transport Session
+    """
+    destination_port: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:destination-port', ge=0, le=65535)
+    ] = None
+    """
+    The transport-protocol port number of the Collector of the IPFIX Transport Session
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-ipfix:oper-state')
+    ] = None
+    """
+    Status of the Transport Session
+
+    Note that this parameter corresponds to
+    ipfixTransportSessionStatus in the IPFIX MIB module.
+    """
+    rate: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:rate', ge=0, le=4294967295)
+    ] = None
+    """
+    The number of bytes per second transmitted by the
+    Exporting Process or received by the Collecting Process
+
+    This parameter is updated every second.
+    Note that this parameter corresponds to
+    ipfixTransportSessionRate in the IPFIX MIB module.
+    """
+    bytes: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:bytes', ge=0, le=18446744073709551615),
+    ] = 0
+    """
+    The number of bytes transmitted by the
+    Exporting Process or received by the Collecting Process
+
+    Discontinuities in the value of this counter can occur at
+    re-initialization of the management system, and at other
+    times as indicated by the value of
+    transportSessionDiscontinuityTime.
+    Note that this parameter corresponds to
+    ipfixTransportSessionBytes in the IPFIX MIB module.
+    """
+    messages: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:messages', ge=0, le=18446744073709551615),
+    ] = 0
+    """
+    The number of messages transmitted by the
+    Exporting Process or received by the Collecting Process
+
+    Discontinuities in the value of this counter can occur at
+    re-initialization of the management system, and at other
+    times as indicated by the value of
+    transportSessionDiscontinuityTime.
+    Note that this parameter corresponds to
+    ipfixTransportSessionMessages in the IPFIX MIB module.
+    """
+    discarded_messages: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-ipfix:discarded-messages', ge=0, le=18446744073709551615
+        ),
+    ] = 0
+    """
+    The number of messages that could not be sent to a collector
+
+    Used for Exporting Processes, this parameter
+    indicates the number of messages that could not be sent due
+    to internal buffer overflows, network congestion, routing
+    issues, etc.  Used for Collecting Process, this parameter
+    indicates the number of received IPFIX Message that are
+    malformed, cannot be decoded, are received in the wrong
+    order or are missing according to the sequence number.
+    Discontinuities in the value of this counter can occur at
+    re-initialization of the management system, and at other
+    times as indicated by the value of
+    transportSessionDiscontinuityTime.
+    """
+    records: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:records', ge=0, le=18446744073709551615),
+    ] = 0
+    """
+    The number of Data Records transmitted by the Exporting Process
+
+    Discontinuities in the value of this counter can occur at
+    re-initialization of the management system, and at other
+    times as indicated by the value of
+    transportSessionDiscontinuityTime.
+    """
+    templates: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:templates', ge=0, le=4294967295)
+    ] = 0
+    """
+    The number of Templates transmitted by the
+    Exporting Process or received by the Collecting Process.
+    Discontinuities in the value of this counter can occur at
+    re-initialization of the management system, and at other
+    times as indicated by the value of
+    transportSessionDiscontinuityTime.
+    """
+    options_templates: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:options-templates', ge=0, le=4294967295),
+    ] = 0
+    """
+    The number of Option Templates transmitted by the
+    Exporting Process or received by the Collecting Process.
+    Discontinuities in the value of this counter can occur at
+    re-initialization of the management system, and at other
+    times as indicated by the value of
+    transportSessionDiscontinuityTime.
+    """
+    transport_session_start_time: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-ipfix:transport-session-start-time',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Timestamp of the start of the given Transport
+    Session.
+    This state parameter does not correspond to any object in
+    the IPFIX MIB module.
+    """
+    transport_session_discontinuity_time: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-ipfix:transport-session-discontinuity-time',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Timestamp of the most recent occasion at which
+    one or more of the Transport Session counters suffered a
+    discontinuity.
+    """
+    template: Annotated[
+        Optional[List[TemplateListEntry]], Field(alias='srl_nokia-ipfix:template')
     ] = None
 
 
@@ -14950,7 +19295,7 @@ class TunnelEndPointsContainer(BaseModel):
     remote mirror tunnel destination endpoint ip-address
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-mirroring:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-mirroring:admin-state')
     ] = 'enable'
     """
     This leaf contains the configured, desired state of the remote mirror tunnel
@@ -14961,11 +19306,134 @@ class TunnelEndPointsContainer(BaseModel):
     """
     Service label for encapsultion type mpls-gre tunnel
     """
+    allowed_tunnel_types: Annotated[
+        Optional[List[str]], Field(alias='srl_nokia-mirroring:allowed-tunnel-types')
+    ] = []
+    """
+    List of allowed transport tunnel types for the mirroring traffic.
+    """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-mirroring:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-mirroring:oper-state')
     ] = None
     """
     This leaf contains the operational state of the remote mirror tunnel
+    """
+    oper_down_reason: Annotated[
+        Optional[EnumerationEnum34], Field(alias='srl_nokia-mirroring:oper-down-reason')
+    ] = None
+    """
+    The reason for the mirror-destination being operational down.  When the reason is not applicable, it is due to the mirroring-instance being shutdown or the mirror-destination is operational up.
+    """
+    operational_tunnel_type: Annotated[
+        Optional[str], Field(alias='srl_nokia-mirroring:operational-tunnel-type')
+    ] = None
+    """
+    The tunnel that is being used for mirroring traffic.
+    """
+    operational_tunnel_id: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-mirroring:operational-tunnel-id', ge=0, le=4294967295),
+    ] = None
+    """
+    The owner-assigned tunnel table index value that identifies
+    the tunnel used by mirror-destination.
+    """
+
+
+class UdpExporterContainer(BaseModel):
+    """
+    UDP parameters.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    ipfix_version: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:ipfix-version', ge=9, le=10)
+    ] = 10
+    """
+    IPFIX version number.
+    """
+    destination_port: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:destination-port', ge=0, le=65535)
+    ] = 4739
+    """
+    If not configured by the user, the Monitoring
+    Device uses the default port number for IPFIX, which is
+    4739 without TLS or DTLS and 4740 if TLS or DTLS is
+    activated.
+    """
+    transport_session: Annotated[
+        Optional[TransportSessionContainer],
+        Field(alias='srl_nokia-ipfix:transport-session'),
+    ] = None
+    source_ip_address: Annotated[
+        Optional[Union[Ipv4AddressType, Ipv6AddressType]],
+        Field(alias='srl_nokia-ipfix:source-ip-address'),
+    ] = None
+    """
+    Source IP address used by the Exporting Process.
+    If not configured, the IP address assigned to the outgoing
+    interface is used as source IP address.
+    """
+    destination_ip_address: Annotated[
+        Union[Ipv4AddressType, Ipv6AddressType],
+        Field(alias='srl_nokia-ipfix:destination-ip-address'),
+    ]
+    """
+    IP address of the Collection Process to which
+    IPFIX Messages are sent.
+    """
+    max_packet_size: Annotated[
+        Optional[int], Field(alias='srl_nokia-ipfix:max-packet-size', ge=0, le=65535)
+    ] = None
+    """
+    This parameter specifies the maximum size of
+    IP packets sent to the Collector.  If set to zero, the
+    Exporting Device MUST derive the maximum packet size
+    from path MTU discovery mechanisms.
+    If not configured by the user, this parameter is set by
+    the Monitoring Device.
+    """
+    template_refresh_timeout: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:template-refresh-timeout', ge=0, le=4294967295),
+    ] = 600
+    """
+    Sets time after which Templates are resent in the
+    UDP Transport Session.
+    Note that the configured lifetime MUST be adapted to the
+    templateLifeTime parameter value at the receiving Collecting
+    Process.
+    """
+    options_template_refresh_timeout: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-ipfix:options-template-refresh-timeout',
+            ge=0,
+            le=4294967295,
+        ),
+    ] = 600
+    """
+    Sets time after which Options Templates are
+    resent in the UDP Transport Session.
+    Note that the configured lifetime MUST be adapted to the
+    optionsTemplateLifeTime parameter value at the receiving
+    Collecting Process.
+    Note that this parameter corresponds to
+    ipfixTransportSessionOptionsTemplateRefreshTimeout in the
+    IPFIX MIB module.
+    """
+    network_instance: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-ipfix:network-instance',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Reference to a configured network-instance
     """
 
 
@@ -14996,7 +19464,7 @@ class UserListEntry(BaseModel):
     If provided as a hashed value, the value should include any '$' characters, for example '$ar2$aOvsuj0ALlU=$r750fMa3ZEA/Di8dIfU2fQ=='.
     """
     role: Annotated[
-        Optional[List[RoleLeafList3]], Field(alias='srl_nokia-aaa:role')
+        Optional[List[RoleLeafList2]], Field(alias='srl_nokia-aaa:role')
     ] = []
     """
     List of roles to assign to this user
@@ -15011,16 +19479,6 @@ class UserListEntry(BaseModel):
     A superuser is granted implicit authorization to all YANG paths, has the ability to execute all CLI plugins, and by default is permitted to access the device through any interface.
 
     Additionally, users with the superuser attribute are able to execute 'sudo' in bash. A user may also be assigned a role or list of roles, but these are only evaluated for service authorization.
-    """
-    spiffe_ids: Annotated[
-        Optional[List[SpiffeIdsLeafList2]], Field(alias='srl_nokia-aaa:spiffe-ids')
-    ] = []
-    """
-    The SPIFFE ID list for the user, including the spiffe:// URI
-
-    This list of IDs is evaluated by TLS-consuming servers (e.g. gNMI, JSON-RPC) that use a TLS server-profile with authenticate-client set to true.
-
-    If a match is found in any incoming offered client certificates, the provider of the certificate is associated with this local user, and given resulting permissions.
     """
     ssh_principals: Annotated[
         Optional[List[str]], Field(alias='srl_nokia-aaa:ssh-principals')
@@ -15101,9 +19559,9 @@ class AdminUserContainer(BaseModel):
     If provided as cleartext, the system will hash the value on input, storing only the hashed value.
     If provided as a hashed value, the value should include any '$' characters, for example '$ar2$aOvsuj0ALlU=$r750fMa3ZEA/Di8dIfU2fQ=='.
     """
-    role: Annotated[
-        Optional[List[RoleLeafList2]], Field(alias='srl_nokia-aaa:role')
-    ] = []
+    role: Annotated[Optional[List[RoleLeafList]], Field(alias='srl_nokia-aaa:role')] = (
+        []
+    )
     """
     List of roles to assign to this user
 
@@ -15234,9 +19692,6 @@ class AuthenticationContainer(BaseModel):
 
     After the timeout is reached, the session is disconnected from the system.
     """
-    dynamic_spiffe: Annotated[
-        Optional[DynamicSpiffeContainer], Field(alias='srl_nokia-aaa:dynamic-spiffe')
-    ] = None
     admin_user: Annotated[
         Optional[AdminUserContainer], Field(alias='srl_nokia-aaa:admin-user')
     ] = None
@@ -15289,6 +19744,100 @@ class AuthorizationContainer(BaseModel):
     ] = None
 
 
+class BindingTableListEntry(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    mac_address: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-first-hop-security-ip-mac-binding:mac-address',
+            pattern='^(?=^[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}$).*$',
+        ),
+    ]
+    """
+    MAC address of the endpoint
+    """
+    network_instance: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-first-hop-security-ip-mac-binding:network-instance',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Network instance where the endpoint is connected
+    """
+    subinterface: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:subinterface'),
+    ] = None
+    """
+    Subnterface where the endpoint is connected
+    """
+    ip_address: Annotated[
+        Union[Ipv4AddressUnicastType, Ipv6AddressUnicastType],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:ip-address'),
+    ]
+    """
+    IP address associated with the endpoint
+    """
+    binding_type: Annotated[
+        Optional[EnumerationEnum76],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:binding-type'),
+    ] = None
+    """
+    Indicates protocol used to learn this IP-MAC association entry
+    """
+    lease_time_start: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-first-hop-security-ip-mac-binding:lease-time-start',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Start of time when DHCP server provided IP address lease.
+    """
+    lease_time_end: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-first-hop-security-ip-mac-binding:lease-time-end',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Time beyond which the DHCP provided IP address lease expires.
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum78],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:oper-state'),
+    ] = None
+    """
+    Indicates the operational state of this IP-MAC association entry
+    """
+    config_updated: Annotated[
+        Optional[bool],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:config_updated'),
+    ] = None
+    bridge_updated: Annotated[
+        Optional[bool],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:bridge_updated'),
+    ] = None
+    """
+    Indicates that the MAC and subinterface is present in the bridge tables
+    """
+    message_type: Annotated[
+        Optional[EnumerationEnum79],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:message_type'),
+    ] = None
+    message6_type: Annotated[
+        Optional[EnumerationEnum80],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:message6_type'),
+    ] = None
+
+
 class BootContainer(BaseModel):
     """
     Top-level container for configuration and state data related to booting the system
@@ -15324,6 +19873,114 @@ class BootContainer(BaseModel):
     autoboot: Annotated[
         Optional[AutobootContainer], Field(alias='srl_nokia-boot:autoboot')
     ] = None
+    grub_password: Annotated[
+        Optional[str], Field(alias='srl_nokia-boot:grub-password')
+    ] = None
+    """
+    The leaf container grub boot password
+    """
+
+
+class BufferListEntry(BaseModel):
+    """
+    Log files maintained in memory, non-persistent across system reboots
+
+    These files are stored at directory /var/log/srlinux/buffer. Rotation into multiple files is available.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    buffer_name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-logging:buffer-name',
+            pattern='^(?=^([^./][^/]*)|(\\.[^\\./]+)|(\\.\\.[^/])+$).*$',
+        ),
+    ]
+    """
+    Base name of the file(s) to be stored in memory
+    """
+    persist: Annotated[
+        Optional[int], Field(alias='srl_nokia-logging:persist', ge=0, le=604800)
+    ] = 0
+    """
+    Time in seconds to shadow the buffer to persistent storage
+
+    Setting this field to 0 results in the buffer not being persisted. A value other than 0 will result in the log being persisted to disk based on the configured value. Logs with a non-zero persist value are persisted automatically on rollover, or at the configured value.
+    """
+    format: Annotated[
+        Optional[Union[str, EnumerationEnum22]], Field(alias='srl_nokia-logging:format')
+    ] = 'RSYSLOG_FileFormat'
+    """
+    Text format of syslog messages to a local output (buffer, file or console), in legacy rsyslog $template style or one of the predefined templates
+
+    The default presents a date timestamp according to rfc3339.
+    The predefined templates are the ones supported by rsyslogd.
+    """
+    rotate: Annotated[
+        Optional[int], Field(alias='srl_nokia-logging:rotate', ge=0, le=65535)
+    ] = 4
+    """
+    Number of files to keep in rotation when a maximum file size is reached
+    """
+    rotations: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-logging:rotations', ge=0, le=18446744073709551615),
+    ] = 0
+    """
+    Number of file rotations occurred
+    """
+    size: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-logging:size',
+            pattern='^(?=^[1-9][0-9]{0,15}(K|M|G){0,1}$).*$',
+        ),
+    ] = '10M'
+    """
+    Number of bytes an individual output file cannot exceed
+
+    The field allows the 'K, M, or G' suffixes as shorthand.
+    When reaching that size, a rotation happens and subsequent data is stored
+    in a new file with the same base name.
+    """
+    facility: Annotated[
+        Optional[List[FacilityListEntry3]], Field(alias='srl_nokia-logging:facility')
+    ] = None
+    subsystem: Annotated[
+        Optional[List[SubsystemListEntry2]], Field(alias='srl_nokia-logging:subsystem')
+    ] = None
+    filter: Annotated[
+        Optional[List[FilterLeafList2]], Field(alias='srl_nokia-logging:filter')
+    ] = []
+    """
+    A set of all-matching criteria that messages must fulfill in order to be captured
+    """
+
+
+class ClockSourceContainer(BaseModel):
+    """
+    Identifies the source of PTP messages into PTP the time recovery engine
+
+    Only one of peer, interface, or sync0-neighbor will be populated
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    port_ds_cfg_ip: Annotated[
+        Optional[PortDsCfgIpContainer], Field(alias='srl_nokia-sync:port-ds-cfg-ip')
+    ] = None
+    port_ds_interface: Annotated[
+        Optional[PortDsInterfaceContainer],
+        Field(alias='srl_nokia-sync:port-ds-interface'),
+    ] = None
+    port_ds_sync0: Annotated[
+        Optional[PortDsSync0Container], Field(alias='srl_nokia-sync:port-ds-sync0')
+    ] = None
 
 
 class ComputedDesignatedForwarderCandidatesContainer(BaseModel):
@@ -15339,20 +19996,1608 @@ class ComputedDesignatedForwarderCandidatesContainer(BaseModel):
     ] = None
 
 
-class ControlPlaneTrafficContainer(BaseModel):
+class ConsoleContainer(BaseModel):
     """
-    Container for the control plane traffic.
+    Hardware serial device normally used for bring-up and diagnostics
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    output: Annotated[
-        Optional[OutputContainer], Field(alias='srl_nokia-system:output')
+    format: Annotated[
+        Optional[Union[str, EnumerationEnum22]], Field(alias='srl_nokia-logging:format')
+    ] = 'RSYSLOG_FileFormat'
+    """
+    Text format of syslog messages to a local output (buffer, file or console), in legacy rsyslog $template style or one of the predefined templates
+
+    The default presents a date timestamp according to rfc3339.
+    The predefined templates are the ones supported by rsyslogd.
+    """
+    facility: Annotated[
+        Optional[List[FacilityListEntry]], Field(alias='srl_nokia-logging:facility')
     ] = None
-    input: Annotated[
-        Optional[InputContainer], Field(alias='srl_nokia-system:input')
+    subsystem: Annotated[
+        Optional[List[SubsystemListEntry]], Field(alias='srl_nokia-logging:subsystem')
+    ] = None
+    filter: Annotated[
+        Optional[List[FilterLeafList]], Field(alias='srl_nokia-logging:filter')
+    ] = []
+    """
+    A set of all-matching criteria that messages must fulfill in order to be captured
+    """
+
+
+class Dhcpv4Container(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-dhcp-server:admin-state')
+    ] = 'disable'
+    """
+    Administratively enable or disable the dhcp server
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-dhcp-server:oper-state')
+    ] = None
+    """
+    Details if the dhcp server is operationally available
+    """
+    trace_options: Annotated[
+        Optional[TraceOptionsContainer2],
+        Field(alias='srl_nokia-dhcp-server:trace-options'),
+    ] = None
+    statistics: Annotated[
+        Optional[StatisticsContainer9], Field(alias='srl_nokia-dhcp-server:statistics')
+    ] = None
+    options: Annotated[
+        Optional[OptionsContainer], Field(alias='srl_nokia-dhcp-server:options')
+    ] = None
+    static_allocation: Annotated[
+        Optional[StaticAllocationContainer],
+        Field(alias='srl_nokia-dhcp-server:static-allocation'),
+    ] = None
+
+
+class Dhcpv6Container(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-dhcp-server:admin-state')
+    ] = 'disable'
+    """
+    Administratively enable or disable the dhcp server
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-dhcp-server:oper-state')
+    ] = None
+    """
+    Details if the dhcp server is operationally available
+    """
+    trace_options: Annotated[
+        Optional[TraceOptionsContainer3],
+        Field(alias='srl_nokia-dhcp-server:trace-options'),
+    ] = None
+    statistics: Annotated[
+        Optional[StatisticsContainer10], Field(alias='srl_nokia-dhcp-server:statistics')
+    ] = None
+    options: Annotated[
+        Optional[OptionsContainer4], Field(alias='srl_nokia-dhcp-server:options')
+    ] = None
+    static_allocation: Annotated[
+        Optional[StaticAllocationContainer2],
+        Field(alias='srl_nokia-dhcp-server:static-allocation'),
+    ] = None
+
+
+class EventHandlerContainer(BaseModel):
+    """
+    Top-level container for configuration and state of event handler and event handling instances
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    run_as_user: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-event-handler:run-as-user',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ] = None
+    """
+    User configured to run event handler instances
+
+    If no user is configured, scripts are executed as the 'admin' user.
+    """
+    instance: Annotated[
+        Optional[List[InstanceListEntry]],
+        Field(alias='srl_nokia-event-handler:instance'),
+    ] = None
+
+
+class EvpnContainer(BaseModel):
+    """
+    System bridge-table BGP-EVPN information
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    mpls_multicast_tep: Annotated[
+        Optional[MplsMulticastTepContainer],
+        Field(
+            alias='srl_nokia-system-bridge-table-evpn-mpls-multicast-tep:mpls-multicast-tep'
+        ),
+    ] = None
+
+
+class FhsIpMacBindingsContainer(BaseModel):
+    """
+    List of First Hop Security IP-MAC association in the database.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    binding_table: Annotated[
+        Optional[List[BindingTableListEntry]],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:binding-table'),
+    ] = None
+
+
+class GroupListEntry(BaseModel):
+    """
+    List of user-configured maintenance groups
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-maintenance-mode:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Name of the maintenance group.
+    """
+    maintenance_mode: Annotated[
+        Optional[MaintenanceModeContainer],
+        Field(alias='srl_nokia-maintenance-mode:maintenance-mode'),
+    ] = None
+    maintenance_profile: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-maintenance-mode:maintenance-profile',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ] = None
+    """
+    Leaf reference to /system/maintenance/profile/name
+    """
+    members: Annotated[
+        Optional[MembersContainer], Field(alias='srl_nokia-maintenance-mode:members')
+    ] = None
+
+
+class GrpcServerListEntry(BaseModel):
+    """
+    List of configured gRPC server instances
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-grpc:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    User-provided name of this server instance
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-grpc:admin-state')
+    ] = 'disable'
+    """
+    Globally enable or disable the gRPC server instance
+
+    Disabling this will disable all gRPC server sockets in all network instances, and any configured unix domain sockets.
+    """
+    trace_options: Annotated[
+        Optional[List[EnumerationEnum13]], Field(alias='srl_nokia-grpc:trace-options')
+    ] = []
+    """
+    gRPC trace options
+    """
+    timeout: Annotated[
+        Optional[int], Field(alias='srl_nokia-grpc:timeout', ge=0, le=65535)
+    ] = 7200
+    """
+    Set the idle timeout in seconds on gRPC connections
+    """
+    rate_limit: Annotated[
+        Optional[int], Field(alias='srl_nokia-grpc:rate-limit', ge=0, le=65535)
+    ] = 60
+    """
+    Set a limit on the number of RPC calls per minute
+    """
+    session_limit: Annotated[
+        Optional[int], Field(alias='srl_nokia-grpc:session-limit', ge=0, le=65535)
+    ] = 20
+    """
+    Set a limit on the number of simultaneous active gRPC sessions
+
+    A session is defined as an individual RPC invocation, which could result in a single client generating multiple sessions.
+    In the context of a Subscribe RPC this is the number of simultaneously active SubscribeRequests across all Subscribe RPCs.
+    """
+    max_concurrent_streams: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-grpc:max-concurrent-streams', ge=0, le=2147483647),
+    ] = 65535
+    """
+    Set a limit on the maximum number of concurrent streams allowed on a single gRPC connection
+
+    This value is signaled to the clients in a SETTINGS frame.
+    """
+    metadata_authentication: Annotated[
+        Optional[bool], Field(alias='srl_nokia-grpc:metadata-authentication')
+    ] = True
+    """
+    Enable or disable the use of username/password metadata authentication for every gRPC request
+    """
+    yang_models: Annotated[
+        Optional[EnumerationEnum14], Field(alias='srl_nokia-grpc:yang-models')
+    ] = 'native'
+    """
+    Specify yang-models to be used when origin field is not present in requests
+    """
+    services: Annotated[Optional[List[str]], Field(alias='srl_nokia-grpc:services')] = (
+        []
+    )
+    """
+    The gRPC service definitions that should be enabled for this gRPC server instance
+    """
+    tls_profile: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-grpc:tls-profile',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ] = None
+    """
+    Reference to the TLS profile to use on the gRPC server
+
+    If none is specified, then TLS is not used.
+    """
+    default_tls_profile: Annotated[
+        Optional[bool], Field(alias='srl_nokia-grpc:default-tls-profile')
+    ] = False
+    """
+    Whether to use default TLS profile (generated by the system) if none is configured via tls-profile field
+    """
+    gnmi: Annotated[Optional[GnmiContainer], Field(alias='srl_nokia-grpc:gnmi')] = None
+    port: Annotated[
+        Optional[int], Field(alias='srl_nokia-grpc:port', ge=0, le=65535)
+    ] = 57400
+    """
+    Port the gRPC server will listen on for incoming connections
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-grpc:oper-state')
+    ] = None
+    """
+    Details if the gRPC server is operationally available
+    """
+    statistics: Annotated[
+        Optional[StatisticsContainer2], Field(alias='srl_nokia-grpc:statistics')
+    ] = None
+    certz: Annotated[Optional[CertzContainer2], Field(alias='srl_nokia-grpc:certz')] = (
+        None
+    )
+    client: Annotated[
+        Optional[List[ClientListEntry]], Field(alias='srl_nokia-grpc:client')
+    ] = None
+    pathz: Annotated[
+        Optional[PathzContainer], Field(alias='srl_nokia-gnsi-pathz:pathz')
+    ] = None
+
+
+class InstanceListEntry2(BaseModel):
+    """
+    List of line references configured for frequency
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    instance_number: Annotated[
+        int, Field(alias='srl_nokia-sync:instance-number', ge=1, le=5)
+    ]
+    """
+    The instance number of the each line reference
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-sync:admin-state')
+    ] = 'disable'
+    """
+    Configure the administrative state of this frequency reference instance
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-sync:oper-state')
+    ] = None
+    """
+    Indicates the operational state of this line reference
+    """
+    source: Annotated[
+        Optional[SourceContainer], Field(alias='srl_nokia-sync:source')
+    ] = None
+    priority: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:priority', ge=1, le=5)
+    ] = 3
+    """
+    Sets the priority of this line timing reference for the system timing selection process
+    1 = highest priority
+    5 = lowest priority
+    Duplicate numbers are not allowed
+    """
+    ql_override: Annotated[
+        Optional[EnumerationEnum104], Field(alias='srl_nokia-sync:ql-override')
+    ] = 'unused'
+    """
+    Override the incoming QL/SSM value for this line reference
+    Quality level override of a timing reference
+    Options are unused, prs, stu, st2, tnc, st3e, st3, prc, ssua, ssub, sec, eec1, eec2
+    """
+    ql_value: Annotated[
+        Optional[EnumerationEnum105], Field(alias='srl_nokia-sync:ql-value')
+    ] = None
+    """
+    The incoming QL/SSM value from this line reference
+    """
+    reference_status: Annotated[
+        Optional[EnumerationEnum106], Field(alias='srl_nokia-sync:reference-status')
+    ] = None
+    """
+    The current status this line reference
+    """
+    not_qualified_reason: Annotated[
+        Optional[EnumerationEnum107], Field(alias='srl_nokia-sync:not-qualified-reason')
+    ] = None
+    """
+    If the reference is not qualified, this identifies the reason
+    """
+
+
+class InterfaceListEntry3(BaseModel):
+    """
+    List of Interfaces to be managed by Mgmt-Stp
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    admin_state: Annotated[
+        Optional[EnumerationEnum3],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:admin-state'),
+    ] = 'disable'
+    """
+    Administratively enable or disable the Mgmt-STP protocol interface
+    """
+    interface_name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:interface-name',
+            max_length=255,
+            min_length=1,
+        ),
+    ]
+    """
+    Name of the MSTP interface
+    """
+    interface_ref: Annotated[
+        Optional[InterfaceRefContainer],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:interface-ref'),
+    ] = None
+    port_number: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:port-number', ge=1, le=2047),
+    ] = None
+    """
+    Port Number associated with this interface
+    """
+    priority: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:priority', ge=0, le=255),
+    ] = 128
+    """
+    Priority value coupled with port number forms 16-bit port-identifier field
+    """
+    path_cost: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:path-cost', ge=1, le=200000000
+        ),
+    ] = 10
+    """
+    The interface path-cost is used by STP to calculate the path cost to the root bridge
+    """
+    edge_port: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:edge-port')
+    ] = 'oc-stp-types:EDGE_AUTO'
+    """
+    Modes of Edge-Port
+    """
+    link_type: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:link-type')
+    ] = None
+    """
+    Indicates the number of bridges behind the subinterface
+    """
+    guard: Annotated[
+        Optional[EnumerationEnum73],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:guard'),
+    ] = 'NONE'
+    """
+    Enable Guard
+    """
+    bpdu_guard: Annotated[
+        Optional[bool], Field(alias='srl_nokia-system-protocols-mgmt-stp:bpdu-guard')
+    ] = False
+    """
+    Enable edge port BPDU guard
+    """
+    port_state: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:port-state')
+    ] = None
+    """
+    Interface Stp Port state
+    """
+    port_num: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:port-num', ge=0, le=4094),
+    ] = None
+    """
+    Interface Stp Port Number
+    """
+    oper_port_priority: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:oper-port-priority', ge=0, le=255
+        ),
+    ] = None
+    """
+    Interface Stp operational Port Priority
+    """
+    port_role: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:port-role')
+    ] = None
+    """
+    Interface Stp Port role
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-state'),
+    ] = None
+    """
+    Stp Operational status
+    """
+    designated_bridge: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:designated-bridge'),
+    ] = None
+    """
+    The bridge identifier of the designated bridge
+
+    The bridge identifer of the bridge recorded as the
+    root in the configuration BPDUs transmitted by the designated
+    bridge for the segment to which the port is attached.
+    format: bridge-priority.extended-system-id.mac-address
+    """
+    designated_port: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:designated-port',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The identifier of the port on the designated bridge
+    """
+    designated_port_priority: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:designated-port-priority',
+            ge=0,
+            le=255,
+        ),
+    ] = None
+    """
+    The Port priority of the port on the Designated Bridge for this port's segment
+    """
+    designated_port_num: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:designated-port-num',
+            ge=0,
+            le=4094,
+        ),
+    ] = None
+    """
+    The Port number of the port on the Designated Bridge for this port's segment
+    """
+    oper_protocol: Annotated[
+        Optional[EnumerationEnum74],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-protocol'),
+    ] = None
+    """
+    The protocol running on this interface
+    """
+    oper_bpdu_encap: Annotated[
+        Optional[EnumerationEnum75],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-bpdu-encap'),
+    ] = None
+    """
+    The operating encsapsulation type used on BPDUs sent and received on this interface
+    """
+    oper_edge: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-edge')
+    ] = None
+    """
+    The protocol running on this interface
+    """
+    forward_transitions: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:forward-transitions',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The number of times this port has transitioned from the Learning state to the Forwarding state
+    """
+    bpdu_guard_error: Annotated[
+        Optional[bool],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:bpdu-guard-error'),
+    ] = None
+    """
+    Displays True when the interface is operationally down due to stp bpdu guard error
+    """
+    bpdu_guard_recovery_time_expires: Annotated[
+        Optional[Union[BpduGuardRecoveryTimeExpiresLeaf1, DateAndTimeDeltaType]],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:bpdu-guard-recovery-time-expires'
+        ),
+    ] = None
+    """
+    The remaining time until the bpdu-guard-down-time expires and the error is cleared on the interface
+    """
+    statistics: Annotated[
+        Optional[StatisticsContainer12],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:statistics'),
+    ] = None
+    inside_region: Annotated[
+        Optional[bool], Field(alias='srl_nokia-system-protocols-mgmt-stp:inside-region')
+    ] = None
+    """
+    Indicates if Mst instance interface is inside MST region
+    """
+    mst_instance: Annotated[
+        Optional[List[MstInstanceListEntry2]],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:mst-instance'),
+    ] = None
+
+
+class JsonRpcServerContainer(BaseModel):
+    """
+    Configures the JSON RPC access API
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-json-rpc:admin-state')
+    ] = 'disable'
+    """
+    Globally enable or disable the JSON RPC server
+    Disabling this will disable all JSON RPC servers.
+    """
+    commit_confirmed_timeout: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-json-rpc:commit-confirmed-timeout', ge=0, le=86400),
+    ] = 0
+    """
+    Number of seconds to wait for confirmation. A value of 0 means commit confirmed is not used
+    """
+    network_instance: Annotated[
+        Optional[List[NetworkInstanceListEntry5]],
+        Field(alias='srl_nokia-json-rpc:network-instance'),
+    ] = None
+    trace_options: Annotated[
+        Optional[List[EnumerationEnum101]],
+        Field(alias='srl_nokia-json-rpc:trace-options'),
+    ] = []
+    """
+    JSON RPC trace options
+    """
+    unix_socket: Annotated[
+        Optional[UnixSocketContainer], Field(alias='srl_nokia-json-rpc:unix-socket')
+    ] = None
+
+
+class LawfulInterceptContainer(BaseModel):
+    """
+    LI properties
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    targets: Annotated[
+        Optional[TargetsContainer], Field(alias='srl_nokia-lawful-intercept:targets')
+    ] = None
+    system: Annotated[
+        Optional[SystemContainer], Field(alias='srl_nokia-lawful-intercept:system')
+    ] = None
+    pfcp: Annotated[
+        Optional[PfcpContainer], Field(alias='srl_nokia-lawful-intercept:pfcp')
+    ] = None
+    admf: Annotated[
+        Optional[AdmfContainer], Field(alias='srl_nokia-lawful-intercept:admf')
+    ] = None
+    admin_state: Annotated[
+        Optional[EnumerationEnum3],
+        Field(alias='srl_nokia-lawful-intercept:admin-state'),
+    ] = 'enable'
+    """
+    Administrative state
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-lawful-intercept:oper-state')
+    ] = None
+    """
+    Operational state
+    """
+
+
+class LldpMedContainer2(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-lldp:admin-state')
+    ] = 'disable'
+    """
+    Enable or disable LLDP-MED on the interface
+
+    When 'enable' the capability TLV will be transmitted.  Other LLDP-MED TLVs must be included
+    in the lldp-med-tlv list to be transmitted to an endpoint.  Value 'disable' stops the
+    transmission and processing of LLDP-MED TLVs.  The base LLDP protocol admin-state must be 'enable'
+    for LLDP-MED to be operationally up.
+    """
+    network_policy: Annotated[
+        Optional[List[NetworkPolicyLeafList]],
+        Field(alias='srl_nokia-lldp:network-policy'),
+    ] = []
+    """
+    Name of the network policy for a specific application type
+
+    Multiple network policies can be assigned to a single interface, one per application type.
+    """
+    lldp_med_tlvs: Annotated[
+        Optional[List[str]], Field(alias='srl_nokia-lldp:lldp-med-tlvs')
+    ] = []
+    """
+    List of supported LLDP-MED tlvs on the interface
+    """
+    location: Annotated[
+        Optional[LocationContainer], Field(alias='srl_nokia-lldp:location')
+    ] = None
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-lldp:oper-state')
+    ] = None
+    """
+    Details the operational state of LLDP MED on the interface
+
+    Global lldp, interface lldp and interface lldp-med must be admin-state 'enable' to achieve oper-state 'up'
+    """
+    mac_phy_configuration_status: Annotated[
+        Optional[MacPhyConfigurationStatusContainer],
+        Field(alias='srl_nokia-lldp:mac-phy-configuration-status'),
+    ] = None
+
+
+class LocatorListEntry(BaseModel):
+    """
+    Enter the locator list instance
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    locator_name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-srv6:locator-name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    SRv6 locator name
+    """
+    full_segment: Annotated[
+        Optional[FullSegmentContainer], Field(alias='srl_nokia-srv6:full-segment')
+    ] = None
+    micro_segment: Annotated[
+        Optional[MicroSegmentContainer2], Field(alias='srl_nokia-srv6:micro-segment')
+    ] = None
+
+
+class LoggingContainer(BaseModel):
+    """
+    System logging provides the interface to syslog services
+    to setup output entities on a selection of log sources.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    console: Annotated[
+        Optional[ConsoleContainer], Field(alias='srl_nokia-logging:console')
+    ] = None
+    filter: Annotated[
+        Optional[List[FilterListEntry]], Field(alias='srl_nokia-logging:filter')
+    ] = None
+    buffer: Annotated[
+        Optional[List[BufferListEntry]], Field(alias='srl_nokia-logging:buffer')
+    ] = None
+    file: Annotated[
+        Optional[List[FileListEntry]], Field(alias='srl_nokia-logging:file')
+    ] = None
+    remote_server: Annotated[
+        Optional[List[RemoteServerListEntry]],
+        Field(alias='srl_nokia-logging:remote-server'),
+    ] = None
+    subsystem_facility: Annotated[
+        Optional[EnumerationEnum23], Field(alias='srl_nokia-logging:subsystem-facility')
+    ] = 'local6'
+    """
+    Linux facility that internal application subsystems will use
+    """
+
+
+class MaintenanceContainer(BaseModel):
+    """
+    Top-level container for Maintenance Mode configuration
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    group: Annotated[
+        Optional[List[GroupListEntry]], Field(alias='srl_nokia-maintenance-mode:group')
+    ] = None
+    profile: Annotated[
+        Optional[List[ProfileListEntry]],
+        Field(alias='srl_nokia-maintenance-mode:profile'),
+    ] = None
+
+
+class MgmtStpListEntry(BaseModel):
+    """
+    Management Stp Instance configured on the local system
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
+        ),
+    ]
+    """
+    A unique name identifying the mgmt-stp-instance
+    """
+    mode: Annotated[
+        Optional[EnumerationEnum71],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:mode'),
+    ] = 'mstp'
+    """
+    Protocol Mode Supported
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum3],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:admin-state'),
+    ] = 'disable'
+    """
+    Administratively enable or disable the stp instance
+
+    When STP on the network instance is administratively disabled,
+    any BPDUs are forwarded transparently.
+    When STP on the network instance is administratively enabled,
+    but the administrative state on a sub-interface is disabled,
+    BPDUs received on such a subinterface are discarded.
+    """
+    bridge_priority: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:bridge-priority'),
+    ] = None
+    """
+    Priority component of the Bridge Identifier
+    """
+    bridge_address: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:bridge-address',
+            pattern='^(?=^[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}$).*$',
+        ),
+    ] = None
+    """
+    A 48-bit administered MAC Address assigned to the bridge
+
+    The bridge mac address cannot be a broadcast or multicast address. The default is
+    the base mac address of the switch. On configuring bridge-address, reserved(0) extended-system-id
+    will be used in the bridge-identifier 
+    """
+    forward_delay: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:forward-delay', ge=4, le=30),
+    ] = 15
+    """
+    The delay used by STP bridges to transition root and designated ports to forwarding
+    """
+    hello_time: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:hello-time', ge=1, le=10),
+    ] = 2
+    """
+    The interval between periodic transmissions of configuration messages by designated ports
+    """
+    hold_count: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:hold-count', ge=1, le=10),
+    ] = 6
+    """
+    The maximum number of BPDUs per second that the switch can send from an interface
+    """
+    max_age: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:max-age', ge=6, le=40),
+    ] = 20
+    """
+    The maximum age of the information transmitted by the bridge when it is the root bridge
+    """
+    mst_name: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:mst-name',
+            max_length=32,
+            min_length=1,
+        ),
+    ] = None
+    """
+    The Configuration Name in the MST Configuration Identifier
+    """
+    mst_revision: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:mst-revision', ge=0, le=65535),
+    ] = 0
+    """
+    The Revision Level in the MST Configuration Identifier
+    """
+    mst_max_hops: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:mst-max-hops', ge=1, le=255),
+    ] = 20
+    """
+    The max hop determines the number of bridges in an MST region that a BPDU can traverse before it is discarded
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-state'),
+    ] = None
+    """
+    Stp Operational status
+    """
+    bridge_id: Annotated[
+        Optional[str], Field(alias='srl_nokia-system-protocols-mgmt-stp:bridge-id')
+    ] = None
+    """
+    The identifier of the bridge
+
+    The bridge identifier of the bridge in the configuration BPDUs
+    transmitted for the segment to which the port is attached
+    """
+    designated_root: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:designated-root'),
+    ] = None
+    """
+    The identifier of the designated bridge
+
+    The bridge identifier of the bridge recorded as the
+    root in the configuration BPDUs transmitted by the designated
+    bridge for the segment to which the port is attached
+    """
+    root_port: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:root-port', ge=0, le=4294967295
+        ),
+    ] = None
+    """
+    The port number of the port which offers the lowest cost path from this bridge to the root bridge
+    """
+    root_cost: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:root-cost',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The cost of the path to the root as seen from this bridge
+    """
+    hold_time: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:hold-time', ge=0, le=255),
+    ] = None
+    """
+    This time value determines the interval length during which no more than two Configuration bridge PDUs shall be transmitted by this node
+    """
+    topology_changes: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:topology-changes',
+            ge=0,
+            le=18446744073709551615,
+        ),
+    ] = 0
+    """
+    The total number of topology changes detected by this bridge since the management entity was last reset or initialized
+    """
+    topology_change_active: Annotated[
+        Optional[bool],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:topology-change-active'),
+    ] = None
+    """
+    Indication topology change is currently in progress
+    """
+    time_since_topology_change: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:time-since-topology-change',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Time since last topology change was detected by bridge entity
+    """
+    oper_max_age: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:oper-max-age', ge=0, le=255),
+    ] = None
+    """
+    The maximum age of the stp information learned
+    """
+    oper_hello_time: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:oper-hello-time', ge=0, le=255
+        ),
+    ] = None
+    """
+    The amount of time between the transmission of Configuration BPDUs
+    """
+    oper_forward_delay: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:oper-forward-delay',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The amount of time it takes to change its state when moving towards the forwarding state
+    """
+    cist_regional_root: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:cist-regional-root'),
+    ] = None
+    """
+    The bridge identifier of the regional root of the CIST spanning tree
+    """
+    cist_internal_root_cost: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:cist-internal-root-cost',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The cost of the path to the CIST regional root bridge
+    """
+    cist_remaining_hop_count: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:cist-remaining-hop-count',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The remaining number of hops
+    """
+    cist_regional_root_port: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-protocols-mgmt-stp:cist-regional-root-port',
+            ge=-2147483648,
+            le=2147483647,
+        ),
+    ] = None
+    """
+    The port number of the port with the lowest cost path
+    """
+    trace_options: Annotated[
+        Optional[TraceOptionsContainer4],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:trace-options'),
+    ] = None
+    mst_instance: Annotated[
+        Optional[List[MstInstanceListEntry]],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:mst-instance'),
+    ] = None
+    interface: Annotated[
+        Optional[List[InterfaceListEntry3]],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:interface'),
+    ] = None
+
+
+class MulticastForwardingInformationBaseContainer(BaseModel):
+    """
+    System Multicast Forwarding Information Base table
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    multicast_route: Annotated[
+        Optional[List[MulticastRouteListEntry]],
+        Field(alias='srl_nokia-system-multicast-mfib-table:multicast-route'),
+    ] = None
+
+
+class NetworkInstanceListEntry(BaseModel):
+    """
+    List of network instances to run a dhcp server in
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-dhcp-server:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Reference to a configured network instance
+    """
+    dhcpv4: Annotated[
+        Optional[Dhcpv4Container], Field(alias='srl_nokia-dhcp-server:dhcpv4')
+    ] = None
+    dhcpv6: Annotated[
+        Optional[Dhcpv6Container], Field(alias='srl_nokia-dhcp-server:dhcpv6')
+    ] = None
+
+
+class PacketLinkQualificationContainer(BaseModel):
+    """
+    Top-level container for gNOI Packet Link Qualification profiles
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    profile: Annotated[
+        Optional[List[ProfileListEntry2]],
+        Field(alias='srl_nokia-packet-link-qual:profile'),
+    ] = None
+
+
+class ParentDsContainer(BaseModel):
+    """
+    The parent data set of the clock
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    parent_port_identity: Annotated[
+        Optional[ParentPortIdentityContainer],
+        Field(alias='srl_nokia-sync:parent-port-identity'),
+    ] = None
+    grandmaster_identity: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-sync:grandmaster-identity', max_length=8, min_length=8),
+    ] = None
+    """
+    The clockIdentity of the grandmaster clock
+    """
+    grandmaster_clock_quality: Annotated[
+        Optional[GrandmasterClockQualityContainer],
+        Field(alias='srl_nokia-sync:grandmaster-clock-quality'),
+    ] = None
+    grandmaster_priority1: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:grandmaster-priority1', ge=0, le=255)
+    ] = None
+    """
+    The priority1 attribute of the grandmaster clock
+    """
+    grandmaster_priority2: Annotated[
+        Optional[int], Field(alias='srl_nokia-sync:grandmaster-priority2', ge=0, le=255)
+    ] = None
+    """
+    The priority2 attribute of the grandmaster clock
+    """
+    protocol_address: Annotated[
+        Optional[ProtocolAddressContainer],
+        Field(alias='srl_nokia-sync:protocol-address'),
+    ] = None
+
+
+class PathzContainer2(BaseModel):
+    """
+    Information relating to the active Pathz authorization policy instances
+
+    This policies is provided by the gNSI gRPC service, and can be changed using the gNSI.Pathz.Rotate RPC
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    collect_policy_success_failure_counters: Annotated[
+        Optional[bool],
+        Field(alias='srl_nokia-configuration:collect-policy-success-failure-counters'),
+    ] = False
+    """
+    Indicates whether the gNSI.pathz module should collect access counters information.
+    """
+    use_exclusively: Annotated[
+        Optional[bool], Field(alias='srl_nokia-configuration:use-exclusively')
+    ] = False
+    """
+    Indicates whether the Pathz authorization policy should be used exclusively for access authorization.
+
+    If set to true, the Pathz authorization policy will be used exclusively, any statically configured RBAC
+    rules will be ignored. If set to false, the Pathz authorization policy will be used together with the
+    statically configured RBAC rules (evaluating both policies and taking the logical conjunction of the
+    results).
+    """
+    policy: Annotated[
+        Optional[List[PolicyListEntry]], Field(alias='srl_nokia-configuration:policy')
+    ] = None
+
+
+class RemoteContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    encap: Annotated[EnumerationEnum33, Field(alias='srl_nokia-mirroring:encap')]
+    """
+    Encapsulation to use for this mirror destination
+    """
+    network_instance: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-mirroring:network-instance',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
+        ),
+    ]
+    """
+    network instance to intitiate remote mirror tunnel
+    """
+    tunnel_end_points: Annotated[
+        Optional[TunnelEndPointsContainer],
+        Field(alias='srl_nokia-mirroring:tunnel-end-points'),
+    ] = None
+
+
+class ServerGroupListEntry(BaseModel):
+    """
+    List of AAA server-groups in the system
+
+    Each server group specifies a type, of which all servers must use. If using the 'local' type, then no servers may be specified.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-aaa:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    User defined name for the server group
+    """
+    type: Annotated[str, Field(alias='srl_nokia-aaa:type')]
+    """
+    AAA server type -- all servers in the group must be of this type
+    """
+    timeout: Annotated[
+        Optional[int], Field(alias='srl_nokia-aaa:timeout', ge=1, le=3600)
+    ] = 10
+    """
+    Set the timeout in seconds on responses from servers in this group
+    """
+    priv_lvl_authorization: Annotated[
+        Optional[bool], Field(alias='srl_nokia-aaa:priv-lvl-authorization')
+    ] = False
+    """
+    Use TACACS+ priv-lvl based authorization
+
+    If false, then authorization is skipped for TACACS+ users granting full admin access for those users.
+    """
+    health_check: Annotated[
+        Optional[Union[HealthCheckLeaf1, EnumerationEnum12]],
+        Field(alias='srl_nokia-aaa:health-check'),
+    ] = '30'
+    """
+    RADIUS and TACACS+ health check interval
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-aaa:oper-state')
+    ] = None
+    """
+    Details the operational state of the server group
+
+    A server group is defined as being down if all servers in the server group are down.
+    """
+    tacacs: Annotated[
+        Optional[TacacsContainer2], Field(alias='srl_nokia-aaa:tacacs')
+    ] = None
+    server: Annotated[
+        Optional[List[ServerListEntry]], Field(alias='srl_nokia-aaa:server')
+    ] = None
+
+
+class Srv6Container(BaseModel):
+    """
+    Enter the srv6 context to configure locators and other SRv6 functionalities
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    source_address: Annotated[
+        Optional[List[SourceAddressListEntry]],
+        Field(alias='srl_nokia-srv6:source-address'),
+    ] = None
+    default_source_address: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-srv6:default-source-address',
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$',
+        ),
+    ]
+    """
+    Default source address
+    """
+    micro_segment: Annotated[
+        Optional[MicroSegmentContainer], Field(alias='srl_nokia-srv6:micro-segment')
+    ] = None
+    locator: Annotated[
+        Optional[List[LocatorListEntry]], Field(alias='srl_nokia-srv6:locator')
+    ] = None
+
+
+class TimeRecoveryEngineContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    role: Annotated[
+        Optional[EnumerationEnum113], Field(alias='srl_nokia-sync:role')
+    ] = None
+    clock_source: Annotated[
+        Optional[ClockSourceContainer], Field(alias='srl_nokia-sync:clock-source')
+    ] = None
+    recovery_state: Annotated[
+        Optional[EnumerationEnum115], Field(alias='srl_nokia-sync:recovery-state')
+    ] = None
+    """
+    Specifies the current state of the time recovery engine in the PTP clock
+    """
+    state_last_changed: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-sync:state-last-changed',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Specifies the last occurrence of a ptp state change for the time recovery engine
+    """
+    last_adjustment: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-sync:last-adjustment',
+            ge=-9223372036854775808,
+            le=9223372036854775807,
+        ),
+    ] = None
+    """
+    Specifies the last adjustment in nanoseconds to the local time of the PTP clock
+    """
+    last_adjustment_timestamp: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-sync:last-adjustment-timestamp',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    The time when last-adjustment was last calculated
+    """
+    statistics: Annotated[
+        Optional[StatisticsContainer19], Field(alias='srl_nokia-sync:statistics')
+    ] = None
+
+
+class UdpExporterCase(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    udp_exporter: Annotated[
+        Optional[UdpExporterContainer], Field(alias='srl_nokia-ipfix:udp-exporter')
+    ] = None
+
+
+class AaaContainer(BaseModel):
+    """
+    Top-level container for AAA services
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    authentication: Annotated[
+        Optional[AuthenticationContainer], Field(alias='srl_nokia-aaa:authentication')
+    ] = None
+    authorization: Annotated[
+        Optional[AuthorizationContainer], Field(alias='srl_nokia-aaa:authorization')
+    ] = None
+    accounting: Annotated[
+        Optional[AccountingContainer], Field(alias='srl_nokia-aaa:accounting')
+    ] = None
+    server_group: Annotated[
+        Optional[List[ServerGroupListEntry]], Field(alias='srl_nokia-aaa:server-group')
+    ] = None
+
+
+class BgpInstanceListEntry(BaseModel):
+    """
+    bgp-instance associated to this ethernet-segment
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    instance: Annotated[
+        int,
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:instance',
+            ge=0,
+            le=4294967295,
+        ),
+    ]
+    designated_forwarder_role_last_change: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:designated-forwarder-role-last-change',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Indicates the time at which the designated-forwarder role was changed.
+    """
+    designated_forwarder_activation_start_time: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:designated-forwarder-activation-start-time',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Indicates the time at which the designated-forwarder activation timer started.
+    """
+    designated_forwarder_activation_time: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:designated-forwarder-activation-time',
+            ge=0,
+            le=4294967295,
+        ),
+    ] = None
+    """
+    Indicates the number of seconds for the activation timer to run, for this node to become the designated forwarder for this bgp instance.
+    """
+    computed_designated_forwarder_candidates: Annotated[
+        Optional[ComputedDesignatedForwarderCandidatesContainer],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:computed-designated-forwarder-candidates'
+        ),
+    ] = None
+
+
+class BridgeTableContainer(BaseModel):
+    """
+    system bridge-table information
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    mac_learning: Annotated[
+        Optional[MacLearningContainer],
+        Field(alias='srl_nokia-system-bridge-table:mac-learning'),
+    ] = None
+    mac_limit: Annotated[
+        Optional[MacLimitContainer],
+        Field(alias='srl_nokia-system-bridge-table:mac-limit'),
+    ] = None
+    statistics: Annotated[
+        Optional[StatisticsContainer3],
+        Field(alias='srl_nokia-system-bridge-table:statistics'),
+    ] = None
+    evpn: Annotated[
+        Optional[EvpnContainer], Field(alias='srl_nokia-system-bridge-table-evpn:evpn')
+    ] = None
+    proxy_arp: Annotated[
+        Optional[ProxyArpContainer],
+        Field(alias='srl_nokia-system-bridge-table-proxy-arp:proxy-arp'),
+    ] = None
+    proxy_nd: Annotated[
+        Optional[ProxyNdContainer],
+        Field(alias='srl_nokia-system-bridge-table-proxy-arp:proxy-nd'),
+    ] = None
+
+
+class ConfigurationContainer(BaseModel):
+    """
+    Top-level container for configuration and state data related to the system configuration
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    last_change: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-configuration:last-change',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+        ),
+    ] = None
+    """
+    Date and time of the last successful commit
+
+    Set to the time the configuration was loaded by management server, so is refreshed at boot time.
+    """
+    max_checkpoints: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-configuration:max-checkpoints', ge=1, le=255),
+    ] = 10
+    """
+    The number of checkpoints kept by the system
+    """
+    max_candidates: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-configuration:max-candidates', ge=1, le=255),
+    ] = 10
+    """
+    The maximum number of combined private and shared candidates
+    """
+    idle_timeout: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-configuration:idle-timeout', ge=0, le=65535),
+    ] = 10080
+    """
+    The idle timeout of configuration candidates
+
+    After this period of no activity, the candidate is emptied and removed from the system.
+    """
+    auto_checkpoint: Annotated[
+        Optional[bool], Field(alias='srl_nokia-configuration:auto-checkpoint')
+    ] = False
+    """
+    Configuration checkpoint will be automatically created after every successful commit (if set to true).
+    """
+    auto_save: Annotated[
+        Optional[bool], Field(alias='srl_nokia-configuration:auto-save')
+    ] = False
+    """
+    Configuration save will be automatically done after every successful commit (if set to true).
+    """
+    max_paths_per_subscription_request: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-configuration:max-paths-per-subscription-request',
+            ge=1,
+            le=500,
+        ),
+    ] = 36
+    """
+    The maximum number of paths that can be subscribed to in a single subscription request
+    """
+    checkpoint: Annotated[
+        Optional[List[CheckpointListEntry]],
+        Field(alias='srl_nokia-configuration:checkpoint'),
+    ] = None
+    session: Annotated[
+        Optional[List[SessionListEntry3]],
+        Field(alias='srl_nokia-configuration:session'),
+    ] = None
+    candidate: Annotated[
+        Optional[List[CandidateListEntry]],
+        Field(alias='srl_nokia-configuration:candidate'),
+    ] = None
+    commit: Annotated[
+        Optional[List[CommitListEntry]], Field(alias='srl_nokia-configuration:commit')
+    ] = None
+    pathz: Annotated[
+        Optional[PathzContainer2], Field(alias='srl_nokia-configuration:pathz')
+    ] = None
+    role: Annotated[
+        Optional[List[RoleListEntry2]], Field(alias='srl_nokia-configuration-role:role')
     ] = None
 
 
@@ -15369,7 +21614,7 @@ class DefaultDsContainer(BaseModel):
         regex_engine="python-re",
     )
     instance_type: Annotated[
-        Optional[EnumerationEnum76], Field(alias='srl_nokia-sync:instance-type')
+        Optional[EnumerationEnum112], Field(alias='srl_nokia-sync:instance-type')
     ] = 'bc'
     """
     The type of PTP instance as per IEEE1588 standard
@@ -15495,159 +21740,9 @@ class DefaultDsContainer(BaseModel):
     ] = None
 
 
-class Dhcpv4Container(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-dhcp-server:admin-state')
-    ] = 'disable'
+class DestinationListEntry(BaseModel):
     """
-    Administratively enable or disable the dhcp server
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-dhcp-server:oper-state')
-    ] = None
-    """
-    Details if the dhcp server is operationally available
-    """
-    trace_options: Annotated[
-        Optional[TraceOptionsContainer2],
-        Field(alias='srl_nokia-dhcp-server:trace-options'),
-    ] = None
-    statistics: Annotated[
-        Optional[StatisticsContainer14], Field(alias='srl_nokia-dhcp-server:statistics')
-    ] = None
-    options: Annotated[
-        Optional[OptionsContainer2], Field(alias='srl_nokia-dhcp-server:options')
-    ] = None
-    static_allocation: Annotated[
-        Optional[StaticAllocationContainer],
-        Field(alias='srl_nokia-dhcp-server:static-allocation'),
-    ] = None
-
-
-class Dhcpv6Container(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-dhcp-server:admin-state')
-    ] = 'disable'
-    """
-    Administratively enable or disable the dhcp server
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-dhcp-server:oper-state')
-    ] = None
-    """
-    Details if the dhcp server is operationally available
-    """
-    trace_options: Annotated[
-        Optional[TraceOptionsContainer3],
-        Field(alias='srl_nokia-dhcp-server:trace-options'),
-    ] = None
-    statistics: Annotated[
-        Optional[StatisticsContainer15], Field(alias='srl_nokia-dhcp-server:statistics')
-    ] = None
-    options: Annotated[
-        Optional[OptionsContainer4], Field(alias='srl_nokia-dhcp-server:options')
-    ] = None
-    static_allocation: Annotated[
-        Optional[StaticAllocationContainer2],
-        Field(alias='srl_nokia-dhcp-server:static-allocation'),
-    ] = None
-
-
-class DnsContainer(BaseModel):
-    """
-    Top-level container for DNS configuration and state
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-dns:oper-state')
-    ] = None
-    """
-    Details the operational state of the DNS client
-    """
-    search_list: Annotated[
-        Optional[List[SearchListLeafList]], Field(alias='srl_nokia-dns:search-list')
-    ] = []
-    """
-    An ordered list of domains to search when resolving a host name
-    """
-    server_list: Annotated[
-        Optional[List[Union[Ipv4AddressType, Ipv6AddressType]]],
-        Field(alias='srl_nokia-dns:server-list'),
-    ] = []
-    """
-    List of the DNS servers that the resolver should query
-    """
-    source_address: Annotated[
-        Optional[Union[Ipv4AddressType, Ipv6AddressType]],
-        Field(alias='srl_nokia-dns:source-address'),
-    ] = None
-    """
-    Source address for DNS to use for messages sent to a remote server
-    """
-    host_entry: Annotated[
-        Optional[List[HostEntryListEntry]], Field(alias='srl_nokia-dns:host-entry')
-    ] = None
-
-
-class EventHandlerContainer(BaseModel):
-    """
-    Top-level container for configuration and state of event handler and event handling instances
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    run_as_user: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-event-handler:run-as-user',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    The user to run event handler instances as
-
-    If no user is configured, scripts are executed as the 'admin' user.
-    """
-    instance: Annotated[
-        Optional[List[InstanceListEntry]],
-        Field(alias='srl_nokia-event-handler:instance'),
-    ] = None
-
-
-class EvpnContainer2(BaseModel):
-    """
-    System bridge-table BGP-EVPN information
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    mpls_multicast_tep: Annotated[
-        Optional[MplsMulticastTepContainer],
-        Field(
-            alias='srl_nokia-system-bridge-table-evpn-mpls-multicast-tep:mpls-multicast-tep'
-        ),
-    ] = None
-
-
-class GroupListEntry(BaseModel):
-    """
-    List of user-configured maintenance groups
+    List of export destinations.
     """
 
     model_config = ConfigDict(
@@ -15657,1074 +21752,16 @@ class GroupListEntry(BaseModel):
     name: Annotated[
         str,
         Field(
-            alias='srl_nokia-maintenance-mode:name',
+            alias='srl_nokia-ipfix:name',
             pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
         ),
     ]
     """
-    Name of the maintenance group.
+    Key of this list.
     """
-    maintenance_mode: Annotated[
-        Optional[MaintenanceModeContainer],
-        Field(alias='srl_nokia-maintenance-mode:maintenance-mode'),
-    ] = None
-    maintenance_profile: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-maintenance-mode:maintenance-profile',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    Leaf reference to /system/maintenance/profile/name
-    """
-    members: Annotated[
-        Optional[MembersContainer], Field(alias='srl_nokia-maintenance-mode:members')
-    ] = None
-
-
-class GrpcServerListEntry(BaseModel):
-    """
-    List of configured gRPC server instances
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-grpc:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
+    destination_parameters: Annotated[
+        UdpExporterCase, Field(alias='srl_nokia-ipfix:destination-parameters')
     ]
-    """
-    User-provided name of this server instance
-    """
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-grpc:admin-state')
-    ] = 'disable'
-    """
-    Globally enable or disable the gRPC server instance
-
-    Disabling this will disable all gRPC server sockets in all network instances, and any configured unix domain sockets.
-    """
-    trace_options: Annotated[
-        Optional[List[EnumerationEnum14]], Field(alias='srl_nokia-grpc:trace-options')
-    ] = []
-    """
-    gRPC trace options
-    """
-    timeout: Annotated[
-        Optional[int], Field(alias='srl_nokia-grpc:timeout', ge=0, le=65535)
-    ] = 7200
-    """
-    Set the idle timeout in seconds on gRPC connections
-    """
-    rate_limit: Annotated[
-        Optional[int], Field(alias='srl_nokia-grpc:rate-limit', ge=0, le=65535)
-    ] = 60
-    """
-    Set a limit on the number of RPC calls per minute
-    """
-    session_limit: Annotated[
-        Optional[int], Field(alias='srl_nokia-grpc:session-limit', ge=0, le=65535)
-    ] = 20
-    """
-    Set a limit on the number of simultaneous active gRPC sessions
-
-    A session is defined as an individual RPC invocation, which could result in a single client generating multiple sessions.
-    In the context of a Subscribe RPC this is the number of simultaneously active SubscribeRequests across all Subscribe RPCs.
-    """
-    max_concurrent_streams: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-grpc:max-concurrent-streams', ge=0, le=2147483647),
-    ] = 65535
-    """
-    Set a limit on the number of concurrent gRPC streams
-    """
-    metadata_authentication: Annotated[
-        Optional[bool], Field(alias='srl_nokia-grpc:metadata-authentication')
-    ] = True
-    """
-    Enable or disable the use of username/password metadata authentication for every gRPC request
-    """
-    yang_models: Annotated[
-        Optional[EnumerationEnum15], Field(alias='srl_nokia-grpc:yang-models')
-    ] = 'native'
-    """
-    Specify yang-models to be used when origin field is not present in requests
-    """
-    services: Annotated[Optional[List[str]], Field(alias='srl_nokia-grpc:services')] = (
-        []
-    )
-    """
-    The gRPC service definitions that should be enabled for this gRPC server instance
-    """
-    tls_profile: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-grpc:tls-profile',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    Reference to the TLS profile to use on the gRPC server
-
-    If none is specified, then TLS is not used.
-    """
-    default_tls_profile: Annotated[
-        Optional[bool], Field(alias='srl_nokia-grpc:default-tls-profile')
-    ] = False
-    """
-    Whether to use default TLS profile (generated by the system) if none is configured via tls-profile field
-    """
-    gnmi: Annotated[Optional[GnmiContainer], Field(alias='srl_nokia-grpc:gnmi')] = None
-    source_address: Annotated[
-        Optional[List[Union[Ipv4AddressType, Ipv6AddressType]]],
-        Field(alias='srl_nokia-grpc:source-address'),
-    ] = ['::']
-    """
-    List of IP addresses the gRPC server will listen on within the network instance
-    """
-    port: Annotated[
-        Optional[int], Field(alias='srl_nokia-grpc:port', ge=0, le=65535)
-    ] = 57400
-    """
-    Port the gRPC server will listen on for incoming connections
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-grpc:oper-state')
-    ] = None
-    """
-    Details if the gRPC server is operationally available
-    """
-    statistics: Annotated[
-        Optional[StatisticsContainer3], Field(alias='srl_nokia-grpc:statistics')
-    ] = None
-    certz: Annotated[Optional[CertzContainer2], Field(alias='srl_nokia-grpc:certz')] = (
-        None
-    )
-    unix_socket: Annotated[
-        Optional[UnixSocketContainer], Field(alias='srl_nokia-grpc:unix-socket')
-    ] = None
-    client: Annotated[
-        Optional[List[ClientListEntry]], Field(alias='srl_nokia-grpc:client')
-    ] = None
-    pathz: Annotated[
-        Optional[PathzContainer], Field(alias='srl_nokia-gnsi-pathz:pathz')
-    ] = None
-
-
-class InstanceListEntry2(BaseModel):
-    """
-    List of line references configured for frequency
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    instance_number: Annotated[
-        int, Field(alias='srl_nokia-sync:instance-number', ge=1, le=5)
-    ]
-    """
-    The instance number of the each line reference
-    """
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-sync:admin-state')
-    ] = 'disable'
-    """
-    Configure the administrative state of this frequency reference instance
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-sync:oper-state')
-    ] = None
-    """
-    Indicates the operational state of this line reference
-    """
-    source: Annotated[
-        Optional[SourceContainer], Field(alias='srl_nokia-sync:source')
-    ] = None
-    priority: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:priority', ge=1, le=5)
-    ] = 3
-    """
-    Sets the priority of this line timing reference for the system timing selection process
-    1 = highest priority
-    5 = lowest priority
-    Duplicate numbers are not allowed
-    """
-    ql_override: Annotated[
-        Optional[EnumerationEnum68], Field(alias='srl_nokia-sync:ql-override')
-    ] = 'unused'
-    """
-    Override the incoming QL/SSM value for this line reference
-    Quality level override of a timing reference
-    Options are unused, prs, stu, st2, tnc, st3e, st3, prc, ssua, ssub, sec, eec1, eec2
-    """
-    ql_value: Annotated[
-        Optional[EnumerationEnum69], Field(alias='srl_nokia-sync:ql-value')
-    ] = None
-    """
-    The incoming QL/SSM value from this line reference
-    """
-    reference_status: Annotated[
-        Optional[EnumerationEnum70], Field(alias='srl_nokia-sync:reference-status')
-    ] = None
-    """
-    The current status this line reference
-    """
-    not_qualified_reason: Annotated[
-        Optional[EnumerationEnum71], Field(alias='srl_nokia-sync:not-qualified-reason')
-    ] = None
-    """
-    If the reference is not qualified, this identifies the reason
-    """
-
-
-class InterfaceListEntry3(BaseModel):
-    """
-    List of interfaces on which LLDP can be enabled
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-lldp:name')]
-    """
-    Reference to the LLDP Ethernet interface
-    """
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-lldp:admin-state')
-    ] = 'enable'
-    """
-    Enable or disable LLDP on the interface
-    """
-    bgp_auto_discovery: Annotated[
-        Optional[BgpAutoDiscoveryContainer2],
-        Field(alias='srl_nokia-lldp:bgp-auto-discovery'),
-    ] = None
-    oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-lldp:oper-state')
-    ] = None
-    """
-    Details the operational state of LLDP on the interface
-    """
-    statistics: Annotated[
-        Optional[StatisticsContainer12], Field(alias='srl_nokia-lldp:statistics')
-    ] = None
-    neighbor: Annotated[
-        Optional[List[NeighborListEntry]], Field(alias='srl_nokia-lldp:neighbor')
-    ] = None
-
-
-class JsonRpcServerContainer(BaseModel):
-    """
-    Configures the JSON RPC access API
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-json-rpc:admin-state')
-    ] = 'disable'
-    """
-    Globally enable or disable the JSON RPC server
-    Disabling this will disable all JSON RPC servers.
-    """
-    commit_confirmed_timeout: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-json-rpc:commit-confirmed-timeout', ge=0, le=86400),
-    ] = 0
-    """
-    Number of seconds to wait for confirmation. A value of 0 means commit confirmed is not used
-    """
-    network_instance: Annotated[
-        Optional[List[NetworkInstanceListEntry3]],
-        Field(alias='srl_nokia-json-rpc:network-instance'),
-    ] = None
-    trace_options: Annotated[
-        Optional[List[EnumerationEnum64]],
-        Field(alias='srl_nokia-json-rpc:trace-options'),
-    ] = []
-    """
-    JSON RPC trace options
-    """
-    unix_socket: Annotated[
-        Optional[UnixSocketContainer3], Field(alias='srl_nokia-json-rpc:unix-socket')
-    ] = None
-
-
-class LawfulInterceptContainer(BaseModel):
-    """
-    Top level container for configuration and operational state for lawful-intercept
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    li_hourly_status: Annotated[
-        Optional[LiHourlyStatusContainer],
-        Field(alias='srl_nokia-lawful-intercept:li-hourly-status'),
-    ] = None
-    targets: Annotated[
-        Optional[TargetsContainer], Field(alias='srl_nokia-lawful-intercept:targets')
-    ] = None
-    system_name: Annotated[
-        Optional[str], Field(alias='srl_nokia-lawful-intercept:system-name')
-    ] = None
-    """
-    Specify the LI management system host name
-    """
-    pfcp: Annotated[
-        Optional[PfcpContainer], Field(alias='srl_nokia-lawful-intercept:pfcp')
-    ] = None
-    admf: Annotated[
-        Optional[AdmfContainer], Field(alias='srl_nokia-lawful-intercept:admf')
-    ] = None
-    admin_state: Annotated[
-        Optional[EnumerationEnum2],
-        Field(alias='srl_nokia-lawful-intercept:admin-state'),
-    ] = 'enable'
-    """
-    This leaf contains the configured, desired state of lawful intercept
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-lawful-intercept:oper-state')
-    ] = None
-    """
-    This leaf reflects the admin state of the lawful intercept
-    """
-
-
-class LldpContainer(BaseModel):
-    """
-    Top-level container for LLDP configuration and state data
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    trace_options: Annotated[
-        Optional[List[EnumerationEnum47]], Field(alias='srl_nokia-lldp:trace-options')
-    ] = []
-    """
-    LLDP trace options
-    """
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-lldp:admin-state')
-    ] = 'enable'
-    """
-    Enable or disable LLDP at the system level
-    """
-    hello_timer: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-lldp:hello-timer', ge=0, le=18446744073709551615),
-    ] = 30
-    """
-    System level hello timer for the LLDP protocol
-    """
-    hold_multiplier: Annotated[
-        Optional[int], Field(alias='srl_nokia-lldp:hold-multiplier', ge=0, le=255)
-    ] = 4
-    """
-    System level hold multiplier, used to define neighbor aging
-
-    This field defines how many hellos need to be missed before
-    a neighbor is aged out.
-
-    This field also is used along with the 'hello-timer' field
-    to define the TTL TLV in outgoing LLDPDUs.
-    """
-    bgp_auto_discovery: Annotated[
-        Optional[BgpAutoDiscoveryContainer],
-        Field(alias='srl_nokia-lldp:bgp-auto-discovery'),
-    ] = None
-    system_name: Annotated[
-        Optional[str],
-        Field(alias='srl_nokia-lldp:system-name', max_length=255, min_length=0),
-    ] = None
-    """
-    The systems administratively assigned name
-
-    The system name field shall contain an alpha-numeric string
-    that indicates the system's administratively assigned name.
-    The system name should be the system's fully qualified domain
-    name.
-    """
-    system_description: Annotated[
-        Optional[str],
-        Field(alias='srl_nokia-lldp:system-description', max_length=255, min_length=0),
-    ] = None
-    """
-    Field detailing system description, including name and versions
-
-    The system description field shall contain an alpha-numeric
-    string that is the textual description of the network entity.
-    The system description should include the full name and
-    version identification of the system's hardware type,
-    software operating system, and networking software.
-    """
-    chassis_id: Annotated[Optional[str], Field(alias='srl_nokia-lldp:chassis-id')] = (
-        None
-    )
-    """
-    The Chassis ID is a mandatory TLV which identifies the
-    chassis component of the endpoint identifier associated with
-    the transmitting LLDP agent
-    """
-    chassis_id_type: Annotated[
-        Optional[EnumerationEnum48], Field(alias='srl_nokia-lldp:chassis-id-type')
-    ] = 'MAC_ADDRESS'
-    """
-    The source for the chassis identifier string
-
-    It is an enumerator defined by the LldpChassisIdSubtype object
-    from IEEE 802.1AB MIB.
-    """
-    management_address: Annotated[
-        Optional[List[ManagementAddressListEntry]],
-        Field(alias='srl_nokia-lldp:management-address'),
-    ] = None
-    statistics: Annotated[
-        Optional[StatisticsContainer11], Field(alias='srl_nokia-lldp:statistics')
-    ] = None
-    interface: Annotated[
-        Optional[List[InterfaceListEntry3]], Field(alias='srl_nokia-lldp:interface')
-    ] = None
-
-
-class MaintenanceContainer(BaseModel):
-    """
-    Top-level container for Maintenance Mode configuration
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    group: Annotated[
-        Optional[List[GroupListEntry]], Field(alias='srl_nokia-maintenance-mode:group')
-    ] = None
-    profile: Annotated[
-        Optional[List[ProfileListEntry2]],
-        Field(alias='srl_nokia-maintenance-mode:profile'),
-    ] = None
-
-
-class ManagementContainer(BaseModel):
-    """
-    Enclosing container for options relating to management server
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    openconfig: Annotated[
-        Optional[OpenconfigContainer], Field(alias='srl_nokia-openconfig:openconfig')
-    ] = None
-
-
-class MulticastForwardingInformationBaseContainer(BaseModel):
-    """
-    System Multicast Forwarding Information Base table
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    multicast_route: Annotated[
-        Optional[List[MulticastRouteListEntry]],
-        Field(alias='srl_nokia-system-multicast-mfib-table:multicast-route'),
-    ] = None
-
-
-class NetworkInstanceListEntry2(BaseModel):
-    """
-    List of network instances to run a dhcp server in
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-dhcp-server:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
-        ),
-    ]
-    """
-    Reference to a configured network instance
-    """
-    dhcpv4: Annotated[
-        Optional[Dhcpv4Container], Field(alias='srl_nokia-dhcp-server:dhcpv4')
-    ] = None
-    dhcpv6: Annotated[
-        Optional[Dhcpv6Container], Field(alias='srl_nokia-dhcp-server:dhcpv6')
-    ] = None
-
-
-class NtpContainer2(BaseModel):
-    """
-    Top-level container for NTP configuration and state
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-ntp:admin-state')
-    ] = None
-    """
-    Enables the system NTP client
-    and indicates that the system should attempt to synchronize
-    the clock
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-ntp:oper-state')
-    ] = None
-    """
-    Details the operational state of the NTP client
-    """
-    synchronized: Annotated[
-        Optional[
-            Union[
-                SynchronizedLeaf1,
-                Union[DomainNameType, Union[Ipv4AddressType, Ipv6AddressType]],
-            ]
-        ],
-        Field(alias='srl_nokia-ntp:synchronized'),
-    ] = None
-    """
-    Address of the NTP server that the local client is synchronized to
-    This field is set to 'unsynchronized', if the local client is not
-    synchronized
-    """
-    source_address: Annotated[
-        Optional[Union[Ipv4AddressType, Ipv6AddressType]],
-        Field(alias='srl_nokia-ntp:source-address'),
-    ] = None
-    """
-    Source address for NTP to use for messages sent to a remote server
-    """
-    server: Annotated[
-        Optional[List[ServerListEntry2]], Field(alias='srl_nokia-ntp:server')
-    ] = None
-
-
-class PacketLinkQualificationContainer(BaseModel):
-    """
-    Top-level container for gNOI Packet Link Qualification profiles
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    profile: Annotated[
-        Optional[List[ProfileListEntry]],
-        Field(alias='srl_nokia-packet-link-qual:profile'),
-    ] = None
-
-
-class ParentDsContainer(BaseModel):
-    """
-    The parent data set of the clock
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    parent_port_identity: Annotated[
-        Optional[ParentPortIdentityContainer],
-        Field(alias='srl_nokia-sync:parent-port-identity'),
-    ] = None
-    grandmaster_identity: Annotated[
-        Optional[str],
-        Field(alias='srl_nokia-sync:grandmaster-identity', max_length=8, min_length=8),
-    ] = None
-    """
-    The clockIdentity of the grandmaster clock
-    """
-    grandmaster_clock_quality: Annotated[
-        Optional[GrandmasterClockQualityContainer],
-        Field(alias='srl_nokia-sync:grandmaster-clock-quality'),
-    ] = None
-    grandmaster_priority1: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:grandmaster-priority1', ge=0, le=255)
-    ] = None
-    """
-    The priority1 attribute of the grandmaster clock
-    """
-    grandmaster_priority2: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:grandmaster-priority2', ge=0, le=255)
-    ] = None
-    """
-    The priority2 attribute of the grandmaster clock
-    """
-    protocol_address: Annotated[
-        Optional[ProtocolAddressContainer],
-        Field(alias='srl_nokia-sync:protocol-address'),
-    ] = None
-
-
-class PathzContainer2(BaseModel):
-    """
-    Information relating to the active Pathz authorization policy instances
-
-    This policies is provided by the gNSI gRPC service, and can be changed using the gNSI.Pathz.Rotate RPC
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    collect_policy_success_failure_counters: Annotated[
-        Optional[bool],
-        Field(alias='srl_nokia-configuration:collect-policy-success-failure-counters'),
-    ] = False
-    """
-    Indicates whether the gNSI.pathz module should collect access counters information.
-    """
-    use_exclusively: Annotated[
-        Optional[bool], Field(alias='srl_nokia-configuration:use-exclusively')
-    ] = False
-    """
-    Indicates whether the Pathz authorization policy should be used exclusively for access authorization.
-
-    If set to true, the Pathz authorization policy will be used exclusively, any statically configured RBAC
-    rules will be ignored. If set to false, the Pathz authorization policy will be used together with the
-    statically configured RBAC rules (evaluating both policies and taking the logical conjunction of the
-    results).
-    """
-    policy: Annotated[
-        Optional[List[PolicyListEntry]], Field(alias='srl_nokia-configuration:policy')
-    ] = None
-
-
-class PortDsInterfaceListListEntry(BaseModel):
-    """
-    List of port data sets for interfaces
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    port_index: Annotated[int, Field(alias='srl_nokia-sync:port-index', ge=1, le=999)]
-    """
-    Index into the port-ds list
-
-    This is not the PTP port number.
-    Configurable ports use port indices 1 through 999 but there is a limit on the overall number of these configured ports based on the platform and software release.
-
-    The data sets (i.e., information model) of IEEE Std
-    1588-2008 specify a member portDS.portIdentity, which
-    uses a typed struct with members clockIdentity and
-    portNumber.
-
-    In this YANG data model, portIdentity is not modeled
-    in the port-ds.  However, its members are provided
-    as follows:
-    portIdentity.portNumber is provided as this
-    ptp-port-number leaf in port-ds, and
-    portIdentity.clockIdentity is provided as the
-    clock-identity leaf in default-ds of the instance
-    (i.e., ../../default-ds/clock-identity).
-    """
-    ptp_port_number: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:ptp-port-number', ge=0, le=65535)
-    ] = None
-    """
-    IEEE Std 1588 portNumber
-
-    This is the port-number that will appear in messages sent for this port-index.
-    """
-    admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-sync:admin-state')
-    ] = 'disable'
-    """
-    The administrative state of the ptp port
-    """
-    port_state: Annotated[
-        Optional[EnumerationEnum80], Field(alias='srl_nokia-sync:port-state')
-    ] = None
-    """
-    Current state associated with the port
-    """
-    source: Annotated[
-        Optional[SourceContainer2], Field(alias='srl_nokia-sync:source')
-    ] = None
-    best_master: Annotated[
-        Optional[bool], Field(alias='srl_nokia-sync:best-master')
-    ] = None
-    """
-    Indicates if this interface was selected by the BMCA to be the best master
-    """
-    parent_clock: Annotated[
-        Optional[bool], Field(alias='srl_nokia-sync:parent-clock')
-    ] = None
-    """
-    Indicates if this interface is the current parent clock of this PTP clock
-
-    May differ from best-master due to use of local GNSS as time source.
-    """
-    log_min_delay_req_interval: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-sync:log-min-delay-req-interval', ge=-6, le=0),
-    ] = None
-    """
-    The base-2 logarithm of the minDelayReqInterval
-
-    The minimum permitted mean time interval between successive Delay_Req messages.
-    The default log-min-delay-req-interval is defined by the profile.
-       itug8275dot1: -4 (16 messages per second)
-       itug8275dot2: -6 (64 messages per second)
-    """
-    log_announce_interval: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:log-announce-interval', ge=-3, le=4)
-    ] = None
-    """
-    The base-2 logarithm of the mean announceInterval
-
-    Mean time interval between successive Announce messages. To change this setting,
-    refer to log-announce-interval in the Default data set.
-    """
-    announce_receipt_timeout: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-sync:announce-receipt-timeout', ge=2, le=10),
-    ] = None
-    """
-    Sets the time limit for missed Announce packets before the master clock is deemed down
-
-    This defines the number of Announce message intervals that must expire with no received
-    Announce messages before declaring an ANNOUNCE_RECEIPT_TIMEOUT event. To change this
-    setting, refer to announce-receipt-timeout in the Default data set.
-    """
-    log_sync_interval: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:log-sync-interval', ge=-6, le=0)
-    ] = None
-    """
-    The base-2 logarithm of the mean SyncInterval for multicast messages
-
-    The default log sync interval is defined by the profile.
-       itug8275dot1: -4 (16 messages per second)
-       itug8275dot2: -6 (64 messages per second)
-    """
-    major_version_number: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:major-version-number', ge=0, le=255)
-    ] = None
-    """
-    The PTP major version number in use on the port
-    """
-    minor_version_number: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:minor-version-number', ge=0, le=255)
-    ] = None
-    """
-    The PTP minor version number in use on the port
-    """
-    local_priority: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:local-priority', ge=1, le=255)
-    ] = 128
-    """
-    Specifies the local priority of the ptp port
-    """
-    master_only: Annotated[
-        Optional[bool], Field(alias='srl_nokia-sync:master-only')
-    ] = True
-    """
-    Specifies the masterOnly attribute of the ptp port
-    """
-    dest_mac: Annotated[
-        Optional[EnumerationEnum81], Field(alias='srl_nokia-sync:dest-mac')
-    ] = 'forwardable'
-    """
-    Configure the MAC address associated with forwardable or non-forwardable
-    """
-    statistics: Annotated[
-        Optional[StatisticsContainer21], Field(alias='srl_nokia-sync:statistics')
-    ] = None
-    neighbor_count: Annotated[
-        Optional[int], Field(alias='srl_nokia-sync:neighbor-count', ge=0, le=4294967295)
-    ] = None
-    """
-    The number of neighbors for the port
-    """
-    neighbor_list: Annotated[
-        Optional[List[NeighborListListEntry]],
-        Field(alias='srl_nokia-sync:neighbor-list'),
-    ] = None
-
-
-class RemoteContainer(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    encap: Annotated[EnumerationEnum28, Field(alias='srl_nokia-mirroring:encap')]
-    network_instance: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-mirroring:network-instance',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
-        ),
-    ]
-    """
-    network instance to intitiate remote mirror tunnel
-    """
-    tunnel_end_points: Annotated[
-        Optional[TunnelEndPointsContainer],
-        Field(alias='srl_nokia-mirroring:tunnel-end-points'),
-    ] = None
-
-
-class ServerGroupListEntry(BaseModel):
-    """
-    List of AAA server-groups in the system
-
-    Each server group specifies a type, of which all servers must use. If using the 'local' type, then no servers may be specified.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-aaa:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    User defined name for the server group
-    """
-    type: Annotated[str, Field(alias='srl_nokia-aaa:type')]
-    """
-    AAA server type -- all servers in the group must be of this type
-    """
-    timeout: Annotated[
-        Optional[int], Field(alias='srl_nokia-aaa:timeout', ge=1, le=3600)
-    ] = 10
-    """
-    Set the timeout in seconds on responses from servers in this group
-    """
-    priv_lvl_authorization: Annotated[
-        Optional[bool], Field(alias='srl_nokia-aaa:priv-lvl-authorization')
-    ] = False
-    """
-    Use TACACS+ priv-lvl based authorization
-
-    If false, then authorization is skipped for TACACS+ users granting full admin access for those users.
-    """
-    server: Annotated[
-        Optional[List[ServerListEntry]], Field(alias='srl_nokia-aaa:server')
-    ] = None
-
-
-class AaaContainer(BaseModel):
-    """
-    Top-level container for AAA services
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    authentication: Annotated[
-        Optional[AuthenticationContainer], Field(alias='srl_nokia-aaa:authentication')
-    ] = None
-    authorization: Annotated[
-        Optional[AuthorizationContainer], Field(alias='srl_nokia-aaa:authorization')
-    ] = None
-    accounting: Annotated[
-        Optional[AccountingContainer], Field(alias='srl_nokia-aaa:accounting')
-    ] = None
-    server_group: Annotated[
-        Optional[List[ServerGroupListEntry]], Field(alias='srl_nokia-aaa:server-group')
-    ] = None
-
-
-class BgpInstanceListEntry(BaseModel):
-    """
-    bgp-instance associated to this ethernet-segment
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    instance: Annotated[
-        int,
-        Field(
-            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:instance',
-            ge=0,
-            le=4294967295,
-        ),
-    ]
-    designated_forwarder_role_last_change: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:designated-forwarder-role-last-change',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Indicates the time at which the designated-forwarder role was changed.
-    """
-    designated_forwarder_activation_start_time: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:designated-forwarder-activation-start-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Indicates the time at which the designated-forwarder activation timer started.
-    """
-    designated_forwarder_activation_time: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:designated-forwarder-activation-time',
-            ge=0,
-            le=4294967295,
-        ),
-    ] = None
-    """
-    Indicates the number of seconds for the activation timer to run, for this node to become the designated forwarder for this bgp instance.
-    """
-    computed_designated_forwarder_candidates: Annotated[
-        Optional[ComputedDesignatedForwarderCandidatesContainer],
-        Field(
-            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:computed-designated-forwarder-candidates'
-        ),
-    ] = None
-
-
-class BridgeTableContainer(BaseModel):
-    """
-    system bridge-table information
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    mac_learning: Annotated[
-        Optional[MacLearningContainer],
-        Field(alias='srl_nokia-system-bridge-table:mac-learning'),
-    ] = None
-    mac_limit: Annotated[
-        Optional[MacLimitContainer],
-        Field(alias='srl_nokia-system-bridge-table:mac-limit'),
-    ] = None
-    statistics: Annotated[
-        Optional[StatisticsContainer5],
-        Field(alias='srl_nokia-system-bridge-table:statistics'),
-    ] = None
-    evpn: Annotated[
-        Optional[EvpnContainer2], Field(alias='srl_nokia-system-bridge-table-evpn:evpn')
-    ] = None
-    proxy_arp: Annotated[
-        Optional[ProxyArpContainer],
-        Field(alias='srl_nokia-system-bridge-table-proxy-arp:proxy-arp'),
-    ] = None
-    proxy_nd: Annotated[
-        Optional[ProxyNdContainer],
-        Field(alias='srl_nokia-system-bridge-table-proxy-arp:proxy-nd'),
-    ] = None
-
-
-class ConfigurationContainer(BaseModel):
-    """
-    Top-level container for configuration and state data related to the system configuration
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    last_change: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-configuration:last-change',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Date and time of the last successful commit
-
-    Set to the time the configuration was loaded by management server, so is refreshed at boot time.
-    """
-    max_checkpoints: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-configuration:max-checkpoints', ge=1, le=255),
-    ] = 10
-    """
-    The number of checkpoints kept by the system
-    """
-    max_candidates: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-configuration:max-candidates', ge=1, le=255),
-    ] = 10
-    """
-    The maximum number of combined private and shared candidates
-    """
-    idle_timeout: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-configuration:idle-timeout', ge=0, le=65535),
-    ] = 10080
-    """
-    The idle timeout of configuration candidates
-
-    After this period of no activity, the candidate is emptied and removed from the system.
-    """
-    auto_checkpoint: Annotated[
-        Optional[bool], Field(alias='srl_nokia-configuration:auto-checkpoint')
-    ] = False
-    """
-    Configuration checkpoint will be automatically created after every successful commit (if set to true).
-    """
-    auto_save: Annotated[
-        Optional[bool], Field(alias='srl_nokia-configuration:auto-save')
-    ] = False
-    """
-    Configuration save will be automatically done after every successful commit (if set to true).
-    """
-    checkpoint: Annotated[
-        Optional[List[CheckpointListEntry]],
-        Field(alias='srl_nokia-configuration:checkpoint'),
-    ] = None
-    session: Annotated[
-        Optional[List[SessionListEntry3]],
-        Field(alias='srl_nokia-configuration:session'),
-    ] = None
-    candidate: Annotated[
-        Optional[List[CandidateListEntry]],
-        Field(alias='srl_nokia-configuration:candidate'),
-    ] = None
-    commit: Annotated[
-        Optional[List[CommitListEntry]], Field(alias='srl_nokia-configuration:commit')
-    ] = None
-    pathz: Annotated[
-        Optional[PathzContainer2], Field(alias='srl_nokia-configuration:pathz')
-    ] = None
-    role: Annotated[
-        Optional[List[RoleListEntry2]], Field(alias='srl_nokia-configuration-role:role')
-    ] = None
 
 
 class DhcpServerContainer(BaseModel):
@@ -16737,15 +21774,62 @@ class DhcpServerContainer(BaseModel):
         regex_engine="python-re",
     )
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-dhcp-server:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-dhcp-server:admin-state')
     ] = 'disable'
     """
     Globally enable or disable the dhcp server
     Disabling this will disable all dhcp servers.
     """
     network_instance: Annotated[
-        Optional[List[NetworkInstanceListEntry2]],
+        Optional[List[NetworkInstanceListEntry]],
         Field(alias='srl_nokia-dhcp-server:network-instance'),
+    ] = None
+
+
+class ExportingProcessListEntry(BaseModel):
+    """
+    Exporting Process of the Monitoring Device.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-ipfix:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    Key of this list.
+    """
+    exporting_process_id: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-ipfix:exporting-process-id', ge=0, le=4294967295),
+    ] = None
+    """
+    The identifier of the Exporting Process.
+    This parameter corresponds to the Information Element
+    exportingProcessId.  Its occurrence helps to associate
+    Exporting Process parameters with Exporing Process
+    statistics exported by the Monitoring Device using the
+    Exporting Process Reliability Statistics Template as
+    defined by the IPFIX protocol specification.
+    """
+    export_mode: Annotated[
+        Optional[str], Field(alias='srl_nokia-ipfix:export-mode')
+    ] = 'parallel'
+    """
+    This parameter determines to which configured
+    destination(s) the incoming Data Records are exported.
+    """
+    destination: Annotated[
+        Optional[List[DestinationListEntry]], Field(alias='srl_nokia-ipfix:destination')
+    ] = None
+    options: Annotated[
+        Optional[List[OptionsListEntry]], Field(alias='srl_nokia-ipfix:options')
     ] = None
 
 
@@ -16807,8 +21891,191 @@ class InstanceListEntry3(BaseModel):
         Optional[List[PortDsDscIpListListEntry]],
         Field(alias='srl_nokia-sync:port-ds-dsc-ip-list'),
     ] = None
+    port_ds_sync0: Annotated[
+        Optional[PortDsSync0Container2], Field(alias='srl_nokia-sync:port-ds-sync0')
+    ] = None
     port_ds_gnss: Annotated[
         Optional[PortDsGnssContainer], Field(alias='srl_nokia-sync:port-ds-gnss')
+    ] = None
+
+
+class InterfaceListEntry4(BaseModel):
+    """
+    List of interfaces on which LLDP can be enabled
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[str, Field(alias='srl_nokia-lldp:name')]
+    """
+    Reference to the LLDP Ethernet interface
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-lldp:admin-state')
+    ] = 'enable'
+    """
+    Enable or disable LLDP on the interface
+    """
+    bgp_auto_discovery: Annotated[
+        Optional[BgpAutoDiscoveryContainer2],
+        Field(alias='srl_nokia-lldp:bgp-auto-discovery'),
+    ] = None
+    lldp_med: Annotated[
+        Optional[LldpMedContainer2], Field(alias='srl_nokia-lldp:lldp-med')
+    ] = None
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-lldp:oper-state')
+    ] = None
+    """
+    Details the operational state of LLDP on the interface
+    """
+    statistics: Annotated[
+        Optional[StatisticsContainer16], Field(alias='srl_nokia-lldp:statistics')
+    ] = None
+    neighbor: Annotated[
+        Optional[List[NeighborListEntry]], Field(alias='srl_nokia-lldp:neighbor')
+    ] = None
+
+
+class IpfixContainer(BaseModel):
+    """
+    Top-level node of the IPFIX configuration
+    data model.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-ipfix:admin-state')
+    ] = 'disable'
+    """
+    Administratively enable or disable IPFIX for the system
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-ipfix:oper-state')
+    ] = None
+    """
+    Details if IPFIX is operationally available
+    """
+    observation_point: Annotated[
+        Optional[List[ObservationPointListEntry]],
+        Field(alias='srl_nokia-ipfix:observation-point'),
+    ] = None
+    selection_process: Annotated[
+        Optional[List[SelectionProcessListEntry]],
+        Field(alias='srl_nokia-ipfix:selection-process'),
+    ] = None
+    cache: Annotated[
+        Optional[List[CacheListEntry]], Field(alias='srl_nokia-ipfix:cache')
+    ] = None
+    exporting_process: Annotated[
+        Optional[List[ExportingProcessListEntry]],
+        Field(alias='srl_nokia-ipfix:exporting-process'),
+    ] = None
+
+
+class LldpContainer(BaseModel):
+    """
+    Top-level container for LLDP configuration and state data
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    trace_options: Annotated[
+        Optional[List[EnumerationEnum86]], Field(alias='srl_nokia-lldp:trace-options')
+    ] = []
+    """
+    LLDP trace options
+    """
+    admin_state: Annotated[
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-lldp:admin-state')
+    ] = 'enable'
+    """
+    Enable or disable LLDP at the system level
+    """
+    hello_timer: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-lldp:hello-timer', ge=0, le=18446744073709551615),
+    ] = 30
+    """
+    System level hello timer for the LLDP protocol
+    """
+    hold_multiplier: Annotated[
+        Optional[int], Field(alias='srl_nokia-lldp:hold-multiplier', ge=0, le=255)
+    ] = 4
+    """
+    System level hold multiplier, used to define neighbor aging
+
+    This field defines how many hellos need to be missed before
+    a neighbor is aged out.
+
+    This field also is used along with the 'hello-timer' field
+    to define the TTL TLV in outgoing LLDPDUs.
+    """
+    bgp_auto_discovery: Annotated[
+        Optional[BgpAutoDiscoveryContainer],
+        Field(alias='srl_nokia-lldp:bgp-auto-discovery'),
+    ] = None
+    system_name: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-lldp:system-name', max_length=255, min_length=0),
+    ] = None
+    """
+    The systems administratively assigned name
+
+    The system name field shall contain an alpha-numeric string
+    that indicates the system's administratively assigned name.
+    The system name should be the system's fully qualified domain
+    name.
+    """
+    system_description: Annotated[
+        Optional[str],
+        Field(alias='srl_nokia-lldp:system-description', max_length=255, min_length=0),
+    ] = None
+    """
+    Field detailing system description, including name and versions
+
+    The system description field shall contain an alpha-numeric
+    string that is the textual description of the network entity.
+    The system description should include the full name and
+    version identification of the system's hardware type,
+    software operating system, and networking software.
+    """
+    chassis_id: Annotated[Optional[str], Field(alias='srl_nokia-lldp:chassis-id')] = (
+        None
+    )
+    """
+    The Chassis ID is a mandatory TLV which identifies the
+    chassis component of the endpoint identifier associated with
+    the transmitting LLDP agent
+    """
+    chassis_id_type: Annotated[
+        Optional[EnumerationEnum87], Field(alias='srl_nokia-lldp:chassis-id-type')
+    ] = 'MAC_ADDRESS'
+    """
+    The source for the chassis identifier string
+
+    It is an enumerator defined by the LldpChassisIdSubtype object
+    from IEEE 802.1AB MIB.
+    """
+    management_address: Annotated[
+        Optional[List[ManagementAddressListEntry]],
+        Field(alias='srl_nokia-lldp:management-address'),
+    ] = None
+    lldp_med: Annotated[
+        Optional[LldpMedContainer], Field(alias='srl_nokia-lldp:lldp-med')
+    ] = None
+    statistics: Annotated[
+        Optional[StatisticsContainer15], Field(alias='srl_nokia-lldp:statistics')
+    ] = None
+    interface: Annotated[
+        Optional[List[InterfaceListEntry4]], Field(alias='srl_nokia-lldp:interface')
     ] = None
 
 
@@ -16821,6 +22088,12 @@ class MirrorDestinationContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
+    slice_size: Annotated[
+        Optional[int], Field(alias='srl_nokia-mirroring:slice-size', ge=0, le=512)
+    ] = 0
+    """
+    Specify mirrored pacekt slice size. This value specifies number of bytes that should be mirrored from the beginning of the original data packet.
+    """
     local: Annotated[Optional[str], Field(alias='srl_nokia-mirroring:local')] = None
     """
     subinterface of type local-mirror-dest used as local mirror destination
@@ -16829,7 +22102,7 @@ class MirrorDestinationContainer(BaseModel):
         Optional[RemoteContainer], Field(alias='srl_nokia-mirroring:remote')
     ] = None
     statistics: Annotated[
-        Optional[StatisticsContainer4], Field(alias='srl_nokia-mirroring:statistics')
+        Optional[StatisticsContainer8], Field(alias='srl_nokia-mirroring:statistics')
     ] = None
 
 
@@ -16853,13 +22126,13 @@ class MirroringInstanceListEntry(BaseModel):
     A unique name identifying the mirroring instance
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-mirroring:admin-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-mirroring:admin-state')
     ] = 'enable'
     """
     This leaf contains the configured, desired state of the mirroring instance.
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3], Field(alias='srl_nokia-mirroring:oper-state')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-mirroring:oper-state')
     ] = None
     """
     This leaf contains the operational state of the mirroring instance.
@@ -16872,7 +22145,7 @@ class MirroringInstanceListEntry(BaseModel):
     A user-entered description of this mirroring instance.
     """
     oper_down_reason: Annotated[
-        Optional[EnumerationEnum25], Field(alias='srl_nokia-mirroring:oper-down-reason')
+        Optional[EnumerationEnum29], Field(alias='srl_nokia-mirroring:oper-down-reason')
     ] = None
     """
     The reason for the mirroring instance being operational down
@@ -16902,7 +22175,7 @@ class MirroringContainer(BaseModel):
     ] = None
 
 
-class NetworkInstanceListEntry(BaseModel):
+class NetworkInstanceListEntry2(BaseModel):
     """
     network instance associated to this ethernet-segment
     """
@@ -16925,13 +22198,13 @@ class NetworkInstanceListEntry(BaseModel):
     ] = None
 
 
-class PtpContainer2(BaseModel):
+class PtpContainer3(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
     ptp_profile: Annotated[
-        Optional[EnumerationEnum75], Field(alias='srl_nokia-sync:ptp-profile')
+        Optional[EnumerationEnum111], Field(alias='srl_nokia-sync:ptp-profile')
     ] = 'itug8275dot1'
     """
     Specifies the PTP profile mode for the PTP clock
@@ -16968,7 +22241,7 @@ class SyncContainer(BaseModel):
     freq_clock: Annotated[
         Optional[FreqClockContainer], Field(alias='srl_nokia-sync:freq-clock')
     ] = None
-    ptp: Annotated[Optional[PtpContainer2], Field(alias='srl_nokia-sync:ptp')] = None
+    ptp: Annotated[Optional[PtpContainer3], Field(alias='srl_nokia-sync:ptp')] = None
     gnss: Annotated[Optional[GnssContainer2], Field(alias='srl_nokia-sync:gnss')] = None
     one_pps: Annotated[
         Optional[OnePpsContainer], Field(alias='srl_nokia-sync:one-pps')
@@ -16981,7 +22254,7 @@ class AssociationContainer(BaseModel):
         regex_engine="python-re",
     )
     network_instance: Annotated[
-        Optional[List[NetworkInstanceListEntry]],
+        Optional[List[NetworkInstanceListEntry2]],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:network-instance'
         ),
@@ -17008,7 +22281,7 @@ class EthernetSegmentListEntry(BaseModel):
     A unique name identifying the ethernet segment.
     """
     type: Annotated[
-        Optional[EnumerationEnum32],
+        Optional[EnumerationEnum60],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:type'
         ),
@@ -17017,7 +22290,7 @@ class EthernetSegmentListEntry(BaseModel):
     Ethernet Segment type.
     """
     admin_state: Annotated[
-        Optional[EnumerationEnum2],
+        Optional[EnumerationEnum3],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:admin-state'
         ),
@@ -17026,7 +22299,7 @@ class EthernetSegmentListEntry(BaseModel):
     Admin state of the ethernet segment
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum3],
+        Optional[EnumerationEnum4],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:oper-state'
         ),
@@ -17046,6 +22319,20 @@ class EthernetSegmentListEntry(BaseModel):
 
     ESI-0 or MAX-ESI values are not allowed.
     ESI values with bytes 1-6 all zeros are not allowed since they would produce a null ESI-import route-target.
+    """
+    use_esi_label: Annotated[
+        Optional[bool],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:use-esi-label'
+        ),
+    ] = True
+    """
+    Indicates if an ESI label is used for the ethernet segment
+
+    When set to true, the ESI label is used for split-horizon filtering within the Ethernet Segment. 'True' is mandatory for
+    all-active multi-homing mode Ethernet Segments connected to MAC-VRF network-instances using MPLS encapsulation. For all-active
+    Ethernet Segments connected to VPWS network-instances with any encapsulation or MAC-VRFs using VXLAN encapsulation, as well as
+    for single-active Ethernet Segments, the use of the ESI label is optional.
     """
     oper_esi: Annotated[
         Optional[str],
@@ -17079,7 +22366,7 @@ class EthernetSegmentListEntry(BaseModel):
         ),
     ] = None
     multi_homing_mode: Annotated[
-        Optional[EnumerationEnum33],
+        Optional[EnumerationEnum61],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:multi-homing-mode'
         ),
@@ -17090,9 +22377,13 @@ class EthernetSegmentListEntry(BaseModel):
     The state of this leaf can be different than the configured value in cases where the configured value is 'all-active' and the
     multi-homing mode advertised by the ES peers in the AD per-ES routes is 'single-active'. In this case, the state of this
     leaf will show 'single-active'.
+
+    When an Ethernet Segment (ES) is configured as either all-active-no-esi-label or single-active-no-esi-label, no ESI (Ethernet
+    Segment Identifier) label is allocated. This configuration is suitable for Ethernet segments connected exclusively to VXLAN or
+    VPWS network instances.
     """
     oper_multi_homing_mode: Annotated[
-        Optional[EnumerationEnum33],
+        Optional[EnumerationEnum61],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:oper-multi-homing-mode'
         ),
@@ -17104,6 +22395,12 @@ class EthernetSegmentListEntry(BaseModel):
     multi-homing mode advertised by the ES peers in the AD per-ES routes is 'single-active'. In this case, the state of this leaf
     will show 'single-active'.
     """
+    advertise_ifl_host_ad_routes: Annotated[
+        Optional[AdvertiseIflHostAdRoutesContainer],
+        Field(
+            alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:advertise-ifl-host-ad-routes'
+        ),
+    ] = None
     df_election: Annotated[
         Optional[DfElectionContainer],
         Field(
@@ -17129,7 +22426,7 @@ class EthernetSegmentListEntry(BaseModel):
         ),
     ] = None
     oper_down_reason: Annotated[
-        Optional[EnumerationEnum39],
+        Optional[EnumerationEnum66],
         Field(
             alias='srl_nokia-system-network-instance-bgp-evpn-ethernet-segments:oper-down-reason'
         ),
@@ -17204,12 +22501,12 @@ class EvpnContainer3(BaseModel):
         ),
     ] = None
     multicast: Annotated[
-        Optional[MulticastContainer],
+        Optional[MulticastContainer2],
         Field(alias='srl_nokia-system-network-instance-bgp-evpn-multicast:multicast'),
     ] = None
 
 
-class ProtocolsContainer2(BaseModel):
+class ProtocolsContainer(BaseModel):
     """
     The routing protocols that are enabled for this
     network-instance.
@@ -17226,6 +22523,10 @@ class ProtocolsContainer2(BaseModel):
         Optional[BgpVpnContainer],
         Field(alias='srl_nokia-system-network-instance-bgp-vpn:bgp-vpn'),
     ] = None
+    mgmt_stp: Annotated[
+        Optional[List[MgmtStpListEntry]],
+        Field(alias='srl_nokia-system-protocols-mgmt-stp:mgmt-stp'),
+    ] = None
 
 
 class NetworkInstanceContainer2(BaseModel):
@@ -17234,12 +22535,12 @@ class NetworkInstanceContainer2(BaseModel):
         regex_engine="python-re",
     )
     protocols: Annotated[
-        Optional[ProtocolsContainer2],
+        Optional[ProtocolsContainer],
         Field(alias='srl_nokia-system-network-instance:protocols'),
     ] = None
 
 
-class SystemContainer(BaseModel):
+class SystemContainer2(BaseModel):
     """
     Enclosing container for system management
     """
@@ -17248,114 +22549,65 @@ class SystemContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    features: Annotated[
-        Optional[List[FeaturesLeafList]], Field(alias='srl_nokia-system:features')
-    ] = []
-    """
-    Features enabled on this platform
-    """
     trace_options: Annotated[
         Optional[List[EnumerationEnum]], Field(alias='srl_nokia-system:trace-options')
     ] = []
     """
     Management server trace options
     """
-    management: Annotated[
-        Optional[ManagementContainer], Field(alias='srl_nokia-system:management')
-    ] = None
-    control_plane_traffic: Annotated[
-        Optional[ControlPlaneTrafficContainer],
-        Field(alias='srl_nokia-system:control-plane-traffic'),
-    ] = None
-    dot1x: Annotated[Optional[Dot1xContainer], Field(alias='srl_nokia-dot1x:dot1x')] = (
-        None
-    )
+    tls: Annotated[Optional[TlsContainer], Field(alias='srl_nokia-tls:tls')] = None
     ssh_server: Annotated[
         Optional[List[SshServerListEntry]], Field(alias='srl_nokia-ssh:ssh-server')
     ] = None
-    tls: Annotated[Optional[TlsContainer], Field(alias='srl_nokia-tls:tls')] = None
     aaa: Annotated[Optional[AaaContainer], Field(alias='srl_nokia-aaa:aaa')] = None
     grpc_server: Annotated[
         Optional[List[GrpcServerListEntry]], Field(alias='srl_nokia-grpc:grpc-server')
     ] = None
-    mpls: Annotated[
-        Optional[MplsContainer], Field(alias='srl_nokia-mpls-label-management:mpls')
+    ndk_server: Annotated[
+        Optional[NdkServerContainer], Field(alias='srl_nokia-ndk:ndk-server')
     ] = None
-    protocols: Annotated[
-        Optional[ProtocolsContainer],
-        Field(alias='srl_nokia-system-protocols:protocols'),
+    license: Annotated[
+        Optional[List[LicenseListEntry]], Field(alias='srl_nokia-license:license')
     ] = None
-    authentication: Annotated[
-        Optional[AuthenticationContainer2],
-        Field(alias='srl_nokia-keychains:authentication'),
-    ] = None
-    dns: Annotated[Optional[DnsContainer], Field(alias='srl_nokia-dns:dns')] = None
-    mirroring: Annotated[
-        Optional[MirroringContainer], Field(alias='srl_nokia-mirroring:mirroring')
-    ] = None
-    datapath: Annotated[
-        Optional[DatapathContainer], Field(alias='srl_nokia-system-datapath:datapath')
+    information: Annotated[
+        Optional[InformationContainer], Field(alias='srl_nokia-system-info:information')
     ] = None
     bridge_table: Annotated[
         Optional[BridgeTableContainer],
         Field(alias='srl_nokia-system-bridge-table:bridge-table'),
     ] = None
-    name: Annotated[
-        Optional[NameContainer], Field(alias='srl_nokia-system-name:name')
-    ] = None
-    license: Annotated[
-        Optional[List[LicenseListEntry]], Field(alias='srl_nokia-license:license')
-    ] = None
-    network_instance: Annotated[
-        Optional[NetworkInstanceContainer2],
-        Field(alias='srl_nokia-system-network-instance:network-instance'),
-    ] = None
     netconf_server: Annotated[
         Optional[List[NetconfServerListEntry]],
         Field(alias='srl_nokia-netconf-server:netconf-server'),
     ] = None
-    event_handler: Annotated[
-        Optional[EventHandlerContainer],
-        Field(alias='srl_nokia-event-handler:event-handler'),
+    logging: Annotated[
+        Optional[LoggingContainer], Field(alias='srl_nokia-logging:logging')
     ] = None
-    lldp: Annotated[Optional[LldpContainer], Field(alias='srl_nokia-lldp:lldp')] = None
-    boot: Annotated[Optional[BootContainer], Field(alias='srl_nokia-boot:boot')] = None
-    configuration: Annotated[
-        Optional[ConfigurationContainer],
-        Field(alias='srl_nokia-configuration:configuration'),
-    ] = None
-    ra_guard_policy: Annotated[
-        Optional[List[RaGuardPolicyListEntry]],
-        Field(alias='srl_nokia-ra_guard:ra-guard-policy'),
-    ] = None
-    app_management: Annotated[
-        Optional[AppManagementContainer],
-        Field(alias='srl_nokia-app-mgmt:app-management'),
-    ] = None
-    dhcp_server: Annotated[
-        Optional[DhcpServerContainer], Field(alias='srl_nokia-dhcp-server:dhcp-server')
-    ] = None
-    packet_link_qualification: Annotated[
-        Optional[PacketLinkQualificationContainer],
-        Field(alias='srl_nokia-packet-link-qual:packet-link-qualification'),
-    ] = None
-    json_rpc_server: Annotated[
-        Optional[JsonRpcServerContainer],
-        Field(alias='srl_nokia-json-rpc:json-rpc-server'),
-    ] = None
-    banner: Annotated[
-        Optional[BannerContainer], Field(alias='srl_nokia-system-banner:banner')
-    ] = None
-    information: Annotated[
-        Optional[InformationContainer], Field(alias='srl_nokia-system-info:information')
+    datapath: Annotated[
+        Optional[DatapathContainer], Field(alias='srl_nokia-system-datapath:datapath')
     ] = None
     utilization: Annotated[
         Optional[UtilizationContainer],
         Field(alias='srl_nokia-system-utilization:utilization'),
     ] = None
-    maintenance: Annotated[
-        Optional[MaintenanceContainer],
-        Field(alias='srl_nokia-maintenance-mode:maintenance'),
+    mirroring: Annotated[
+        Optional[MirroringContainer], Field(alias='srl_nokia-mirroring:mirroring')
+    ] = None
+    dhcp_server: Annotated[
+        Optional[DhcpServerContainer], Field(alias='srl_nokia-dhcp-server:dhcp-server')
+    ] = None
+    cli: Annotated[Optional[CliContainer2], Field(alias='srl_nokia-system-cli:cli')] = (
+        None
+    )
+    name: Annotated[
+        Optional[NameContainer], Field(alias='srl_nokia-system-name:name')
+    ] = None
+    multicast: Annotated[
+        Optional[MulticastContainer],
+        Field(alias='srl_nokia-system-multicast:multicast'),
+    ] = None
+    mpls: Annotated[
+        Optional[MplsContainer], Field(alias='srl_nokia-mpls-label-management:mpls')
     ] = None
     multicast_forwarding_information_base: Annotated[
         Optional[MulticastForwardingInformationBaseContainer],
@@ -17363,25 +22615,90 @@ class SystemContainer(BaseModel):
             alias='srl_nokia-system-multicast-mfib-table:multicast-forwarding-information-base'
         ),
     ] = None
-    multicast: Annotated[
-        Optional[MulticastContainer2],
-        Field(alias='srl_nokia-system-multicast:multicast'),
+    authentication: Annotated[
+        Optional[AuthenticationContainer2],
+        Field(alias='srl_nokia-keychains:authentication'),
     ] = None
-    ntp: Annotated[Optional[NtpContainer2], Field(alias='srl_nokia-ntp:ntp')] = None
-    clock: Annotated[Optional[ClockContainer], Field(alias='srl_nokia-ntp:clock')] = (
-        None
-    )
+    configuration: Annotated[
+        Optional[ConfigurationContainer],
+        Field(alias='srl_nokia-configuration:configuration'),
+    ] = None
+    protection_policies: Annotated[
+        Optional[ProtectionPoliciesContainer],
+        Field(alias='srl_nokia-protection-policies:protection-policies'),
+    ] = None
+    srv6: Annotated[Optional[Srv6Container], Field(alias='srl_nokia-srv6:srv6')] = None
+    ra_guard_policy: Annotated[
+        Optional[List[RaGuardPolicyListEntry]],
+        Field(alias='srl_nokia-ra_guard:ra-guard-policy'),
+    ] = None
+    network_instance: Annotated[
+        Optional[NetworkInstanceContainer2],
+        Field(alias='srl_nokia-system-network-instance:network-instance'),
+    ] = None
+    fhs_classid_mgmt: Annotated[
+        Optional[FhsClassidMgmtContainer],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:fhs-classid-mgmt'),
+    ] = None
+    first_hop_security_policy: Annotated[
+        Optional[List[FirstHopSecurityPolicyListEntry]],
+        Field(
+            alias='srl_nokia-first-hop-security-ip-mac-binding:first-hop-security-policy'
+        ),
+    ] = None
+    fhs_ip_mac_bindings: Annotated[
+        Optional[FhsIpMacBindingsContainer],
+        Field(alias='srl_nokia-first-hop-security-ip-mac-binding:fhs-ip-mac-bindings'),
+    ] = None
+    app_management: Annotated[
+        Optional[AppManagementContainer],
+        Field(alias='srl_nokia-app-mgmt:app-management'),
+    ] = None
+    maintenance: Annotated[
+        Optional[MaintenanceContainer],
+        Field(alias='srl_nokia-maintenance-mode:maintenance'),
+    ] = None
+    banner: Annotated[
+        Optional[BannerContainer], Field(alias='srl_nokia-system-banner:banner')
+    ] = None
+    mtu: Annotated[Optional[MtuContainer], Field(alias='srl_nokia-mtu:mtu')] = None
+    tftp_server: Annotated[
+        Optional[TftpServerContainer], Field(alias='srl_nokia-tftp:tftp-server')
+    ] = None
     lawful_intercept: Annotated[
         Optional[LawfulInterceptContainer],
         Field(alias='srl_nokia-lawful-intercept:lawful-intercept'),
     ] = None
-    mtu: Annotated[Optional[MtuContainer], Field(alias='srl_nokia-mtu:mtu')] = None
-    sync: Annotated[Optional[SyncContainer], Field(alias='srl_nokia-sync:sync')] = None
+    lldp: Annotated[Optional[LldpContainer], Field(alias='srl_nokia-lldp:lldp')] = None
+    boot: Annotated[Optional[BootContainer], Field(alias='srl_nokia-boot:boot')] = None
+    event_handler: Annotated[
+        Optional[EventHandlerContainer],
+        Field(alias='srl_nokia-event-handler:event-handler'),
+    ] = None
+    json_rpc_server: Annotated[
+        Optional[JsonRpcServerContainer],
+        Field(alias='srl_nokia-json-rpc:json-rpc-server'),
+    ] = None
+    dhcp_server_guard_policy: Annotated[
+        Optional[List[DhcpServerGuardPolicyListEntry]],
+        Field(alias='srl_nokia-dhcp-server-guard:dhcp-server-guard-policy'),
+    ] = None
+    ipfix: Annotated[Optional[IpfixContainer], Field(alias='srl_nokia-ipfix:ipfix')] = (
+        None
+    )
+    packet_link_qualification: Annotated[
+        Optional[PacketLinkQualificationContainer],
+        Field(alias='srl_nokia-packet-link-qual:packet-link-qualification'),
+    ] = None
     lacp: Annotated[Optional[LacpContainer], Field(alias='srl_nokia-lacp:lacp')] = None
     l2cp_transparency: Annotated[
         Optional[L2cpTransparencyContainer],
         Field(alias='srl_nokia-interfaces-l2cp:l2cp-transparency'),
     ] = None
+    sync: Annotated[Optional[SyncContainer], Field(alias='srl_nokia-sync:sync')] = None
+    dot1x: Annotated[Optional[Dot1xContainer], Field(alias='srl_nokia-dot1x:dot1x')] = (
+        None
+    )
 
 
 class Model(BaseModel):
@@ -17405,7 +22722,7 @@ class Model(BaseModel):
         regex_engine="python-re",
     )
     system: Annotated[
-        Optional[SystemContainer], Field(alias='srl_nokia-system:system')
+        Optional[SystemContainer2], Field(alias='srl_nokia-system:system')
     ] = None
 
 

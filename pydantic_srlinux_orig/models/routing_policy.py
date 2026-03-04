@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
+from typing_extensions import Annotated
 
 
 class AsNumberType(RootModel[int]):
@@ -22,9 +23,7 @@ class AsPathSetMemberLeafList(RootModel[str]):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    root: Annotated[
-        str, Field(pattern='^(?=^(null)|([0-9$ ()*+,.^{}\\[\\]\\-\\|?<>_\\\\]+)$).*$')
-    ]
+    root: Annotated[str, Field(max_length=65535, min_length=1)]
     """
     A list of regular expressions
     """
@@ -38,11 +37,30 @@ class BgpExtCommunityRegexpType2Type1(RootModel[str]):
     root: Annotated[
         str,
         Field(
-            pattern='^(?=^[\\^]?link\\-bandwidth[0-9$()*+,.^{}\\[\\]\\-|?:_]*[kMGT]?[$]?$).*$'
+            pattern='^(?=^[\\^]?link-bandwidth:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+[kMGT]?[$]?$).*$'
         ),
     ]
     """
     Type definition for extended community regular expressions
+
+    Each regex is a sequence of terms and operators. A term can be:
+     - a single digit, such as ‟4”
+     - a range term composed of two elementary terms separated by the ‛-’ character like ‟2-3”
+     - the dot ‟.” wild-card character which matches any elementary term or ':'
+     - a regular expression enclosed in parenthesis ‟( )”
+     - a choice of digits and/or ranges enclosed in square brackets; for example, [51-37] matches digit 5 or any single digit between 1 and 3 or the digit 7
+
+    Supported operators:
+    | - match term on the left of the operator or the term on the right of the operator
+    * - matches zero or more occurrences of the preceding term
+    ? - matches zero or one occurrence of the preceding term
+    + - matches one or more occurrences of the preceding term
+    {m,n} - matches least m and at most n repetitions of the term
+    {m} - matches exactly m repetitions of the term
+    {m,} - matches m or more repetitions of the term
+    ^ - matches the beginning of the string
+    $ - matches the end of the string
+    backslash - an escape character to indicate that the following character is a match criteria and not a grouping delimiter
     """
 
 
@@ -53,10 +71,31 @@ class BgpExtCommunityRegexpType2Type2(RootModel[str]):
     )
     root: Annotated[
         str,
-        Field(pattern='^(?=^[\\^]?target[0-9$()*+,.^{}\\[\\]\\-|?:_\\\\]*[$]?$).*$'),
+        Field(
+            pattern='^(?=^[\\^]?target:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+[$]?$).*$'
+        ),
     ]
     """
     Type definition for extended community regular expressions
+
+    Each regex is a sequence of terms and operators. A term can be:
+     - a single digit, such as ‟4”
+     - a range term composed of two elementary terms separated by the ‛-’ character like ‟2-3”
+     - the dot ‟.” wild-card character which matches any elementary term or ':'
+     - a regular expression enclosed in parenthesis ‟( )”
+     - a choice of digits and/or ranges enclosed in square brackets; for example, [51-37] matches digit 5 or any single digit between 1 and 3 or the digit 7
+
+    Supported operators:
+    | - match term on the left of the operator or the term on the right of the operator
+    * - matches zero or more occurrences of the preceding term
+    ? - matches zero or one occurrence of the preceding term
+    + - matches one or more occurrences of the preceding term
+    {m,n} - matches least m and at most n repetitions of the term
+    {m} - matches exactly m repetitions of the term
+    {m,} - matches m or more repetitions of the term
+    ^ - matches the beginning of the string
+    $ - matches the end of the string
+    backslash - an escape character to indicate that the following character is a match criteria and not a grouping delimiter
     """
 
 
@@ -67,60 +106,31 @@ class BgpExtCommunityRegexpType2Type3(RootModel[str]):
     )
     root: Annotated[
         str,
-        Field(pattern='^(?=^[\\^]?origin[0-9$()*+,.^{}\\[\\]\\-|?:_\\\\]*[$]?$).*$'),
+        Field(
+            pattern='^(?=^[\\^]?origin:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+:[0-9()*+,.{}\\[\\]\\-\\|\\?\\\\]+[$]?$).*$'
+        ),
     ]
     """
     Type definition for extended community regular expressions
-    """
 
+    Each regex is a sequence of terms and operators. A term can be:
+     - a single digit, such as ‟4”
+     - a range term composed of two elementary terms separated by the ‛-’ character like ‟2-3”
+     - the dot ‟.” wild-card character which matches any elementary term or ':'
+     - a regular expression enclosed in parenthesis ‟( )”
+     - a choice of digits and/or ranges enclosed in square brackets; for example, [51-37] matches digit 5 or any single digit between 1 and 3 or the digit 7
 
-class BgpExtCommunityRegexpType2Type4(RootModel[str]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[
-        str, Field(pattern='^(?=^[\\^]?color[0-9$()*+,.^{}\\[\\]\\-|?:_]*[$]?$).*$')
-    ]
-    """
-    Type definition for extended community regular expressions
-    """
-
-
-class BgpExtCommunityRegexpType2Type5(RootModel[str]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[str, Field(pattern='^(?=^bgp-tunnel-encap:(VXLAN|MPLS)$).*$')]
-    """
-    Type definition for extended community regular expressions
-    """
-
-
-class BgpExtCommunityRegexpType2Type6(RootModel[str]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[
-        str, Field(pattern='^(?=^[\\^]?ext[0-9a-f$()*+,.^{}\\[\\]\\-|?:_]*[$]?$).*$')
-    ]
-    """
-    Type definition for extended community regular expressions
-    """
-
-
-class BgpExtCommunityRegexpType2Type7(RootModel[str]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[
-        str, Field(pattern='^(?=^[\\^]?gbp\\-tag[0-9$()*+,.^{}\\[\\]\\-|?:_]*[$]?$).*$')
-    ]
-    """
-    Type definition for extended community regular expressions
+    Supported operators:
+    | - match term on the left of the operator or the term on the right of the operator
+    * - matches zero or more occurrences of the preceding term
+    ? - matches zero or one occurrence of the preceding term
+    + - matches one or more occurrences of the preceding term
+    {m,n} - matches least m and at most n repetitions of the term
+    {m} - matches exactly m repetitions of the term
+    {m,} - matches m or more repetitions of the term
+    ^ - matches the beginning of the string
+    $ - matches the end of the string
+    backslash - an escape character to indicate that the following character is a match criteria and not a grouping delimiter
     """
 
 
@@ -198,6 +208,145 @@ class BgpExtCommunityRegexpTypeType2(RootModel[str]):
     """
 
 
+class BgpExtCommunityType2Type1(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^link-bandwidth:(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9]):[0-9]+[kMGT]?$).*$'
+        ),
+    ]
+    """
+    Type definition for extended community members
+    """
+
+
+class BgpExtCommunityType2Type2(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^target:(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9]):(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9])$).*$'
+        ),
+    ]
+    """
+    Type definition for extended community members
+    """
+
+
+class BgpExtCommunityType2Type3(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^target:(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$'
+        ),
+    ]
+    """
+    Type definition for extended community members
+    """
+
+
+class BgpExtCommunityType2Type4(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^target:(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$'
+        ),
+    ]
+    """
+    Type definition for extended community members
+    """
+
+
+class BgpExtCommunityType2Type5(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^origin:(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9]):(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9])$).*$'
+        ),
+    ]
+    """
+    Type definition for extended community members
+    """
+
+
+class BgpExtCommunityType2Type6(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^origin:(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$'
+        ),
+    ]
+    """
+    Type definition for extended community members
+    """
+
+
+class BgpExtCommunityType2Type7(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^origin:(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9]):(6553[0-5]|655[0-2][0-9]|654[0-9]{2}|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$).*$'
+        ),
+    ]
+    """
+    Type definition for extended community members
+    """
+
+
+class BgpExtCommunityType2Type8(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^color:[0-1]{2}:(429496729[0-5]|42949672[0-8][0-9]|4294967[0-1][0-9]{2}|429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|4294[0-8][0-9]{5}|429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[0-1][0-9]{8}|[1-3][0-9]{9}|[1-9][0-9]{1,8}|[0-9])$).*$'
+        ),
+    ]
+    """
+    Type definition for extended community members
+    """
+
+
+class BgpExtCommunityType2Type9(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[str, Field(pattern='^(?=^bgp-tunnel-encap:(VXLAN|MPLS)$).*$')]
+    """
+    Type definition for extended community members
+    """
+
+
 class BgpExtCommunityTypeType1(RootModel[str]):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -210,7 +359,16 @@ class BgpExtCommunityTypeType1(RootModel[str]):
         ),
     ]
     """
-    Type definition for extended community attributes
+    Type definition for extended community attributes. In the case that
+    common communities are utilised, they are represented as a string
+    of the form:
+     - target:<2b AS>:<4b value> per RFC4360 section 4
+     - target:<4b IPv4>:<2b value> per RFC4360 section 4
+     - origin:<2b ASN>:<4b value> per RFC4360 section 5
+     - origin:<4b IPv4>:<2b value> per RFC4360 section 5
+     - color:<CO bits>:<4b value> per draft-ietf-idr-segment-routing-te-policy
+       section 3
+     - bgp-tunnel-encap:VXLAN, bgp-tunnel-encap:MPLS
     """
 
 
@@ -226,7 +384,16 @@ class BgpExtCommunityTypeType2(RootModel[str]):
         ),
     ]
     """
-    Type definition for extended community attributes
+    Type definition for extended community attributes. In the case that
+    common communities are utilised, they are represented as a string
+    of the form:
+     - target:<2b AS>:<4b value> per RFC4360 section 4
+     - target:<4b IPv4>:<2b value> per RFC4360 section 4
+     - origin:<2b ASN>:<4b value> per RFC4360 section 5
+     - origin:<4b IPv4>:<2b value> per RFC4360 section 5
+     - color:<CO bits>:<4b value> per draft-ietf-idr-segment-routing-te-policy
+       section 3
+     - bgp-tunnel-encap:VXLAN, bgp-tunnel-encap:MPLS
     """
 
 
@@ -242,7 +409,16 @@ class BgpExtCommunityTypeType3(RootModel[str]):
         ),
     ]
     """
-    Type definition for extended community attributes
+    Type definition for extended community attributes. In the case that
+    common communities are utilised, they are represented as a string
+    of the form:
+     - target:<2b AS>:<4b value> per RFC4360 section 4
+     - target:<4b IPv4>:<2b value> per RFC4360 section 4
+     - origin:<2b ASN>:<4b value> per RFC4360 section 5
+     - origin:<4b IPv4>:<2b value> per RFC4360 section 5
+     - color:<CO bits>:<4b value> per draft-ietf-idr-segment-routing-te-policy
+       section 3
+     - bgp-tunnel-encap:VXLAN, bgp-tunnel-encap:MPLS
     """
 
 
@@ -258,7 +434,16 @@ class BgpExtCommunityTypeType4(RootModel[str]):
         ),
     ]
     """
-    Type definition for extended community attributes
+    Type definition for extended community attributes. In the case that
+    common communities are utilised, they are represented as a string
+    of the form:
+     - target:<2b AS>:<4b value> per RFC4360 section 4
+     - target:<4b IPv4>:<2b value> per RFC4360 section 4
+     - origin:<2b ASN>:<4b value> per RFC4360 section 5
+     - origin:<4b IPv4>:<2b value> per RFC4360 section 5
+     - color:<CO bits>:<4b value> per draft-ietf-idr-segment-routing-te-policy
+       section 3
+     - bgp-tunnel-encap:VXLAN, bgp-tunnel-encap:MPLS
     """
 
 
@@ -274,7 +459,16 @@ class BgpExtCommunityTypeType5(RootModel[str]):
         ),
     ]
     """
-    Type definition for extended community attributes
+    Type definition for extended community attributes. In the case that
+    common communities are utilised, they are represented as a string
+    of the form:
+     - target:<2b AS>:<4b value> per RFC4360 section 4
+     - target:<4b IPv4>:<2b value> per RFC4360 section 4
+     - origin:<2b ASN>:<4b value> per RFC4360 section 5
+     - origin:<4b IPv4>:<2b value> per RFC4360 section 5
+     - color:<CO bits>:<4b value> per draft-ietf-idr-segment-routing-te-policy
+       section 3
+     - bgp-tunnel-encap:VXLAN, bgp-tunnel-encap:MPLS
     """
 
 
@@ -290,7 +484,16 @@ class BgpExtCommunityTypeType6(RootModel[str]):
         ),
     ]
     """
-    Type definition for extended community attributes
+    Type definition for extended community attributes. In the case that
+    common communities are utilised, they are represented as a string
+    of the form:
+     - target:<2b AS>:<4b value> per RFC4360 section 4
+     - target:<4b IPv4>:<2b value> per RFC4360 section 4
+     - origin:<2b ASN>:<4b value> per RFC4360 section 5
+     - origin:<4b IPv4>:<2b value> per RFC4360 section 5
+     - color:<CO bits>:<4b value> per draft-ietf-idr-segment-routing-te-policy
+       section 3
+     - bgp-tunnel-encap:VXLAN, bgp-tunnel-encap:MPLS
     """
 
 
@@ -306,7 +509,16 @@ class BgpExtCommunityTypeType7(RootModel[str]):
         ),
     ]
     """
-    Type definition for extended community attributes
+    Type definition for extended community attributes. In the case that
+    common communities are utilised, they are represented as a string
+    of the form:
+     - target:<2b AS>:<4b value> per RFC4360 section 4
+     - target:<4b IPv4>:<2b value> per RFC4360 section 4
+     - origin:<2b ASN>:<4b value> per RFC4360 section 5
+     - origin:<4b IPv4>:<2b value> per RFC4360 section 5
+     - color:<CO bits>:<4b value> per draft-ietf-idr-segment-routing-te-policy
+       section 3
+     - bgp-tunnel-encap:VXLAN, bgp-tunnel-encap:MPLS
     """
 
 
@@ -317,7 +529,16 @@ class BgpExtCommunityTypeType8(RootModel[str]):
     )
     root: Annotated[str, Field(pattern='^(?=^bgp-tunnel-encap:(VXLAN|MPLS)$).*$')]
     """
-    Type definition for extended community attributes
+    Type definition for extended community attributes. In the case that
+    common communities are utilised, they are represented as a string
+    of the form:
+     - target:<2b AS>:<4b value> per RFC4360 section 4
+     - target:<4b IPv4>:<2b value> per RFC4360 section 4
+     - origin:<2b ASN>:<4b value> per RFC4360 section 5
+     - origin:<4b IPv4>:<2b value> per RFC4360 section 5
+     - color:<CO bits>:<4b value> per draft-ietf-idr-segment-routing-te-policy
+       section 3
+     - bgp-tunnel-encap:VXLAN, bgp-tunnel-encap:MPLS
     """
 
 
@@ -353,17 +574,6 @@ class BgpLargeCommunityTypeType(RootModel[str]):
     """
 
 
-class BgpStdCommunityRegexpType2Type(RootModel[str]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[str, Field(pattern='^(?=^[0-9$()*+,.\\^{}\\[\\]\\-|?:_]+$).*$')]
-    """
-    Type definition for regular expressions that match standard BGP communities
-    """
-
-
 class BgpStdCommunityRegexpTypeType(RootModel[str]):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -376,7 +586,7 @@ class BgpStdCommunityRegexpTypeType(RootModel[str]):
         ),
     ]
     """
-    Type definition for legacy regular expressions that match standard BGP communities
+    Type definition for regular expressions that match standard BGP communities
     """
 
 
@@ -442,29 +652,6 @@ class Ipv6PrefixType(RootModel[str]):
     """
 
 
-class LabeledUnicastContainer(BaseModel):
-    """
-    Policy actions related to statistics collection of BGP-LU routes and tunnels
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    ingress: Annotated[
-        Optional[bool], Field(alias='srl_nokia-routing-policy:ingress')
-    ] = None
-    """
-    Set true to enable statistics collection for ILM forwarding entries associated with BGP-LU routes
-    """
-    egress: Annotated[
-        Optional[bool], Field(alias='srl_nokia-routing-policy:egress')
-    ] = None
-    """
-    Set true to enable statistics collection for NHLFE forwarding entries associated with BGP-LU routes
-    """
-
-
 class ReplaceLeafList(RootModel[int]):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -473,8 +660,6 @@ class ReplaceLeafList(RootModel[int]):
     root: Annotated[int, Field(ge=1, le=4294967295)]
     """
     Clear the existing AS path and replace it a new AS_SEQUENCE containing the listed AS numbers.
-
-    This takes precedence over a prepend action; the prepend action is not performed if a remove or replace action is specified.
     """
 
 
@@ -486,8 +671,6 @@ class ReplaceLeafList2(RootModel[int]):
     root: Annotated[int, Field(ge=1, le=4294967295)]
     """
     Clear the existing AS path and replace it a new AS_SEQUENCE containing the listed AS numbers.
-
-    This takes precedence over a prepend action; the prepend action is not performed if a remove or replace action is specified.
     """
 
 
@@ -502,9 +685,31 @@ class RouteTypeLeafList(RootModel[int]):
     """
 
 
-class SrtePolicyContainer2(BaseModel):
+class SetLeaf21(RootModel[int]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[int, Field(ge=0, le=4294967295)]
     """
-    Policy actions related to statistics collection of BGP-signaled SR policies
+    The new value of the Multi-Exit Discriminator attribute value to write into the matching BGP routes. The route-table-cost option derives the MED from the route metric.
+    """
+
+
+class SetLeaf71(RootModel[int]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[int, Field(ge=0, le=4294967295)]
+    """
+    The new value of the Multi-Exit Discriminator attribute value to write into the matching BGP routes. The route-table-cost option derives the MED from the route metric.
+    """
+
+
+class StatisticsContainer(BaseModel):
+    """
+    BGP Labeled unicast tunnel statistics
     """
 
     model_config = ConfigDict(
@@ -515,54 +720,37 @@ class SrtePolicyContainer2(BaseModel):
         Optional[bool], Field(alias='srl_nokia-routing-policy:ingress')
     ] = None
     """
-    Set true to enable statistics collection for ILM forwarding entries associated with BGP SR policies
+    Ingress statistics collection for BGP-LU tunnels
     """
     egress: Annotated[
         Optional[bool], Field(alias='srl_nokia-routing-policy:egress')
     ] = None
     """
-    Set true to enable statistics collection for NHLFE forwarding entries associated with BGP SR policies
+    Egress statistics collection for BGP-LU tunnels
     """
 
 
-class SrtePolicyContainer3(BaseModel):
+class StatisticsContainer2(BaseModel):
     """
-    Policy actions related to protection and maintenance of BGP SRTE policy tunnels
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    protection_policy: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-routing-policy:protection-policy',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    The protection policy to use with the TE policy if the matched BGP route becomes the active candidate path
-    """
-
-
-class StatisticsContainer(BaseModel):
-    """
-    Policy actions related to statistics collection
+    BGP Labeled unicast tunnel statistics
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    labeled_unicast: Annotated[
-        Optional[LabeledUnicastContainer],
-        Field(alias='srl_nokia-routing-policy:labeled-unicast'),
+    ingress: Annotated[
+        Optional[bool], Field(alias='srl_nokia-routing-policy:ingress')
     ] = None
-    srte_policy: Annotated[
-        Optional[SrtePolicyContainer2],
-        Field(alias='srl_nokia-routing-policy:srte-policy'),
+    """
+    Ingress statistics collection for BGP-LU tunnels
+    """
+    egress: Annotated[
+        Optional[bool], Field(alias='srl_nokia-routing-policy:egress')
     ] = None
+    """
+    Egress statistics collection for BGP-LU tunnels
+    """
 
 
 class TagTypeType1(RootModel[int]):
@@ -578,58 +766,34 @@ class TagTypeType1(RootModel[int]):
     """
 
 
-class ValueLeaf1(RootModel[int]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[int, Field(ge=0, le=4294967295)]
-    """
-    Change the value of the Multi-Exit Discriminator attribute in matching BGP routes
-
-    The route-table-cost option derives its value from the route metric.
-    """
-
-
-class ValueLeaf31(RootModel[int]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[int, Field(ge=0, le=4294967295)]
-    """
-    Change the value of the Multi-Exit Discriminator attribute in matching BGP routes
-
-    The route-table-cost option derives its value from the route metric.
-    """
-
-
 class EnumerationEnum(Enum):
-    asn = 'asn'
-    character = 'character'
+    any = 'any'
+    all = 'all'
+    invert = 'invert'
 
 
 class EnumerationEnum10(Enum):
-    self = 'self'
+    internal = 'internal'
+    external = 'external'
 
 
 class EnumerationEnum11(Enum):
-    igp = 'igp'
-    egp = 'egp'
-    incomplete = 'incomplete'
-
-
-class EnumerationEnum12(Enum):
+    narrow = 'narrow'
     wide = 'wide'
 
 
+class EnumerationEnum12(Enum):
+    any = 'any'
+
+
 class EnumerationEnum13(Enum):
-    type_1 = 'type-1'
-    type_2 = 'type-2'
+    any = 'any'
 
 
 class EnumerationEnum14(Enum):
-    any = 'any'
+    eq = 'eq'
+    ge = 'ge'
+    le = 'le'
 
 
 class EnumerationEnum15(Enum):
@@ -645,102 +809,63 @@ class EnumerationEnum16(Enum):
 
 
 class EnumerationEnum17(Enum):
-    eq = 'eq'
-    ge = 'ge'
-    le = 'le'
+    any = 'any'
+    all = 'all'
+    invert = 'invert'
 
 
 class EnumerationEnum18(Enum):
-    any = 'any'
-    all = 'all'
-    invert = 'invert'
+    internal = 'internal'
+    external = 'external'
 
 
 class EnumerationEnum19(Enum):
-    any = 'any'
-    all = 'all'
-    invert = 'invert'
-
-
-class EnumerationEnum2(Enum):
-    any = 'any'
-    all = 'all'
-    invert = 'invert'
-
-
-class EnumerationEnum20(Enum):
-    present = 'present'
-    not_present = 'not-present'
-
-
-class EnumerationEnum21(Enum):
-    internal = 'internal'
-    external = 'external'
-
-
-class EnumerationEnum22(Enum):
-    internal = 'internal'
-    external = 'external'
-
-
-class EnumerationEnum23(Enum):
     accept = 'accept'
     reject = 'reject'
     next_statement = 'next-statement'
     next_policy = 'next-policy'
 
 
-class EnumerationEnum24(Enum):
+class EnumerationEnum2(Enum):
+    accept = 'accept'
+    reject = 'reject'
+    next_policy = 'next-policy'
+
+
+class EnumerationEnum20(Enum):
     auto = 'auto'
 
 
-class EnumerationEnum25(Enum):
+class EnumerationEnum21(Enum):
     reference = 'reference'
 
 
-class EnumerationEnum26(Enum):
+class EnumerationEnum22(Enum):
     reference = 'reference'
 
 
-class EnumerationEnum27(Enum):
+class EnumerationEnum23(Enum):
     route_table_cost = 'route-table-cost'
 
 
-class EnumerationEnum28(Enum):
-    set = 'set'
-    add = 'add'
-    subtract = 'subtract'
-
-
-class EnumerationEnum29(Enum):
+class EnumerationEnum24(Enum):
     igp = 'igp'
     egp = 'egp'
     incomplete = 'incomplete'
 
 
 class EnumerationEnum3(Enum):
-    accept = 'accept'
-    reject = 'reject'
-    next_policy = 'next-policy'
-
-
-class EnumerationEnum30(Enum):
-    wide = 'wide'
-
-
-class EnumerationEnum31(Enum):
-    type_1 = 'type-1'
-    type_2 = 'type-2'
-
-
-class EnumerationEnum4(Enum):
     auto = 'auto'
 
 
-class EnumerationEnum5(Enum):
+class EnumerationEnum4(Enum):
     add = 'add'
     remove = 'remove'
     replace = 'replace'
+
+
+class EnumerationEnum5(Enum):
+    reference = 'reference'
 
 
 class EnumerationEnum6(Enum):
@@ -748,17 +873,17 @@ class EnumerationEnum6(Enum):
 
 
 class EnumerationEnum7(Enum):
-    reference = 'reference'
-
-
-class EnumerationEnum8(Enum):
     route_table_cost = 'route-table-cost'
 
 
+class EnumerationEnum8(Enum):
+    self = 'self'
+
+
 class EnumerationEnum9(Enum):
-    set = 'set'
-    add = 'add'
-    subtract = 'subtract'
+    igp = 'igp'
+    egp = 'egp'
+    incomplete = 'incomplete'
 
 
 class EvpnContainer(BaseModel):
@@ -807,7 +932,8 @@ class Ipv6AddressType(RootModel[str]):
         ),
     ]
     """
-    An IPv6 address represented as either a full address, shortened or mixed-shortened formats
+    An IPv6 address represented as either a full address; shortened
+    or mixed-shortened formats.
     """
 
 
@@ -834,6 +960,39 @@ class LocalPreferenceContainer2(BaseModel):
     ] = None
     """
     The new value of LOCAL_PREF to write into the matching BGP routes
+    """
+
+
+class OspfContainer(BaseModel):
+    """
+    Configuration for OSPF-specific policy match criteria
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    area_id: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-routing-policy:area-id',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
+        ),
+    ] = None
+    """
+    The area identifier as a dotted-quad.
+    """
+    route_type: Annotated[
+        Optional[str], Field(alias='srl_nokia-routing-policy:route-type')
+    ] = None
+    """
+    The OSPF route type.
+    """
+    instance_id: Annotated[
+        Optional[int], Field(alias='srl_nokia-routing-policy:instance-id', ge=0, le=255)
+    ] = None
+    """
+    OSPFv3 instance identifier
     """
 
 
@@ -887,7 +1046,7 @@ class PrefixContainer(BaseModel):
     Reference to a prefix set name
     """
     match_set_options: Annotated[
-        Optional[EnumerationEnum14],
+        Optional[EnumerationEnum12],
         Field(alias='srl_nokia-routing-policy:match-set-options'),
     ] = None
 
@@ -902,7 +1061,7 @@ class PrependContainer(BaseModel):
         regex_engine="python-re",
     )
     as_number: Annotated[
-        Optional[Union[AsNumberType, EnumerationEnum4]],
+        Optional[Union[AsNumberType, EnumerationEnum3]],
         Field(alias='srl_nokia-routing-policy:as-number'),
     ] = None
     """
@@ -928,7 +1087,7 @@ class PrependContainer2(BaseModel):
         regex_engine="python-re",
     )
     as_number: Annotated[
-        Optional[Union[AsNumberType, EnumerationEnum24]],
+        Optional[Union[AsNumberType, EnumerationEnum20]],
         Field(alias='srl_nokia-routing-policy:as-number'),
     ] = None
     """
@@ -942,21 +1101,6 @@ class PrependContainer2(BaseModel):
     """
     The number of repetitions of the prepended AS number
     """
-
-
-class ProtectionContainer(BaseModel):
-    """
-    Policy actions related to protection and maintenance of BGP tunnels
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    srte_policy: Annotated[
-        Optional[SrtePolicyContainer3],
-        Field(alias='srl_nokia-routing-policy:srte-policy'),
-    ] = None
 
 
 class ReferencedSetsLeafList(RootModel[str]):
@@ -1098,12 +1242,6 @@ class SetTagSetLeafList2(RootModel[str]):
 
 
 class SourceAddressContainer(BaseModel):
-    """
-    Multicast Source IP address
-
-    Source address can be configured as a prefix.
-    """
-
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -1116,49 +1254,9 @@ class SourceAddressContainer(BaseModel):
         ),
     ] = None
     """
-    A name used to identify the prefix set
-    """
+    Multicast source IP address
 
-
-class Srv6Container(BaseModel):
-    """
-    Enter the srv6 context
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    locator: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-routing-policy:locator',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    Locator for SRv6 TLV to use
-    """
-
-
-class Srv6Container3(BaseModel):
-    """
-    Enter the srv6 context
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    locator: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-routing-policy:locator',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    Locator for SRv6 TLV to use
+    Source address can be configured as a prefix.
     """
 
 
@@ -1182,11 +1280,13 @@ class StandardCommunitySetListEntry(BaseModel):
     A name used to identify the community set
     """
     member: Annotated[
-        Optional[List[Union[BgpStdCommunityRegexpType2Type, str]]],
+        Optional[
+            List[Union[BgpStdCommunityTypeType, BgpStdCommunityRegexpTypeType, str]]
+        ],
         Field(alias='srl_nokia-routing-policy:member'),
     ] = []
     """
-    A standard BGP community value or regular expression
+    An extended BGP community value or regular expression
     """
 
 
@@ -1196,7 +1296,7 @@ class StandardCommunityContainer(BaseModel):
         regex_engine="python-re",
     )
     operation: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-routing-policy:operation')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-routing-policy:operation')
     ] = None
     """
     The type of operation for modifying the community attribute with the specified values
@@ -1206,7 +1306,7 @@ class StandardCommunityContainer(BaseModel):
         Field(alias='srl_nokia-routing-policy:referenced-sets'),
     ] = []
     method: Annotated[
-        Optional[EnumerationEnum6], Field(alias='srl_nokia-routing-policy:method')
+        Optional[EnumerationEnum5], Field(alias='srl_nokia-routing-policy:method')
     ] = 'reference'
     """
     Indicates the method used to specify the standard communities for the action
@@ -1231,7 +1331,7 @@ class StandardCommunityContainer2(BaseModel):
     A route meets this condition if the configured match-set-options apply to the referenced standard-community-set
     """
     match_set_options: Annotated[
-        Optional[EnumerationEnum18],
+        Optional[EnumerationEnum15],
         Field(alias='srl_nokia-routing-policy:match-set-options'),
     ] = 'any'
     """
@@ -1245,7 +1345,7 @@ class StandardCommunityContainer3(BaseModel):
         regex_engine="python-re",
     )
     operation: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-routing-policy:operation')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-routing-policy:operation')
     ] = None
     """
     The type of operation for modifying the community attribute with the specified values
@@ -1255,7 +1355,7 @@ class StandardCommunityContainer3(BaseModel):
         Field(alias='srl_nokia-routing-policy:referenced-sets'),
     ] = []
     method: Annotated[
-        Optional[EnumerationEnum25], Field(alias='srl_nokia-routing-policy:method')
+        Optional[EnumerationEnum21], Field(alias='srl_nokia-routing-policy:method')
     ] = 'reference'
     """
     Indicates the method used to specify the standard communities for the action
@@ -1329,7 +1429,7 @@ class AsPathLengthContainer(BaseModel):
     The number of (unique) AS numbers in the AS path
     """
     operator: Annotated[
-        Optional[EnumerationEnum17], Field(alias='srl_nokia-routing-policy:operator')
+        Optional[EnumerationEnum14], Field(alias='srl_nokia-routing-policy:operator')
     ] = None
     """
     The comparison operator that applies to the value
@@ -1361,13 +1461,14 @@ class AsPathSetListEntry(BaseModel):
     """
     A name used to identify the AS path regular expression
     """
-    regex_mode: Annotated[
-        Optional[EnumerationEnum], Field(alias='srl_nokia-routing-policy:regex-mode')
-    ] = 'asn'
+    expression: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-routing-policy:expression', max_length=65535, min_length=1
+        ),
+    ] = None
     """
-    Mode used to parse the regular expression in every as-path-set-member of the as-path-set
-
-    In ASN mode the AS path is converted to a string and the string is matched one complete AS number at a time. In character mode the AS path is converted to a string and the string is matched one character at a time.
+    A regular expression where each AS number is an elemental term
     """
     as_path_set_member: Annotated[
         Optional[List[AsPathSetMemberLeafList]],
@@ -1398,8 +1499,6 @@ class AsPathContainer(BaseModel):
     ] = []
     """
     Clear the existing AS path and replace it a new AS_SEQUENCE containing the listed AS numbers.
-
-    This takes precedence over a prepend action; the prepend action is not performed if a remove or replace action is specified.
     """
     prepend: Annotated[
         Optional[PrependContainer], Field(alias='srl_nokia-routing-policy:prepend')
@@ -1421,15 +1520,12 @@ class AsPathContainer2(BaseModel):
     """
     Reference to an as-path-set name
 
-    A route meets this condition if it matches the as-path-set-member regex strings according to the match-set-options logic
+    A route meets this condition if it matches the regular expression
     """
     match_set_options: Annotated[
-        Optional[EnumerationEnum16],
+        Optional[EnumerationEnum13],
         Field(alias='srl_nokia-routing-policy:match-set-options'),
-    ] = 'any'
-    """
-    Options that determine the matching criteria that applies to the members in the referenced set
-    """
+    ] = None
 
 
 class AsPathContainer3(BaseModel):
@@ -1453,8 +1549,6 @@ class AsPathContainer3(BaseModel):
     ] = []
     """
     Clear the existing AS path and replace it a new AS_SEQUENCE containing the listed AS numbers.
-
-    This takes precedence over a prepend action; the prepend action is not performed if a remove or replace action is specified.
     """
     prepend: Annotated[
         Optional[PrependContainer2], Field(alias='srl_nokia-routing-policy:prepend')
@@ -1623,7 +1717,7 @@ class CommunitySetListEntry(BaseModel):
     A standard BGP community value, regular expression or well-known name or else a large BGP community value or regular expression
     """
     match_set_options: Annotated[
-        Optional[EnumerationEnum2],
+        Optional[EnumerationEnum],
         Field(alias='srl_nokia-routing-policy:match-set-options'),
     ] = 'all'
     """
@@ -1654,13 +1748,22 @@ class ExtendedCommunitySetListEntry(BaseModel):
         Optional[
             List[
                 Union[
-                    BgpExtCommunityRegexpType2Type1,
-                    BgpExtCommunityRegexpType2Type2,
-                    BgpExtCommunityRegexpType2Type3,
-                    BgpExtCommunityRegexpType2Type4,
-                    BgpExtCommunityRegexpType2Type5,
-                    BgpExtCommunityRegexpType2Type6,
-                    BgpExtCommunityRegexpType2Type7,
+                    Union[
+                        BgpExtCommunityType2Type1,
+                        BgpExtCommunityType2Type2,
+                        BgpExtCommunityType2Type3,
+                        BgpExtCommunityType2Type4,
+                        BgpExtCommunityType2Type5,
+                        BgpExtCommunityType2Type6,
+                        BgpExtCommunityType2Type7,
+                        BgpExtCommunityType2Type8,
+                        BgpExtCommunityType2Type9,
+                    ],
+                    Union[
+                        BgpExtCommunityRegexpType2Type1,
+                        BgpExtCommunityRegexpType2Type2,
+                        BgpExtCommunityRegexpType2Type3,
+                    ],
                 ]
             ]
         ],
@@ -1677,7 +1780,7 @@ class ExtendedCommunityContainer(BaseModel):
         regex_engine="python-re",
     )
     operation: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-routing-policy:operation')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-routing-policy:operation')
     ] = None
     """
     The type of operation for modifying the community attribute with the specified values
@@ -1687,7 +1790,7 @@ class ExtendedCommunityContainer(BaseModel):
         Field(alias='srl_nokia-routing-policy:referenced-sets'),
     ] = []
     method: Annotated[
-        Optional[EnumerationEnum7], Field(alias='srl_nokia-routing-policy:method')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-routing-policy:method')
     ] = 'reference'
     """
     Indicates the method used to specify the extended communities for the action
@@ -1712,7 +1815,7 @@ class ExtendedCommunityContainer2(BaseModel):
     A route meets this condition if the configured match-set-options apply to the referenced extended-community-set
     """
     match_set_options: Annotated[
-        Optional[EnumerationEnum19],
+        Optional[EnumerationEnum16],
         Field(alias='srl_nokia-routing-policy:match-set-options'),
     ] = 'any'
     """
@@ -1726,7 +1829,7 @@ class ExtendedCommunityContainer3(BaseModel):
         regex_engine="python-re",
     )
     operation: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-routing-policy:operation')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-routing-policy:operation')
     ] = None
     """
     The type of operation for modifying the community attribute with the specified values
@@ -1736,7 +1839,7 @@ class ExtendedCommunityContainer3(BaseModel):
         Field(alias='srl_nokia-routing-policy:referenced-sets'),
     ] = []
     method: Annotated[
-        Optional[EnumerationEnum26], Field(alias='srl_nokia-routing-policy:method')
+        Optional[EnumerationEnum22], Field(alias='srl_nokia-routing-policy:method')
     ] = 'reference'
     """
     Indicates the method used to specify the extended communities for the action
@@ -1744,14 +1847,6 @@ class ExtendedCommunityContainer3(BaseModel):
 
 
 class GroupAddressContainer(BaseModel):
-    """
-    Multicast group IP address
-
-    To match a <S,G> the source needs to be present in the multicast source-address leafref and the group needs to present in the group-address leafref.
-    To match a <*,G> the group has to be programmed in the group-address leafref and no source in the source-address leafref.
-    Group address can be configured as a prefix.
-    """
-
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -1764,7 +1859,12 @@ class GroupAddressContainer(BaseModel):
         ),
     ] = None
     """
-    A name used to identify the prefix set
+    Multicast group IP address
+
+    <S,G> the source needs to be present in the multicast source-address leafref and the
+    group needs to present in the group-address leafref.  To match a <*,G> the group has to
+    be programmed in the group-address leafref and no source in the source-address leafref.
+    Group address can be configured as a prefix.
     """
 
 
@@ -1802,7 +1902,7 @@ class InternalTagsContainer2(BaseModel):
     Reference to a tag-set defined under routing-policy
     """
     match_set_options: Annotated[
-        Optional[EnumerationEnum15],
+        Optional[EnumerationEnum17],
         Field(alias='srl_nokia-routing-policy:match-set-options'),
     ] = 'any'
     """
@@ -1844,7 +1944,7 @@ class IsisContainer2(BaseModel):
     Match an IS-IS route based on its level
     """
     route_type: Annotated[
-        Optional[EnumerationEnum21], Field(alias='srl_nokia-routing-policy:route-type')
+        Optional[EnumerationEnum18], Field(alias='srl_nokia-routing-policy:route-type')
     ] = None
     """
     Match an IS-IS route based on its type
@@ -1858,20 +1958,12 @@ class MedContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    value: Annotated[
-        Optional[Union[EnumerationEnum8, ValueLeaf1]],
-        Field(alias='srl_nokia-routing-policy:value'),
+    set: Annotated[
+        Optional[Union[SetLeaf21, EnumerationEnum7]],
+        Field(alias='srl_nokia-routing-policy:set'),
     ] = None
     """
-    Change the value of the Multi-Exit Discriminator attribute in matching BGP routes
-
-    The route-table-cost option derives its value from the route metric.
-    """
-    operation: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-routing-policy:operation')
-    ] = None
-    """
-    The operation to use when applying the configured value to the existing MED
+    The new value of the Multi-Exit Discriminator attribute value to write into the matching BGP routes. The route-table-cost option derives the MED from the route metric.
     """
 
 
@@ -1880,20 +1972,12 @@ class MedContainer2(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    value: Annotated[
-        Optional[Union[EnumerationEnum27, ValueLeaf31]],
-        Field(alias='srl_nokia-routing-policy:value'),
+    set: Annotated[
+        Optional[Union[SetLeaf71, EnumerationEnum23]],
+        Field(alias='srl_nokia-routing-policy:set'),
     ] = None
     """
-    Change the value of the Multi-Exit Discriminator attribute in matching BGP routes
-
-    The route-table-cost option derives its value from the route metric.
-    """
-    operation: Annotated[
-        Optional[EnumerationEnum28], Field(alias='srl_nokia-routing-policy:operation')
-    ] = None
-    """
-    The operation to use when applying the configured value to the existing MED
+    The new value of the Multi-Exit Discriminator attribute value to write into the matching BGP routes. The route-table-cost option derives the MED from the route metric.
     """
 
 
@@ -1906,11 +1990,17 @@ class MetricContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    set_style: Annotated[
-        Optional[EnumerationEnum12], Field(alias='srl_nokia-routing-policy:set-style')
+    set_type: Annotated[
+        Optional[EnumerationEnum10], Field(alias='srl_nokia-routing-policy:set-type')
     ] = None
     """
-    Set the style of the metric
+    Set the metric type, internal or external
+    """
+    set_style: Annotated[
+        Optional[EnumerationEnum11], Field(alias='srl_nokia-routing-policy:set-style')
+    ] = None
+    """
+    Set the style of the metric, narrow or wide
     """
     set_value: Annotated[
         Optional[int],
@@ -1923,30 +2013,6 @@ class MetricContainer(BaseModel):
 
 class MetricContainer2(BaseModel):
     """
-    Policy actions related to OSPF metrics
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    set_external_type: Annotated[
-        Optional[EnumerationEnum13],
-        Field(alias='srl_nokia-routing-policy:set-external-type'),
-    ] = None
-    """
-    Set the external metric type of the redistributed route
-    """
-    set_value: Annotated[
-        Optional[int], Field(alias='srl_nokia-routing-policy:set-value', ge=0, le=65535)
-    ] = None
-    """
-    Set the metric value of the redistributed route
-    """
-
-
-class MetricContainer3(BaseModel):
-    """
     Policy actions related to ISIS metrics
     """
 
@@ -1954,11 +2020,17 @@ class MetricContainer3(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    set_style: Annotated[
-        Optional[EnumerationEnum30], Field(alias='srl_nokia-routing-policy:set-style')
+    set_type: Annotated[
+        Optional[EnumerationEnum10], Field(alias='srl_nokia-routing-policy:set-type')
     ] = None
     """
-    Set the style of the metric
+    Set the metric type, internal or external
+    """
+    set_style: Annotated[
+        Optional[EnumerationEnum11], Field(alias='srl_nokia-routing-policy:set-style')
+    ] = None
+    """
+    Set the style of the metric, narrow or wide
     """
     set_value: Annotated[
         Optional[int],
@@ -1966,30 +2038,6 @@ class MetricContainer3(BaseModel):
     ] = None
     """
     Set the metric of the IS-IS prefix
-    """
-
-
-class MetricContainer4(BaseModel):
-    """
-    Policy actions related to OSPF metrics
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    set_external_type: Annotated[
-        Optional[EnumerationEnum31],
-        Field(alias='srl_nokia-routing-policy:set-external-type'),
-    ] = None
-    """
-    Set the external metric type of the redistributed route
-    """
-    set_value: Annotated[
-        Optional[int], Field(alias='srl_nokia-routing-policy:set-value', ge=0, le=65535)
-    ] = None
-    """
-    Set the metric value of the redistributed route
     """
 
 
@@ -2027,13 +2075,6 @@ class NextHopResolutionContainer(BaseModel):
     """
     Reference to a tag-set to be used for controlling next-hop resolution
     """
-    set_flex_algo: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-routing-policy:set-flex-algo', ge=128, le=255),
-    ] = None
-    """
-    Action to set the algorithm fornext-hop resolution of matched BGP routes
-    """
 
 
 class NextHopResolutionContainer2(BaseModel):
@@ -2055,13 +2096,6 @@ class NextHopResolutionContainer2(BaseModel):
     """
     Reference to a tag-set to be used for controlling next-hop resolution
     """
-    set_flex_algo: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-routing-policy:set-flex-algo', ge=128, le=255),
-    ] = None
-    """
-    Action to set the algorithm fornext-hop resolution of matched BGP routes
-    """
 
 
 class OriginContainer(BaseModel):
@@ -2070,7 +2104,7 @@ class OriginContainer(BaseModel):
         regex_engine="python-re",
     )
     set: Annotated[
-        Optional[EnumerationEnum11], Field(alias='srl_nokia-routing-policy:set')
+        Optional[EnumerationEnum9], Field(alias='srl_nokia-routing-policy:set')
     ] = None
     """
     The new value of the ORIGIN attribute to write into the matching BGP routes
@@ -2083,64 +2117,11 @@ class OriginContainer2(BaseModel):
         regex_engine="python-re",
     )
     set: Annotated[
-        Optional[EnumerationEnum29], Field(alias='srl_nokia-routing-policy:set')
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-routing-policy:set')
     ] = None
     """
     The new value of the ORIGIN attribute to write into the matching BGP routes
     """
-
-
-class OspfContainer(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    metric: Annotated[
-        Optional[MetricContainer2], Field(alias='srl_nokia-routing-policy:metric')
-    ] = None
-
-
-class OspfContainer2(BaseModel):
-    """
-    Configuration for OSPF-specific policy match criteria
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    area_id: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-routing-policy:area-id',
-            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
-        ),
-    ] = None
-    """
-    The area identifier as a dotted-quad.
-    """
-    route_type: Annotated[
-        Optional[EnumerationEnum22], Field(alias='srl_nokia-routing-policy:route-type')
-    ] = None
-    """
-    The OSPF route type.
-    """
-    instance_id: Annotated[
-        Optional[int], Field(alias='srl_nokia-routing-policy:instance-id', ge=0, le=255)
-    ] = None
-    """
-    OSPFv3 instance identifier
-    """
-
-
-class OspfContainer3(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    metric: Annotated[
-        Optional[MetricContainer4], Field(alias='srl_nokia-routing-policy:metric')
-    ] = None
 
 
 class PrefixSidCase(BaseModel):
@@ -2197,31 +2178,57 @@ class PrefixListEntry(BaseModel):
     """
 
 
-class Srv6Container2(BaseModel):
+class BgpContainer2(BaseModel):
     """
-    Enter the srv6 context
+    Configuration for BGP-specific policy match criteria
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    sid_prefix: Annotated[
+    as_path_set: Annotated[
         Optional[str],
         Field(
-            alias='srl_nokia-routing-policy:sid-prefix',
-            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$).*$',
+            alias='srl_nokia-routing-policy:as-path-set',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
         ),
     ] = None
     """
-    SRv6 SID or uSID as match criterion for the BGP route
+    Reference to an as-path-set name
+
+    A route meets this condition if it matches the regular expression
     """
-    tlv: Annotated[
-        Optional[EnumerationEnum20], Field(alias='srl_nokia-routing-policy:tlv')
+    as_path: Annotated[
+        Optional[AsPathContainer2], Field(alias='srl_nokia-routing-policy:as-path')
+    ] = None
+    as_path_length: Annotated[
+        Optional[AsPathLengthContainer],
+        Field(alias='srl_nokia-routing-policy:as-path-length'),
+    ] = None
+    community_set: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-routing-policy:community-set',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
     ] = None
     """
-    SRv6 TLV presence as match criterion for BGP route
+    Reference to a community-set name
+
+    A route meets this condition if has any community value matching a community member in the referenced community-set
     """
+    standard_community: Annotated[
+        Optional[StandardCommunityContainer2],
+        Field(alias='srl_nokia-routing-policy:standard-community'),
+    ] = None
+    extended_community: Annotated[
+        Optional[ExtendedCommunityContainer2],
+        Field(alias='srl_nokia-routing-policy:extended-community'),
+    ] = None
+    evpn: Annotated[
+        Optional[EvpnContainer], Field(alias='srl_nokia-routing-policy:evpn')
+    ] = None
 
 
 class IsisContainer(BaseModel):
@@ -2252,7 +2259,7 @@ class IsisContainer3(BaseModel):
     Set the level that a prefix is to be imported into
     """
     metric: Annotated[
-        Optional[MetricContainer3], Field(alias='srl_nokia-routing-policy:metric')
+        Optional[MetricContainer2], Field(alias='srl_nokia-routing-policy:metric')
     ] = None
 
 
@@ -2286,106 +2293,6 @@ class LabelAllocationContainer2(BaseModel):
     ] = None
 
 
-class PrefixSetListEntry(BaseModel):
-    """
-    List of defined prefix sets
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-routing-policy:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    A name used to identify the prefix set
-    """
-    prefix: Annotated[
-        Optional[List[PrefixListEntry]], Field(alias='srl_nokia-routing-policy:prefix')
-    ] = None
-
-
-class SrtePolicyContainer(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    distinguisher: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-routing-policy:distinguisher', ge=0, le=4294967295),
-    ] = None
-    """
-    Unique identifier of the policy candidate path in the context of <color, endpoint> tuple
-    """
-    color: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-routing-policy:color', ge=0, le=4294967295),
-    ] = None
-    """
-    Color of the SRTE policy, used to steer traffic into the tunnel
-    """
-    endpoint: Annotated[
-        Optional[Union[Ipv4AddressType, Ipv6AddressType]],
-        Field(alias='srl_nokia-routing-policy:endpoint'),
-    ] = None
-    """
-    The endpoint IPv4 or IPv6 address of the SR policy
-    """
-
-
-class BgpContainer2(BaseModel):
-    """
-    Configuration for BGP-specific policy match criteria
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    as_path: Annotated[
-        Optional[AsPathContainer2], Field(alias='srl_nokia-routing-policy:as-path')
-    ] = None
-    as_path_length: Annotated[
-        Optional[AsPathLengthContainer],
-        Field(alias='srl_nokia-routing-policy:as-path-length'),
-    ] = None
-    community_set: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-routing-policy:community-set',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    Reference to a community-set name
-
-    A route meets this condition if has any community value matching a community member in the referenced community-set
-    """
-    standard_community: Annotated[
-        Optional[StandardCommunityContainer2],
-        Field(alias='srl_nokia-routing-policy:standard-community'),
-    ] = None
-    extended_community: Annotated[
-        Optional[ExtendedCommunityContainer2],
-        Field(alias='srl_nokia-routing-policy:extended-community'),
-    ] = None
-    evpn: Annotated[
-        Optional[EvpnContainer], Field(alias='srl_nokia-routing-policy:evpn')
-    ] = None
-    srte_policy: Annotated[
-        Optional[SrtePolicyContainer],
-        Field(alias='srl_nokia-routing-policy:srte-policy'),
-    ] = None
-    srv6: Annotated[
-        Optional[Srv6Container2], Field(alias='srl_nokia-routing-policy:srv6')
-    ] = None
-
-
 class MatchContainer(BaseModel):
     """
     Match conditions of the policy statement
@@ -2395,8 +2302,21 @@ class MatchContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
+    prefix_set: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-routing-policy:prefix-set',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ] = None
+    """
+    Reference to a prefix set name
+    """
     prefix: Annotated[
         Optional[PrefixContainer], Field(alias='srl_nokia-routing-policy:prefix')
+    ] = None
+    bgp: Annotated[
+        Optional[BgpContainer2], Field(alias='srl_nokia-routing-policy:bgp')
     ] = None
     family: Annotated[
         Optional[List[str]], Field(alias='srl_nokia-routing-policy:family')
@@ -2421,38 +2341,42 @@ class MatchContainer(BaseModel):
 
     If the final action of the called policy (which may in turn call other policies) with respect to a route is 'accept' then the route is considered to satisfy this match condition. If the final action of the called policy with respect to a route is 'reject' then the route is considered a non-match of this condition and hence the policy statement
     """
-    origin_network_instance: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-routing-policy:origin-network-instance',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    Reference to network-instance that leaked the route into the network-instance where the policy is being evaluated
-    """
-    network_instance_leaked_route: Annotated[
-        Optional[bool],
-        Field(alias='srl_nokia-routing-policy:network-instance-leaked-route'),
-    ] = None
-    """
-    When set true, match all leaked routes (with an origin-network-instance different than the local context network-instance)
-    """
     internal_tags: Annotated[
         Optional[InternalTagsContainer2],
         Field(alias='srl_nokia-routing-policy:internal-tags'),
-    ] = None
-    bgp: Annotated[
-        Optional[BgpContainer2], Field(alias='srl_nokia-routing-policy:bgp')
     ] = None
     isis: Annotated[
         Optional[IsisContainer2], Field(alias='srl_nokia-routing-policy:isis')
     ] = None
     ospf: Annotated[
-        Optional[OspfContainer2], Field(alias='srl_nokia-routing-policy:ospf')
+        Optional[OspfContainer], Field(alias='srl_nokia-routing-policy:ospf')
     ] = None
     multicast: Annotated[
         Optional[MulticastContainer], Field(alias='srl_nokia-routing-policy:multicast')
+    ] = None
+
+
+class PrefixSetListEntry(BaseModel):
+    """
+    List of defined prefix sets
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-routing-policy:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    A name used to identify the prefix set
+    """
+    prefix: Annotated[
+        Optional[List[PrefixListEntry]], Field(alias='srl_nokia-routing-policy:prefix')
     ] = None
 
 
@@ -2466,7 +2390,7 @@ class NextHopContainer(BaseModel):
         regex_engine="python-re",
     )
     set: Annotated[
-        Optional[Union[EnumerationEnum10, Union[Ipv4AddressType, Ipv6AddressType]]],
+        Optional[Union[EnumerationEnum8, Union[Ipv4AddressType, Ipv6AddressType]]],
         Field(alias='srl_nokia-routing-policy:set'),
     ] = None
     """
@@ -2484,7 +2408,7 @@ class NextHopContainer2(BaseModel):
         regex_engine="python-re",
     )
     set: Annotated[
-        Optional[Union[EnumerationEnum10, Union[Ipv4AddressType, Ipv6AddressType]]],
+        Optional[Union[EnumerationEnum8, Union[Ipv4AddressType, Ipv6AddressType]]],
         Field(alias='srl_nokia-routing-policy:set'),
     ] = None
     """
@@ -2535,12 +2459,13 @@ class BgpContainer(BaseModel):
     origin: Annotated[
         Optional[OriginContainer], Field(alias='srl_nokia-routing-policy:origin')
     ] = None
+    statistics: Annotated[
+        Optional[StatisticsContainer],
+        Field(alias='srl_nokia-routing-policy:statistics'),
+    ] = None
     label_allocation: Annotated[
         Optional[LabelAllocationContainer],
         Field(alias='srl_nokia-routing-policy:label-allocation'),
-    ] = None
-    srv6: Annotated[
-        Optional[Srv6Container], Field(alias='srl_nokia-routing-policy:srv6')
     ] = None
 
 
@@ -2587,26 +2512,19 @@ class BgpContainer3(BaseModel):
     origin: Annotated[
         Optional[OriginContainer2], Field(alias='srl_nokia-routing-policy:origin')
     ] = None
+    statistics: Annotated[
+        Optional[StatisticsContainer2],
+        Field(alias='srl_nokia-routing-policy:statistics'),
+    ] = None
     label_allocation: Annotated[
         Optional[LabelAllocationContainer2],
         Field(alias='srl_nokia-routing-policy:label-allocation'),
-    ] = None
-    statistics: Annotated[
-        Optional[StatisticsContainer],
-        Field(alias='srl_nokia-routing-policy:statistics'),
-    ] = None
-    protection: Annotated[
-        Optional[ProtectionContainer],
-        Field(alias='srl_nokia-routing-policy:protection'),
-    ] = None
-    srv6: Annotated[
-        Optional[Srv6Container3], Field(alias='srl_nokia-routing-policy:srv6')
     ] = None
 
 
 class DefaultActionContainer(BaseModel):
     """
-    Actions for routes that do not match any policy statement
+    Actions for routes that do not match any policy entry
     """
 
     model_config = ConfigDict(
@@ -2614,22 +2532,17 @@ class DefaultActionContainer(BaseModel):
         regex_engine="python-re",
     )
     policy_result: Annotated[
-        Optional[EnumerationEnum3],
+        Optional[EnumerationEnum2],
         Field(alias='srl_nokia-routing-policy:policy-result'),
     ] = None
     """
-    Select the action type for routes that do not match any policy statement
-
-    If no value is configured for the policy-result then the implicit default is a next-policy behavior.
+    Select the action type for routes that do not match any policy statement.
     """
     bgp: Annotated[
         Optional[BgpContainer], Field(alias='srl_nokia-routing-policy:bgp')
     ] = None
     isis: Annotated[
         Optional[IsisContainer], Field(alias='srl_nokia-routing-policy:isis')
-    ] = None
-    ospf: Annotated[
-        Optional[OspfContainer], Field(alias='srl_nokia-routing-policy:ospf')
     ] = None
     route_preference: Annotated[
         Optional[RoutePreferenceContainer],
@@ -2651,22 +2564,19 @@ class ActionContainer(BaseModel):
         regex_engine="python-re",
     )
     policy_result: Annotated[
-        Optional[EnumerationEnum23],
+        Optional[EnumerationEnum19],
         Field(alias='srl_nokia-routing-policy:policy-result'),
     ] = None
     """
     Select the action to apply to matching routes
 
-    If no value is configured for the policy-result then the implicit default is a next-statement behavior.
+    If no value is configured for the policy-result then the entire statement is skipped and ignored.
     """
     bgp: Annotated[
         Optional[BgpContainer3], Field(alias='srl_nokia-routing-policy:bgp')
     ] = None
     isis: Annotated[
         Optional[IsisContainer3], Field(alias='srl_nokia-routing-policy:isis')
-    ] = None
-    ospf: Annotated[
-        Optional[OspfContainer3], Field(alias='srl_nokia-routing-policy:ospf')
     ] = None
     route_preference: Annotated[
         Optional[RoutePreferenceContainer2],
@@ -2708,7 +2618,6 @@ class StatementListEntry(BaseModel):
 class PolicyListEntry(BaseModel):
     """
     List of policy definitions, keyed by unique name
-
     These policy definitions are expected to be referenced (by name) in policy in import-policy and/or export-policy statements.
     """
 
@@ -2749,6 +2658,10 @@ class RoutingPolicyContainer(BaseModel):
         Optional[List[AsPathSetListEntry]],
         Field(alias='srl_nokia-routing-policy:as-path-set'),
     ] = None
+    prefix_set: Annotated[
+        Optional[List[PrefixSetListEntry]],
+        Field(alias='srl_nokia-routing-policy:prefix-set'),
+    ] = None
     community_set: Annotated[
         Optional[List[CommunitySetListEntry]],
         Field(alias='srl_nokia-routing-policy:community-set'),
@@ -2760,10 +2673,6 @@ class RoutingPolicyContainer(BaseModel):
     extended_community_set: Annotated[
         Optional[List[ExtendedCommunitySetListEntry]],
         Field(alias='srl_nokia-routing-policy:extended-community-set'),
-    ] = None
-    prefix_set: Annotated[
-        Optional[List[PrefixSetListEntry]],
-        Field(alias='srl_nokia-routing-policy:prefix-set'),
     ] = None
     tag_set: Annotated[
         Optional[List[TagSetListEntry]], Field(alias='srl_nokia-routing-policy:tag-set')

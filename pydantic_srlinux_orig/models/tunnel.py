@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
+from typing_extensions import Annotated
 
 
 class EnumerationEnum(Enum):
@@ -39,7 +40,8 @@ class Ipv6AddressType(RootModel[str]):
         ),
     ]
     """
-    An IPv6 address represented as either a full address, shortened or mixed-shortened formats
+    An IPv6 address represented as either a full address; shortened
+    or mixed-shortened formats.
     """
 
 
@@ -410,13 +412,13 @@ class TunnelContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    vxlan_tunnel: Annotated[
-        Optional[VxlanTunnelContainer],
-        Field(alias='srl_nokia-vxlan-tunnel-vtep:vxlan-tunnel'),
-    ] = None
     pseudowire_tunnel: Annotated[
         Optional[PseudowireTunnelContainer],
         Field(alias='srl_nokia-pw-tunnel:pseudowire-tunnel'),
+    ] = None
+    vxlan_tunnel: Annotated[
+        Optional[VxlanTunnelContainer],
+        Field(alias='srl_nokia-vxlan-tunnel-vtep:vxlan-tunnel'),
     ] = None
 
 

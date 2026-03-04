@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
+from typing_extensions import Annotated
 
 
 class CodeLeafList(RootModel[int]):
@@ -104,64 +105,33 @@ class L4PortTypeType1(RootModel[int]):
     """
 
 
-class RateBpsCase(BaseModel):
+class PrefixListListEntry2(BaseModel):
     """
-    Rate-based rate limit configuration.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    peak_rate_kbps: Annotated[
-        Optional[int], Field(alias='srl_nokia-acl:peak-rate-kbps', ge=1, le=800000000)
-    ] = None
-    """
-    The peak information rate (PIR) in kbps (bucket empty/fill rate).
-    """
-    maximum_burst_size: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-acl:maximum-burst-size', ge=1, le=125000000),
-    ] = None
-    """
-    The MBS bucket depth in bytes
-    """
-
-
-class RatePpsCase(BaseModel):
-    """
-    Packet-based rate limit configuration.
+    Match a packet if its source IP address is within the specified IPv4 prefix list.
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    peak_rate_pps: Annotated[
-        Optional[int], Field(alias='srl_nokia-acl:peak-rate-pps', ge=64, le=4000000)
-    ] = 64
+    name: Annotated[str, Field(alias='srl_nokia-acl:name')]
     """
-    The maximum number of packets per second (bucket empty/fill rate)
+    Reference to the name of the IPv4 prefix list
     """
-    maximum_burst_packet: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-acl:maximum-burst-packet', ge=32, le=126976),
-    ] = 32
+
+
+class PrefixListListEntry4(BaseModel):
     """
-    The maximum depth of the policer bucket in number of packets
+    Match a packet if its source IP address is within the specified IPv6 prefix list.
     """
-    committed_rate_pps: Annotated[
-        Optional[int], Field(alias='srl_nokia-acl:committed-rate-pps', ge=1, le=4000000)
-    ] = 1
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[str, Field(alias='srl_nokia-acl:name')]
     """
-    The committed number of packets per second
-    """
-    committed_burst_packet: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-acl:committed-burst-packet', ge=32, le=4000000),
-    ] = 32
-    """
-    The committed depth of the policer bucket in number of packets
+    Reference to the name of the IPv6 prefix list
     """
 
 
@@ -169,6 +139,12 @@ class EnumerationEnum(Enum):
     ipv4 = 'ipv4'
     ipv6 = 'ipv6'
     mac = 'mac'
+
+
+class EnumerationEnum10(Enum):
+    default = 'default'
+    ipv4_egress_scaled = 'ipv4-egress-scaled'
+    acl_mfc_ipv4_only = 'acl-mfc-ipv4-only'
 
 
 class EnumerationEnum2(Enum):
@@ -241,12 +217,6 @@ class EnumerationEnum4(Enum):
 
 
 class EnumerationEnum5(Enum):
-    le = 'le'
-    ge = 'ge'
-    eq = 'eq'
-
-
-class EnumerationEnum6(Enum):
     dest_unreachable = 'dest-unreachable'
     packet_too_big = 'packet-too-big'
     time_exceeded = 'time-exceeded'
@@ -268,6 +238,12 @@ class EnumerationEnum6(Enum):
     mcast_rtr_adv = 'mcast-rtr-adv'
     mcast_rtr_solicit = 'mcast-rtr-solicit'
     mcast_rtr_term = 'mcast-rtr-term'
+
+
+class EnumerationEnum6(Enum):
+    le = 'le'
+    ge = 'ge'
+    eq = 'eq'
 
 
 class EnumerationEnum7(Enum):
@@ -513,7 +489,8 @@ class Ipv6AddressType(RootModel[str]):
         ),
     ]
     """
-    An IPv6 address represented as either a full address, shortened or mixed-shortened formats
+    An IPv6 address represented as either a full address; shortened
+    or mixed-shortened formats.
     """
 
 
@@ -599,43 +576,31 @@ class PolicerContainer2(BaseModel):
     """
 
 
-class PrefixListListEntry2(BaseModel):
+class PrefixListListEntry(BaseModel):
     """
-    Match a packet if its source IP address is within the specified IPv4 prefix list.
+    Match a packet if its destination IP address is within the specified IPv4 prefix list.
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
+    name: Annotated[str, Field(alias='srl_nokia-acl:name')]
     """
     Reference to the name of the IPv4 prefix list
     """
 
 
-class PrefixListListEntry4(BaseModel):
+class PrefixListListEntry3(BaseModel):
     """
-    Match a packet if its source IP address is within the specified IPv6 prefix list.
+    Match a packet if its destination IP address is within the specified IPv6 prefix list.
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
+    name: Annotated[str, Field(alias='srl_nokia-acl:name')]
     """
     Reference to the name of the IPv6 prefix list
     """
@@ -680,48 +645,6 @@ class PrefixListEntry2(BaseModel):
     ]
     """
     A user defined IPv6 prefix
-    """
-
-
-class RangeContainer(BaseModel):
-    """
-    Container used to specify a contiguous range of TTL values
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    start: Annotated[
-        Optional[int], Field(alias='srl_nokia-acl:start', ge=0, le=255)
-    ] = None
-    """
-    The starting TTL value number to include in the range
-    """
-    end: Annotated[Optional[int], Field(alias='srl_nokia-acl:end', ge=0, le=255)] = None
-    """
-    The ending TTL value number to include in the range
-    """
-
-
-class RangeContainer2(BaseModel):
-    """
-    Container used to specify a contiguous range of hop-limit values
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    start: Annotated[
-        Optional[int], Field(alias='srl_nokia-acl:start', ge=0, le=255)
-    ] = None
-    """
-    The starting hop-limit value number to include in the range
-    """
-    end: Annotated[Optional[int], Field(alias='srl_nokia-acl:end', ge=0, le=255)] = None
-    """
-    The ending hop-limit value number to include in the range
     """
 
 
@@ -913,15 +836,14 @@ class SystemCpuPolicerListEntry(BaseModel):
 
     If set to true, multiple policer instances are created from this template, one for each cpm-filter entry that refers to the policer template.
     """
-    peak_rate_pps: Annotated[
-        Optional[int], Field(alias='srl_nokia-acl:peak-rate-pps', ge=1, le=4000000)
+    peak_packet_rate: Annotated[
+        Optional[int], Field(alias='srl_nokia-acl:peak-packet-rate', ge=1, le=4000000)
     ] = None
     """
     The maximum number of packets per second (bucket empty/fill rate)
     """
-    maximum_burst_packet: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-acl:maximum-burst-packet', ge=16, le=4000000),
+    max_packet_burst: Annotated[
+        Optional[int], Field(alias='srl_nokia-acl:max-packet-burst', ge=16, le=4000000)
     ] = 16
     """
     The maximum depth of the policer bucket in number of packets
@@ -997,41 +919,93 @@ class AggregateContainer(BaseModel):
     """
     The number of bytes that were considered exceeding by the policer. The byte count includes 18 bytes of Ethernet overhead for every IP packet.
     """
-    conforming_in_packets: Annotated[
-        Optional[int],
+
+
+class DestinationIpContainer(BaseModel):
+    """
+    Packet matching criteria based on destination IPv4 address
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    prefix: Annotated[
+        Optional[str],
         Field(
-            alias='srl_nokia-acl:conforming-in-packets', ge=0, le=18446744073709551615
+            alias='srl_nokia-acl:prefix',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))$).*$',
         ),
-    ] = 0
+    ] = None
     """
-    The number of packets (actually Ethernet frames) that were considered conforming below commited rate by the policer
+    Match a packet if its destination IP address is within the specified IPv4 prefix.
     """
-    conforming_out_packets: Annotated[
-        Optional[int],
+    prefix_list: Annotated[
+        Optional[List[PrefixListListEntry]], Field(alias='srl_nokia-acl:prefix-list')
+    ] = None
+    address: Annotated[
+        Optional[str],
         Field(
-            alias='srl_nokia-acl:conforming-out-packets', ge=0, le=18446744073709551615
+            alias='srl_nokia-acl:address',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
         ),
-    ] = 0
+    ] = None
     """
-    The number of packets (actually Ethernet frames) that were considered conforming below peak rate and above commited rate by the policer
+    Match a packet if its destination IP address logically anded with the inverse of the mask equals this IP address.
     """
-    conforming_in_octets: Annotated[
-        Optional[int],
+    mask: Annotated[
+        Optional[str],
         Field(
-            alias='srl_nokia-acl:conforming-in-octets', ge=0, le=18446744073709551615
+            alias='srl_nokia-acl:mask',
+            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
         ),
-    ] = 0
+    ] = None
     """
-    The number of bytes that were considered conforming below commited rate by the policer. The byte count includes 18 bytes of Ethernet overhead for every IP packet.
+    Match a packet if its destination IP address logically anded with the inverse of this mask equals the configured IP address.
     """
-    conforming_out_octets: Annotated[
-        Optional[int],
+
+
+class DestinationIpContainer2(BaseModel):
+    """
+    Packet matching criteria based on destination IPv6 address
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    prefix: Annotated[
+        Optional[str],
         Field(
-            alias='srl_nokia-acl:conforming-out-octets', ge=0, le=18446744073709551615
+            alias='srl_nokia-acl:prefix',
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$).*$',
         ),
-    ] = 0
+    ] = None
     """
-    The number of bytes that were considered conforming below peak rate and above commited by the policer. The byte count includes 18 bytes of Ethernet overhead for every IP packet.
+    Match a packet if its destination IP address is within the specified IPv6 prefix.
+    """
+    prefix_list: Annotated[
+        Optional[List[PrefixListListEntry3]], Field(alias='srl_nokia-acl:prefix-list')
+    ] = None
+    address: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-acl:address',
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$',
+        ),
+    ] = None
+    """
+    Match a packet if its destination IP address logically anded with the inverse of the mask equals this IP address.
+    """
+    mask: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-acl:mask',
+            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$',
+        ),
+    ] = None
+    """
+    Match a packet if its destination IP address logically anded with the inverse of this mask equals the configured IP address.
     """
 
 
@@ -1107,7 +1081,7 @@ class Icmp6Container(BaseModel):
         regex_engine="python-re",
     )
     type: Annotated[
-        Optional[Union[Icmp6TypeType1, EnumerationEnum6]],
+        Optional[Union[Icmp6TypeType1, EnumerationEnum5]],
         Field(alias='srl_nokia-acl:type'),
     ] = None
     """
@@ -1160,19 +1134,13 @@ class Ipv4PrefixListListEntry(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
+    name: Annotated[str, Field(alias='srl_nokia-acl:name')]
     """
     Reference to the name of the IPv4 prefix list
     """
     description: Annotated[
         Optional[str],
-        Field(alias='srl_nokia-acl:description', max_length=4096, min_length=1),
+        Field(alias='srl_nokia-acl:description', max_length=255, min_length=1),
     ] = None
     """
     Description string for the prefix list
@@ -1191,19 +1159,13 @@ class Ipv6PrefixListListEntry(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
+    name: Annotated[str, Field(alias='srl_nokia-acl:name')]
     """
     Reference to the name of the IPv6 prefix list
     """
     description: Annotated[
         Optional[str],
-        Field(alias='srl_nokia-acl:description', max_length=4096, min_length=1),
+        Field(alias='srl_nokia-acl:description', max_length=255, min_length=1),
     ] = None
     """
     Description string for the prefix list
@@ -1232,86 +1194,7 @@ class MatchListContainer(BaseModel):
     ] = None
 
 
-class NetworkInstanceCase(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    network_instance: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-acl:network-instance',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    Routing context used for route lookup
-    """
-
-
-class PrefixListListEntry(BaseModel):
-    """
-    Match a packet if its destination IP address is within the specified IPv4 prefix list.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    Reference to the name of the IPv4 prefix list
-    """
-
-
-class PrefixListListEntry3(BaseModel):
-    """
-    Match a packet if its destination IP address is within the specified IPv6 prefix list.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    Reference to the name of the IPv6 prefix list
-    """
-
-
-class RangeCase(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    range: Annotated[Optional[RangeContainer], Field(alias='srl_nokia-acl:range')] = (
-        None
-    )
-
-
-class RangeCase2(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    range: Annotated[Optional[RangeContainer2], Field(alias='srl_nokia-acl:range')] = (
-        None
-    )
-
-
-class RangeContainer3(BaseModel):
+class RangeContainer(BaseModel):
     """
     Container used to specify a contiguous range of TCP/UDP port numbers
     """
@@ -1336,7 +1219,7 @@ class RangeContainer3(BaseModel):
     """
 
 
-class RangeContainer4(BaseModel):
+class RangeContainer2(BaseModel):
     """
     Container used to specify a contiguous range of TCP/UDP port numbers
     """
@@ -1432,7 +1315,7 @@ class SourceIpContainer(BaseModel):
         ),
     ] = None
     """
-    Match a packet if its source IP address logically anded with the inverse of this mask equals the configured IP address logically anded with the inverse of this mask.
+    Match a packet if its source IP address logically anded with the inverse of this mask equals the configured IP address.
     """
 
 
@@ -1476,8 +1359,41 @@ class SourceIpContainer2(BaseModel):
         ),
     ] = None
     """
-    Match a packet if its source IP address logically anded with the inverse of this mask equals the configured IP address logically anded with the inverse of this mask.
+    Match a packet if its source IP address logically anded with the inverse of this mask equals the configured IP address.
     """
+
+
+class SourcePortContainer(BaseModel):
+    """
+    A packet matches this condition if its source TCP or UDP port number matches the value or range that is specified
+
+    The rule should also have a condition that the IP protocol equals 6 (TCP) or 17 (UDP) in order for this to be interpreted correctly.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    operator: Annotated[
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-acl:operator')
+    ] = None
+    """
+    Comparison operator
+
+    eq = equal
+    ge = greater than or equal to
+    le = less than or equal to
+    """
+    value: Annotated[
+        Optional[Union[L4PortTypeType1, EnumerationEnum7]],
+        Field(alias='srl_nokia-acl:value'),
+    ] = None
+    """
+    A source port number
+    """
+    range: Annotated[Optional[RangeContainer2], Field(alias='srl_nokia-acl:range')] = (
+        None
+    )
 
 
 class StatisticsContainer(BaseModel):
@@ -1543,100 +1459,6 @@ class StatisticsContainer5(BaseModel):
     ] = None
 
 
-class ValueCase(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    operator: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-acl:operator')
-    ] = None
-    """
-    Comparison operator
-
-    eq = equal
-    ge = greater than or equal to
-    le = less than or equal to
-    """
-    value: Annotated[
-        Optional[int], Field(alias='srl_nokia-acl:value', ge=0, le=255)
-    ] = None
-    """
-    A TTL value number
-    """
-
-
-class ValueCase2(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    operator: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-acl:operator')
-    ] = None
-    """
-    Comparison operator
-
-    eq = equal
-    ge = greater than or equal to
-    le = less than or equal to
-    """
-    value: Annotated[
-        Optional[int], Field(alias='srl_nokia-acl:value', ge=0, le=255)
-    ] = None
-    """
-    A hop-limit value number
-    """
-
-
-class ValueCase3(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    operator: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-acl:operator')
-    ] = None
-    """
-    Comparison operator
-
-    eq = equal
-    ge = greater than or equal to
-    le = less than or equal to
-    """
-    value: Annotated[
-        Optional[Union[L4PortTypeType1, EnumerationEnum7]],
-        Field(alias='srl_nokia-acl:value'),
-    ] = None
-    """
-    A destination port number
-    """
-
-
-class ValueCase4(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    operator: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-acl:operator')
-    ] = None
-    """
-    Comparison operator
-
-    eq = equal
-    ge = greater than or equal to
-    le = less than or equal to
-    """
-    value: Annotated[
-        Optional[Union[L4PortTypeType1, EnumerationEnum7]],
-        Field(alias='srl_nokia-acl:value'),
-    ] = None
-    """
-    A source port number
-    """
-
-
 class AclFilterListEntry2(BaseModel):
     """
     MAC, IPv4, IPv6 ACL filter(s) to be applied on this subinterface direction
@@ -1648,13 +1470,7 @@ class AclFilterListEntry2(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
+    name: Annotated[str, Field(alias='srl_nokia-acl:name')]
     """
     ACL Filter policy name
     """
@@ -1685,107 +1501,37 @@ class DatapathProgrammingContainer(BaseModel):
     ] = None
 
 
-class DestinationIpContainer(BaseModel):
+class DestinationPortContainer(BaseModel):
     """
-    Packet matching criteria based on destination IPv4 address
+    A packet matches this condition if its destination TCP or UDP port number matches the value or range that is specified
+
+    The rule should also have a condition that the IP protocol equals 6 (TCP) or 17 (UDP) in order for this to be interpreted correctly.
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    prefix: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-acl:prefix',
-            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))$).*$',
-        ),
+    operator: Annotated[
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-acl:operator')
     ] = None
     """
-    Match a packet if its destination IP address is within the specified IPv4 prefix.
-    """
-    prefix_list: Annotated[
-        Optional[List[PrefixListListEntry]], Field(alias='srl_nokia-acl:prefix-list')
-    ] = None
-    address: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-acl:address',
-            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
-        ),
-    ] = None
-    """
-    Match a packet if its destination IP address logically anded with the inverse of the mask equals this IP address.
-    """
-    mask: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-acl:mask',
-            pattern='^(?=^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$).*$',
-        ),
-    ] = None
-    """
-    Match a packet if its destination IP address logically anded with the inverse of this mask equals the configured IP address logically anded with the inverse of this mask.
-    """
+    Comparison operator
 
-
-class DestinationIpContainer2(BaseModel):
+    eq = equal
+    ge = greater than or equal to
+    le = less than or equal to
     """
-    Packet matching criteria based on destination IPv6 address
+    value: Annotated[
+        Optional[Union[L4PortTypeType1, EnumerationEnum7]],
+        Field(alias='srl_nokia-acl:value'),
+    ] = None
     """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
+    A destination port number
+    """
+    range: Annotated[Optional[RangeContainer], Field(alias='srl_nokia-acl:range')] = (
+        None
     )
-    prefix: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-acl:prefix',
-            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))(/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$).*$',
-        ),
-    ] = None
-    """
-    Match a packet if its destination IP address is within the specified IPv6 prefix.
-    """
-    prefix_list: Annotated[
-        Optional[List[PrefixListListEntry3]], Field(alias='srl_nokia-acl:prefix-list')
-    ] = None
-    address: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-acl:address',
-            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$',
-        ),
-    ] = None
-    """
-    Match a packet if its destination IP address logically anded with the inverse of the mask equals this IP address.
-    """
-    mask: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-acl:mask',
-            pattern='^(?=^((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))$).*$',
-        ),
-    ] = None
-    """
-    Match a packet if its destination IP address logically anded with the inverse of this mask equals the configured IP address logically anded with the inverse of this mask.
-    """
-
-
-class HopLimitContainer(BaseModel):
-    """
-    A packet matches this condition if its IPv6 hop-limit value matches the value or range that is specified.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    hop_limit_match_type: Annotated[
-        Optional[Union[ValueCase2, RangeCase2]],
-        Field(alias='srl_nokia-acl:hop-limit-match-type'),
-    ] = None
 
 
 class InputContainer(BaseModel):
@@ -1837,13 +1583,7 @@ class InterfaceListEntry(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    interface_id: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:interface-id',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
+    interface_id: Annotated[str, Field(alias='srl_nokia-acl:interface-id')]
     """
     Identifier for the interface or subinterface.
     """
@@ -1853,189 +1593,6 @@ class InterfaceListEntry(BaseModel):
     input: Annotated[Optional[InputContainer], Field(alias='srl_nokia-acl:input')] = (
         None
     )
-
-
-class Ipv6Container(BaseModel):
-    """
-    Container for the common layer-3 IPv6 match criteria
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    destination_ip: Annotated[
-        Optional[DestinationIpContainer2], Field(alias='srl_nokia-acl:destination-ip')
-    ] = None
-    dscp_set: Annotated[
-        Optional[List[Union[DscpValueType, EnumerationEnum2]]],
-        Field(alias='srl_nokia-acl:dscp-set'),
-    ] = []
-    """
-    A list of DSCP values to be matched for incoming packets. An OR match should be performed, such that a packet must match one of the values defined in this list. If the field is left empty then any DSCP value matches.
-    """
-    icmp6: Annotated[Optional[Icmp6Container], Field(alias='srl_nokia-acl:icmp6')] = (
-        None
-    )
-    next_header: Annotated[
-        Optional[Union[IpProtocolTypeType1, EnumerationEnum4]],
-        Field(alias='srl_nokia-acl:next-header'),
-    ] = None
-    """
-    An IPv6 packet matches this condition if its first next-header field (in the IPv6 fixed header) contains the specified value
-    """
-    source_ip: Annotated[
-        Optional[SourceIpContainer2], Field(alias='srl_nokia-acl:source-ip')
-    ] = None
-    hop_limit: Annotated[
-        Optional[HopLimitContainer], Field(alias='srl_nokia-acl:hop-limit')
-    ] = None
-
-
-class NextHopContainer(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    address: Annotated[
-        Union[Ipv4AddressType, Ipv6AddressType], Field(alias='srl_nokia-acl:address')
-    ]
-    """
-    IP address of next hop to forward matching packets.
-    """
-    network_instance: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-acl:network-instance',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    Routing context used for route lookup
-    """
-
-
-class PolicerListEntry(BaseModel):
-    """
-    List of policer templates used in subintreface and CPM Filter ACL.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    User-defined name of the policer
-    """
-    scope: Annotated[Optional[EnumerationEnum9], Field(alias='srl_nokia-acl:scope')] = (
-        'global'
-    )
-    """
-    Controls the instantiation of the policer between subinterfaces
-
-    global: policer is instantiated per direction and shared between ACL, requires filter subinterface-specific disabled
-
-    subinterface: policer is instantiated per subinterface and per direction, requires filter subinterface-specific input-and-ouput
-    """
-    rate_parameters: Annotated[
-        Optional[Union[RateBpsCase, RatePpsCase]],
-        Field(alias='srl_nokia-acl:rate-parameters'),
-    ] = None
-    statistics: Annotated[
-        Optional[StatisticsContainer5], Field(alias='srl_nokia-acl:statistics')
-    ] = None
-
-
-class PolicersContainer(BaseModel):
-    """
-    Container for policer definitions used by ACL entries
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    system_cpu_policer: Annotated[
-        Optional[List[SystemCpuPolicerListEntry]],
-        Field(alias='srl_nokia-acl:system-cpu-policer'),
-    ] = None
-    policer: Annotated[
-        Optional[List[PolicerListEntry]], Field(alias='srl_nokia-acl:policer')
-    ] = None
-
-
-class RangeCase3(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    range: Annotated[Optional[RangeContainer3], Field(alias='srl_nokia-acl:range')] = (
-        None
-    )
-
-
-class RangeCase4(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    range: Annotated[Optional[RangeContainer4], Field(alias='srl_nokia-acl:range')] = (
-        None
-    )
-
-
-class SourcePortContainer(BaseModel):
-    """
-    A packet matches this condition if its source TCP or UDP port number matches the value or range that is specified
-
-    The rule should also have a condition that the IP protocol equals 6 (TCP) or 17 (UDP) in order for this to be interpreted correctly.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    port: Annotated[
-        Optional[Union[ValueCase4, RangeCase4]], Field(alias='srl_nokia-acl:port')
-    ] = None
-
-
-class TtlContainer(BaseModel):
-    """
-    A packet matches this condition if its IPv4 TTL value matches the value or range that is specified.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    ttl_match_type: Annotated[
-        Optional[Union[ValueCase, RangeCase]],
-        Field(alias='srl_nokia-acl:ttl-match-type'),
-    ] = None
-
-
-class DestinationPortContainer(BaseModel):
-    """
-    A packet matches this condition if its destination TCP or UDP port number matches the value or range that is specified
-
-    The rule should also have a condition that the IP protocol equals 6 (TCP) or 17 (UDP) in order for this to be interpreted correctly.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    port: Annotated[
-        Optional[Union[ValueCase3, RangeCase3]], Field(alias='srl_nokia-acl:port')
-    ] = None
 
 
 class Ipv4Container(BaseModel):
@@ -2073,12 +1630,6 @@ class Ipv4Container(BaseModel):
     and and the more-fragments bit is 1. It is not valid to configure this leaf without configuring a
     match value for the fragment leaf.
     """
-    ip_option_present: Annotated[
-        Optional[bool], Field(alias='srl_nokia-acl:ip-option-present')
-    ] = None
-    """
-    Match a packet if it contains an IPv4 IP option.
-    """
     icmp: Annotated[Optional[IcmpContainer], Field(alias='srl_nokia-acl:icmp')] = None
     protocol: Annotated[
         Optional[Union[IpProtocolTypeType1, EnumerationEnum4]],
@@ -2090,16 +1641,117 @@ class Ipv4Container(BaseModel):
     source_ip: Annotated[
         Optional[SourceIpContainer], Field(alias='srl_nokia-acl:source-ip')
     ] = None
-    ttl: Annotated[Optional[TtlContainer], Field(alias='srl_nokia-acl:ttl')] = None
 
 
-class NextHopCase(BaseModel):
+class Ipv6Container(BaseModel):
+    """
+    Container for the common layer-3 IPv6 match criteria
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    next_hop: Annotated[
-        Optional[NextHopContainer], Field(alias='srl_nokia-acl:next-hop')
+    destination_ip: Annotated[
+        Optional[DestinationIpContainer2], Field(alias='srl_nokia-acl:destination-ip')
+    ] = None
+    dscp_set: Annotated[
+        Optional[List[Union[DscpValueType, EnumerationEnum2]]],
+        Field(alias='srl_nokia-acl:dscp-set'),
+    ] = []
+    """
+    A list of DSCP values to be matched for incoming packets. An OR match should be performed, such that a packet must match one of the values defined in this list. If the field is left empty then any DSCP value matches.
+    """
+    icmp6: Annotated[Optional[Icmp6Container], Field(alias='srl_nokia-acl:icmp6')] = (
+        None
+    )
+    next_header: Annotated[
+        Optional[Union[IpProtocolTypeType1, EnumerationEnum4]],
+        Field(alias='srl_nokia-acl:next-header'),
+    ] = None
+    """
+    An IPv6 packet matches this condition if its first next-header field (in the IPv6 fixed header) contains the specified value
+    """
+    source_ip: Annotated[
+        Optional[SourceIpContainer2], Field(alias='srl_nokia-acl:source-ip')
+    ] = None
+
+
+class NextHopContainer(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    address: Annotated[
+        Optional[Union[Ipv4AddressType, Ipv6AddressType]],
+        Field(alias='srl_nokia-acl:address'),
+    ] = None
+    """
+    IP address of next hop to forward matching packets.
+    """
+
+
+class PolicerListEntry(BaseModel):
+    """
+    List of policer templates used in subintreface and CPM Filter ACL.
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[
+        str,
+        Field(
+            alias='srl_nokia-acl:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    User-defined name of the policer
+    """
+    scope: Annotated[Optional[EnumerationEnum9], Field(alias='srl_nokia-acl:scope')] = (
+        'global'
+    )
+    """
+    Controls the instantiation of the policer between subinterfaces
+
+    global: policer is instantiated per direction and shared between ACL, requires filter subinterface-specific disabled
+
+    subinterface: policer is instantiated per subinterface and per direction, requires filter subinterface-specific input-and-ouput
+    """
+    peak_rate: Annotated[
+        Optional[int], Field(alias='srl_nokia-acl:peak-rate', ge=1, le=800000000)
+    ] = None
+    """
+    The PIR rate in kbps (bucket empty/fill rate).
+    """
+    max_burst: Annotated[
+        Optional[int], Field(alias='srl_nokia-acl:max-burst', ge=1, le=125000000)
+    ] = None
+    """
+    The MBS bucket depth in bytes
+    """
+    statistics: Annotated[
+        Optional[StatisticsContainer5], Field(alias='srl_nokia-acl:statistics')
+    ] = None
+
+
+class PolicersContainer(BaseModel):
+    """
+    Container for policer definitions used by ACL entries
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    system_cpu_policer: Annotated[
+        Optional[List[SystemCpuPolicerListEntry]],
+        Field(alias='srl_nokia-acl:system-cpu-policer'),
+    ] = None
+    policer: Annotated[
+        Optional[List[PolicerListEntry]], Field(alias='srl_nokia-acl:policer')
     ] = None
 
 
@@ -2131,21 +1783,6 @@ class TransportContainer(BaseModel):
     """
 
 
-class ForwardContainer(BaseModel):
-    """
-    Enter the forward context
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    forward_action: Annotated[
-        Optional[Union[NextHopCase, NetworkInstanceCase]],
-        Field(alias='srl_nokia-acl:forward-action'),
-    ] = None
-
-
 class MatchContainer(BaseModel):
     """
     Container for the conditions that determine whether a packet matches this entry
@@ -2170,6 +1807,30 @@ class MatchContainer(BaseModel):
     """
     Reference to a configured network-instance
     """
+
+
+class NextHopCase(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    next_hop: Annotated[
+        Optional[NextHopContainer], Field(alias='srl_nokia-acl:next-hop')
+    ] = None
+
+
+class ForwardContainer(BaseModel):
+    """
+    Enable the next-hop context
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    forward_action: Annotated[
+        Optional[NextHopCase], Field(alias='srl_nokia-acl:forward-action')
+    ] = None
 
 
 class AcceptContainer(BaseModel):
@@ -2234,25 +1895,6 @@ class ActionContainer(BaseModel):
     """
     Collect statistics for each entry of the ACL. If this is set to false no hardware resources are allocated to collecting statistics for this ACL entry.
     """
-    log: Annotated[Optional[bool], Field(alias='srl_nokia-acl:log')] = False
-    """
-    When this is true, a log is created for each packet matching the entry
-
-    For IP packets matched by an IP filter entry the log entry contains the following information:
-    - timestamp
-    - filter name
-    - filter entry sequence-id
-    - incoming subinterface name
-    - action: drop
-    - IP protocol
-    - packet-length
-    - source IP address
-    - source L4 port number (TCP/UDP packets)
-    - destination IP address
-    - destination L4 port number (TCP/UDP packets)
-    - icmp-type (ICMP packets)
-    - icmp-code (ICMP packets)
-    """
 
 
 class EntryListEntry(BaseModel):
@@ -2272,7 +1914,7 @@ class EntryListEntry(BaseModel):
     """
     description: Annotated[
         Optional[str],
-        Field(alias='srl_nokia-acl:description', max_length=4096, min_length=1),
+        Field(alias='srl_nokia-acl:description', max_length=255, min_length=1),
     ] = None
     """
     Description string for the filter entry
@@ -2310,13 +1952,7 @@ class AclFilterListEntry(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-acl:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
+    name: Annotated[str, Field(alias='srl_nokia-acl:name')]
     """
     ACL Filter policy name
     """
@@ -2329,7 +1965,7 @@ class AclFilterListEntry(BaseModel):
     """
     description: Annotated[
         Optional[str],
-        Field(alias='srl_nokia-acl:description', max_length=4096, min_length=1),
+        Field(alias='srl_nokia-acl:description', max_length=255, min_length=1),
     ] = None
     """
     Description string for the filter policy
@@ -2374,6 +2010,12 @@ class AclContainer(BaseModel):
     match_list: Annotated[
         Optional[MatchListContainer], Field(alias='srl_nokia-acl:match-list')
     ] = None
+    tcam_profile: Annotated[
+        Optional[EnumerationEnum10], Field(alias='srl_nokia-acl:tcam-profile')
+    ] = None
+    """
+    Specify the TCAM resource management profile
+    """
     egress_mac_filtering: Annotated[
         Optional[bool], Field(alias='srl_nokia-acl:egress-mac-filtering')
     ] = False

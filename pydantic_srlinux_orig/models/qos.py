@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
+from typing_extensions import Annotated
 
 
 class CommittedBurstSizeTableContainer(BaseModel):
@@ -41,6 +42,28 @@ class CommittedBurstSizeTableContainer(BaseModel):
     """
 
 
+class Dot1pLeafList(RootModel[int]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[int, Field(ge=0, le=7)]
+    """
+    List of dot1p values of the packets which will be assigned to a given pfc-queue
+    """
+
+
+class DropLeaf2(BaseModel):
+    """
+    Violating packets should be dropped immediately
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+
+
 class DscpValueType(RootModel[int]):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,17 +72,6 @@ class DscpValueType(RootModel[int]):
     root: Annotated[int, Field(ge=0, le=63)]
     """
     A DiffServ Code Point represented numerically.
-    """
-
-
-class InterfaceListEntry(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    interface_id: Annotated[str, Field(alias='srl_nokia-qos:interface-id')]
-    """
-    Identifier for the interface or subinterface
     """
 
 
@@ -108,20 +120,25 @@ class PacketLengthAdjustmentContainer2(BaseModel):
     """
 
 
-class PfcPriorityListEntry(BaseModel):
+class PfcPauseFramePriorityLeafList(RootModel[int]):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    index: Annotated[int, Field(alias='srl_nokia-qos:index', ge=0, le=7)]
+    root: Annotated[int, Field(ge=0, le=7)]
     """
-    PFC-priority index
+    PFC priorities indicated in generated pfc-pause-frame if congestion occurs in a given pfc-queue
     """
-    pfc_enable: Annotated[Optional[bool], Field(alias='srl_nokia-qos:pfc-enable')] = (
-        False
+
+
+class PfcPauseFramePriorityLeafList2(RootModel[int]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
     )
+    root: Annotated[int, Field(ge=0, le=7)]
     """
-    Enables/disables pfc for a given pfc-priority
+    The pfc-priority received in pfc-pause-frame
     """
 
 
@@ -284,44 +301,29 @@ class EnumerationEnum(Enum):
 
 
 class EnumerationEnum10(Enum):
-    drop = 'drop'
-    mark_exceed = 'mark-exceed'
-
-
-class EnumerationEnum11(Enum):
-    extended = 'extended'
-
-
-class EnumerationEnum12(Enum):
-    low = 'low'
-    medium = 'medium'
-    high = 'high'
-
-
-class EnumerationEnum13(Enum):
     in_ = 'in'
     out = 'out'
     exceed = 'exceed'
     in_plus = 'in-plus'
 
 
-class EnumerationEnum14(Enum):
+class EnumerationEnum11(Enum):
     strict = 'strict'
 
 
-class EnumerationEnum15(Enum):
+class EnumerationEnum12(Enum):
     queue = 'queue'
 
 
-class EnumerationEnum16(Enum):
+class EnumerationEnum13(Enum):
     auto_input = 'auto-input'
 
 
-class EnumerationEnum17(Enum):
+class EnumerationEnum14(Enum):
     auto_input = 'auto-input'
 
 
-class EnumerationEnum18(Enum):
+class EnumerationEnum15(Enum):
     up = 'up'
     down = 'down'
     empty = 'empty'
@@ -337,39 +339,17 @@ class EnumerationEnum18(Enum):
     waiting = 'waiting'
 
 
-class EnumerationEnum19(Enum):
-    lldp_oper_state_down = 'lldp-oper-state-down'
-    multiple_lldp_peers = 'multiple-lldp-peers'
-    remote_dcbx_down = 'remote-dcbx-down'
-    dcbx_admin_disabled = 'dcbx-admin-disabled'
-
-
-class EnumerationEnum2(Enum):
-    protect = 'protect'
-
-
-class EnumerationEnum20(Enum):
-    remote_down = 'remote-down'
-    remote_up = 'remote-up'
-
-
-class EnumerationEnum21(Enum):
-    complete = 'complete'
-    partial = 'partial'
-    none = 'none'
-
-
-class EnumerationEnum22(Enum):
+class EnumerationEnum16(Enum):
     inner = 'inner'
     outer = 'outer'
 
 
-class EnumerationEnum23(Enum):
+class EnumerationEnum17(Enum):
     trusted = 'trusted'
     untrusted = 'untrusted'
 
 
-class EnumerationEnum24(Enum):
+class EnumerationEnum18(Enum):
     unicast = 'unicast'
     unknown_unicast = 'unknown-unicast'
     multicast = 'multicast'
@@ -377,33 +357,58 @@ class EnumerationEnum24(Enum):
     broadcast = 'broadcast'
 
 
-class EnumerationEnum25(Enum):
-    stats_only = 'stats-only'
-    rate_limiting_with_parent = 'rate-limiting-with-parent'
-    rate_limiting_orphan = 'rate-limiting-orphan'
-
-
-class EnumerationEnum26(Enum):
+class EnumerationEnum19(Enum):
     field_0 = '0'
     field_1 = '1'
 
 
-class EnumerationEnum27(Enum):
+class EnumerationEnum2(Enum):
+    in_ = 'in'
+    out = 'out'
+    exceed = 'exceed'
+    in_plus = 'in-plus'
+    in_low = 'in-low'
+    out_low = 'out-low'
+
+
+class EnumerationEnum20(Enum):
     local = 'local'
     interface_queue = 'interface-queue'
 
 
-class EnumerationEnum28(Enum):
+class EnumerationEnum21(Enum):
     tcp = 'tcp'
     non_tcp = 'non-tcp'
     all = 'all'
 
 
-class EnumerationEnum29(Enum):
+class EnumerationEnum22(Enum):
     low = 'low'
     medium = 'medium'
     high = 'high'
     all = 'all'
+
+
+class EnumerationEnum23(Enum):
+    in_ = 'in'
+    out = 'out'
+    exceed = 'exceed'
+
+
+class EnumerationEnum24(Enum):
+    field_0 = '0'
+    field_1 = '1'
+
+
+class EnumerationEnum25(Enum):
+    low = 'low'
+    medium = 'medium'
+    high = 'high'
+
+
+class EnumerationEnum26(Enum):
+    violating_focus = 'violating-focus'
+    forwarding_focus = 'forwarding-focus'
 
 
 class EnumerationEnum3(Enum):
@@ -431,64 +436,34 @@ class EnumerationEnum3(Enum):
     cs7 = 'CS7'
 
 
-class EnumerationEnum30(Enum):
-    no_information_available = 'no-information-available'
-    in_progress = 'in-progress'
-    done = 'done'
-
-
-class EnumerationEnum31(Enum):
-    in_ = 'in'
-    out = 'out'
-    exceed = 'exceed'
-
-
-class EnumerationEnum32(Enum):
-    field_0 = '0'
-    field_1 = '1'
-
-
-class EnumerationEnum33(Enum):
-    low = 'low'
-    medium = 'medium'
-    high = 'high'
-
-
-class EnumerationEnum34(Enum):
-    violating_focus = 'violating-focus'
-    forwarding_focus = 'forwarding-focus'
-
-
 class EnumerationEnum4(Enum):
-    protect = 'protect'
-
-
-class EnumerationEnum5(Enum):
-    protect = 'protect'
-
-
-class EnumerationEnum6(Enum):
-    in_ = 'in'
-    out = 'out'
-    exceed = 'exceed'
-    in_plus = 'in-plus'
-    in_low = 'in-low'
-    out_low = 'out-low'
-
-
-class EnumerationEnum7(Enum):
     remote = 'remote'
 
 
-class EnumerationEnum8(Enum):
+class EnumerationEnum5(Enum):
     trtcm1 = 'trtcm1'
     trtcm2 = 'trtcm2'
 
 
-class EnumerationEnum9(Enum):
+class EnumerationEnum6(Enum):
     closest = 'closest'
     lower = 'lower'
     higher = 'higher'
+
+
+class EnumerationEnum7(Enum):
+    drop = 'drop'
+    mark_exceed = 'mark-exceed'
+
+
+class EnumerationEnum8(Enum):
+    extended = 'extended'
+
+
+class EnumerationEnum9(Enum):
+    low = 'low'
+    medium = 'medium'
+    high = 'high'
 
 
 class AddCase(BaseModel):
@@ -574,36 +549,14 @@ class DeadlockContainer(BaseModel):
     """
 
 
-class Dot1pListEntry(BaseModel):
-    """
-    List of protected dot1p values
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    value: Annotated[int, Field(alias='srl_nokia-qos:value', ge=0, le=7)]
-    """
-    A single dot1p value
-    """
-    action: Annotated[
-        Optional[EnumerationEnum2], Field(alias='srl_nokia-qos:action')
-    ] = None
-
-
 class DropCase(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    drop: Annotated[
-        Optional[List[None]],
-        Field(alias='srl_nokia-acl-policers:drop', max_length=1, min_length=1),
-    ] = None
-    """
-    Violating packets should be dropped immediately
-    """
+    drop: Annotated[Optional[DropLeaf2], Field(alias='srl_nokia-acl-policers:drop')] = (
+        None
+    )
 
 
 class DscpRewriteContainer(BaseModel):
@@ -629,7 +582,7 @@ class ExceedActionContainer(BaseModel):
         regex_engine="python-re",
     )
     drop_probability: Annotated[
-        Optional[EnumerationEnum33],
+        Optional[EnumerationEnum25],
         Field(alias='srl_nokia-acl-policers:drop-probability'),
     ] = 'medium'
     """
@@ -672,7 +625,7 @@ class InputProfileListEntry(BaseModel):
         regex_engine="python-re",
     )
     input_profile: Annotated[
-        EnumerationEnum6, Field(alias='srl_nokia-qos:input-profile')
+        EnumerationEnum2, Field(alias='srl_nokia-qos:input-profile')
     ]
     """
     The profile the input packet was classified to, based on applicable classification criteria
@@ -709,20 +662,6 @@ class InputContainer2(BaseModel):
     """
 
 
-class InputsContainer4(BaseModel):
-    """
-    List of subinterface inputs
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    interface: Annotated[
-        Optional[List[InterfaceListEntry]], Field(alias='srl_nokia-qos:interface')
-    ] = None
-
-
 class InterfacePoolListEntry(BaseModel):
     """
     List of interface-pools associated with the base interface
@@ -749,20 +688,6 @@ class InterfacePoolListEntry(BaseModel):
     """
     Actual usage of the interface-pool
     """
-
-
-class MplsTrafficClassListEntry(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    value: Annotated[int, Field(alias='srl_nokia-qos:value', ge=0, le=7)]
-    """
-    A single traffic-class value
-    """
-    action: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-qos:action')
-    ] = None
 
 
 class MulticastPriorityListEntry(BaseModel):
@@ -802,7 +727,7 @@ class OperationalSeparationThresholdsListEntry(BaseModel):
         regex_engine="python-re",
     )
     input_profile: Annotated[
-        EnumerationEnum6, Field(alias='srl_nokia-qos:input-profile')
+        EnumerationEnum2, Field(alias='srl_nokia-qos:input-profile')
     ]
     """
     The profile the input packet was classified to, based on applicable classification criteria
@@ -979,7 +904,7 @@ class PeakRatePercentageCase2(BaseModel):
     """
 
 
-class PfcPriorityListEntry2(BaseModel):
+class PfcPriorityListEntry(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -1055,83 +980,6 @@ class PfcQueueListEntry(BaseModel):
     """
 
 
-class PfcQueueListEntry3(BaseModel):
-    """
-    List of pfc-queues
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    pfc_queue_name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-qos:pfc-queue-name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    The pfc-queue name
-    """
-    pfc_enable: Annotated[Optional[bool], Field(alias='srl_nokia-qos:pfc-enable')] = (
-        None
-    )
-    """
-    Displays the actual state of the pfc-queue
-    """
-    pfc_on_threshold_bytes: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-qos:pfc-on-threshold-bytes', ge=0, le=4294967295),
-    ] = None
-    """
-    Displays the actual on-threshold of the pfc-queue
-    """
-    pfc_off_threshold_bytes: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-qos:pfc-off-threshold-bytes', ge=0, le=4294967295),
-    ] = None
-    """
-    Displays the actual off-threshold of the pfc-queue
-    """
-    pfc_maximum_burst_size: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-qos:pfc-maximum-burst-size', ge=0, le=4294967295),
-    ] = None
-    """
-    Displays the actual maximum-burst-size of the pfc-queue
-    """
-    pfc_maximum_pfc_reserved_share: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-qos:pfc-maximum-pfc-reserved-share', ge=0, le=4294967295
-        ),
-    ] = None
-    """
-    Displays the actual maximum share the pfc-queue can take from pfc-reserved buffer configured per given forwarding-complex
-    """
-    pfc_buffer_used: Annotated[
-        Optional[int], Field(alias='srl_nokia-qos:pfc-buffer-used', ge=0, le=4294967295)
-    ] = None
-    """
-    The pfc-buffer usage by pfc-queue
-    """
-    peak_pfc_buffer_used: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-qos:peak-pfc-buffer-used', ge=0, le=4294967295),
-    ] = None
-    """
-    The peak value for pfc-buffer usage by pfc-queue
-    """
-    pfc_reserved_buffer_used: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-qos:pfc-reserved-buffer-used', ge=0, le=4294967295),
-    ] = None
-    """
-    The pfc-reserved-buffer usage by pfc-queue
-    """
-
-
 class PfcQueueListEntry4(BaseModel):
     """
     List of pfc-queues
@@ -1158,6 +1006,13 @@ class PfcQueueListEntry4(BaseModel):
     """
     Maximum amount of shared buffer memory available for the given pfc-queue
     """
+    committed_burst_size: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-qos:committed-burst-size', ge=1536, le=262144),
+    ] = 102400
+    """
+    Reserved amount of buffer memory available for the given pfc-queue
+    """
     maximum_pfc_reserved_share_percentage: Annotated[
         Optional[int],
         Field(
@@ -1180,13 +1035,21 @@ class PfcQueueListEntry4(BaseModel):
         Optional[int], Field(alias='srl_nokia-qos:pfc-on-threshold', ge=0, le=100)
     ] = 100
     """
-    Defines the pfc-queue depth at which pfc-pause-frames genaration will start. It is expressed as percentage of maximum-burst-size
+    Defines the pfc-queue depth at which pfc-pause-frames genaration will start. It is expressed as percentage of maximum-burst-size or committed-burst-size, respectively
     """
     pfc_off_threshold: Annotated[
         Optional[int], Field(alias='srl_nokia-qos:pfc-off-threshold', ge=0, le=100)
     ] = 80
     """
-    Defines the pfc-queue depth at which pfc-pause-frames will stop be generated. It is expressed as percentage of maximum-burst-size
+    Defines the pfc-queue depth at which pfc-pause-frames will stop be generated. It is expressed as percentage of maximum-burst-size or committed-burst-size, respectively
+    """
+    use_dynamic_allocation: Annotated[
+        Optional[bool], Field(alias='srl_nokia-qos:use-dynamic-allocation')
+    ] = None
+    """
+    Enables dynamic allocation of the buffer space
+
+    MBS statement is ignored, if enabled
     """
 
 
@@ -1303,7 +1166,7 @@ class ProfileListEntry(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    profile_name: Annotated[EnumerationEnum6, Field(alias='srl_nokia-qos:profile-name')]
+    profile_name: Annotated[EnumerationEnum2, Field(alias='srl_nokia-qos:profile-name')]
     """
     Profile-names for different profiles used during classification
     """
@@ -1492,14 +1355,21 @@ class QueueListEntry2(BaseModel):
     Egress-queue name
     """
     pfc_pause_frame_priority: Annotated[
-        Optional[int], Field(alias='srl_nokia-qos:pfc-pause-frame-priority', ge=0, le=7)
-    ] = None
+        Optional[List[PfcPauseFramePriorityLeafList2]],
+        Field(alias='srl_nokia-qos:pfc-pause-frame-priority'),
+    ] = []
     """
     The pfc-priority received in pfc-pause-frame
     """
+    enable_pfc: Annotated[Optional[bool], Field(alias='srl_nokia-qos:enable-pfc')] = (
+        False
+    )
+    """
+    Enables/disables reaction to received pfc-frames for a given pfc-priority
+    """
 
 
-class QueueListEntry6(BaseModel):
+class QueueListEntry5(BaseModel):
     """
     List of queues
     """
@@ -1534,7 +1404,7 @@ class QueueListEntry6(BaseModel):
     Must be non-zero/non-default in order to add the active-queue-management presence container
     """
     mbs_adaptation_rule: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:mbs-adaptation-rule')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:mbs-adaptation-rule')
     ] = 'closest'
     """
     Defines how the user-configured values will be adjusted to available hardware values
@@ -1547,7 +1417,7 @@ class QueueListEntry6(BaseModel):
     Committed queue length expressed in bytes
     """
     cbs_adaptation_rule: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:cbs-adaptation-rule')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:cbs-adaptation-rule')
     ] = 'closest'
     """
     Defines how the user-configured values will be adjusted to values defined by committed-burst-size-table
@@ -1557,40 +1427,13 @@ class QueueListEntry6(BaseModel):
         Field(alias='srl_nokia-qos:high-threshold-bytes', ge=0, le=4294967295),
     ] = 0
     """
-    The queue depth that, when crossed in a rising direction, signals a potential start of congestion
-
-    On IXR-6/10 this parameter applies to all VOQs associated with the egress queue. On 7220-D2/D3/H2/H3 this parameter applies to the unicast queue only; the configuration of this leaf is ignored when the queue-template is attached to a queue with queue-type other than unicast.
-
-    The actions that follow the start of congestion depend on whether queue-depth-sampling is true or false. If queue-depth-sampling is false, the system time is recorded and no further actions are taken. If queue-depth sampling is true, the system starts a rapid queue-depth polling process that profiles the entire duration of congestion.
-
-    On 7220-D2/D3 the threshold is rounded up the nearest multiple of 2048 bytes. On IXR-6e/10e the threshold is rounded up to the nearest multiple of 4096 bytes. On 7220-H2/H3 the threshold is rounded up to the nearest multiple of 254 bytes.
+    The queue depth that, when crossed in a rising direction, triggers a hardware interrupt and a recording of the current system time.
 
     The default value of 0 disables the functionality.
-    """
-    low_threshold_bytes: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-qos:low-threshold-bytes', ge=4096, le=4294967295),
-    ] = None
-    """
-    The queue depth that, when crossed in a falling direction, signals a potential end of congestion
 
-    When queue-depth-sampling is enabled and a VOQ associated with the egress queue is in a congested state the periodic pollling of that VOQ's depth ends when there have been low-threshold-count samples recording a depth below the low-threshold-bytes.
-    """
-    low_threshold_count: Annotated[
-        Optional[int], Field(alias='srl_nokia-qos:low-threshold-count', ge=1, le=255)
-    ] = 3
-    """
-    The number of consecutive queue-depth samples below low-threshold-bytes that are required to declare the end of congestion
+    On IXR-6/10 this parameter applies to a set of VOQs (and therefore to unicast traffic only). On 7220-D2/D3/H2/H3 this parameter applies to a unicast queue only; the configuration of this leaf is ignored when the queue-template is attached to a queue with queue-type other than unicast.
 
-    When queue-depth-sampling is enabled and a VOQ associated with the egress queue is in a congested state the periodic pollling of that VOQ's depth ends when there have been low-threshold-count samples recording a depth below the low-threshold-bytes.
-    """
-    queue_depth_sampling: Annotated[
-        Optional[bool], Field(alias='srl_nokia-qos:queue-depth-sampling')
-    ] = False
-    """
-    True setting enables triggered queue-depth sampling
-
-    When this setting is enabled and the queue depth of any VOQ associated with the egress queue exceeds the high-threshold, the system records the congestion start-time and begins collecting regular samples of the VOQ's depth. The periodic sampling continues until the low-threshold conditions are met.
+    On 7220-D2/D3 the threshold is rounded up the nearest multiple of 2048 bytes. On IXR-6/10 the threshold is rounded up to the nearest multiple of 4096 bytes. On 7220-H2/H3 the threshold is rounded up to the nearest multiple of 254 bytes
     """
     interface_pool: Annotated[
         Optional[int], Field(alias='srl_nokia-qos:interface-pool', ge=0, le=7)
@@ -1598,6 +1441,23 @@ class QueueListEntry6(BaseModel):
     """
     Interface-pool the queue is assigned to at subinterface level
     """
+
+
+class QueuesContainer3(BaseModel):
+    """
+    Buffer allocation parameters for individual queues
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    queue: Annotated[
+        Optional[List[QueueListEntry5]], Field(alias='srl_nokia-qos:queue')
+    ] = None
+    pfc_queue: Annotated[
+        Optional[List[PfcQueueListEntry4]], Field(alias='srl_nokia-qos:pfc-queue')
+    ] = None
 
 
 class RateContainer2(BaseModel):
@@ -1614,7 +1474,7 @@ class RateContainer2(BaseModel):
         Field(alias='srl_nokia-qos:kbps-or-percentage'),
     ] = None
     pir_adaptation_rule: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:pir-adaptation-rule')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:pir-adaptation-rule')
     ] = 'closest'
     """
     Defines how the user-configured values will be adjusted to available hardware values
@@ -1635,7 +1495,7 @@ class RateContainer3(BaseModel):
         Field(alias='srl_nokia-qos:kbps-or-percentage'),
     ] = None
     pir_adaptation_rule: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:pir-adaptation-rule')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:pir-adaptation-rule')
     ] = 'closest'
     """
     Defines how the user-configured values will be adjusted to available hardware values
@@ -1648,7 +1508,7 @@ class ReColorCase(BaseModel):
         regex_engine="python-re",
     )
     drop_probability: Annotated[
-        Optional[EnumerationEnum33],
+        Optional[EnumerationEnum25],
         Field(alias='srl_nokia-acl-policers:drop-probability'),
     ] = 'high'
     """
@@ -1873,7 +1733,7 @@ class StatisticsContainer(BaseModel):
     Total number of packets discarded becuase pfc-buffer-allocation was depleted. Under normal condition this counter should not be incremented
     """
     pfc_priority: Annotated[
-        Optional[List[PfcPriorityListEntry2]], Field(alias='srl_nokia-qos:pfc-priority')
+        Optional[List[PfcPriorityListEntry]], Field(alias='srl_nokia-qos:pfc-priority')
     ] = None
 
 
@@ -1950,40 +1810,6 @@ class ViolateActionContainer(BaseModel):
     ] = None
 
 
-class VirtualInterfaceListEntry(BaseModel):
-    """
-    Virtual interface for the purpose of SVLAN level scheduling
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-qos:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    Virtual interface name
-    """
-    sched_class_scheduling_policy: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-qos:sched-class-scheduling-policy',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    Interface level scheduling policy
-    """
-    inputs: Annotated[
-        Optional[InputsContainer4], Field(alias='srl_nokia-qos:inputs')
-    ] = None
-
-
 class AdaptationRulesContainer(BaseModel):
     """
     Container defining adaptation rules for individual policer parameters
@@ -1994,37 +1820,37 @@ class AdaptationRulesContainer(BaseModel):
         regex_engine="python-re",
     )
     peak_rate: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:peak-rate')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:peak-rate')
     ] = 'closest'
     """
     Adaptation rule for peak-rate-kbps parameter
     """
     committed_rate: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:committed-rate')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:committed-rate')
     ] = 'closest'
     """
     Adaptation rule for committed-rate-kbps parameter
     """
     excess_rate: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:excess-rate')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:excess-rate')
     ] = 'closest'
     """
     Adaptation rule for excess-rate-kbs parameter
     """
     maximum_burst_size: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:maximum-burst-size')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:maximum-burst-size')
     ] = 'closest'
     """
     Adaptation rule for maximum-burst-size parameter
     """
     committed_burst_size: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:committed-burst-size')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:committed-burst-size')
     ] = 'closest'
     """
     Adaptation rule for committed-burst-size parameter
     """
     excess_burst_size: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:excess-burst-size')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:excess-burst-size')
     ] = 'closest'
     """
     Adaptation rule for excess-burst-size parameter
@@ -2174,7 +2000,7 @@ class AutoInputCase(BaseModel):
         regex_engine="python-re",
     )
     inputs: Annotated[
-        Optional[EnumerationEnum16], Field(alias='srl_nokia-qos:inputs')
+        Optional[EnumerationEnum13], Field(alias='srl_nokia-qos:inputs')
     ] = None
     """
     This options defines that all queues defined in this queue-scheduling-policy are input to this tier-0 scheduler or all tier-0 schedulers are input to tier-1 scheduler
@@ -2187,60 +2013,35 @@ class AutoInputCase2(BaseModel):
         regex_engine="python-re",
     )
     inputs: Annotated[
-        Optional[EnumerationEnum17], Field(alias='srl_nokia-qos:inputs')
+        Optional[EnumerationEnum14], Field(alias='srl_nokia-qos:inputs')
     ] = None
     """
     This options defines that all scheduling-classes are input to this tier-0 scheduler or all tier-0 schedulers are input to tier-1 scheduler
     """
 
 
-class CongestionEventListEntry(BaseModel):
+class BufferAllocationProfileListEntry(BaseModel):
     """
-    List of the most recent congestion event(s) for this VOQ
+    The name of a buffer-allocation-profile
     """
 
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    index: Annotated[int, Field(alias='srl_nokia-qos:index', ge=0, le=65535)]
-    """
-    Index representing the order of recorded congestion events for the VOQ
-
-    Index 0 is the most recent event, index 1 is the next most recent event, etc.
-    """
-    status: Annotated[
-        Optional[EnumerationEnum30], Field(alias='srl_nokia-qos:status')
-    ] = None
-    """
-    Current status of the congestion event
-    """
-    start_time: Annotated[
-        Optional[str],
+    name: Annotated[
+        str,
         Field(
-            alias='srl_nokia-qos:start-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
+            alias='srl_nokia-qos:name',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
         ),
+    ]
+    """
+    Unique string name used for the buffer-allocation-profile
+    """
+    queues: Annotated[
+        Optional[QueuesContainer3], Field(alias='srl_nokia-qos:queues')
     ] = None
-    """
-    The time when the depth of the VOQ exceeded high-threshold-bytes in a rising direction
-    """
-    end_time: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-qos:end-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The time when VOQ congestion ended, determined by low-threshold conditions
-    """
-    high_watermark: Annotated[
-        Optional[int], Field(alias='srl_nokia-qos:high-watermark', ge=0, le=4294967295)
-    ] = None
-    """
-    The highest queue-depth sample that was taken between the start-time and end-time
-    """
 
 
 class DropProbabilityListEntry2(BaseModel):
@@ -2249,7 +2050,7 @@ class DropProbabilityListEntry2(BaseModel):
         regex_engine="python-re",
     )
     drop_probability: Annotated[
-        EnumerationEnum12, Field(alias='srl_nokia-qos:drop-probability')
+        EnumerationEnum9, Field(alias='srl_nokia-qos:drop-probability')
     ]
     """
     A drop probability level within the FC for which a different remarking is desired
@@ -2268,7 +2069,7 @@ class DropProbabilityListEntry3(BaseModel):
         regex_engine="python-re",
     )
     drop_probability: Annotated[
-        EnumerationEnum12, Field(alias='srl_nokia-qos:drop-probability')
+        EnumerationEnum9, Field(alias='srl_nokia-qos:drop-probability')
     ]
     """
     A drop probability level within the FC for which a different remarking is desired
@@ -2295,22 +2096,6 @@ class DropZonesContainer(BaseModel):
     multicast_priority: Annotated[
         Optional[List[MulticastPriorityListEntry]],
         Field(alias='srl_nokia-qos:multicast-priority'),
-    ] = None
-
-
-class DscpListEntry(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    value: Annotated[
-        Union[DscpValueType, EnumerationEnum3], Field(alias='srl_nokia-qos:value')
-    ]
-    """
-    A single dscp value
-    """
-    action: Annotated[
-        Optional[EnumerationEnum4], Field(alias='srl_nokia-qos:action')
     ] = None
 
 
@@ -2411,6 +2196,38 @@ class ExplicitCongestionNotificationContainer(BaseModel):
     """
 
 
+class ForwardingClassLeafList(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$'
+        ),
+    ]
+    """
+    List of forwarding-classes which packets are assigned to a given pfc-queue for untagged routed-interfaces
+    """
+
+
+class ForwardingClassLeafList2(RootModel[str]):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    root: Annotated[
+        str,
+        Field(
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$'
+        ),
+    ]
+    """
+    The forwarding class mapped in the given pfc-queue
+    """
+
+
 class ForwardingClassListEntry2(BaseModel):
     """
     User defined forwarding class
@@ -2464,7 +2281,7 @@ class ForwardingComplexListEntry(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[EnumerationEnum26, Field(alias='srl_nokia-qos:name')]
+    name: Annotated[EnumerationEnum19, Field(alias='srl_nokia-qos:name')]
     """
     Forwarding-complex name
     """
@@ -2767,7 +2584,7 @@ class InputListEntry(BaseModel):
     User-defined identifier for the scheduler input
     """
     input_type: Annotated[
-        Optional[EnumerationEnum15], Field(alias='srl_nokia-qos:input-type')
+        Optional[EnumerationEnum12], Field(alias='srl_nokia-qos:input-type')
     ] = 'queue'
     queue_name: Annotated[
         Optional[str],
@@ -2790,20 +2607,6 @@ class InputListEntry(BaseModel):
     ] = None
     """
     For weighted round-robin schedulers, this leaf indicates the weight of the corresponding input
-    """
-    committed_rate_kbps: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-qos:committed-rate-kbps', ge=0, le=18446744073709551615),
-    ] = None
-    """
-    Defines CIR value for subinterface queue. The total subinterface queue rate is defined as CIR+EIR
-    """
-    excess_rate_kbps: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-qos:excess-rate-kbps', ge=0, le=18446744073709551615),
-    ] = None
-    """
-    Defines EIR value for subinterface queue. The total subinterface queue rate is defined as CIR+EIR
     """
 
 
@@ -3144,36 +2947,6 @@ class PerLagMemberStatisticsContainer(BaseModel):
     ] = None
 
 
-class PfcPriorityListEntry3(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    index: Annotated[int, Field(alias='srl_nokia-qos:index', ge=0, le=7)]
-    """
-    PFC-priority index
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum18], Field(alias='srl_nokia-qos:oper-state')
-    ] = None
-    """
-    Indicates the PFC state on receiving side of the interface
-    """
-    remote_state: Annotated[
-        Optional[EnumerationEnum20], Field(alias='srl_nokia-qos:remote-state')
-    ] = None
-
-
-class PfcQueueCase(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    pfc_queue: Annotated[
-        Optional[List[PfcQueueListEntry4]], Field(alias='srl_nokia-qos:pfc-queue')
-    ] = None
-
-
 class PfcQueueListEntry2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -3189,27 +2962,96 @@ class PfcQueueListEntry2(BaseModel):
     """
     PFC-queue the packets should be mapped to
     """
-    dot1p: Annotated[Optional[int], Field(alias='srl_nokia-qos:dot1p', ge=0, le=7)] = (
-        None
-    )
+    dot1p: Annotated[
+        Optional[List[Dot1pLeafList]], Field(alias='srl_nokia-qos:dot1p')
+    ] = []
     """
-    dot1p of the packets which will be assigned to a given pfc-queue
+    List of dot1p values of the packets which will be assigned to a given pfc-queue
     """
     forwarding_class: Annotated[
-        Optional[str],
+        Optional[List[ForwardingClassLeafList]],
+        Field(alias='srl_nokia-qos:forwarding-class'),
+    ] = []
+    """
+    List of forwarding-classes which packets are assigned to a given pfc-queue for untagged routed-interfaces
+    """
+    pfc_pause_frame_priority: Annotated[
+        Optional[List[PfcPauseFramePriorityLeafList]],
+        Field(alias='srl_nokia-qos:pfc-pause-frame-priority'),
+    ] = []
+    """
+    PFC priorities indicated in generated pfc-pause-frame if congestion occurs in a given pfc-queue
+    """
+    enable_pfc: Annotated[Optional[bool], Field(alias='srl_nokia-qos:enable-pfc')] = (
+        False
+    )
+    """
+    Enables/disables pfc-frame generation for a given pfc-queue
+    """
+
+
+class PfcQueueListEntry3(BaseModel):
+    """
+    List of pfc-queues
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    pfc_queue_name: Annotated[
+        str,
         Field(
-            alias='srl_nokia-qos:forwarding-class',
+            alias='srl_nokia-qos:pfc-queue-name',
             pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ]
+    """
+    The pfc-queue name
+    """
+    forwarding_class: Annotated[
+        Optional[List[ForwardingClassLeafList2]],
+        Field(alias='srl_nokia-qos:forwarding-class'),
+    ] = []
+    """
+    The forwarding class mapped in the given pfc-queue
+    """
+    pfc_on_threshold_bytes: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-qos:pfc-on-threshold-bytes', ge=0, le=4294967295),
+    ] = None
+    """
+    Displays the actual on-threshold of the pfc-queue
+    """
+    pfc_off_threshold_bytes: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-qos:pfc-off-threshold-bytes', ge=0, le=4294967295),
+    ] = None
+    """
+    Displays the actual off-threshold of the pfc-queue
+    """
+    pfc_committed_burst_size: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-qos:pfc-committed-burst-size', ge=0, le=4294967295),
+    ] = None
+    """
+    Displays the actual committed-burst-size of the pfc-queue
+    """
+    pfc_maximum_burst_size: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-qos:pfc-maximum-burst-size', ge=0, le=4294967295),
+    ] = None
+    """
+    Displays the actual maximum-burst-size of the pfc-queue
+    """
+    pfc_maximum_pfc_reserved_share: Annotated[
+        Optional[int],
+        Field(
+            alias='srl_nokia-qos:pfc-maximum-pfc-reserved-share', ge=0, le=4294967295
         ),
     ] = None
     """
-    forwarding-class of packets, that are assigned to a given pfc-queue for untagged routed-interfaces
-    """
-    pfc_pause_frame_priority: Annotated[
-        Optional[int], Field(alias='srl_nokia-qos:pfc-pause-frame-priority', ge=0, le=7)
-    ] = None
-    """
-    PFC priorities indicated in generated pfc-pause-frame if congestion occurs in a given pfc-queue
+    Displays the actual maximum share the pfc-queue can take from pfc-reserved buffer configured per given forwarding-complex
     """
 
 
@@ -3251,6 +3093,12 @@ class PfcContainer(BaseModel):
     """
     MAC address used as source-mac address used in generated pfc-pause-frames on the interface
     """
+    oper_state: Annotated[
+        Optional[EnumerationEnum15], Field(alias='srl_nokia-qos:oper-state')
+    ] = None
+    """
+    Details if the PFC feature is operationally available
+    """
     deadlock_detection_timer: Annotated[
         Optional[int],
         Field(alias='srl_nokia-qos:deadlock-detection-timer', ge=0, le=65535),
@@ -3282,35 +3130,12 @@ class PolicerStatisticsContainer(BaseModel):
     ] = None
 
 
-class PreClassificationContainer(BaseModel):
-    """
-    Defines list of protected codepoints within the system
-
-    Dot1p codepoints have highest priority. MPLS and DSCP condepoints are relevant only on untagged interfaces
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    dot1p: Annotated[
-        Optional[List[Dot1pListEntry]], Field(alias='srl_nokia-qos:dot1p')
-    ] = None
-    dscp: Annotated[
-        Optional[List[DscpListEntry]], Field(alias='srl_nokia-qos:dscp')
-    ] = None
-    mpls_traffic_class: Annotated[
-        Optional[List[MplsTrafficClassListEntry]],
-        Field(alias='srl_nokia-qos:mpls-traffic-class'),
-    ] = None
-
-
 class ProfileListEntry2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    profile: Annotated[EnumerationEnum13, Field(alias='srl_nokia-qos:profile')]
+    profile: Annotated[EnumerationEnum10, Field(alias='srl_nokia-qos:profile')]
     """
     A packet profile within the FC for which a different remarking is desired
     """
@@ -3327,7 +3152,7 @@ class ProfileListEntry3(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    profile: Annotated[EnumerationEnum13, Field(alias='srl_nokia-qos:profile')]
+    profile: Annotated[EnumerationEnum10, Field(alias='srl_nokia-qos:profile')]
     """
     A packet profile within the FC for which a different remarking is desired
     """
@@ -3344,7 +3169,7 @@ class ProfileListEntry4(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    profile: Annotated[EnumerationEnum13, Field(alias='srl_nokia-qos:profile')]
+    profile: Annotated[EnumerationEnum10, Field(alias='srl_nokia-qos:profile')]
     """
     A packet profile within the FC for which a different remarking is desired
     """
@@ -3393,21 +3218,6 @@ class QueueDepthSamplingContainer(BaseModel):
     """
 
 
-class QueueDepthContainer2(BaseModel):
-    """
-    Container with the latest queue-depth information for a specific VOQ
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    congestion_event: Annotated[
-        Optional[List[CongestionEventListEntry]],
-        Field(alias='srl_nokia-qos:congestion-event'),
-    ] = None
-
-
 class QueueListCase(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -3453,16 +3263,6 @@ class QueueSchedulerListEntry(BaseModel):
     ] = None
 
 
-class QueueCase(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    queue: Annotated[
-        Optional[List[QueueListEntry6]], Field(alias='srl_nokia-qos:queue')
-    ] = None
-
-
 class QueueContainer(BaseModel):
     """
     Container used to define whether local subinterface should be created or re-direction to remote queue at interface level should be used
@@ -3483,7 +3283,7 @@ class QueueContainer(BaseModel):
     The queue name
     """
     re_direct_to: Annotated[
-        Optional[EnumerationEnum7], Field(alias='srl_nokia-qos:re-direct-to')
+        Optional[EnumerationEnum4], Field(alias='srl_nokia-qos:re-direct-to')
     ] = None
     """
     The re-direction to interface level queue
@@ -3514,30 +3314,6 @@ class QueueListEntry3(BaseModel):
     ] = None
 
 
-class QueueListEntry5(BaseModel):
-    """
-    List of egress queues associated with the interface
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    queue_name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-qos:queue-name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    The queue name
-    """
-    queue_depth: Annotated[
-        Optional[QueueDepthContainer2], Field(alias='srl_nokia-qos:queue-depth')
-    ] = None
-
-
 class QueuesContainer(BaseModel):
     """
     Enclosing container for the list of user-defined queue names
@@ -3559,17 +3335,6 @@ class QueuesContainer(BaseModel):
     ] = None
 
 
-class QueuesContainer3(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    queue_pfc_queue: Annotated[
-        Optional[Union[QueueCase, PfcQueueCase]],
-        Field(alias='srl_nokia-qos:queue-pfc-queue'),
-    ] = None
-
-
 class RateContainer(BaseModel):
     """
     Container with options defining parent-policer rate
@@ -3586,7 +3351,7 @@ class RateContainer(BaseModel):
     Defines peak-rate of the parent-policer
     """
     adaptation_rule: Annotated[
-        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:adaptation-rule')
+        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:adaptation-rule')
     ] = 'closest'
     """
     Defines adaptation-rule for peak-rate of the parent-policer
@@ -3777,10 +3542,6 @@ class SchedulerContainer(BaseModel):
         Optional[List[SchedClassSchedulerListEntry]],
         Field(alias='srl_nokia-qos:sched-class-scheduler'),
     ] = None
-    virtual_interface: Annotated[
-        Optional[List[VirtualInterfaceListEntry]],
-        Field(alias='srl_nokia-qos:virtual-interface'),
-    ] = None
     scheduler_policy: Annotated[
         Optional[str],
         Field(
@@ -3790,13 +3551,6 @@ class SchedulerContainer(BaseModel):
     ] = None
     """
     The scheduler policy to be applied to traffic on this interface
-    """
-    aggregate_rate_percentage: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-qos:aggregate-rate-percentage', ge=1, le=100),
-    ] = 100
-    """
-    Defines the aggregate-rate for a subinterface as a percentage of outgoing interface rate
     """
 
 
@@ -3814,7 +3568,7 @@ class SchedulerListEntry(BaseModel):
     Sequence number for the scheduler within the scheduler policy. Schedulers are processed from lowest sequence to highest
     """
     priority: Annotated[
-        Optional[EnumerationEnum14], Field(alias='srl_nokia-qos:priority')
+        Optional[EnumerationEnum11], Field(alias='srl_nokia-qos:priority')
     ] = None
     """
     Priority of the scheduler within the scheduler policy
@@ -3896,13 +3650,13 @@ class TrafficClassListEntry(BaseModel):
     The forwarding class
     """
     drop_probability: Annotated[
-        Optional[EnumerationEnum12], Field(alias='srl_nokia-qos:drop-probability')
+        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:drop-probability')
     ] = None
     """
     The drop probability to which the traffic-class value is mapped
     """
     profile: Annotated[
-        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:profile')
+        Optional[EnumerationEnum2], Field(alias='srl_nokia-qos:profile')
     ] = None
     """
     The profile to which the traffic-class value is mapped
@@ -3939,24 +3693,6 @@ class UnicastMappingContainer(BaseModel):
     ] = None
 
 
-class VoqInterfaceListEntry(BaseModel):
-    """
-    List of VOQ ingress traffic objects associated with output traffic on the interface
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-qos:name')]
-    """
-    The name of the VOQ ingress traffic object in the format 'voq-<x>-<y>-<z>' where <x> is the ingress slot identifier, <y> is the ingress forwarding-complex identifier, and <z> is the ingress core identifier
-    """
-    queue: Annotated[
-        Optional[List[QueueListEntry5]], Field(alias='srl_nokia-qos:queue')
-    ] = None
-
-
 class WredSlopeListEntry(BaseModel):
     """
     List of WRED slopes
@@ -3967,13 +3703,13 @@ class WredSlopeListEntry(BaseModel):
         regex_engine="python-re",
     )
     traffic_type: Annotated[
-        EnumerationEnum28, Field(alias='srl_nokia-qos:traffic-type')
+        EnumerationEnum21, Field(alias='srl_nokia-qos:traffic-type')
     ]
     """
     The traffic type to which the WRED slope applies
     """
     drop_probability: Annotated[
-        EnumerationEnum29, Field(alias='srl_nokia-qos:drop-probability')
+        EnumerationEnum22, Field(alias='srl_nokia-qos:drop-probability')
     ]
     """
     The drop probability to which the WRED slope applies
@@ -4020,13 +3756,13 @@ class WredSlopeListEntry2(BaseModel):
         regex_engine="python-re",
     )
     traffic_type: Annotated[
-        EnumerationEnum28, Field(alias='srl_nokia-qos:traffic-type')
+        EnumerationEnum21, Field(alias='srl_nokia-qos:traffic-type')
     ]
     """
     The traffic type to which the WRED slope applies
     """
     drop_probability: Annotated[
-        EnumerationEnum29, Field(alias='srl_nokia-qos:drop-probability')
+        EnumerationEnum22, Field(alias='srl_nokia-qos:drop-probability')
     ]
     """
     The drop probability to which the WRED slope applies
@@ -4091,7 +3827,7 @@ class WredSlopeListEntry3(BaseModel):
         regex_engine="python-re",
     )
     wred_profile: Annotated[
-        EnumerationEnum31, Field(alias='srl_nokia-qos:wred-profile')
+        EnumerationEnum23, Field(alias='srl_nokia-qos:wred-profile')
     ]
     """
     The key for individual wred-slopes 
@@ -4179,62 +3915,6 @@ class AggregateStatisticsContainer2(BaseModel):
     ] = None
 
 
-class BufferAllocationProfileListEntry(BaseModel):
-    """
-    The name of a buffer-allocation-profile
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        str,
-        Field(
-            alias='srl_nokia-qos:name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ]
-    """
-    Unique string name used for the buffer-allocation-profile
-    """
-    queues: Annotated[
-        Optional[QueuesContainer3], Field(alias='srl_nokia-qos:queues')
-    ] = None
-
-
-class DcbxContainer(BaseModel):
-    """
-    Container defining DCBX related parameters and state information
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    admin_state: Annotated[
-        Optional[EnumerationEnum], Field(alias='srl_nokia-qos:admin-state')
-    ] = 'enable'
-    """
-    Enabling/disabling DCBX protocol on the interface
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum18], Field(alias='srl_nokia-qos:oper-state')
-    ] = None
-    """
-    Operational state for DCBX on the interface
-    """
-    oper_state_reason: Annotated[
-        Optional[EnumerationEnum19], Field(alias='srl_nokia-qos:oper-state-reason')
-    ] = None
-    """
-    Indicates the reason for DCBX oper-state down
-    """
-    pfc_priority: Annotated[
-        Optional[List[PfcPriorityListEntry3]], Field(alias='srl_nokia-qos:pfc-priority')
-    ] = None
-
-
 class DefaultContainer(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -4251,20 +3931,20 @@ class DefaultContainer(BaseModel):
     The forwarding class
     """
     drop_probability: Annotated[
-        Optional[EnumerationEnum12], Field(alias='srl_nokia-qos:drop-probability')
+        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:drop-probability')
     ] = None
     """
     The default drop-probability for packets arriving on this subinterface that do not match any classification rule
     """
     profile: Annotated[
-        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:profile')
+        Optional[EnumerationEnum2], Field(alias='srl_nokia-qos:profile')
     ] = 'out'
     """
     The default profile for packets arriving on this subinterface that do not match any classification rule
     """
 
 
-class Dot1pListEntry2(BaseModel):
+class Dot1pListEntry(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -4281,13 +3961,13 @@ class Dot1pListEntry2(BaseModel):
     The forwarding class
     """
     drop_probability: Annotated[
-        Optional[EnumerationEnum12], Field(alias='srl_nokia-qos:drop-probability')
+        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:drop-probability')
     ] = None
     """
     The drop probability to which the dot1p value is mapped
     """
     profile: Annotated[
-        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:profile')
+        Optional[EnumerationEnum2], Field(alias='srl_nokia-qos:profile')
     ] = None
     """
     The profile to which the dot1p value is mapped
@@ -4316,7 +3996,7 @@ class DropProbabilityListEntry(BaseModel):
         regex_engine="python-re",
     )
     drop_probability: Annotated[
-        EnumerationEnum12, Field(alias='srl_nokia-qos:drop-probability')
+        EnumerationEnum9, Field(alias='srl_nokia-qos:drop-probability')
     ]
     """
     A drop probability level within the FC for which a different remarking is desired
@@ -4385,7 +4065,7 @@ class DscpCase4(BaseModel):
     """
 
 
-class DscpListEntry2(BaseModel):
+class DscpListEntry(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
@@ -4407,10 +4087,61 @@ class DscpListEntry2(BaseModel):
     The forwarding class
     """
     profile: Annotated[
-        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:profile')
+        Optional[EnumerationEnum2], Field(alias='srl_nokia-qos:profile')
     ] = None
     """
     The profile to which the DSCP value is mapped
+    """
+
+
+class DscpListEntry2(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    value: Annotated[
+        Union[DscpValueType, EnumerationEnum3], Field(alias='srl_nokia-qos:value')
+    ]
+    """
+    A DiffServ Code Point represented numerically or by a PHB name.
+    """
+    forwarding_class: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-qos:forwarding-class',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ] = None
+    """
+    The forwarding class
+    """
+    drop_probability: Annotated[
+        Optional[EnumerationEnum9], Field(alias='srl_nokia-qos:drop-probability')
+    ] = None
+    """
+    The drop probability to which the DSCP value is mapped
+    """
+    profile: Annotated[
+        Optional[EnumerationEnum2], Field(alias='srl_nokia-qos:profile')
+    ] = None
+    """
+    The profile to which the DSCP value is mapped
+    """
+    de_out_profile: Annotated[
+        Optional[bool], Field(alias='srl_nokia-qos:de-out-profile')
+    ] = True
+    """
+    The discard-eligibility to which the DSCP value is mapped
+    """
+    ip_rewrite_policy: Annotated[
+        Optional[str],
+        Field(
+            alias='srl_nokia-qos:ip-rewrite-policy',
+            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
+        ),
+    ] = None
+    """
+    The ip-rewrite-policy to be used for this dscp-value
     """
 
 
@@ -4435,59 +4166,8 @@ class DscpListEntry3(BaseModel):
     """
     The forwarding class
     """
-    drop_probability: Annotated[
-        Optional[EnumerationEnum12], Field(alias='srl_nokia-qos:drop-probability')
-    ] = None
-    """
-    The drop probability to which the DSCP value is mapped
-    """
     profile: Annotated[
-        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:profile')
-    ] = None
-    """
-    The profile to which the DSCP value is mapped
-    """
-    de_out_profile: Annotated[
-        Optional[bool], Field(alias='srl_nokia-qos:de-out-profile')
-    ] = True
-    """
-    The discard-eligibility to which the DSCP value is mapped
-    """
-    ip_rewrite_policy: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-qos:ip-rewrite-policy',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    The ip-rewrite-policy to be used for this dscp-value
-    """
-
-
-class DscpListEntry4(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    value: Annotated[
-        Union[DscpValueType, EnumerationEnum3], Field(alias='srl_nokia-qos:value')
-    ]
-    """
-    A DiffServ Code Point represented numerically or by a PHB name.
-    """
-    forwarding_class: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-qos:forwarding-class',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    The forwarding class
-    """
-    profile: Annotated[
-        Optional[EnumerationEnum6], Field(alias='srl_nokia-qos:profile')
+        Optional[EnumerationEnum2], Field(alias='srl_nokia-qos:profile')
     ] = None
     """
     The profile to which the DSCP value is mapped
@@ -4630,7 +4310,7 @@ class ForwardingClassListEntry5(BaseModel):
     The forwarding class
     """
     forwarding_type: Annotated[
-        Optional[List[EnumerationEnum24]], Field(alias='srl_nokia-qos:forwarding-type')
+        Optional[List[EnumerationEnum18]], Field(alias='srl_nokia-qos:forwarding-type')
     ] = []
     """
     The list of forwarding types, belonging to this forwarding-class, to match to the policer
@@ -4657,7 +4337,7 @@ class ForwardingClassListEntry6(BaseModel):
     A forwarding class that has traffic to match to the policer
     """
     forwarding_type: Annotated[
-        Optional[List[EnumerationEnum24]],
+        Optional[List[EnumerationEnum18]],
         Field(alias='srl_nokia-acl-policers:forwarding-type'),
     ] = []
     """
@@ -4689,7 +4369,7 @@ class ForwardingComplexListEntry2(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    name: Annotated[EnumerationEnum32, Field(alias='srl_nokia-qos:name')]
+    name: Annotated[EnumerationEnum24, Field(alias='srl_nokia-qos:name')]
     """
     Forwarding-complex name
     """
@@ -5038,9 +4718,6 @@ class OutputClassMapListEntry(BaseModel):
     """
     User defined output-class-map name
     """
-    queue_block_size: Annotated[
-        Optional[int], Field(alias='srl_nokia-qos:queue-block-size', ge=0, le=12)
-    ] = 12
     forwarding_class: Annotated[
         Optional[List[ForwardingClassListEntry4]],
         Field(alias='srl_nokia-qos:forwarding-class'),
@@ -5101,7 +4778,7 @@ class PolicerListEntry(BaseModel):
     A number to identify given policer within policer-policy
     """
     algorithm_type: Annotated[
-        Optional[EnumerationEnum8], Field(alias='srl_nokia-qos:algorithm-type')
+        Optional[EnumerationEnum5], Field(alias='srl_nokia-qos:algorithm-type')
     ] = 'trtcm2'
     """
     Defines the algorithm-type used for the given policer
@@ -5166,13 +4843,13 @@ class PolicerListEntry(BaseModel):
     This parameter is ignored if 'algorithm-type' is set to 'trtcm1'
     """
     violate_action: Annotated[
-        Optional[EnumerationEnum10], Field(alias='srl_nokia-qos:violate-action')
+        Optional[EnumerationEnum7], Field(alias='srl_nokia-qos:violate-action')
     ] = 'drop'
     """
     Defines action when policer will evaluate the packet as violating
     """
     statistics_mode: Annotated[
-        Optional[EnumerationEnum11], Field(alias='srl_nokia-qos:statistics-mode')
+        Optional[EnumerationEnum8], Field(alias='srl_nokia-qos:statistics-mode')
     ] = 'extended'
     """
     Defines the number and type of the counters collected for the policer. The modes are mutually exclusive
@@ -5192,12 +4869,6 @@ class PolicerListEntry3(BaseModel):
         Optional[List[ForwardingClassListEntry5]],
         Field(alias='srl_nokia-qos:forwarding-class'),
     ] = None
-    policer_usage_mode: Annotated[
-        Optional[EnumerationEnum25], Field(alias='srl_nokia-qos:policer-usage-mode')
-    ] = None
-    """
-    Defines the usage model of the policer
-    """
     eir_policer_threshold_separation_policy: Annotated[
         Optional[str],
         Field(alias='srl_nokia-qos:eir-policer-threshold-separation-policy'),
@@ -5293,7 +4964,7 @@ class PolicerListEntry4(BaseModel):
         int, Field(alias='srl_nokia-acl-policers:peak-rate-kbps', ge=0, le=4294967295)
     ]
     """
-    The peak information rate (PIR) of the policer, defined in kilobits (1000 bits) per second.
+    The peak information rate (PIR) of the policer, defined in kilobits (1024 bits) per second.
     On 7220-D2/D3 the minimum rate is 8 Kbps
     """
     committed_rate_kbps: Annotated[
@@ -5301,7 +4972,7 @@ class PolicerListEntry4(BaseModel):
         Field(alias='srl_nokia-acl-policers:committed-rate-kbps', ge=0, le=4294967295),
     ]
     """
-    The committed information rate (CIR) of the policer, defined in kilobits (1000 bits) per second
+    The committed information rate (CIR) of the policer, defined in kilobits (1024 bits) per second
     On 7220-D2/D3 the minimum rate  is 8 Kbps
     """
     maximum_burst_size: Annotated[
@@ -5413,7 +5084,7 @@ class QueueListEntry4(BaseModel):
     The list of forwarding classes that map to this queue
     """
     queue_type: Annotated[
-        Optional[EnumerationEnum27], Field(alias='srl_nokia-qos:queue-type')
+        Optional[EnumerationEnum20], Field(alias='srl_nokia-qos:queue-type')
     ] = None
     """
     Indicates whether given queue is local to subinterface or interface-queue
@@ -5467,10 +5138,6 @@ class ResourceManagementContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    pre_classification: Annotated[
-        Optional[PreClassificationContainer],
-        Field(alias='srl_nokia-qos:pre-classification'),
-    ] = None
     forwarding_class_resource_priority: Annotated[
         Optional[ForwardingClassResourcePriorityContainer],
         Field(alias='srl_nokia-qos:forwarding-class-resource-priority'),
@@ -5609,7 +5276,7 @@ class SystemGeneratedTrafficContainer(BaseModel):
         regex_engine="python-re",
     )
     dscp: Annotated[
-        Optional[List[DscpListEntry2]], Field(alias='srl_nokia-qos:dscp')
+        Optional[List[DscpListEntry]], Field(alias='srl_nokia-qos:dscp')
     ] = None
 
 
@@ -5716,13 +5383,13 @@ class ClassifiersContainer2(BaseModel):
     Enables short-pipe model for all lsp-bindings terminated on the subinterface
     """
     match_qinq_dot1p: Annotated[
-        Optional[EnumerationEnum22], Field(alias='srl_nokia-qos:match-qinq-dot1p')
+        Optional[EnumerationEnum16], Field(alias='srl_nokia-qos:match-qinq-dot1p')
     ] = 'outer'
     """
     Defines which dot1p bits will be used for dot1p-classification in case of QinQ encapsulation
     """
     tos_rewrite_state: Annotated[
-        Optional[EnumerationEnum23], Field(alias='srl_nokia-qos:tos-rewrite-state')
+        Optional[EnumerationEnum17], Field(alias='srl_nokia-qos:tos-rewrite-state')
     ] = 'trusted'
     """
     Defines whether given subinterface is considered as trusted/untrusted for ToS rewrite purpose
@@ -5747,7 +5414,7 @@ class Dot1pPolicyListEntry(BaseModel):
     The name 'default' is reserved for the system default dot1p mapping policy
     """
     dot1p: Annotated[
-        Optional[List[Dot1pListEntry2]], Field(alias='srl_nokia-qos:dot1p')
+        Optional[List[Dot1pListEntry]], Field(alias='srl_nokia-qos:dot1p')
     ] = None
 
 
@@ -5789,7 +5456,7 @@ class DscpPolicyListEntry(BaseModel):
     The name 'default' is reserved for the system default DSCP mapping policy
     """
     dscp: Annotated[
-        Optional[List[DscpListEntry3]], Field(alias='srl_nokia-qos:dscp')
+        Optional[List[DscpListEntry2]], Field(alias='srl_nokia-qos:dscp')
     ] = None
 
 
@@ -5833,7 +5500,7 @@ class DscpReclassifyPolicyListEntry(BaseModel):
     Name of egress dscp-reclassifier policy
     """
     dscp: Annotated[
-        Optional[List[DscpListEntry4]], Field(alias='srl_nokia-qos:dscp')
+        Optional[List[DscpListEntry3]], Field(alias='srl_nokia-qos:dscp')
     ] = None
 
 
@@ -5930,10 +5597,6 @@ class OutputContainer2(BaseModel):
         Optional[List[InterfacePoolListEntry]],
         Field(alias='srl_nokia-qos:interface-pool'),
     ] = None
-    voq_interface: Annotated[
-        Optional[List[VoqInterfaceListEntry]],
-        Field(alias='srl_nokia-qos:voq-interface'),
-    ] = None
 
 
 class PfcMappingProfileListEntry(BaseModel):
@@ -5951,9 +5614,6 @@ class PfcMappingProfileListEntry(BaseModel):
     """
     User defined pfc-mapping-profile name. The name 'default' is reserved for system use
     """
-    pfc_priority: Annotated[
-        Optional[List[PfcPriorityListEntry]], Field(alias='srl_nokia-qos:pfc-priority')
-    ] = None
     received_traffic: Annotated[
         Optional[ReceivedTrafficContainer],
         Field(alias='srl_nokia-qos:received-traffic'),
@@ -6037,7 +5697,7 @@ class PolicerTemplateListEntry(BaseModel):
         Optional[List[PolicerListEntry4]], Field(alias='srl_nokia-acl-policers:policer')
     ] = None
     statistics_mode: Annotated[
-        Optional[EnumerationEnum34],
+        Optional[EnumerationEnum26],
         Field(alias='srl_nokia-acl-policers:statistics-mode'),
     ] = 'violating-focus'
     """
@@ -6214,7 +5874,7 @@ class InputContainer(BaseModel):
     ] = None
 
 
-class InterfaceListEntry2(BaseModel):
+class InterfaceListEntry(BaseModel):
     """
     List of interfaces and subinterfaces referenced by QoS policies
     """
@@ -6231,20 +5891,6 @@ class InterfaceListEntry2(BaseModel):
         Optional[InterfaceRefContainer], Field(alias='srl_nokia-qos:interface-ref')
     ] = None
     pfc: Annotated[Optional[PfcContainer], Field(alias='srl_nokia-qos:pfc')] = None
-    dcbx: Annotated[Optional[DcbxContainer], Field(alias='srl_nokia-qos:dcbx')] = None
-    voq_statistics: Annotated[
-        Optional[bool], Field(alias='srl_nokia-qos:voq-statistics')
-    ] = None
-    """
-    Enable or disable voq-stats at interface
-    """
-    voq_statistics_allocation_status: Annotated[
-        Optional[EnumerationEnum21],
-        Field(alias='srl_nokia-qos:voq-statistics-allocation-status'),
-    ] = None
-    """
-    Enable or disable voq-stats at interface
-    """
     input: Annotated[Optional[InputContainer], Field(alias='srl_nokia-qos:input')] = (
         None
     )
@@ -6263,7 +5909,7 @@ class InterfacesContainer(BaseModel):
         regex_engine="python-re",
     )
     interface: Annotated[
-        Optional[List[InterfaceListEntry2]], Field(alias='srl_nokia-qos:interface')
+        Optional[List[InterfaceListEntry]], Field(alias='srl_nokia-qos:interface')
     ] = None
 
 

@@ -1,0 +1,80 @@
+name: l3evpn
+prefix: __lab-name
+
+mgmt:
+  network: l3evpn   # management network name
+  ipv4-subnet: 172.100.106.16/28  
+
+
+topology:
+  defaults:
+    kind: nokia_srlinux
+  kinds:
+    nokia_srlinux:
+      image: ghcr.io/nokia/srlinux:25.10.1
+    linux:
+      image: quay.io/frrouting/frr:10.5.0
+
+  nodes:
+    spine:
+      mgmt-ipv4: 172.100.106.18
+      type: ixr-d3l
+      startup-config: startup_configs/spine.conf
+    leaf1:
+      mgmt-ipv4: 172.100.106.19
+      type: ixr-d2l
+      startup-config: startup_configs/leaf1.conf
+    leaf2:
+      mgmt-ipv4: 172.100.106.20
+      type: ixr-d2l
+      startup-config: startup_configs/leaf2.conf
+
+    srv1:
+      mgmt-ipv4: 172.100.106.21
+      kind: linux
+      exec:
+        - ip link set dev eth0 down
+        - ip link set dev eth1 address 00:C1:AB:00:00:01
+        - ip addr add 192.168.1.100/24 dev eth1
+        - ip route add 0/0 via 192.168.1.1
+
+    srv2:
+      mgmt-ipv4: 172.100.106.22
+      kind: linux
+      exec:
+        - ip link set dev eth0 down
+        - ip link set dev eth1 address 00:C1:AB:00:00:01
+        - ip addr add 192.168.2.100/24 dev eth1
+        - ip route add 0/0 via 192.168.2.1
+
+    # ce1:
+    #   mgmt-ipv4: 172.100.106.23
+    #   kind: linux
+    #   binds:
+    #     - startup_configs/frr1.conf:/etc/frr/frr.conf
+    #     - startup_configs/frr-daemons.conf:/etc/frr/daemons
+    #   exec:
+    #     - ip link set dev eth1 address 00:C1:AB:00:01:01
+    #     - ip link set dev eth0 down
+    #     - touch /etc/frr/vtysh.conf
+    # ce2:
+    #   mgmt-ipv4: 172.100.106.24
+    #   kind: linux
+    #   binds:
+    #     - startup_configs/frr2.conf:/etc/frr/frr.conf
+    #     - startup_configs/frr-daemons.conf:/etc/frr/daemons
+    #   exec:
+    #     - ip link set dev eth1 address 00:C1:AB:00:01:02
+    #     - ip link set dev eth0 down
+    #     - touch /etc/frr/vtysh.conf
+
+  links:
+    # Spine - Leaf
+    - endpoints: ["spine:e1-1", "leaf1:e1-49"]
+    - endpoints: ["spine:e1-2", "leaf2:e1-49"]
+    # Leaf - Clients
+    - endpoints: ["leaf1:e1-1", "srv1:eth1"]
+    - endpoints: ["leaf2:e1-1", "srv2:eth1"]
+    # Leaf - CEs
+    # - endpoints: ["leaf1:e1-2", "ce1:eth1"]
+    # - endpoints: ["leaf2:e1-2", "ce2:eth1"]

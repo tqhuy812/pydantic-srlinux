@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
+from typing_extensions import Annotated
 
 
 class CpuSetLeafList(RootModel[int]):
@@ -25,7 +26,7 @@ class IndexLeaf121(RootModel[int]):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    root: Annotated[int, Field(ge=0, le=18446744073709551615)]
+    root: Annotated[int, Field(ge=0, le=4294967295)]
     """
     CPU index for each processor core on the system
 
@@ -41,17 +42,6 @@ class IndexLeaf51(RootModel[int]):
     root: Annotated[int, Field(ge=0, le=7)]
     """
     The pipeline number (TH3 systems) or direction (J2 and J2C+ systems).
-    """
-
-
-class MdaBindingLeafList(RootModel[str]):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    root: Annotated[str, Field(max_length=1, min_length=1)]
-    """
-    MDAs serviced via given Line Card
     """
 
 
@@ -73,37 +63,6 @@ class P4rtContainer(BaseModel):
     This ID may be referred to as a 'device', 'node' or 'target' by the P4RT specification.
 
     Each ASIC is addressed by the client based on this numeric identifier.
-    """
-
-
-class ResourceListEntry6(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-platform-tcam:name')]
-    """
-    The name of the TCAM resource
-    """
-    free: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-tcam:free', ge=0, le=4294967295)
-    ] = None
-    """
-    The number of available and unused TCAM entries for the entry type, assuming that the maximum number of dynamic TCAM slices are allocated
-    """
-    reserved: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-tcam:reserved', ge=0, le=4294967295),
-    ] = None
-    """
-    The number of TCAM entries that are currently reserved in this resource pool. Reservation happens when a configuration change is committed. Reserved entries may not be programmed yet if the commit has just occurred.
-    """
-    programmed: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-tcam:programmed', ge=0, le=4294967295),
-    ] = None
-    """
-    The number of TCAM entries belonging to this resource that are currently programmed into hardware. When the number of programmed entries equals the number of reserved entries HW programming of this resource type has finished.
     """
 
 
@@ -213,14 +172,14 @@ class SystemReservedPoolContainer(BaseModel):
 
 
 class TcamContainer(BaseModel):
+    """
+    Container for managing the allocation of TCAM banks to different applications.
+    """
+
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    resource: Annotated[
-        Optional[List[ResourceListEntry6]],
-        Field(alias='srl_nokia-platform-tcam:resource'),
-    ] = None
 
 
 class EnumerationEnum(Enum):
@@ -235,51 +194,26 @@ class EnumerationEnum10(Enum):
 
 
 class EnumerationEnum11(Enum):
-    up = 'up'
-    down = 'down'
-    failed = 'failed'
-    up_unused = 'up-unused'
-    down_vni_conflict = 'down-vni-conflict'
-
-
-class EnumerationEnum12(Enum):
-    active = 'active'
-    inactive = 'inactive'
-
-
-class EnumerationEnum13(Enum):
-    unspecified = 'unspecified'
-    healthy = 'healthy'
-    unhealthy = 'unhealthy'
-
-
-class EnumerationEnum14(Enum):
-    unspecified = 'unspecified'
-    healthy = 'healthy'
-    unhealthy = 'unhealthy'
-
-
-class EnumerationEnum15(Enum):
     active = 'active'
     standby = 'standby'
 
 
-class EnumerationEnum16(Enum):
+class EnumerationEnum12(Enum):
     unspecified = 'unspecified'
     healthy = 'healthy'
     unhealthy = 'unhealthy'
 
 
-class EnumerationEnum17(Enum):
+class EnumerationEnum13(Enum):
     all = 'all'
 
 
-class EnumerationEnum18(Enum):
+class EnumerationEnum14(Enum):
     x86_64 = 'x86_64'
     aarch64 = 'aarch64'
 
 
-class EnumerationEnum19(Enum):
+class EnumerationEnum15(Enum):
     compactflash = 'compactflash'
     ssd = 'ssd'
     hdd = 'hdd'
@@ -287,25 +221,48 @@ class EnumerationEnum19(Enum):
     mmc = 'mmc'
 
 
-class EnumerationEnum2(Enum):
-    up = 'up'
-    down = 'down'
-
-
-class EnumerationEnum20(Enum):
+class EnumerationEnum16(Enum):
     ro = 'ro'
     rw = 'rw'
 
 
+class EnumerationEnum17(Enum):
+    a = 'A'
+    b = 'B'
+
+
+class EnumerationEnum18(Enum):
+    synchronized = 'synchronized'
+    synchronizing = 'synchronizing'
+    not_ready = 'not-ready'
+
+
+class EnumerationEnum19(Enum):
+    disabled = 'disabled'
+    enabled = 'enabled'
+    high_scale = 'high-scale'
+
+
+class EnumerationEnum2(Enum):
+    firmware = 'firmware'
+    hardware = 'hardware'
+
+
+class EnumerationEnum20(Enum):
+    feed = 'feed'
+    module = 'module'
+    none = 'none'
+
+
 class EnumerationEnum21(Enum):
-    two_priorities = 'two-priorities'
-    eight_priorities = 'eight-priorities'
+    up = 'up'
+    down = 'down'
 
 
 class EnumerationEnum22(Enum):
-    fault = 'fault'
-    eeprom_invalid = 'eeprom-invalid'
-    airflow_mismatch = 'airflow-mismatch'
+    unspecified = 'unspecified'
+    healthy = 'healthy'
+    unhealthy = 'unhealthy'
 
 
 class EnumerationEnum23(Enum):
@@ -315,104 +272,40 @@ class EnumerationEnum23(Enum):
 
 
 class EnumerationEnum24(Enum):
-    vertical_ports_up = 'vertical-ports-up'
-    vertical_ports_down = 'vertical-ports-down'
-    horizontal = 'horizontal'
+    fault = 'fault'
+    eeprom_invalid = 'eeprom-invalid'
+    airflow_mismatch = 'airflow-mismatch'
 
 
 class EnumerationEnum25(Enum):
-    feed = 'feed'
-    module = 'module'
-    none = 'none'
+    unspecified = 'unspecified'
+    healthy = 'healthy'
+    unhealthy = 'unhealthy'
 
 
 class EnumerationEnum26(Enum):
-    up = 'up'
-    down = 'down'
-
-
-class EnumerationEnum27(Enum):
-    gen2cp_only = 'gen2cp-only'
-    gen3_only = 'gen3-only'
-    gen2cp_gen3_mixed = 'gen2cp-gen3-mixed'
-
-
-class EnumerationEnum28(Enum):
-    unspecified = 'unspecified'
-    healthy = 'healthy'
-    unhealthy = 'unhealthy'
-
-
-class EnumerationEnum29(Enum):
-    unspecified = 'unspecified'
-    healthy = 'healthy'
-    unhealthy = 'unhealthy'
-
-
-class EnumerationEnum3(Enum):
-    firmware = 'firmware'
-    hardware = 'hardware'
-
-
-class EnumerationEnum30(Enum):
     no_input_fault = 'no-input/fault'
     eeprom_invalid = 'eeprom-invalid'
     airflow_mismatch = 'airflow-mismatch'
 
 
-class EnumerationEnum31(Enum):
+class EnumerationEnum27(Enum):
     unspecified = 'unspecified'
     healthy = 'healthy'
     unhealthy = 'unhealthy'
 
 
-class EnumerationEnum32(Enum):
-    field_1 = '1'
-    field_2 = '2'
-    field_3 = '3'
-    field_4 = '4'
-
-
-class EnumerationEnum33(Enum):
-    disabled = 'disabled'
-    enabled = 'enabled'
-    high_scale = 'high-scale'
-
-
-class EnumerationEnum34(Enum):
-    gen2 = 'Gen2'
-    gen2c_ = 'Gen2c+'
-    gen3 = 'Gen3'
-
-
-class EnumerationEnum35(Enum):
-    a = 'A'
-    b = 'B'
-
-
-class EnumerationEnum36(Enum):
-    synchronized = 'synchronized'
-    synchronizing = 'synchronizing'
-    not_ready = 'not-ready'
-
-
-class EnumerationEnum37(Enum):
-    a = 'A'
-    b = 'B'
-
-
-class EnumerationEnum38(Enum):
-    active = 'active'
-    standby = 'standby'
-    synchronizing = 'synchronizing'
-
-
-class EnumerationEnum39(Enum):
+class EnumerationEnum28(Enum):
     not_isolated = 'not-isolated'
     no_hugepages = 'no-hugepages'
     irq_not_masked = 'irq-not-masked'
     sibling_not_isolated = 'sibling-not-isolated'
     invalid_cpu_id = 'invalid-cpu-id'
+
+
+class EnumerationEnum3(Enum):
+    up = 'up'
+    down = 'down'
 
 
 class EnumerationEnum4(Enum):
@@ -447,72 +340,15 @@ class EnumerationEnum7(Enum):
 
 
 class EnumerationEnum8(Enum):
-    field_4_k = '4K'
-    field_6_k = '6K'
-    field_8_k = '8K'
-    field_12_k = '12K'
-    field_16_k = '16K'
-    field_24_k = '24K'
+    up = 'up'
+    down = 'down'
+    failed = 'failed'
+    up_unused = 'up-unused'
 
 
 class EnumerationEnum9(Enum):
-    level_1_fec = 'level-1-fec'
-    level_2_fec = 'level-2-fec'
-    level_3_fec = 'level-3-fec'
-    lag = 'lag'
-    network_header = 'network-header'
-
-
-class ApplicationListEntry(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-platform-lc:name')]
-    """
-    Bank binding. Displays the name of the application bank is assigned to
-    """
-    entries: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-lc:entries', ge=0, le=18446744073709551615),
-    ] = None
-    """
-    Bank entries reserved for a given application
-    """
-
-
-class BankAllocationListEntry(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    bank_id: Annotated[
-        int, Field(alias='srl_nokia-platform-resource-mgmt:bank-id', ge=1, le=34)
-    ]
-    """
-    Unique identifier of the bank. Starts with 1. Some applications support allocation of multiple banks
-    """
-
-
-class BankListEntry(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    bank_id: Annotated[int, Field(alias='srl_nokia-platform-lc:bank-id', ge=1, le=34)]
-    """
-    Unique bank location identifier
-    """
-    bank_size: Annotated[
-        Optional[EnumerationEnum8], Field(alias='srl_nokia-platform-lc:bank-size')
-    ] = None
-    """
-    Bank size. Counter banks are in different sizes and applications can make use of different bank sizes for scale
-    """
-    application: Annotated[
-        Optional[List[ApplicationListEntry]],
-        Field(alias='srl_nokia-platform-lc:application'),
-    ] = None
+    active = 'active'
+    inactive = 'inactive'
 
 
 class CertificateListEntry(BaseModel):
@@ -601,20 +437,6 @@ class ContentsContainer(BaseModel):
     ] = None
 
 
-class CounterBanksContainer(BaseModel):
-    """
-    Bank allocation across different stake-holders. Banks are required by policers to function as well for various stats collection such as Per-Prefix Stats, LSP Stats and alike
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    bank: Annotated[
-        Optional[List[BankListEntry]], Field(alias='srl_nokia-platform-lc:bank')
-    ] = None
-
-
 class CpuacctStatisticsContainer(BaseModel):
     """
     Top-level container for cgroup cpuacct statistics
@@ -637,58 +459,6 @@ class CpuacctStatisticsContainer(BaseModel):
     ] = None
     """
     CPU usage user system
-    """
-
-
-class CryptoModuleContainer(BaseModel):
-    """
-    Top level container for crypto module state
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    crypto_module_version: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-chassis:crypto-module-version')
-    ] = None
-    """
-    Version of the crypto module installed
-    """
-    entropy_provider_version: Annotated[
-        Optional[str],
-        Field(alias='srl_nokia-platform-chassis:entropy-provider-version'),
-    ] = None
-    """
-    Version of the entropy provider installed
-    """
-    fips_provider_version: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-chassis:fips-provider-version')
-    ] = None
-    """
-    Version of the fips provider installed
-    """
-
-
-class Dot1xMultiHostAuthenticationTcamContainer(BaseModel):
-    """
-    Container to provide an option for allocating required hardware resources to dot1x multi-host-authentication or mac-based-authentication
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    dot1x_multi_host: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-first-hop-security-res-mgmt:dot1x-multi-host',
-            ge=0,
-            le=254,
-        ),
-    ] = 0
-    """
-    number of hardware TCAM entries to use for multi host authentication
     """
 
 
@@ -816,7 +586,7 @@ class FabricContainer(BaseModel):
     """
 
 
-class FanContainer2(BaseModel):
+class FanContainer(BaseModel):
     """
     Top-level container for state relating to fans
     """
@@ -836,33 +606,6 @@ class FanContainer2(BaseModel):
     ] = None
     """
     The current RPM of the fan
-    """
-
-
-class FanListEntry(BaseModel):
-    """
-    Grouping for fan configuration and state
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    id: Annotated[int, Field(alias='srl_nokia-platform-fan:id', ge=1, le=255)]
-    """
-    Numeric identifier for the fan
-    """
-    speed: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-fan:speed', ge=0, le=100)
-    ] = None
-    """
-    Configured speed percentage of the fan, based on temperature sensor readings
-    """
-    speed_rpm: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-fan:speed-rpm', ge=0, le=65535)
-    ] = None
-    """
-    RPM of the fan
     """
 
 
@@ -900,121 +643,6 @@ class FeedListEntry(BaseModel):
     ] = None
     """
     Current input amperage of this feed
-    """
-
-
-class FirstHopSecurityTcamContainer(BaseModel):
-    """
-    Container for managing the allocation of TCAM banks to First Hop Security.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    first_hop_security_ip_source_guard_entries: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-first-hop-security-res-mgmt:first-hop-security-ip-source-guard-entries',
-            ge=0,
-            le=1280,
-        ),
-    ] = 0
-    """
-    Number of hardware TCAM entries to use for First Hop Security (FHS) IP Source Guard
-
-    The number of hardware TCAM entries to allocate when First Hop Security
-    IP source guard is enabled on a subinterface. This number must be set to be
-    equal to or more than the number of IP-MAC association entries in the
-    First Hop security ip-mac-binding-table. Software will allocate the required
-    number of hardware TCAM entries.
-    """
-    first_hop_security_ip_source_guard: Annotated[
-        Optional[EnumerationEnum4],
-        Field(
-            alias='srl_nokia-platform-first-hop-security-res-mgmt:first-hop-security-ip-source-guard'
-        ),
-    ] = 'disable'
-    """
-    Set to enable, to allocate hardware resource to enforce IP Source Guard
-
-    When set to enable, hardware resource is taken away from Ingress IPv6 ACLs,
-    reducing the number of Ingress IPv6 ACLs that can be used.
-
-    When set to disable, First Hop security IP source guard cannot be enable. 
-    """
-    first_hop_security_ip_source_guard_v4_entries: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-first-hop-security-res-mgmt:first-hop-security-ip-source-guard-v4-entries',
-            ge=0,
-            le=6144,
-        ),
-    ] = 0
-    """
-    Allocate hardware resources required for IPv4 Source Guard
-
-    The number of hardware TCAM entries to allocate when First Hop Security
-    IP source guard is enabled on a subinterface. This number must be set to be
-    equal to or more than the number of IP-MAC association entries in the
-    First Hop security ip-mac-binding-table. Software will allocate the required
-    number of hardware TCAM entries if available. 
-    """
-    first_hop_security_ip_source_guard_v6_entries: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-first-hop-security-res-mgmt:first-hop-security-ip-source-guard-v6-entries',
-            ge=0,
-            le=6144,
-        ),
-    ] = 0
-    """
-    Allocate hardware resources required for IPv6 Source Guard
-
-    The number of hardware TCAM entries to allocate when First Hop Security
-    IP source guard is enabled on a subinterface. This number must be set to be
-    equal to or more than the number of IP-MAC association entries in the
-    First Hop security ip-mac-binding-table. Software will allocate the required
-    number of hardware TCAM entries if available. 
-    """
-
-
-class GroupBasedPolicyContainer(BaseModel):
-    """
-    Container for managing the allocation of hardware resources used for group-based policy
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    chassis_reboot_required: Annotated[
-        Optional[bool],
-        Field(alias='srl_nokia-platform-resource-mgmt:chassis-reboot-required'),
-    ] = None
-    """
-    Indicates if a chassis reboot is required to activate configuration changes in this container
-
-    Reads true if the user has committed a change in the configuration of mac-lookup or lpm-source-lookup but has not yet saved the config and restarted the system, so previous configuration is still in effect.
-    """
-    mac_lookup: Annotated[
-        Optional[bool], Field(alias='srl_nokia-platform-resource-mgmt:mac-lookup')
-    ] = False
-    """
-    Enables support for group-based policy on MAC-VRF network-instances
-
-    When set to true, the system allocates resources for group-based policy on MAC-VRF network-instances.
-    When set to false, the system does not allocate resources for group-based policy on MAC-VRF network-instances
-    and uses those resources for other purposes.
-    """
-    lpm_source_lookup: Annotated[
-        Optional[bool],
-        Field(alias='srl_nokia-platform-resource-mgmt:lpm-source-lookup'),
-    ] = False
-    """
-    True means the datapath is operating in a mode that can find the source tag from LPM route table lookups
-
-    Certain route scale numbers may be reduced when operating in this mode.
     """
 
 
@@ -1121,30 +749,6 @@ class LastSwitchoverReasonContainer(BaseModel):
     Any additional details relating to the last switchover
 
     This field is not populated if the system has not performed a switchover since initial startup.
-    """
-
-
-class MdbProfileContainer(BaseModel):
-    """
-    Container for managing the allocation of hardware resources according to a Broadcom MDB profile
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    chassis_reboot_required: Annotated[
-        Optional[bool],
-        Field(alias='srl_nokia-platform-resource-mgmt:chassis-reboot-required'),
-    ] = None
-    """
-    Reads true if the user has committed a change in the MDB profile configuration but has not yet saved the config and restarted the system, so previous configuration (and the associated MDB profile) is still in effect
-    """
-    id: Annotated[
-        Optional[EnumerationEnum32], Field(alias='srl_nokia-platform-resource-mgmt:id')
-    ] = '1'
-    """
-    MDB profile ID. Different MDB profiles are supported on 7250 IXR platforms with different scaling profiles to align better with scaling needs of various use-cases 
     """
 
 
@@ -1363,96 +967,6 @@ class MidPoolListEntry(BaseModel):
     ] = None
     """
     Actual usage of the mid-pool
-    """
-
-
-class MplsLabelsContainer(BaseModel):
-    """
-    Container for the FIB programming state of ILM entries
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    entries_remaining_to_add: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-ip-route-tables:entries-remaining-to-add',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = None
-    """
-    The number of entries that need to be created in order to reach synchronization with the CPM
-    """
-    entries_remaining_to_modify: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-ip-route-tables:entries-remaining-to-modify',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = None
-    """
-    The number of entries that need to be modified in order to reach synchronization with the CPM
-    """
-    last_sync_time: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-ip-route-tables:last-sync-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The time when the forwarding complex last reached sync with the control plane
-
-    A linecard reaches sync when both entries-remaining-to-add and entries-remaining-to-modify reach zero
-    """
-
-
-class MplsLabelsContainer2(BaseModel):
-    """
-    Container for the FIB programming state of ILM entries
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    entries_remaining_to_add: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-ip-route-tables:entries-remaining-to-add',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = None
-    """
-    The number of entries that need to be created in order to reach synchronization with the CPM
-    """
-    entries_remaining_to_modify: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-ip-route-tables:entries-remaining-to-modify',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = None
-    """
-    The number of entries that need to be modified in order to reach synchronization with the CPM
-    """
-    last_sync_time: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-ip-route-tables:last-sync-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The time when the forwarding complex last reached sync with the control plane
-
-    A linecard reaches sync when both entries-remaining-to-add and entries-remaining-to-modify reach zero
     """
 
 
@@ -1758,29 +1272,6 @@ class PcrIndexLeafList(RootModel[int]):
     """
 
 
-class PfcHeadroomBufferContainer(BaseModel):
-    """
-    Container for utilization statistics of the pfc-headroom-buffer
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    used: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-qos:used', ge=0, le=4294967295)
-    ] = None
-    """
-    Used pfc-headroom-buffer
-    """
-    free: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-qos:free', ge=0, le=4294967295)
-    ] = None
-    """
-    Remaining pfc-headroom-buffer
-    """
-
-
 class PowerContainer(BaseModel):
     """
     State related to power consumption and allocation for this component
@@ -1844,38 +1335,7 @@ class PowerContainer2(BaseModel):
     """
 
 
-class PowerContainer3(BaseModel):
-    """
-    State related to power consumption and allocation for this component
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    allocated: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-fan:allocated', ge=0, le=4294967295),
-    ] = None
-    """
-    The power budget allocated to this component
-    """
-    used: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-fan:used', ge=0, le=4294967295)
-    ] = None
-    """
-    The power in use by this component
-    """
-    required: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-fan:required', ge=0, le=4294967295),
-    ] = None
-    """
-    The power budget required to enable this component
-    """
-
-
-class PowerContainer5(BaseModel):
+class PowerContainer4(BaseModel):
     """
     State related to power consumption and allocation for this component
     """
@@ -1901,6 +1361,37 @@ class PowerContainer5(BaseModel):
     required: Annotated[
         Optional[int],
         Field(alias='srl_nokia-platform-fabric:required', ge=0, le=4294967295),
+    ] = None
+    """
+    The power budget required to enable this component
+    """
+
+
+class PowerContainer5(BaseModel):
+    """
+    State related to power consumption and allocation for this component
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    allocated: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-platform-fan:allocated', ge=0, le=4294967295),
+    ] = None
+    """
+    The power budget allocated to this component
+    """
+    used: Annotated[
+        Optional[int], Field(alias='srl_nokia-platform-fan:used', ge=0, le=4294967295)
+    ] = None
+    """
+    The power in use by this component
+    """
+    required: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-platform-fan:required', ge=0, le=4294967295),
     ] = None
     """
     The power budget required to enable this component
@@ -1989,9 +1480,105 @@ class ResourceListEntry(BaseModel):
     """
 
 
-class ResourceListEntry10(BaseModel):
+class ResourceListEntry2(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[str, Field(alias='srl_nokia-platform-qos:name')]
     """
-    List of ASIC-specific datapath resources
+    The name of the QoS resource
+    """
+    used: Annotated[
+        Optional[int], Field(alias='srl_nokia-platform-qos:used', ge=0, le=4294967295)
+    ] = None
+    """
+    The number of resources that are in use
+    """
+    free: Annotated[
+        Optional[int], Field(alias='srl_nokia-platform-qos:free', ge=0, le=4294967295)
+    ] = None
+    """
+    The number of resources that are unused and available
+    """
+
+
+class ResourceListEntry3(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[str, Field(alias='srl_nokia-platform-mtu:name')]
+    """
+    The name of the MTU resource
+    """
+    used: Annotated[
+        Optional[int], Field(alias='srl_nokia-platform-mtu:used', ge=0, le=255)
+    ] = None
+    """
+    The number of resources that are in use
+    """
+    free: Annotated[
+        Optional[int], Field(alias='srl_nokia-platform-mtu:free', ge=0, le=255)
+    ] = None
+    """
+    The number of resources that are unused and available
+    """
+
+
+class ResourceListEntry6(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[str, Field(alias='srl_nokia-platform-qos:name')]
+    """
+    The name of the QoS resource
+    """
+    rising_threshold_log: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-platform-qos:rising-threshold-log', ge=0, le=100),
+    ] = 90
+    """
+    Sets the threshold that triggers the generation of a WARNING log whenever the utilization of the QoS resource in any linecard/complex/core reaches this value in a rising direction
+    """
+    falling_threshold_log: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-platform-qos:falling-threshold-log', ge=0, le=100),
+    ] = 70
+    """
+    Sets the threshold that triggers the generation of a NOTICE log whenever the utilization of the QoS resource in any linecard/complex/core falls reaches this value in a falling direction
+    """
+
+
+class ResourceListEntry7(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    name: Annotated[str, Field(alias='srl_nokia-platform-mtu:name')]
+    """
+    The name of the MTU resource
+    """
+    rising_threshold_log: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-platform-mtu:rising-threshold-log', ge=0, le=100),
+    ] = 90
+    """
+    Sets the threshold that triggers the generation of a WARNING log whenever the utilization of the MTU resource in any linecard/complex/core reaches this value in a rising direction and this is the first trigger since the last restart or since the last falling-threshold-log was triggered.
+    """
+    falling_threshold_log: Annotated[
+        Optional[int],
+        Field(alias='srl_nokia-platform-mtu:falling-threshold-log', ge=0, le=100),
+    ] = 70
+    """
+    Sets the threshold that triggers the generation of a NOTICE log whenever the utilization of the MTU resource in any linecard/complex/core reaches this value in a falling direction and this is the first trigger since the last rising-threshold-log was triggered.
+    """
+
+
+class ResourceListEntry8(BaseModel):
+    """
+    List of generic datapath resources
     """
 
     model_config = ConfigDict(
@@ -2000,7 +1587,11 @@ class ResourceListEntry10(BaseModel):
     )
     name: Annotated[str, Field(alias='srl_nokia-platform-datapath-resources:name')]
     """
-    The name of the ASIC-specific datapath resource.
+    The name of the XDP datapath resource.
+
+    Some of these resources may be software only (i.e. no correspondence to a hardware table).
+
+    Some of these resources may depend on multiple HW tables and when the utilization is reported it represents an aggregated or summarized view.
     """
     upper_threshold_set: Annotated[
         Optional[int],
@@ -2026,193 +1617,9 @@ class ResourceListEntry10(BaseModel):
     """
 
 
-class ResourceListEntry11(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-platform-mtu:name')]
-    """
-    The name of the MTU resource
-    """
-    rising_threshold_log: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-mtu:rising-threshold-log', ge=0, le=100),
-    ] = 90
-    """
-    Sets the threshold that triggers the generation of a WARNING log whenever the utilization of the MTU resource in any linecard/complex/core reaches this value in a rising direction and this is the first trigger since the last restart or since the last falling-threshold-log was triggered.
-    """
-    falling_threshold_log: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-mtu:falling-threshold-log', ge=0, le=100),
-    ] = 70
-    """
-    Sets the threshold that triggers the generation of a NOTICE log whenever the utilization of the MTU resource in any linecard/complex/core reaches this value in a falling direction and this is the first trigger since the last rising-threshold-log was triggered.
-    """
-
-
-class ResourceListEntry12(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-platform-qos:name')]
-    """
-    The name of the QoS resource
-    """
-    rising_threshold_log: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-qos:rising-threshold-log', ge=0, le=100),
-    ] = 90
-    """
-    Sets the threshold that triggers the generation of a WARNING log whenever the utilization of the QoS resource in any linecard/complex/core reaches this value in a rising direction
-    """
-    falling_threshold_log: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-qos:falling-threshold-log', ge=0, le=100),
-    ] = 70
-    """
-    Sets the threshold that triggers the generation of a NOTICE log whenever the utilization of the QoS resource in any linecard/complex/core falls reaches this value in a falling direction
-    """
-
-
-class ResourceListEntry4(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-platform-mtu:name')]
-    """
-    The name of the MTU resource
-    """
-    used: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-mtu:used', ge=0, le=255)
-    ] = None
-    """
-    The number of resources that are in use
-    """
-    free: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-mtu:free', ge=0, le=255)
-    ] = None
-    """
-    The number of resources that are unused and available
-    """
-
-
-class ResourceListEntry5(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-platform-qos:name')]
-    """
-    The name of the QoS resource
-    """
-    used: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-qos:used', ge=0, le=4294967295)
-    ] = None
-    """
-    The number of resources that are in use
-    """
-    free: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-qos:free', ge=0, le=4294967295)
-    ] = None
-    """
-    The number of resources that are unused and available
-    """
-
-
-class ResourceListEntry7(BaseModel):
-    """
-    List of generic datapath resources.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-platform-datapath-resources:name')]
-    """
-    The name of the XDP datapath resource
-    """
-    used_percent: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-datapath-resources:used-percent', ge=0, le=100),
-    ] = None
-    """
-    The percentage of the resource that is currently used
-    """
-    used_entries: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-datapath-resources:used-entries',
-            ge=0,
-            le=4294967295,
-        ),
-    ] = None
-    """
-    The number of entries that are currently used
-    """
-    free_entries: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-datapath-resources:free-entries',
-            ge=0,
-            le=4294967295,
-        ),
-    ] = None
-    """
-    The number of entries that are currently free
-    """
-
-
-class ResourceListEntry8(BaseModel):
-    """
-    List of ASIC-specific datapath resources.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-platform-datapath-resources:name')]
-    """
-    The name of the ASIC-specific datapath resource
-    """
-    used_percent: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-datapath-resources:used-percent', ge=0, le=100),
-    ] = None
-    """
-    The percentage of the resource that is currently used
-    """
-    used_entries: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-datapath-resources:used-entries',
-            ge=0,
-            le=4294967295,
-        ),
-    ] = None
-    """
-    The number of entries that are currently used
-    """
-    free_entries: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-datapath-resources:free-entries',
-            ge=0,
-            le=4294967295,
-        ),
-    ] = None
-    """
-    The number of entries that are currently free
-    """
-
-
 class ResourceListEntry9(BaseModel):
     """
-    List of generic datapath resources
+    List of ASIC-specific datapath resources
     """
 
     model_config = ConfigDict(
@@ -2221,11 +1628,7 @@ class ResourceListEntry9(BaseModel):
     )
     name: Annotated[str, Field(alias='srl_nokia-platform-datapath-resources:name')]
     """
-    The name of the XDP datapath resource.
-
-    Some of these resources may be software only (i.e. no correspondence to a hardware table).
-
-    Some of these resources may depend on multiple HW tables and when the utilization is reported it represents an aggregated or summarized view.
+    The name of the ASIC-specific datapath resource.
     """
     upper_threshold_set: Annotated[
         Optional[int],
@@ -2276,59 +1679,6 @@ class RootPoolListEntry(BaseModel):
     mid_pool: Annotated[
         Optional[List[MidPoolListEntry]], Field(alias='srl_nokia-platform-qos:mid-pool')
     ] = None
-
-
-class ServiceActivationTestheadContainer(BaseModel):
-    """
-    Service activation generator stream and bandwidth resources
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    stream_total: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-oam:stream-total', ge=0, le=255)
-    ] = None
-    """
-    Total generator streams supported
-    """
-    stream_allocated: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-oam:stream-allocated', ge=0, le=255),
-    ] = None
-    """
-    Active generator streams in use
-    """
-    stream_free: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-oam:stream-free', ge=0, le=255)
-    ] = None
-    """
-    Available generator streams
-    """
-    bandwidth_total_kbps: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-oam:bandwidth-total-kbps', ge=0, le=4294967295),
-    ] = None
-    """
-    Total generator bandwidth supported
-    """
-    bandwidth_allocated_kbps: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-oam:bandwidth-allocated-kbps', ge=0, le=4294967295
-        ),
-    ] = None
-    """
-    Active generator bandwidth in use
-    """
-    bandwidth_free_kbps: Annotated[
-        Optional[int],
-        Field(alias='srl_nokia-platform-oam:bandwidth-free-kbps', ge=0, le=4294967295),
-    ] = None
-    """
-    Available generator bandwidth
-    """
 
 
 class SoftwareInterruptContainer(BaseModel):
@@ -2491,29 +1841,6 @@ class SystemContainer(BaseModel):
     """
 
 
-class TcamContainer2(BaseModel):
-    """
-    Container for managing the allocation of TCAM banks to different applications.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    dot1x_multi_host_authentication_tcam: Annotated[
-        Optional[Dot1xMultiHostAuthenticationTcamContainer],
-        Field(
-            alias='srl_nokia-platform-first-hop-security-res-mgmt:dot1x-multi-host-authentication-tcam'
-        ),
-    ] = None
-    first_hop_security_tcam: Annotated[
-        Optional[FirstHopSecurityTcamContainer],
-        Field(
-            alias='srl_nokia-platform-first-hop-security-res-mgmt:first-hop-security-tcam'
-        ),
-    ] = None
-
-
 class TemperatureContainer(BaseModel):
     """
     State related to temperature for this component
@@ -2575,57 +1902,6 @@ class TemperatureContainer2(BaseModel):
         regex_engine="python-re",
     )
     instant: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-lc:instant', ge=-32768, le=32767)
-    ] = None
-    """
-    Represents the highest current temperature of any sensor on this component
-
-    Note that as multiple sensors may feed in, that this field and the margin field may be referencing different sensors.
-    """
-    maximum: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-lc:maximum', ge=-32768, le=32767)
-    ] = None
-    """
-    Represents the highest temperature any sensor on this component has reached since it booted
-    """
-    maximum_time: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-lc:maximum-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Indicates the time this component reached the temperature referenced in the maximum field
-    """
-    alarm_status: Annotated[
-        Optional[bool], Field(alias='srl_nokia-platform-lc:alarm-status')
-    ] = None
-    """
-    Indicates if a temperature sensor of this component is currently in an alarm state
-
-    An alarm state is triggered if the margin is <=2 degrees, indicating that a thermal protection shut down is imminent unless adequate system cooling is provided to bring the temperature sensor back into safe operating ranges.
-    """
-    margin: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-lc:margin', ge=-32768, le=32767)
-    ] = None
-    """
-    Indicates the lowest alarm margin of any sensor on this component
-
-    The margin is the delta between the current sensor temperature and the thermal protection threshold for that sensor. Note that as multiple sensors may feed in, that this field and the instant field may be referencing different sensors.
-    """
-
-
-class TemperatureContainer3(BaseModel):
-    """
-    State related to temperature for this component
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    instant: Annotated[
         Optional[int],
         Field(alias='srl_nokia-platform-control:instant', ge=-32768, le=32767),
     ] = None
@@ -2670,7 +1946,7 @@ class TemperatureContainer3(BaseModel):
     """
 
 
-class TemperatureContainer4(BaseModel):
+class TemperatureContainer3(BaseModel):
     """
     State related to temperature for this component
     """
@@ -2724,7 +2000,7 @@ class TemperatureContainer4(BaseModel):
     """
 
 
-class TemperatureContainer5(BaseModel):
+class TemperatureContainer4(BaseModel):
     """
     State related to temperature for this component
     """
@@ -2830,96 +2106,6 @@ class Tpm20PcrBankListEntry(BaseModel):
     ] = []
     """
     List the TPM2.0 PCRs available to be extracted
-    """
-
-
-class TunnelsContainer(BaseModel):
-    """
-    Container for the FIB programming state of tunnels
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    entries_remaining_to_add: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-ip-route-tables:entries-remaining-to-add',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = None
-    """
-    The number of entries that need to be created in order to reach synchronization with the CPM
-    """
-    entries_remaining_to_modify: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-ip-route-tables:entries-remaining-to-modify',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = None
-    """
-    The number of entries that need to be modified in order to reach synchronization with the CPM
-    """
-    last_sync_time: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-ip-route-tables:last-sync-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The time when the forwarding complex last reached sync with the control plane
-
-    A linecard reaches sync when both entries-remaining-to-add and entries-remaining-to-modify reach zero
-    """
-
-
-class TunnelsContainer2(BaseModel):
-    """
-    Container for the FIB programming state of tunnels
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    entries_remaining_to_add: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-ip-route-tables:entries-remaining-to-add',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = None
-    """
-    The number of entries that need to be created in order to reach synchronization with the CPM
-    """
-    entries_remaining_to_modify: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-ip-route-tables:entries-remaining-to-modify',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = None
-    """
-    The number of entries that need to be modified in order to reach synchronization with the CPM
-    """
-    last_sync_time: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-ip-route-tables:last-sync-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The time when the forwarding complex last reached sync with the control plane
-
-    A linecard reaches sync when both entries-remaining-to-add and entries-remaining-to-modify reach zero
     """
 
 
@@ -3056,7 +2242,7 @@ class UnifiedForwardingResourcesContainer(BaseModel):
     Reads true if the user has committed a change to one or more of the configurable values in the uft container but has not yet restarted XDP so the operational values are still the values initialized at the last XDP restart.
     """
     alpm: Annotated[
-        Optional[EnumerationEnum33],
+        Optional[EnumerationEnum19],
         Field(alias='srl_nokia-platform-resource-mgmt:alpm'),
     ] = None
     """
@@ -3190,52 +2376,7 @@ class XdpContainer(BaseModel):
 
 class XdpContainer3(BaseModel):
     """
-    Container for monitoring datapath resources that typically generic
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    resource: Annotated[
-        Optional[List[ResourceListEntry7]],
-        Field(alias='srl_nokia-platform-datapath-resources:resource'),
-    ] = None
-
-
-class XdpContainer4(BaseModel):
-    """
     Container for monitoring datapath resources that are generic in concept.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    resource: Annotated[
-        Optional[List[ResourceListEntry9]],
-        Field(alias='srl_nokia-platform-datapath-resources:resource'),
-    ] = None
-
-
-class ApplicationListEntry2(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[str, Field(alias='srl_nokia-platform-resource-mgmt:name')]
-    """
-    Bank allocation is facilitated on per application (LSP Stats, Policer Stats, and alike) basis
-    """
-    bank_allocation: Annotated[
-        Optional[List[BankAllocationListEntry]],
-        Field(alias='srl_nokia-platform-resource-mgmt:bank-allocation'),
-    ] = None
-
-
-class AsicContainer2(BaseModel):
-    """
-    Container for monitoring datapath resources that are typically ASIC specific
     """
 
     model_config = ConfigDict(
@@ -3248,7 +2389,7 @@ class AsicContainer2(BaseModel):
     ] = None
 
 
-class AsicContainer3(BaseModel):
+class AsicContainer2(BaseModel):
     """
     Container for monitoring datapath resources that are specific to a subset of the chipsets supported by SRLinux.
     """
@@ -3258,7 +2399,7 @@ class AsicContainer3(BaseModel):
         regex_engine="python-re",
     )
     resource: Annotated[
-        Optional[List[ResourceListEntry10]],
+        Optional[List[ResourceListEntry9]],
         Field(alias='srl_nokia-platform-datapath-resources:resource'),
     ] = None
 
@@ -3298,10 +2439,6 @@ class BufferMemoryContainer(BaseModel):
     ] = None
     dram: Annotated[
         Optional[DramContainer], Field(alias='srl_nokia-platform-qos:dram')
-    ] = None
-    pfc_headroom_buffer: Annotated[
-        Optional[PfcHeadroomBufferContainer],
-        Field(alias='srl_nokia-platform-qos:pfc-headroom-buffer'),
     ] = None
     system_reserved_pool: Annotated[
         Optional[SystemReservedPoolContainer],
@@ -3432,6 +2569,45 @@ class ControlContainer(BaseModel):
 
 class ControlListEntry(BaseModel):
     """
+    Secure Boot states related to control modules
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    slot: Annotated[
+        str, Field(alias='srl_nokia-platform-secure-boot:slot', pattern='^(?=^A|B$).*$')
+    ]
+    """
+    Slot identifier for the control module
+    """
+    oper_state: Annotated[
+        Optional[EnumerationEnum],
+        Field(alias='srl_nokia-platform-secure-boot:oper-state'),
+    ] = None
+    """
+    Secure Boot operational state
+    """
+    root_of_trust: Annotated[
+        Optional[EnumerationEnum2],
+        Field(alias='srl_nokia-platform-secure-boot:root-of-trust'),
+    ] = None
+    """
+    Root of Trust for Secure Boot execution
+    """
+    uefi_variables_update: Annotated[
+        Optional[UefiVariablesUpdateContainer],
+        Field(alias='srl_nokia-platform-secure-boot:uefi-variables-update'),
+    ] = None
+    uefi_variables: Annotated[
+        Optional[List[UefiVariablesListEntry]],
+        Field(alias='srl_nokia-platform-secure-boot:uefi-variables'),
+    ] = None
+
+
+class ControlListEntry2(BaseModel):
+    """
     TPM status, PCR indexes and certificates per control module
     """
 
@@ -3447,7 +2623,7 @@ class ControlListEntry(BaseModel):
     The slot identifier is the system wide unique name for the module's TPM
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum], Field(alias='srl_nokia-platform-tpm:oper-state')
+        Optional[EnumerationEnum3], Field(alias='srl_nokia-platform-tpm:oper-state')
     ] = None
     """
     TPM chip self-test status
@@ -3459,45 +2635,6 @@ class ControlListEntry(BaseModel):
     certificates: Annotated[
         Optional[List[CertificatesListEntry]],
         Field(alias='srl_nokia-platform-tpm:certificates'),
-    ] = None
-
-
-class ControlListEntry2(BaseModel):
-    """
-    Secure Boot states related to control modules
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    slot: Annotated[
-        str, Field(alias='srl_nokia-platform-secure-boot:slot', pattern='^(?=^A|B$).*$')
-    ]
-    """
-    Slot identifier for the control module
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum2],
-        Field(alias='srl_nokia-platform-secure-boot:oper-state'),
-    ] = None
-    """
-    Secure Boot operational state
-    """
-    root_of_trust: Annotated[
-        Optional[EnumerationEnum3],
-        Field(alias='srl_nokia-platform-secure-boot:root-of-trust'),
-    ] = None
-    """
-    Root of Trust for Secure Boot execution
-    """
-    uefi_variables_update: Annotated[
-        Optional[UefiVariablesUpdateContainer],
-        Field(alias='srl_nokia-platform-secure-boot:uefi-variables-update'),
-    ] = None
-    uefi_variables: Annotated[
-        Optional[List[UefiVariablesListEntry]],
-        Field(alias='srl_nokia-platform-secure-boot:uefi-variables'),
     ] = None
 
 
@@ -3517,7 +2654,7 @@ class DatapathContainer(BaseModel):
 
 class DatapathContainer3(BaseModel):
     """
-    Container for monitoring datapath resources of XDP CPM
+    Container for monitoring datapath resources system-wide
     """
 
     model_config = ConfigDict(
@@ -3530,25 +2667,6 @@ class DatapathContainer3(BaseModel):
     ] = None
     asic: Annotated[
         Optional[AsicContainer2],
-        Field(alias='srl_nokia-platform-datapath-resources:asic'),
-    ] = None
-
-
-class DatapathContainer4(BaseModel):
-    """
-    Container for monitoring datapath resources system-wide
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    xdp: Annotated[
-        Optional[XdpContainer4],
-        Field(alias='srl_nokia-platform-datapath-resources:xdp'),
-    ] = None
-    asic: Annotated[
-        Optional[AsicContainer3],
         Field(alias='srl_nokia-platform-datapath-resources:asic'),
     ] = None
 
@@ -3586,7 +2704,7 @@ class DropCountersContainer(BaseModel):
         ),
     ] = 0
     """
-    Aggregation of all counters incremented when packets are dropped because the aggregate ingress traffic rate exceeds internal performance limits of the integrated circuit
+    Aggregation of all counters incremeneted when packets are dropped because the aggregate ingress traffic rate exceeds internal performance limits of the integrated circuit
     """
     packet_processing_aggregate: Annotated[
         Optional[int],
@@ -3613,20 +2731,6 @@ class DropCountersContainer(BaseModel):
     Aggregation of all counters incremented when packets are dropped due to no FIB entry for an IPv4 or IPv6 packet
 
     This counter and the packet-processing-aggregate counter should be incremented for each no-route packet drop.
-    """
-
-
-class EnvironmentContainer(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    orientation: Annotated[
-        Optional[EnumerationEnum24],
-        Field(alias='srl_nokia-platform-chassis:orientation'),
-    ] = 'horizontal'
-    """
-    The orientation of the chassis
     """
 
 
@@ -3708,68 +2812,6 @@ class FanTrayContainer(BaseModel):
     """
 
 
-class FanContainer(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    speed: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-fan:speed', ge=0, le=100)
-    ] = None
-    """
-    Average configured fan speed percentage of all fans in the fan tray, based on temperature sensor readings
-    """
-    speed_rpm: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-fan:speed-rpm', ge=0, le=65535)
-    ] = None
-    """
-    Maximum RPM of all fans in the fan tray
-    """
-    fan: Annotated[
-        Optional[List[FanListEntry]], Field(alias='srl_nokia-platform-fan:fan')
-    ] = None
-
-
-class FirstHopSecurityContainer(BaseModel):
-    """
-    Container to provide an option for allocating required hardware resources to First Hop security
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    first_hop_security_protocols: Annotated[
-        Optional[EnumerationEnum4],
-        Field(
-            alias='srl_nokia-platform-first-hop-security-res-mgmt:first-hop-security-protocols'
-        ),
-    ] = 'disable'
-    """
-    Set to enable use of hardware resource by protocols used for First Hop security
-
-    When First Hop Security is enabled, this results in redirection of select
-    protocol packets such as DHCPv4, DHCPv6, IPv6 RA, etc. from select subinterfaces
-    to CPU for further processing by First Hop Security manager.
-    When First Hop security is disabled, the above hardware resource will be used
-    IPv6 Router Advertisement Guard (ra-guard) feature.  
-    """
-    ipv6_ra_guard: Annotated[
-        Optional[EnumerationEnum4],
-        Field(alias='srl_nokia-platform-first-hop-security-res-mgmt:ipv6-ra-guard'),
-    ] = 'enable'
-    """
-    Set to enable for exclusive use of hardware resource by IPv6 Router Advertisement guard (ra-guard)
-
-    When IPv6 RA-guard is enabled, software allocates hardware resources used to
-    identify IPv6 Router Advertisement protocol packets from select subinterfaces
-    to be sent to CPU for further processing by IPv6 ra-guard manager.
-    When IPv6 RA-guard is disabled, software takes away the hardware resource
-    allocated for exclusive use by IPv6 Router Advertisement Guard (ra-guard) feature
-    and IPv6 RA packets received on any subinterface is not sent to CPU. 
-    """
-
-
 class ForwarderContainer(BaseModel):
     """
     Top-level container for forwarder thread statistics
@@ -3811,27 +2853,6 @@ class ForwarderContainer(BaseModel):
     """
 
 
-class ForwardingComplexTypeListEntry(BaseModel):
-    """
-    List of forwarding complex types in the system
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    name: Annotated[
-        EnumerationEnum34, Field(alias='srl_nokia-platform-resource-mgmt:name')
-    ]
-    """
-    Counter bank sizes and scale can be different among various ASICs within the same chassis. Configuration is on per ASIC basis
-    """
-    application: Annotated[
-        Optional[List[ApplicationListEntry2]],
-        Field(alias='srl_nokia-platform-resource-mgmt:application'),
-    ] = None
-
-
 class HardwareInterruptContainer(BaseModel):
     """
     Time spent servicing hardware interrupts
@@ -3864,23 +2885,6 @@ class HardwareInterruptContainer(BaseModel):
     ] = None
     """
     The arithmetic mean value of this statistic over the last fifteen minutes
-    """
-
-
-class HashUserListEntry(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    user: Annotated[EnumerationEnum9, Field(alias='srl_nokia-platform-lc:user')]
-    """
-    A user of a load-balancing hash calculation
-    """
-    hash_polynomial: Annotated[
-        Optional[int], Field(alias='srl_nokia-platform-lc:hash-polynomial', ge=1, le=8)
-    ] = None
-    """
-    An identifier for the polynomial used to calculate the load-balancing key
     """
 
 
@@ -3959,7 +2963,7 @@ class HealthzContainer2(BaseModel):
         regex_engine="python-re",
     )
     status: Annotated[
-        Optional[EnumerationEnum13], Field(alias='srl_nokia-platform-healthz:status')
+        Optional[EnumerationEnum12], Field(alias='srl_nokia-platform-healthz:status')
     ] = None
     """
     Health status
@@ -4015,7 +3019,7 @@ class HealthzContainer3(BaseModel):
         regex_engine="python-re",
     )
     status: Annotated[
-        Optional[EnumerationEnum14], Field(alias='srl_nokia-platform-healthz:status')
+        Optional[EnumerationEnum22], Field(alias='srl_nokia-platform-healthz:status')
     ] = None
     """
     Health status
@@ -4071,7 +3075,7 @@ class HealthzContainer4(BaseModel):
         regex_engine="python-re",
     )
     status: Annotated[
-        Optional[EnumerationEnum16], Field(alias='srl_nokia-platform-healthz:status')
+        Optional[EnumerationEnum23], Field(alias='srl_nokia-platform-healthz:status')
     ] = None
     """
     Health status
@@ -4127,7 +3131,7 @@ class HealthzContainer5(BaseModel):
         regex_engine="python-re",
     )
     status: Annotated[
-        Optional[EnumerationEnum23], Field(alias='srl_nokia-platform-healthz:status')
+        Optional[EnumerationEnum25], Field(alias='srl_nokia-platform-healthz:status')
     ] = None
     """
     Health status
@@ -4183,119 +3187,7 @@ class HealthzContainer6(BaseModel):
         regex_engine="python-re",
     )
     status: Annotated[
-        Optional[EnumerationEnum28], Field(alias='srl_nokia-platform-healthz:status')
-    ] = None
-    """
-    Health status
-
-    The status of the component, indicating its current health.
-    """
-    last_unhealthy: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-healthz:last-unhealthy',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Last unhealthy time
-
-    The time at which the component was last observed to transition from
-    the healthy state to any other state, represented as nanoseconds
-    since the Unix epoch.
-    """
-    unhealthy_count: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-healthz:unhealthy-count',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    Unhealthy count
-
-    The number of times the component has transitioned from the healthy
-    state to any other state.
-    """
-
-
-class HealthzContainer7(BaseModel):
-    """
-    The health of the component
-
-    The paramaters within this
-    container indicate the status of the component beyond whether
-    it is operationally up or down. When a signal is received
-    that a component is in an unhealthy state the gNOI.Healthz
-    service can be used to retrieve further diagnostic information
-    relating to the component.
-    The contents of this directory relate only to the specific
-    component that it is associated with.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    status: Annotated[
-        Optional[EnumerationEnum29], Field(alias='srl_nokia-platform-healthz:status')
-    ] = None
-    """
-    Health status
-
-    The status of the component, indicating its current health.
-    """
-    last_unhealthy: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-healthz:last-unhealthy',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Last unhealthy time
-
-    The time at which the component was last observed to transition from
-    the healthy state to any other state, represented as nanoseconds
-    since the Unix epoch.
-    """
-    unhealthy_count: Annotated[
-        Optional[int],
-        Field(
-            alias='srl_nokia-platform-healthz:unhealthy-count',
-            ge=0,
-            le=18446744073709551615,
-        ),
-    ] = 0
-    """
-    Unhealthy count
-
-    The number of times the component has transitioned from the healthy
-    state to any other state.
-    """
-
-
-class HealthzContainer8(BaseModel):
-    """
-    The health of the component
-
-    The paramaters within this
-    container indicate the status of the component beyond whether
-    it is operationally up or down. When a signal is received
-    that a component is in an unhealthy state the gNOI.Healthz
-    service can be used to retrieve further diagnostic information
-    relating to the component.
-    The contents of this directory relate only to the specific
-    component that it is associated with.
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    status: Annotated[
-        Optional[EnumerationEnum31], Field(alias='srl_nokia-platform-healthz:status')
+        Optional[EnumerationEnum27], Field(alias='srl_nokia-platform-healthz:status')
     ] = None
     """
     Health status
@@ -4379,47 +3271,6 @@ class IdleContainer(BaseModel):
     ] = None
     """
     The arithmetic mean value of this statistic over the last fifteen minutes
-    """
-
-
-class IomListEntry(BaseModel):
-    """
-    Top-level container for line card redundancy
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    cpiom: Annotated[
-        EnumerationEnum37, Field(alias='srl_nokia-platform-redundancy:cpiom')
-    ]
-    """
-    Linecard
-    """
-    forwarding_state: Annotated[
-        Optional[EnumerationEnum38],
-        Field(alias='srl_nokia-platform-redundancy:forwarding-state'),
-    ] = None
-    """
-    Forwarding state of line card
-    """
-    mda_binding: Annotated[
-        Optional[List[MdaBindingLeafList]],
-        Field(alias='srl_nokia-platform-redundancy:mda-binding'),
-    ] = []
-    """
-    MDAs serviced via given Line Card
-    """
-    active_up_time: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-redundancy:active-up-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Date and time since in active state
     """
 
 
@@ -4552,81 +3403,13 @@ class LinecardContainer(BaseModel):
     """
 
 
-class LinecardContainer2(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    iom: Annotated[
-        Optional[List[IomListEntry]], Field(alias='srl_nokia-platform-redundancy:iom')
-    ] = None
-    forwarding_takeover: Annotated[
-        Optional[bool], Field(alias='srl_nokia-platform-redundancy:forwarding-takeover')
-    ] = False
-    """
-    The behavior when an inactive line card boots up and reconciles with active one
-
-    Set to false and forwarding for all MDAs remain on the active line card, forwarding is not shared with newly active line card.
-    Set to true and forwarding for half of the MDAs to be passed to newly active line card as soon as both CPIOMs are in full sync.
-
-    When both CPIOMs are booting, typically a chassis reboot, and forwarding-takeover is disabled, first CPIOM to boot assumes forwarding operations for all MDAs.
-    When both CPIOMs are booting, typically a chassis reboot, and forwarding-takeover is enabled, CPIOM-A typically boots up and assumes forwarding for all MDAs.  When CPM and IOM sync is completed among two CPIOMs, half of the MDAs are re-homed and forwarding is shared among two CPIOMs
-    """
-
-
-class LoadBalancingContainer(BaseModel):
-    """
-    Load-balancing state presented on a per-forwarding-complex basis
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    hash_user: Annotated[
-        Optional[List[HashUserListEntry]],
-        Field(alias='srl_nokia-platform-lc:hash-user'),
-    ] = None
-
-
-class ModeContainer(BaseModel):
-    """
-    Top level container for chassis mode state
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    running: Annotated[
-        Optional[EnumerationEnum27], Field(alias='srl_nokia-platform-chassis:running')
-    ] = None
-    """
-    Currrent chassis mode
-    """
-    configured: Annotated[
-        Optional[EnumerationEnum27],
-        Field(alias='srl_nokia-platform-chassis:configured'),
-    ] = None
-    """
-    The configured chassis mode, which takes effect after a reboot if it differs from the current running mode.
-    """
-    chassis_reboot_required: Annotated[
-        Optional[bool],
-        Field(alias='srl_nokia-platform-chassis:chassis-reboot-required'),
-    ] = None
-    """
-    Reads true if the user has committed a change to configurable chassis type value and has not yet restarted chassis. The operational value is still the values initialized at the last chassis restart.
-    """
-
-
 class MtuContainer(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
     resource: Annotated[
-        Optional[List[ResourceListEntry4]],
+        Optional[List[ResourceListEntry3]],
         Field(alias='srl_nokia-platform-mtu:resource'),
     ] = None
 
@@ -4637,7 +3420,7 @@ class MtuContainer2(BaseModel):
         regex_engine="python-re",
     )
     resource: Annotated[
-        Optional[List[ResourceListEntry11]],
+        Optional[List[ResourceListEntry7]],
         Field(alias='srl_nokia-platform-mtu:resource'),
     ] = None
 
@@ -4663,7 +3446,7 @@ class NextHopListEntry(BaseModel):
     The system-wide unique identifier of the next-hop object
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum11],
+        Optional[EnumerationEnum8],
         Field(alias='srl_nokia-platform-linecard-fib:oper-state'),
     ] = None
     """
@@ -4704,14 +3487,10 @@ class PartitionListEntry(BaseModel):
     Path to where this partition is mounted
     """
     mount_status: Annotated[
-        Optional[EnumerationEnum20], Field(alias='srl_nokia-platform-disk:mount-status')
+        Optional[EnumerationEnum16], Field(alias='srl_nokia-platform-disk:mount-status')
     ] = None
     """
     Current mount status of this partition
-    """
-    label: Annotated[Optional[str], Field(alias='srl_nokia-platform-disk:label')] = None
-    """
-    Label name of the partition
     """
     size: Annotated[
         Optional[int],
@@ -4813,7 +3592,7 @@ class PowerSupplyListEntry(BaseModel):
     The total capacity the power supply module can provide
     """
     fan: Annotated[
-        Optional[FanContainer2], Field(alias='srl_nokia-platform-psu:fan')
+        Optional[FanContainer], Field(alias='srl_nokia-platform-psu:fan')
     ] = None
     input: Annotated[
         Optional[InputContainer], Field(alias='srl_nokia-platform-psu:input')
@@ -4825,7 +3604,7 @@ class PowerSupplyListEntry(BaseModel):
         Optional[List[FeedListEntry]], Field(alias='srl_nokia-platform-psu:feed')
     ] = None
     oper_reason: Annotated[
-        Optional[EnumerationEnum30], Field(alias='srl_nokia-platform-psu:oper-reason')
+        Optional[EnumerationEnum26], Field(alias='srl_nokia-platform-psu:oper-reason')
     ] = None
     """
     Indicates the reason for the current state of the component
@@ -4884,7 +3663,7 @@ class PowerSupplyListEntry(BaseModel):
     """
     The reason the component transitioned to a failed state
 
-    Once set, field persists until component is operationally up, otherwise it is empty if the component is not currently in a failure state
+    Field is empty if the component is not currently in a failure state
     """
     clei_code: Annotated[
         Optional[str], Field(alias='srl_nokia-platform-psu:clei-code')
@@ -4909,11 +3688,11 @@ class PowerSupplyListEntry(BaseModel):
     The date this component was manufactured
     """
     temperature: Annotated[
-        Optional[TemperatureContainer5],
+        Optional[TemperatureContainer4],
         Field(alias='srl_nokia-platform-psu:temperature'),
     ] = None
     healthz: Annotated[
-        Optional[HealthzContainer8], Field(alias='srl_nokia-platform-healthz:healthz')
+        Optional[HealthzContainer6], Field(alias='srl_nokia-platform-healthz:healthz')
     ] = None
 
 
@@ -4994,13 +3773,6 @@ class ProgrammingProgressContainer(BaseModel):
         Optional[NextHopGroupsContainer],
         Field(alias='srl_nokia-ip-route-tables:next-hop-groups'),
     ] = None
-    mpls_labels: Annotated[
-        Optional[MplsLabelsContainer],
-        Field(alias='srl_nokia-ip-route-tables:mpls-labels'),
-    ] = None
-    tunnels: Annotated[
-        Optional[TunnelsContainer], Field(alias='srl_nokia-ip-route-tables:tunnels')
-    ] = None
 
 
 class ProgrammingProgressContainer2(BaseModel):
@@ -5019,13 +3791,6 @@ class ProgrammingProgressContainer2(BaseModel):
         Optional[NextHopGroupsContainer2],
         Field(alias='srl_nokia-ip-route-tables:next-hop-groups'),
     ] = None
-    mpls_labels: Annotated[
-        Optional[MplsLabelsContainer2],
-        Field(alias='srl_nokia-ip-route-tables:mpls-labels'),
-    ] = None
-    tunnels: Annotated[
-        Optional[TunnelsContainer2], Field(alias='srl_nokia-ip-route-tables:tunnels')
-    ] = None
 
 
 class QosContainer2(BaseModel):
@@ -5034,34 +3799,12 @@ class QosContainer2(BaseModel):
         regex_engine="python-re",
     )
     resource: Annotated[
-        Optional[List[ResourceListEntry12]],
+        Optional[List[ResourceListEntry6]],
         Field(alias='srl_nokia-platform-qos:resource'),
     ] = None
 
 
-class QosContainer3(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    traffic_management_mode: Annotated[
-        Optional[EnumerationEnum21],
-        Field(alias='srl_nokia-platform-qos:traffic-management-mode'),
-    ] = 'eight-priorities'
-    """
-    Defines traffic-management-mode at system level.
-
-    Changing the traffic-management-mode requires the system reboot
-    """
-    chassis_reboot_required: Annotated[
-        Optional[bool], Field(alias='srl_nokia-platform-qos:chassis-reboot-required')
-    ] = None
-    """
-    Reads true if the user has committed a change in traffic-management-mode. The change will take effect only after reboot
-    """
-
-
-class RedundancyContainer(BaseModel):
+class RedundancyContainer2(BaseModel):
     """
     Top-level container for power redundancy configuration and state
     """
@@ -5071,7 +3814,7 @@ class RedundancyContainer(BaseModel):
         regex_engine="python-re",
     )
     mode: Annotated[
-        Optional[EnumerationEnum25], Field(alias='srl_nokia-platform-chassis:mode')
+        Optional[EnumerationEnum20], Field(alias='srl_nokia-platform-chassis:mode')
     ] = 'none'
     """
     Set the power redundancy mode in use
@@ -5079,7 +3822,7 @@ class RedundancyContainer(BaseModel):
     This only sets the level at which power redundancy will be assumed unavailable, and will not result in the powering down of components unless there is insufficient non-redundant power available.
     """
     status: Annotated[
-        Optional[EnumerationEnum26], Field(alias='srl_nokia-platform-chassis:status')
+        Optional[EnumerationEnum21], Field(alias='srl_nokia-platform-chassis:status')
     ] = None
     """
     Current status of the selected power redundancy mode
@@ -5091,7 +3834,7 @@ class ResourceGroupListEntry(BaseModel):
     Resource-group resources for the given interface-group-resource-pool
 
     Describes the number of resource-sets used and free within the resource-group.
-    A resource-set consists of 1 output-queue, and 1 tier-0 queue-scheduler, which is allocated to every configured subinterface.
+    A resource-set consists of 16 output-queues, 16 tier-0 queue-schedulers and 1 tier-1 queue-scheduler, which is allocated to every configured subinterface.
     """
 
     model_config = ConfigDict(
@@ -5105,24 +3848,42 @@ class ResourceGroupListEntry(BaseModel):
     ] = None
 
 
+class ResourceManagementContainer(BaseModel):
+    """
+    Container for managing resources in a system-wide context
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        regex_engine="python-re",
+    )
+    tcam: Annotated[
+        Optional[TcamContainer], Field(alias='srl_nokia-platform-resource-mgmt:tcam')
+    ] = None
+    unified_forwarding_resources: Annotated[
+        Optional[UnifiedForwardingResourcesContainer],
+        Field(alias='srl_nokia-platform-resource-mgmt:unified-forwarding-resources'),
+    ] = None
+
+
 class ResourceMonitoringContainer(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
         regex_engine="python-re",
     )
-    datapath: Annotated[
-        Optional[DatapathContainer4],
-        Field(alias='srl_nokia-platform-datapath-resources:datapath'),
+    qos: Annotated[
+        Optional[QosContainer2], Field(alias='srl_nokia-platform-qos:qos')
     ] = None
     mtu: Annotated[
         Optional[MtuContainer2], Field(alias='srl_nokia-platform-mtu:mtu')
     ] = None
-    qos: Annotated[
-        Optional[QosContainer2], Field(alias='srl_nokia-platform-qos:qos')
+    datapath: Annotated[
+        Optional[DatapathContainer3],
+        Field(alias='srl_nokia-platform-datapath-resources:datapath'),
     ] = None
 
 
-class ResourceListEntry2(BaseModel):
+class ResourceListEntry4(BaseModel):
     """
     List of generic datapath resources.
     """
@@ -5196,7 +3957,7 @@ class ResourceListEntry2(BaseModel):
     """
 
 
-class ResourceListEntry3(BaseModel):
+class ResourceListEntry5(BaseModel):
     """
     List of ASIC-specific datapath resources.
     """
@@ -5270,21 +4031,6 @@ class ResourceListEntry3(BaseModel):
     """
 
 
-class ResourcesContainer(BaseModel):
-    """
-    OAM resources usage and allocation
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    service_activation_testhead: Annotated[
-        Optional[ServiceActivationTestheadContainer],
-        Field(alias='srl_nokia-platform-oam:service-activation-testhead'),
-    ] = None
-
-
 class SecureBootContainer(BaseModel):
     """
     State information related to Secure Boot
@@ -5295,7 +4041,7 @@ class SecureBootContainer(BaseModel):
         regex_engine="python-re",
     )
     control: Annotated[
-        Optional[List[ControlListEntry2]],
+        Optional[List[ControlListEntry]],
         Field(alias='srl_nokia-platform-secure-boot:control'),
     ] = None
 
@@ -5327,7 +4073,7 @@ class SynchronizationContainer(BaseModel):
         regex_engine="python-re",
     )
     state: Annotated[
-        Optional[EnumerationEnum36], Field(alias='srl_nokia-platform-redundancy:state')
+        Optional[EnumerationEnum18], Field(alias='srl_nokia-platform-redundancy:state')
     ] = None
     """
     Current synchronization status
@@ -5407,7 +4153,7 @@ class TpmContainer(BaseModel):
         regex_engine="python-re",
     )
     control: Annotated[
-        Optional[List[ControlListEntry]], Field(alias='srl_nokia-platform-tpm:control')
+        Optional[List[ControlListEntry2]], Field(alias='srl_nokia-platform-tpm:control')
     ] = None
 
 
@@ -5420,12 +4166,12 @@ class TrustContainer(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    tpm: Annotated[
-        Optional[TpmContainer], Field(alias='srl_nokia-platform-tpm:tpm')
-    ] = None
     secure_boot: Annotated[
         Optional[SecureBootContainer],
         Field(alias='srl_nokia-platform-secure-boot:secure-boot'),
+    ] = None
+    tpm: Annotated[
+        Optional[TpmContainer], Field(alias='srl_nokia-platform-tpm:tpm')
     ] = None
 
 
@@ -5439,7 +4185,7 @@ class XdpContainer2(BaseModel):
         regex_engine="python-re",
     )
     resource: Annotated[
-        Optional[List[ResourceListEntry2]],
+        Optional[List[ResourceListEntry4]],
         Field(alias='srl_nokia-platform-datapath-resources:resource'),
     ] = None
 
@@ -5454,62 +4200,8 @@ class AsicContainer(BaseModel):
         regex_engine="python-re",
     )
     resource: Annotated[
-        Optional[List[ResourceListEntry3]],
+        Optional[List[ResourceListEntry5]],
         Field(alias='srl_nokia-platform-datapath-resources:resource'),
-    ] = None
-
-
-class ControlPlaneContainer(BaseModel):
-    """
-    Top-level container for control plane redundancy
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    active_module: Annotated[
-        Optional[EnumerationEnum35],
-        Field(alias='srl_nokia-platform-redundancy:active-module'),
-    ] = None
-    """
-    Control module currently active
-    """
-    failover_time: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-redundancy:failover-time',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Date and time of the last control module failover
-    """
-    synchronization: Annotated[
-        Optional[SynchronizationContainer],
-        Field(alias='srl_nokia-platform-redundancy:synchronization'),
-    ] = None
-
-
-class CounterBanksContainer2(BaseModel):
-    """
-    Container for managing the allocation of hardware counter banks
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    chassis_reboot_required: Annotated[
-        Optional[bool],
-        Field(alias='srl_nokia-platform-resource-mgmt:chassis-reboot-required'),
-    ] = None
-    """
-    Reads true if the user has committed a change in the counter bank allocation configuration but has not yet saved the config and restarted the system, so previous configuration (and the associated counter bank allocation) is still in effect
-    """
-    forwarding_complex_type: Annotated[
-        Optional[List[ForwardingComplexTypeListEntry]],
-        Field(alias='srl_nokia-platform-resource-mgmt:forwarding-complex-type'),
     ] = None
 
 
@@ -5523,7 +4215,7 @@ class CpuListEntry(BaseModel):
         regex_engine="python-re",
     )
     index: Annotated[
-        Union[EnumerationEnum17, IndexLeaf121],
+        Union[EnumerationEnum13, IndexLeaf121],
         Field(alias='srl_nokia-platform-cpu:index'),
     ]
     """
@@ -5532,7 +4224,7 @@ class CpuListEntry(BaseModel):
     On a single-core system, the index should be zero.  The 'all' index signifies an aggregation of the CPU utilization statistics over all cores in the system.
     """
     architecture: Annotated[
-        Optional[EnumerationEnum18], Field(alias='srl_nokia-platform-cpu:architecture')
+        Optional[EnumerationEnum14], Field(alias='srl_nokia-platform-cpu:architecture')
     ] = None
     """
     Architecture supported by the CPU
@@ -5600,7 +4292,7 @@ class CpuListEntry2(BaseModel):
     The operational state of the CPU
     """
     oper_reason: Annotated[
-        Optional[EnumerationEnum39], Field(alias='srl_nokia-platform-vxdp:oper-reason')
+        Optional[EnumerationEnum28], Field(alias='srl_nokia-platform-vxdp:oper-reason')
     ] = None
     """
     The reason (if any) that this CPU is in its current operational state
@@ -5677,7 +4369,7 @@ class DiskListEntry(BaseModel):
     Total size of the disk
     """
     type: Annotated[
-        Optional[EnumerationEnum19], Field(alias='srl_nokia-platform-disk:type')
+        Optional[EnumerationEnum15], Field(alias='srl_nokia-platform-disk:type')
     ] = None
     """
     Type of disk
@@ -5774,7 +4466,7 @@ class FabricListEntry(BaseModel):
     """
     The reason the component transitioned to a failed state
 
-    Once set, field persists until component is operationally up, otherwise it is empty if the component is not currently in a failure state
+    Field is empty if the component is not currently in a failure state
     """
     clei_code: Annotated[
         Optional[str], Field(alias='srl_nokia-platform-fabric:clei-code')
@@ -5813,27 +4505,27 @@ class FabricListEntry(BaseModel):
     A non empty value implies that a delayed reboot operation has been triggered for this component, which can be aborted using 'tools platform <component> reboot cancel'.
     """
     locator_state: Annotated[
-        Optional[EnumerationEnum12],
+        Optional[EnumerationEnum9],
         Field(alias='srl_nokia-platform-fabric:locator-state'),
     ] = 'inactive'
     """
     Details if the locator LED is active on this component
     """
     power: Annotated[
-        Optional[PowerContainer5], Field(alias='srl_nokia-platform-fabric:power')
+        Optional[PowerContainer4], Field(alias='srl_nokia-platform-fabric:power')
     ] = None
     temperature: Annotated[
-        Optional[TemperatureContainer4],
+        Optional[TemperatureContainer3],
         Field(alias='srl_nokia-platform-fabric:temperature'),
     ] = None
     healthz: Annotated[
-        Optional[HealthzContainer7], Field(alias='srl_nokia-platform-healthz:healthz')
+        Optional[HealthzContainer4], Field(alias='srl_nokia-platform-healthz:healthz')
     ] = None
 
 
 class FanTrayListEntry(BaseModel):
     """
-    Top-level container for fan tray configuration and state
+    Top-level container for fan module configuration and state
     """
 
     model_config = ConfigDict(
@@ -5848,11 +4540,20 @@ class FanTrayListEntry(BaseModel):
     """
     Fan tray type, as translated from the components EEPROM
     """
-    fan: Annotated[
-        Optional[FanContainer], Field(alias='srl_nokia-platform-fan:fan')
+    speed: Annotated[
+        Optional[int], Field(alias='srl_nokia-platform-fan:speed', ge=0, le=100)
     ] = None
+    """
+    The current speed of the fan tray
+    """
+    speed_rpm: Annotated[
+        Optional[int], Field(alias='srl_nokia-platform-fan:speed-rpm', ge=0, le=65535)
+    ] = None
+    """
+    The current RPM of the fan tray
+    """
     oper_reason: Annotated[
-        Optional[EnumerationEnum22], Field(alias='srl_nokia-platform-fan:oper-reason')
+        Optional[EnumerationEnum24], Field(alias='srl_nokia-platform-fan:oper-reason')
     ] = None
     """
     Indicates the reason for the current state of this fan tray
@@ -5911,7 +4612,7 @@ class FanTrayListEntry(BaseModel):
     """
     The reason the component transitioned to a failed state
 
-    Once set, field persists until component is operationally up, otherwise it is empty if the component is not currently in a failure state
+    Field is empty if the component is not currently in a failure state
     """
     clei_code: Annotated[
         Optional[str], Field(alias='srl_nokia-platform-fan:clei-code')
@@ -5936,13 +4637,13 @@ class FanTrayListEntry(BaseModel):
     The date this component was manufactured
     """
     locator_state: Annotated[
-        Optional[EnumerationEnum12], Field(alias='srl_nokia-platform-fan:locator-state')
+        Optional[EnumerationEnum9], Field(alias='srl_nokia-platform-fan:locator-state')
     ] = 'inactive'
     """
     Details if the locator LED is active on this component
     """
     power: Annotated[
-        Optional[PowerContainer3], Field(alias='srl_nokia-platform-fan:power')
+        Optional[PowerContainer5], Field(alias='srl_nokia-platform-fan:power')
     ] = None
     healthz: Annotated[
         Optional[HealthzContainer5], Field(alias='srl_nokia-platform-healthz:healthz')
@@ -5977,110 +4678,6 @@ class ForwardingPlaneContainer(BaseModel):
         Optional[FibTableContainer2],
         Field(alias='srl_nokia-platform-control-fp:fib-table'),
     ] = None
-    tcam: Annotated[
-        Optional[TcamContainer], Field(alias='srl_nokia-platform-tcam:tcam')
-    ] = None
-    datapath: Annotated[
-        Optional[DatapathContainer3],
-        Field(alias='srl_nokia-platform-datapath-resources:datapath'),
-    ] = None
-
-
-class IcmListEntry(BaseModel):
-    """
-    Top-level container for icm module state
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    id: Annotated[int, Field(alias='srl_nokia-platform-icm:id', ge=1, le=255)]
-    """
-    Numeric identifier for the icm tray
-    """
-    type: Annotated[Optional[str], Field(alias='srl_nokia-platform-icm:type')] = None
-    """
-    ICM tray type
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-platform-icm:oper-state')
-    ] = None
-    """
-    The operational state of this component
-    """
-    last_booted: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-icm:last-booted',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The date and time this component last booted
-
-    For components that do not boot, this is the time the component was last discovered by the active control module
-    """
-    last_booted_reason: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-icm:last-booted-reason')
-    ] = None
-    """
-    The reason this component last booted or rebooted
-
-    For components without the ability to 'boot' this field is never populated
-    """
-    last_change: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-icm:last-change',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The date and time this component last changed state
-    """
-    part_number: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-icm:part-number')
-    ] = None
-    """
-    Part number for this component
-    """
-    removable: Annotated[
-        Optional[bool], Field(alias='srl_nokia-platform-icm:removable')
-    ] = None
-    """
-    Details if this component can be removed from the system
-    """
-    failure_reason: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-icm:failure-reason')
-    ] = None
-    """
-    The reason the component transitioned to a failed state
-
-    Once set, field persists until component is operationally up, otherwise it is empty if the component is not currently in a failure state
-    """
-    clei_code: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-icm:clei-code')
-    ] = None
-    """
-    The Common Language Identification Code for this component
-    """
-    serial_number: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-icm:serial-number')
-    ] = None
-    """
-    The serial number for this component
-    """
-    manufactured_date: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-icm:manufactured-date',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The date this component was manufactured
-    """
 
 
 class InterfaceGroupResourcePoolListEntry(BaseModel):
@@ -6113,7 +4710,7 @@ class InterfaceListEntry(BaseModel):
     admin_state: Annotated[
         Optional[EnumerationEnum4],
         Field(alias='srl_nokia-platform-control:admin-state'),
-    ] = 'enable'
+    ] = None
     """
     Set the administrative state of this interface
     """
@@ -6123,142 +4720,6 @@ class InterfaceListEntry(BaseModel):
     """
     Indicates the current operational state of this interface
     """
-
-
-class MdaListEntry(BaseModel):
-    """
-    Top-level container for mda configuration and state
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    slot: Annotated[int, Field(alias='srl_nokia-platform-lc:slot', ge=1, le=8)]
-    """
-    Numeric identifier for the mda position within the parent linecard
-    """
-    admin_state: Annotated[
-        Optional[EnumerationEnum4], Field(alias='srl_nokia-platform-lc:admin-state')
-    ] = 'enable'
-    """
-    The administrative state of this component
-    """
-    oper_state: Annotated[
-        Optional[EnumerationEnum5], Field(alias='srl_nokia-platform-lc:oper-state')
-    ] = None
-    """
-    The operational state of this component
-    """
-    last_booted: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-lc:last-booted',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The date and time this component last booted
-
-    For components that do not boot, this is the time the component was last discovered by the active control module
-    """
-    last_booted_reason: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-lc:last-booted-reason')
-    ] = None
-    """
-    The reason this component last booted or rebooted
-
-    For components without the ability to 'boot' this field is never populated
-    """
-    last_change: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-lc:last-change',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The date and time this component last changed state
-    """
-    part_number: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-lc:part-number')
-    ] = None
-    """
-    Part number for this component
-    """
-    removable: Annotated[
-        Optional[bool], Field(alias='srl_nokia-platform-lc:removable')
-    ] = None
-    """
-    Details if this component can be removed from the system
-    """
-    failure_reason: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-lc:failure-reason')
-    ] = None
-    """
-    The reason the component transitioned to a failed state
-
-    Once set, field persists until component is operationally up, otherwise it is empty if the component is not currently in a failure state
-    """
-    clei_code: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-lc:clei-code')
-    ] = None
-    """
-    The Common Language Identification Code for this component
-    """
-    serial_number: Annotated[
-        Optional[str], Field(alias='srl_nokia-platform-lc:serial-number')
-    ] = None
-    """
-    The serial number for this component
-    """
-    manufactured_date: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-lc:manufactured-date',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    The date this component was manufactured
-    """
-    rebooting_at: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-platform-lc:rebooting-at',
-            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
-        ),
-    ] = None
-    """
-    Indicates the date and time this component will reboot
-
-    If empty, no delayed reboots are queued for this component.
-
-    A non empty value implies that a delayed reboot operation has been triggered for this component, which can be aborted using 'tools platform <component> reboot cancel'.
-    """
-    type: Annotated[Optional[str], Field(alias='srl_nokia-platform-lc:type')] = None
-    """
-    MDA type, as read from the physical assembly
-    """
-    interfaces: Annotated[
-        Optional[List[str]], Field(alias='srl_nokia-platform-lc:interfaces')
-    ] = []
-    """
-    List of interfaces that belong to this mda
-    """
-    locator_state: Annotated[
-        Optional[EnumerationEnum12], Field(alias='srl_nokia-platform-lc:locator-state')
-    ] = 'inactive'
-    """
-    Details if the locator LED is active on this component
-    """
-    temperature: Annotated[
-        Optional[TemperatureContainer2],
-        Field(alias='srl_nokia-platform-lc:temperature'),
-    ] = None
-    healthz: Annotated[
-        Optional[HealthzContainer2], Field(alias='srl_nokia-platform-healthz:healthz')
-    ] = None
 
 
 class NextHopGroupListEntry(BaseModel):
@@ -6280,7 +4741,7 @@ class NextHopGroupListEntry(BaseModel):
     A system-wide unique identifier of a next-hop-group
     """
     oper_state: Annotated[
-        Optional[EnumerationEnum11],
+        Optional[EnumerationEnum8],
         Field(alias='srl_nokia-platform-linecard-fib:oper-state'),
     ] = None
     """
@@ -6309,21 +4770,7 @@ class NextHopGroupListEntry(BaseModel):
     ] = None
 
 
-class OamContainer(BaseModel):
-    """
-    Enter the OAM context
-    """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    resources: Annotated[
-        Optional[ResourcesContainer], Field(alias='srl_nokia-platform-oam:resources')
-    ] = None
-
-
-class PowerContainer4(BaseModel):
+class PowerContainer3(BaseModel):
     """
     Top-level container for chassis-wide power state
     """
@@ -6348,12 +4795,12 @@ class PowerContainer4(BaseModel):
         Optional[FabricContainer2], Field(alias='srl_nokia-platform-chassis:fabric')
     ] = None
     redundancy: Annotated[
-        Optional[RedundancyContainer],
+        Optional[RedundancyContainer2],
         Field(alias='srl_nokia-platform-chassis:redundancy'),
     ] = None
 
 
-class RedundancyContainer2(BaseModel):
+class RedundancyContainer(BaseModel):
     """
     Top-level container for platform redundancy
     """
@@ -6362,49 +4809,26 @@ class RedundancyContainer2(BaseModel):
         populate_by_name=True,
         regex_engine="python-re",
     )
-    control_plane: Annotated[
-        Optional[ControlPlaneContainer],
-        Field(alias='srl_nokia-platform-redundancy:control-plane'),
+    active_module: Annotated[
+        Optional[EnumerationEnum17],
+        Field(alias='srl_nokia-platform-redundancy:active-module'),
     ] = None
-    linecard: Annotated[
-        Optional[LinecardContainer2],
-        Field(alias='srl_nokia-platform-redundancy:linecard'),
-    ] = None
-
-
-class ResourceManagementContainer(BaseModel):
     """
-    Container for managing resources in a system-wide context
+    Control module currently active
     """
-
-    model_config = ConfigDict(
-        populate_by_name=True,
-        regex_engine="python-re",
-    )
-    mdb_profile: Annotated[
-        Optional[MdbProfileContainer],
-        Field(alias='srl_nokia-platform-resource-mgmt:mdb-profile'),
-    ] = None
-    tcam: Annotated[
-        Optional[TcamContainer2], Field(alias='srl_nokia-platform-resource-mgmt:tcam')
-    ] = None
-    unified_forwarding_resources: Annotated[
-        Optional[UnifiedForwardingResourcesContainer],
-        Field(alias='srl_nokia-platform-resource-mgmt:unified-forwarding-resources'),
-    ] = None
-    counter_banks: Annotated[
-        Optional[CounterBanksContainer2],
-        Field(alias='srl_nokia-platform-resource-mgmt:counter-banks'),
-    ] = None
-    group_based_policy: Annotated[
-        Optional[GroupBasedPolicyContainer],
-        Field(alias='srl_nokia-platform-resource-mgmt:group-based-policy'),
-    ] = None
-    first_hop_security: Annotated[
-        Optional[FirstHopSecurityContainer],
+    failover_time: Annotated[
+        Optional[str],
         Field(
-            alias='srl_nokia-platform-first-hop-security-res-mgmt:first-hop-security'
+            alias='srl_nokia-platform-redundancy:failover-time',
+            pattern='^(?=^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[\\+\\-]\\d{2}:\\d{2})$).*$',
         ),
+    ] = None
+    """
+    Date and time of the last control module failover
+    """
+    synchronization: Annotated[
+        Optional[SynchronizationContainer],
+        Field(alias='srl_nokia-platform-redundancy:synchronization'),
     ] = None
 
 
@@ -6485,10 +4909,6 @@ class ChassisContainer(BaseModel):
 
     This value is not used by the system, but is provided for user convenience.
     """
-    environment: Annotated[
-        Optional[EnvironmentContainer],
-        Field(alias='srl_nokia-platform-chassis:environment'),
-    ] = None
     type: Annotated[Optional[str], Field(alias='srl_nokia-platform-chassis:type')] = (
         None
     )
@@ -6536,7 +4956,7 @@ class ChassisContainer(BaseModel):
     The number of line card slots supported by the chassis
     """
     power: Annotated[
-        Optional[PowerContainer4], Field(alias='srl_nokia-platform-chassis:power')
+        Optional[PowerContainer3], Field(alias='srl_nokia-platform-chassis:power')
     ] = None
     oper_state: Annotated[
         Optional[EnumerationEnum5], Field(alias='srl_nokia-platform-chassis:oper-state')
@@ -6592,7 +5012,7 @@ class ChassisContainer(BaseModel):
     """
     The reason the component transitioned to a failed state
 
-    Once set, field persists until component is operationally up, otherwise it is empty if the component is not currently in a failure state
+    Field is empty if the component is not currently in a failure state
     """
     clei_code: Annotated[
         Optional[str], Field(alias='srl_nokia-platform-chassis:clei-code')
@@ -6616,15 +5036,8 @@ class ChassisContainer(BaseModel):
     """
     The date this component was manufactured
     """
-    crypto_module: Annotated[
-        Optional[CryptoModuleContainer],
-        Field(alias='srl_nokia-platform-chassis:crypto-module'),
-    ] = None
-    mode: Annotated[
-        Optional[ModeContainer], Field(alias='srl_nokia-platform-chassis:mode')
-    ] = None
     healthz: Annotated[
-        Optional[HealthzContainer6], Field(alias='srl_nokia-platform-healthz:healthz')
+        Optional[HealthzContainer3], Field(alias='srl_nokia-platform-healthz:healthz')
     ] = None
     uuid: Annotated[
         Optional[str],
@@ -6690,7 +5103,7 @@ class ControlListEntry3(BaseModel):
     Control module type, as translated from the components EEPROM
     """
     role: Annotated[
-        Optional[EnumerationEnum15], Field(alias='srl_nokia-platform-control:role')
+        Optional[EnumerationEnum11], Field(alias='srl_nokia-platform-control:role')
     ] = None
     """
     Control module role, detailing active or standby state
@@ -6757,7 +5170,7 @@ class ControlListEntry3(BaseModel):
     """
     The reason the component transitioned to a failed state
 
-    Once set, field persists until component is operationally up, otherwise it is empty if the component is not currently in a failure state
+    Field is empty if the component is not currently in a failure state
     """
     clei_code: Annotated[
         Optional[str], Field(alias='srl_nokia-platform-control:clei-code')
@@ -6812,7 +5225,7 @@ class ControlListEntry3(BaseModel):
     This version is the squashfs version, and may not represent the current per-application versions if versions have been modified after the system has been installed.
     """
     locator_state: Annotated[
-        Optional[EnumerationEnum12],
+        Optional[EnumerationEnum9],
         Field(alias='srl_nokia-platform-control:locator-state'),
     ] = 'inactive'
     """
@@ -6822,18 +5235,18 @@ class ControlListEntry3(BaseModel):
         Optional[PowerContainer2], Field(alias='srl_nokia-platform-control:power')
     ] = None
     temperature: Annotated[
-        Optional[TemperatureContainer3],
+        Optional[TemperatureContainer2],
         Field(alias='srl_nokia-platform-control:temperature'),
     ] = None
     forwarding_plane: Annotated[
         Optional[ForwardingPlaneContainer],
         Field(alias='srl_nokia-platform-control-fp:forwarding-plane'),
     ] = None
-    healthz: Annotated[
-        Optional[HealthzContainer4], Field(alias='srl_nokia-platform-healthz:healthz')
-    ] = None
     cgroup: Annotated[
         Optional[List[CgroupListEntry]], Field(alias='srl_nokia-platform-cgroup:cgroup')
+    ] = None
+    healthz: Annotated[
+        Optional[HealthzContainer2], Field(alias='srl_nokia-platform-healthz:healthz')
     ] = None
     cpu: Annotated[
         Optional[List[CpuListEntry]], Field(alias='srl_nokia-platform-cpu:cpu')
@@ -6870,7 +5283,7 @@ class QosContainer(BaseModel):
         regex_engine="python-re",
     )
     resource: Annotated[
-        Optional[List[ResourceListEntry5]],
+        Optional[List[ResourceListEntry2]],
         Field(alias='srl_nokia-platform-qos:resource'),
     ] = None
     resource_set_pool: Annotated[
@@ -6960,20 +5373,12 @@ class ForwardingComplexListEntry(BaseModel):
         Optional[DropCountersContainer],
         Field(alias='srl_nokia-platform-lc:drop-counters'),
     ] = None
-    counter_banks: Annotated[
-        Optional[CounterBanksContainer],
-        Field(alias='srl_nokia-platform-lc:counter-banks'),
+    fib_table: Annotated[
+        Optional[FibTableContainer],
+        Field(alias='srl_nokia-platform-linecard-fib:fib-table'),
     ] = None
-    load_balancing: Annotated[
-        Optional[LoadBalancingContainer],
-        Field(alias='srl_nokia-platform-lc:load-balancing'),
-    ] = None
-    datapath: Annotated[
-        Optional[DatapathContainer2],
-        Field(alias='srl_nokia-platform-datapath-resources:datapath'),
-    ] = None
-    mtu: Annotated[
-        Optional[MtuContainer], Field(alias='srl_nokia-platform-mtu:mtu')
+    p4rt: Annotated[
+        Optional[P4rtContainer], Field(alias='srl_nokia-platform-p4rt:p4rt')
     ] = None
     qos: Annotated[
         Optional[QosContainer], Field(alias='srl_nokia-platform-qos:qos')
@@ -6982,18 +5387,12 @@ class ForwardingComplexListEntry(BaseModel):
         Optional[BufferMemoryContainer],
         Field(alias='srl_nokia-platform-qos:buffer-memory'),
     ] = None
-    healthz: Annotated[
-        Optional[HealthzContainer], Field(alias='srl_nokia-platform-healthz:healthz')
+    mtu: Annotated[
+        Optional[MtuContainer], Field(alias='srl_nokia-platform-mtu:mtu')
     ] = None
-    p4rt: Annotated[
-        Optional[P4rtContainer], Field(alias='srl_nokia-platform-p4rt:p4rt')
-    ] = None
-    oam: Annotated[
-        Optional[OamContainer], Field(alias='srl_nokia-platform-oam:oam')
-    ] = None
-    fib_table: Annotated[
-        Optional[FibTableContainer],
-        Field(alias='srl_nokia-platform-linecard-fib:fib-table'),
+    datapath: Annotated[
+        Optional[DatapathContainer2],
+        Field(alias='srl_nokia-platform-datapath-resources:datapath'),
     ] = None
 
 
@@ -7070,7 +5469,7 @@ class LinecardListEntry(BaseModel):
     """
     The reason the component transitioned to a failed state
 
-    Once set, field persists until component is operationally up, otherwise it is empty if the component is not currently in a failure state
+    Field is empty if the component is not currently in a failure state
     """
     clei_code: Annotated[
         Optional[str], Field(alias='srl_nokia-platform-lc:clei-code')
@@ -7110,7 +5509,7 @@ class LinecardListEntry(BaseModel):
     """
     type: Annotated[Optional[str], Field(alias='srl_nokia-platform-lc:type')] = None
     """
-    Linecard type, as read from the physical assembly
+    Linecard type, as translated from the components EEPROM
     """
     forwarding_complex: Annotated[
         Optional[List[ForwardingComplexListEntry]],
@@ -7125,7 +5524,7 @@ class LinecardListEntry(BaseModel):
     This version is the squashfs version, and may not represent the current per-application versions if versions have been modified after the system has been installed.
     """
     locator_state: Annotated[
-        Optional[EnumerationEnum12], Field(alias='srl_nokia-platform-lc:locator-state')
+        Optional[EnumerationEnum9], Field(alias='srl_nokia-platform-lc:locator-state')
     ] = 'inactive'
     """
     Details if the locator LED is active on this component
@@ -7136,11 +5535,8 @@ class LinecardListEntry(BaseModel):
     temperature: Annotated[
         Optional[TemperatureContainer], Field(alias='srl_nokia-platform-lc:temperature')
     ] = None
-    mda: Annotated[
-        Optional[List[MdaListEntry]], Field(alias='srl_nokia-platform-lc:mda')
-    ] = None
     healthz: Annotated[
-        Optional[HealthzContainer3], Field(alias='srl_nokia-platform-healthz:healthz')
+        Optional[HealthzContainer], Field(alias='srl_nokia-platform-healthz:healthz')
     ] = None
 
 
@@ -7163,15 +5559,17 @@ class PlatformContainer(BaseModel):
         Optional[List[ControlListEntry3]],
         Field(alias='srl_nokia-platform-control:control'),
     ] = None
+    redundancy: Annotated[
+        Optional[RedundancyContainer],
+        Field(alias='srl_nokia-platform-redundancy:redundancy'),
+    ] = None
+    resource_management: Annotated[
+        Optional[ResourceManagementContainer],
+        Field(alias='srl_nokia-platform-resource-mgmt:resource-management'),
+    ] = None
     resource_monitoring: Annotated[
         Optional[ResourceMonitoringContainer],
         Field(alias='srl_nokia-platform-resource-monitoring:resource-monitoring'),
-    ] = None
-    qos: Annotated[
-        Optional[QosContainer3], Field(alias='srl_nokia-platform-qos:qos')
-    ] = None
-    fan_tray: Annotated[
-        Optional[List[FanTrayListEntry]], Field(alias='srl_nokia-platform-fan:fan-tray')
     ] = None
     chassis: Annotated[
         Optional[ChassisContainer], Field(alias='srl_nokia-platform-chassis:chassis')
@@ -7179,31 +5577,12 @@ class PlatformContainer(BaseModel):
     fabric: Annotated[
         Optional[List[FabricListEntry]], Field(alias='srl_nokia-platform-fabric:fabric')
     ] = None
+    fan_tray: Annotated[
+        Optional[List[FanTrayListEntry]], Field(alias='srl_nokia-platform-fan:fan-tray')
+    ] = None
     power_supply: Annotated[
         Optional[List[PowerSupplyListEntry]],
         Field(alias='srl_nokia-platform-psu:power-supply'),
-    ] = None
-    resource_management: Annotated[
-        Optional[ResourceManagementContainer],
-        Field(alias='srl_nokia-platform-resource-mgmt:resource-management'),
-    ] = None
-    icm: Annotated[
-        Optional[List[IcmListEntry]], Field(alias='srl_nokia-platform-icm:icm')
-    ] = None
-    max_poe_power_budget_available: Annotated[
-        Optional[float],
-        Field(
-            alias='srl_nokia-platform-poe:max-poe-power-budget-available',
-            ge=-9.223372036854776e16,
-            le=9.223372036854776e16,
-        ),
-    ] = None
-    """
-    Maximum PoE power available for use by connected devices per platform
-    """
-    redundancy: Annotated[
-        Optional[RedundancyContainer2],
-        Field(alias='srl_nokia-platform-redundancy:redundancy'),
     ] = None
     vxdp: Annotated[
         Optional[VxdpContainer], Field(alias='srl_nokia-platform-vxdp:vxdp')

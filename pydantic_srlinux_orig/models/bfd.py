@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
+from typing_extensions import Annotated
 
 
 class EnumerationEnum(Enum):
@@ -54,7 +55,6 @@ class EnumerationEnum5(Enum):
 class EnumerationEnum6(Enum):
     local = 'LOCAL'
     pcep = 'PCEP'
-    bgp = 'BGP'
 
 
 class EnumerationEnum7(Enum):
@@ -104,7 +104,8 @@ class Ipv6AddressType(RootModel[str]):
         ),
     ]
     """
-    An IPv6 address represented as either a full address, shortened or mixed-shortened formats
+    An IPv6 address represented as either a full address; shortened
+    or mixed-shortened formats.
     """
 
 
@@ -177,7 +178,7 @@ class AsyncContainer(BaseModel):
         ),
     ] = None
     """
-    Timestamp of the last time the session counters were cleared
+    Timestamp of the last time the session counters were cleared.
     """
 
 
@@ -438,31 +439,29 @@ class SubinterfaceListEntry(BaseModel):
         ),
     ] = 1000000
     """
-    Minimum interval between transmission of BFD control packets
+    The minimum interval between transmission of BFD control packets
 
     This value is advertised to the peer, however the actual interval used is specified
     by taking the maximum of desired-minimum-transmit-interval and the value of the remote
     required-minimum-receive interval value.
     This value is specified as an integer number of microseconds.
-    [Note: On vSRL instances this must be set to a value of 1000000 or greater]
     """
     required_minimum_receive: Annotated[
         Optional[int],
         Field(alias='srl_nokia-bfd:required-minimum-receive', ge=10000, le=100000000),
     ] = 1000000
     """
-    Minimum interval between received BFD control packets that this system should support
+    The minimum interval between received BFD control packets that this system should support
 
     This value is advertised to the remote peer to indicate the maximum frequency (i.e., minimum
     inter-packet interval) between BFD control packets that is acceptable to the local system.
     This value is specified as an integer number of microseconds.
-    [Note: On vSRL instances this must be set to a value of 1000000 or greater]
     """
     detection_multiplier: Annotated[
         Optional[int], Field(alias='srl_nokia-bfd:detection-multiplier', ge=3, le=20)
     ] = 3
     """
-    Number of packets that must be missed to declare this session as down
+    The number of packets that must be missed to declare this session as down
 
     The detection interval for the BFD session is calculated by multiplying the
     value of the negotiated transmission interval by this value.
@@ -472,7 +471,7 @@ class SubinterfaceListEntry(BaseModel):
         Field(alias='srl_nokia-bfd:minimum-echo-receive-interval', ge=0, le=100000000),
     ] = 0
     """
-    Minimum interval between echo packets the local node can receive
+    The minimum interval between echo packets the local node can receive
 
     Implicitly enabled echo mode on the associated interface.
     """
@@ -480,7 +479,7 @@ class SubinterfaceListEntry(BaseModel):
         Optional[int], Field(alias='srl_nokia-bfd:max-hop-count', ge=2, le=255)
     ] = 255
     """
-    TTL to be used in the BFD IP header for multihop BFD
+    TTL to be used in the BFD IP header for multihop BFD.
     """
 
 
@@ -535,7 +534,6 @@ class LagInterfaceListEntry(BaseModel):
     by taking the maximum of desired-minimum-transmit-interval and the value of the remote
     required-minimum-receive interval value.
     This value is specified as an integer number of microseconds.
-    [Note: On vSRL instances this must be set to a value of 1000000 or greater]
     """
     required_minimum_receive: Annotated[
         Optional[int],
@@ -549,7 +547,6 @@ class LagInterfaceListEntry(BaseModel):
     This value is advertised to the remote peer to indicate the maximum frequency (i.e., minimum
     inter-packet interval) between BFD control packets that is acceptable to the local system.
     This value is specified as an integer number of microseconds.
-    [Note: On vSRL instances this must be set to a value of 1000000 or greater]
     """
     detection_multiplier: Annotated[
         Optional[int],
@@ -607,13 +604,13 @@ class PeerListEntry(BaseModel):
         Optional[str], Field(alias='srl_nokia-bfd:ipv6-link-local-interface')
     ] = None
     """
-    For IPv6 link local sessions only, indicates the local interface with which the session is associated
+    For IPv6 link local sessions only, indicates the local interface with which the session is associated.
     """
     ipv4_unnumbered_interface: Annotated[
         Optional[str], Field(alias='srl_nokia-bfd:ipv4-unnumbered-interface')
     ] = None
     """
-    For IPv4 unnumbered sessions only, indicates the local interface with which the session is associated
+    For IPv4 unnumbered sessions only, indicates the local interface with which the session is associated.
     """
     local_address: Annotated[
         Optional[Union[Ipv4AddressType, Ipv6AddressType]],
@@ -627,7 +624,7 @@ class PeerListEntry(BaseModel):
         Field(alias='srl_nokia-bfd:remote-address'),
     ] = None
     """
-    Remote IP address for the far-end of the BFD session
+    The remote IP address for the far-end of the BFD session
 
     This must be the same IP version as the local-address.
     """
@@ -636,7 +633,7 @@ class PeerListEntry(BaseModel):
         Field(alias='srl_nokia-bfd:remote-discriminator', ge=0, le=4294967295),
     ] = None
     """
-    Unique identifier used by the remote system to identify this BFD session
+    A unique identifier used by the remote system to identify this BFD session
     """
     subscribed_protocols: Annotated[
         Optional[str], Field(alias='srl_nokia-bfd:subscribed-protocols')
@@ -648,13 +645,13 @@ class PeerListEntry(BaseModel):
         Optional[EnumerationEnum3], Field(alias='srl_nokia-bfd:session-state')
     ] = None
     """
-    State of the BFD session perceived by the local system
+    The state of the BFD session perceived by the local system
     """
     remote_session_state: Annotated[
         Optional[EnumerationEnum3], Field(alias='srl_nokia-bfd:remote-session-state')
     ] = None
     """
-    Reported state of the BFD session according to the remote system
+    The reported state of the BFD session according to the remote system
 
     This state reflects the last state reported in a BFD control packet.
     """
@@ -684,19 +681,19 @@ class PeerListEntry(BaseModel):
         Field(alias='srl_nokia-bfd:failure-transitions', ge=0, le=18446744073709551615),
     ] = None
     """
-    Number of times that the BFD session transitioned out of the up state
+    The number of times that the BFD session has transitioned out of the up state
     """
     local_diagnostic_code: Annotated[
         Optional[EnumerationEnum4], Field(alias='srl_nokia-bfd:local-diagnostic-code')
     ] = None
     """
-    Local BFD diagnostic code indicating the most recent reason for failure of this BFD session
+    The local BFD diagnostic code indicating the most recent reason for failure of this BFD session
     """
     remote_diagnostic_code: Annotated[
         Optional[EnumerationEnum4], Field(alias='srl_nokia-bfd:remote-diagnostic-code')
     ] = None
     """
-    Remote BFD diagnostic code indicating the remote system's reason for failure of the BFD session
+    The remote BFD diagnostic code indicating the remote system's reason for failure of the BFD session
     """
     remote_minimum_receive_interval: Annotated[
         Optional[int],
@@ -705,7 +702,7 @@ class PeerListEntry(BaseModel):
         ),
     ] = None
     """
-    Value of the minimum receive interval that was specified by the peer
+    The value of the minimum receive interval that was specified by the peer
 
     This value references the value in the most recent BFD control packet
     received from the peer.
@@ -721,17 +718,17 @@ class PeerListEntry(BaseModel):
         Field(alias='srl_nokia-bfd:active-transmit-interval', ge=0, le=4294967295),
     ] = None
     """
-    Transmit interval currently being used by this BFD session
+    The transmit interval currently being used by this BFD session
 
     This is the amount of time the local BFD agent will wait between the
-    sending of BFD messages to the remote peer.
+    sending of BFD messages to the remote peer
     """
     active_receive_interval: Annotated[
         Optional[int],
         Field(alias='srl_nokia-bfd:active-receive-interval', ge=0, le=4294967295),
     ] = None
     """
-    Receive interval currently being used by this BFD session
+    The receive interval currently being used by this BFD session
 
     This is the amount of time the BFD state machine expects between
     receiving BFD messages from the remote peer.
@@ -740,7 +737,7 @@ class PeerListEntry(BaseModel):
         Optional[int], Field(alias='srl_nokia-bfd:remote-multiplier', ge=0, le=255)
     ] = None
     """
-    Current number of packets that must be missed to declare the session as down
+    The current number of packets that must be missed to declare the session as down
 
     The detection interval for the BFD session is calculated by multiplying the
     value of the negotiated transmission interval by this value.
@@ -756,22 +753,6 @@ class PeerListEntry(BaseModel):
     ] = None
     """
     Type of TE-Policy associated with this seamless BFD session
-    """
-    te_policy_candidate_path_name: Annotated[
-        Optional[str],
-        Field(
-            alias='srl_nokia-bfd:te-policy-candidate-path-name',
-            pattern='^(?=^[A-Za-z0-9!@#$%^&()|+=`~.,/_:;?-][A-Za-z0-9 !@#$%^&()|+=`~.,/_:;?-]*$).*$',
-        ),
-    ] = None
-    """
-    Colored TE-Policy candidate path name
-    """
-    te_policy_color: Annotated[
-        Optional[int], Field(alias='srl_nokia-bfd:te-policy-color', ge=0, le=4294967295)
-    ] = None
-    """
-    Color associated with the (colored) TE-Policy
     """
     te_policy_segment_list_index: Annotated[
         Optional[int],
@@ -810,7 +791,7 @@ class PeerListEntry(BaseModel):
 
 class NetworkInstanceListEntry(BaseModel):
     """
-    Network-instance context for the BFD session
+    network-instance context for BFD session.
     """
 
     model_config = ConfigDict(
@@ -819,7 +800,7 @@ class NetworkInstanceListEntry(BaseModel):
     )
     name: Annotated[str, Field(alias='srl_nokia-bfd:name')]
     """
-    Unique name identifying the network instance
+    A unique name identifying the network instance
     """
     peer: Annotated[
         Optional[List[PeerListEntry]], Field(alias='srl_nokia-bfd:peer')
